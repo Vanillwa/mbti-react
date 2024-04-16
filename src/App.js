@@ -4,9 +4,8 @@ import Header from "./component/Header";
 function App() {
   return (
     <div className="App">
-      <Header/>
       <Routes>
-
+        <Route path="/" element={<Main/>}></Route>
       </Routes>
     </div>
   );
