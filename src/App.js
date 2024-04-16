@@ -1,15 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
-import Header from "./component/Header";
 import  Nav  from "./component/Nav";
+import LeftSidebar from "./component/LeftSidebar";
 function App() {
   return (
     <div className="App">
-     <Nav/>
+
+      <Nav/>
+      <LeftSidebar/>
       <Routes>
         <Route path="/" element={<Main/>}></Route>
-     
-      
+
+
       </Routes>
     </div>
   );

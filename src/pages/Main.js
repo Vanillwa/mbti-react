@@ -1,7 +1,7 @@
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 
 import '../css/Main.css'
@@ -46,6 +46,7 @@ function Main(){
 	
 		</>
 	)
+
 }
 
-export default Main
+export default Main;

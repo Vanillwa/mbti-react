@@ -21,6 +21,10 @@
   margin-left: 2vw;
 }
 
+.navbar-logo .logo{
+  width: 100px;
+}
+
 .navbar-user{
   margin-right: 2vw;
   display: flex;
@@ -42,4 +46,11 @@
   height: 40px;
   border-radius: 20px;
   margin-right: 10px;
+}
+
+.chatIcon {
+  width: 20px;
+  height: auto;
+  margin-right: 1vw;
+  margin-bottom: 5px;
 }
