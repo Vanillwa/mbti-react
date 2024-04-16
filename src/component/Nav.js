@@ -11,7 +11,7 @@ const Nav = () => {
       <div className="navbar-user">
         <Link to='/chatroom'>채팅</Link>
         <span className="user-name">회원이름</span> {/* 회원 이름 */}
-        <img src="user_image_url" alt="회원사진" className="user-image" />{" "}
+        <img src="user_image_url" alt="회원사진" className="user-image" />
         {/* 회원사진 URL */}
       </div>
     </nav>
