@@ -127,18 +127,7 @@ function Join() {
               readOnly
             >다른 사이트 이용약관보고 추후 적을 것</textarea>
           </div>
-          <div className="col-12">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="checkBox4"
-              />
-              <label className="form-check-label" htmlFor="checkBox4">
-                <strong>[선택]</strong> 위치기반서비스 이용약관
-              </label>
-            </div>
-          </div>
+         
               <div className="col-12 d-flex justify-content-center">
                 {/*  나중에 확인은 submit으로 바꿀예정입니다. */}
                 <button type="button" className="btn btn-primary me-2" onClick={goMain}>확인</button>
