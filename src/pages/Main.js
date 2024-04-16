@@ -32,7 +32,7 @@ function Main(){
 		<Form.Text className="text-muted">
         <a href="#">아이디찾기 </a>
 		<a href="#">비밀번호찾기 </a>
-		<a href="#">회원가입</a>
+		<a href="/Join">회원가입</a>
 		  </Form.Text>
       </Form.Group>
       <Button variant="primary" type="submit">
