@@ -3,7 +3,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
+
+import '../css/Main.css'
+
+
 function Main(){
+	
 	return(
 		<>
 		<Container>
@@ -16,7 +21,7 @@ function Main(){
 
 
 	<Container>
-	<Form>
+	<Form className='Login-form'>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>아이디</Form.Label>
         <Form.Control type="email" placeholder="Email" />
@@ -34,6 +39,9 @@ function Main(){
         로그인
       </Button>
     </Form>
+	</Container>
+	<Container className='footer'>
+	<Button variant="dark">게시판이동</Button>
 	</Container>
 	
 		</>
