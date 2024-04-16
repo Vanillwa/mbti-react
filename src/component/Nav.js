@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import img from "../images/MBTI.png";
 import logo from '../images/logo.avif'
 import chatIcon from '../svg/chat-dots.svg'
+
+// 디비에서 값 받아오면 수정할 예정
+// width height 수정 필요
 const Nav = () => {
   return (
     <nav className="navbar">
