@@ -1,18 +1,24 @@
 import React from "react";
-import '../css/Nav.css'
+import "../css/Nav.css";
 import { Link } from "react-router-dom";
+import img from "../images/MBTI.png";
+import logo from '../images/logo.avif'
+import chatIcon from '../svg/chat-dots.svg'
 const Nav = () => {
   return (
     <nav className="navbar">
-      <Link to='/' className="navbar-logo">로고</Link>
+      <Link to="/" className="navbar-logo">
+        <img src={logo} className="logo"></img>
+      </Link>
       <div className="navbar-search">
         <input type="text" placeholder="검색" />
       </div>
       <div className="navbar-user">
-        <Link to='/chatroom'>채팅</Link>
-        <span className="user-name">회원이름</span> {/* 회원 이름 */}
-        <img src="user_image_url" alt="회원사진" className="user-image" />
-        {/* 회원사진 URL */}
+        <Link to="/chatroom" className="chatLink"><img src={chatIcon} className="chatIcon"></img></Link>
+        <Link to='/'>
+        <span className="user-name">유저이름</span>
+        <img src={img} alt="회원사진" className="user-image" />
+        </Link>
       </div>
     </nav>
   );

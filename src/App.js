@@ -4,11 +4,10 @@ import  Nav  from "./component/Nav";
 function App() {
   return (
     <div className="App">
-
+      <Nav/>
       <Routes>
         <Route path="/" element={<Main/>}></Route>
-      <Header/>
-      <Nav/>
+      
       </Routes>
     </div>
   );
