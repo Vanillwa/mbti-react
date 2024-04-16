@@ -5,14 +5,11 @@ import LeftSidebar from "./component/LeftSidebar";
 function App() {
   return (
     <div className="App">
-
+      
       <Nav/> {/* 확인용으로 일단 상단에 배치하겠습니다. */}
       <LeftSidebar/>
       <Routes>
         <Route path="/" element={<Main/>}></Route>
-        
-        <Route path="/" element={<Main/>}></Route>
-
       </Routes>
     </div>
   );
