@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper";
+import { Autoplay} from "swiper";
 import "swiper/css";
 
 import styles from "../css/Main.module.css";
@@ -48,15 +48,7 @@ const handleSubmit = async(e)=>{
   return (
     <>
       <Container className={styles.topcontainer}>
-        <Navbar expand="lg" className="bg-body-tertiary ">
-          <Container>
-           
-            <Navbar.Brand href="#">
-              <h1>Logo</h1>
-            </Navbar.Brand>
-           
-          </Container>
-        </Navbar>
+             <Link to="#" className={styles.link}><h1 >Logo</h1></Link> 
       </Container>
 
       <Container className={styles.mainCon}>
@@ -64,8 +56,9 @@ const handleSubmit = async(e)=>{
           className={styles.swiper}
           spaceBetween={50}
           slidesPerView={1}
+         
           modules={[Autoplay]}
-          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          autoplay={{ delay: 3500, disableOnInteraction: false}}
           loop={true}>
           <SwiperSlide>
             <img src={NFtype} alt="외교형" />
@@ -93,9 +86,9 @@ const handleSubmit = async(e)=>{
               <Form.Control name="password" type="password" placeholder="Password" />
                 <p className={styles.alert}>{pwdAlert}</p>
               <Form.Text className="text-muted">
-                <Link to="#">아이디찾기 </Link>
-                <Link to="#">비밀번호찾기 </Link>
-                <Link to="/join">회원가입</Link>
+                <Link to="#" className={styles.link} >아이디찾기 </Link>
+                <Link to="#" className={styles.link}>비밀번호찾기 </Link>
+                <Link to="/join" className={styles.link}>회원가입</Link>
               </Form.Text>
             </Form.Group>
             <Button variant="primary" type="submit">
@@ -105,7 +98,7 @@ const handleSubmit = async(e)=>{
         </Container>
       </Container>
 
-      <Container className="bottom">
+      <Container className={styles.bottom}>
         <Button variant="dark">게시판이동</Button>
       </Container>
     </>

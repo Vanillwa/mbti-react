@@ -1,18 +1,35 @@
+*{padding:0; margin:0; box-sizing: border-box;}
+
+
+.link {
+    text-decoration: none; 
+    color:grey;
+  }
 
 .topcontainer{
+    margin-top:20px;
     margin-bottom:200px;
+    text-align: center;
+    
 }
+
 
 .mainCon{
     
     display: flex; justify-content: center;
 }
+.mainCon img{width:900px;}
 .swiper{
     max-width:900px;
 }
  
 .loginform{
-    max-width:500px;
+    max-width:450px;
 }
 
 .alert{color:red;}
+
+.bottom{
+    display: flex; justify-content: center;
+    margin-top:150px;
+}
