@@ -10,14 +10,18 @@
   padding: 10px;
   overflow-y: auto;
 }
-
-.sidebar-item {
-  padding: 10px;
-  margin: 8px 0;
-  background-color: #444;
-  border-radius: 5px;
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
 
-.sidebar-item:hover {
-  background-color: #555;
+.sidebar a {
+  padding: 10px 0;
+  text-decoration: none;
+  color: white;
+}
+
+.sidebar a:hover {
+  color: grey;
 }

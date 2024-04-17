@@ -1,19 +1,21 @@
 // App.js 파일 내용
-import React from 'react';
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Join from "./pages/Join"; // './pages/Join' 경로에 있는 Join 컴포넌트를 import
-import Nav from "./component/Nav";
-import LeftSidebar from "./component/LeftSidebar";
+
+import List from "./pages/List";
+import Layout from "./component/layout";
 
 function App() {
   return (
     <div className="App">
-      <Nav/>
-      <LeftSidebar/>
       <Routes>
-        <Route path="/" element={<Main/>}></Route>
-        <Route path="/join" element={<Join/>}></Route>
+        <Route element={<Layout />}>
+          <Route path="/list" element={<List />} />
+        </Route>
+        <Route path="/" element={<Main />} />
+        <Route path="/join" element={<Join />} />
       </Routes>
     </div>
   );
