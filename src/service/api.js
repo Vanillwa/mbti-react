@@ -37,3 +37,10 @@ export const getMessage = async (roomId) => {
   const res = await axios.get(`/chat/${roomId}`);
   return res.data;
 };
+
+export const getPostList = async (mbti)=>{
+  console.log(mbti)
+  const res = await axios.get(`/post/list?mbti=${mbti}`);
+  return res.data;
+  
+}

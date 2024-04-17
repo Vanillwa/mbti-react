@@ -8,7 +8,6 @@ import {Swiper,SwiperSlide} from 'swiper/react';
 import {Autoplay} from 'swiper';
 import 'swiper/css';
 
-
 import styles from '../css/Main.module.css'
 import NFtype from '../images/Main/NFtype.JPG'
 import NTtype from '../images/Main/NTtype.JPG'
