@@ -1,16 +1,15 @@
 
 a{text-decoration: none;}
 
-
-
-
-.mbti-img{
-
+.container{
+    max-width: 1000px;
 }
 
-.Login-form{
-
+.Mainform{
+    display: flex;
 }
+
+
 
 .footer{
     position:fixed;
