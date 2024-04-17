@@ -18,38 +18,27 @@ function Main(){
 		<Container className={styles.container} >
 		<Navbar expand="lg" className="bg-body-tertiary ">
         <Container>
-          <Navbar.Brand href="#"><h1>Logo</h1></Navbar.Brand>
+          <Navbar.Brand href="#" ><h1>Logo</h1></Navbar.Brand>
         </Container>
       </Navbar>
     </Container>
-    <div className="Mainform">
-<Swiper
+
+
+    <Container className={styles.mainform}>
+<Swiper className={styles.swiper}
 spaceBetween={50}
 slidesPerView={1}
 modules={[Autoplay]}
 autoplay={{delay:2500,
-disableOnInteraction:false}}
-loop={true}
->
-  <SwiperSlide></SwiperSlide>
-  <SwiperSlide>22</SwiperSlide>
-  <SwiperSlide>33</SwiperSlide>
-  <SwiperSlide>44</SwiperSlide>
-  <SwiperSlide>11</SwiperSlide>
-  <SwiperSlide>22</SwiperSlide>
-  <SwiperSlide>33</SwiperSlide>
-  <SwiperSlide>44</SwiperSlide>
-  <SwiperSlide>11</SwiperSlide>
-  <SwiperSlide>22</SwiperSlide>
-  <SwiperSlide>33</SwiperSlide>
-  <SwiperSlide>44</SwiperSlide>
-  <SwiperSlide>11</SwiperSlide>
-  <SwiperSlide>22</SwiperSlide>
-  <SwiperSlide>33</SwiperSlide>
-  <SwiperSlide>44</SwiperSlide>
+  disableOnInteraction: false,}}
+loop={true}>
+  <SwiperSlide><img src={process.env.PUBLIC_URL + '/images/Main/NFtype.JPG'} alt="외교형" /></SwiperSlide>
+  <SwiperSlide><img src={process.env.PUBLIC_URL + '/images/Main/NTtype.JPG'} alt="분석형" /></SwiperSlide>
+  <SwiperSlide><img src={process.env.PUBLIC_URL + '/images/Main/SJtype.JPG'} alt="관리자형" /></SwiperSlide>
+  <SwiperSlide><img src={process.env.PUBLIC_URL + '/images/Main/SPtype.JPG'} alt="탐험가형" /></SwiperSlide>
 </Swiper>
-	<Container>
-	<Form className='Login-form'>
+	
+	<Form className={styles.loginform}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>아이디</Form.Label>
         <Form.Control type="email" placeholder="Email" />
@@ -63,14 +52,13 @@ loop={true}
 		<a href="/Join">회원가입</a>
 		  </Form.Text>
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button  variant="primary" type="submit">
         로그인
       </Button>
     </Form>
-	</Container>
-  </div>
+  </Container>
 
-	<Container className='footer'>
+	<Container className={styles.footer}>
 	<Button variant="dark">게시판이동</Button>
 	</Container>
 	

@@ -1,19 +1,26 @@
 
-a{text-decoration: none;}
+
 
 .container{
-    max-width: 1000px;
+    margin-bottom:200px;
 }
 
-.Mainform{
-    display: flex;
-}
+.mainform{display:flex; justify-content: center; }
 
+
+.swiper{max-width: 600px; }
+.swiper img{width:600px; height:300px;}
+
+
+.loginform{width:600px;}
+.loginform a{text-decoration-line: none; color:black;}
 
 
 .footer{
-    position:fixed;
-    bottom:20px;
-    left:45%;
-
+   display: flex;
+   justify-content: center;
+   margin-top:100px;
 }
+
+
+
