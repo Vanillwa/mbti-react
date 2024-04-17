@@ -3,74 +3,113 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper";
+import "swiper/css";
 
-import {Swiper,SwiperSlide} from 'swiper/react';
-import {Autoplay} from 'swiper';
-import 'swiper/css';
+import styles from "../css/Main.module.css";
+import NFtype from "../images/Main/NFtype.JPG";
+import NTtype from "../images/Main/NTtype.JPG";
+import SJtype from "../images/Main/SJtype.JPG";
+import SPtype from "../images/Main/SPtype.JPG";
+import { fetchLogin } from "../service/api";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
 
+function Main() {
+  const {login} = useAuthContext()
+  const [emailAlert,setEmailAlert] = useState() 
+  const [pwdAlert,setPwdAlert] = useState()
 
-import styles from '../css/Main.module.css'
-import NFtype from '../images/Main/NFtype.JPG'
-import NTtype from '../images/Main/NTtype.JPG'
-import SJtype from '../images/Main/SJtype.JPG'
-import SPtype from '../images/Main/SPtype.JPG'
+ const navigate = useNavigate()
+const handleSubmit = async(e)=>{
+  e.preventDefault()
+  let body= {
+    email:e.target.email.value,
+    password:e.target.password.value
+  }
+  console.log(body)
+  const res=await fetchLogin(body)
 
+  if(res.message === "success"){
+    login(res.userInfo)
+   navigate("/list")
+  }
+  else if(res.message === "NoExist"){
+    setEmailAlert("이메일을 다시 확인해주세요.")
+  }
+  else if(res.message === "PwdFail"){
+    setPwdAlert("비밀번호가 올바르지않습니다.")
+  }
+}
 
+  return (
+    <>
+      <Container className={styles.topcontainer}>
+        <Navbar expand="lg" className="bg-body-tertiary ">
+          <Container>
+           
+            <Navbar.Brand href="#">
+              <h1>Logo</h1>
+            </Navbar.Brand>
+           
+          </Container>
+        </Navbar>
+      </Container>
 
-function Main(){
+      <Container className={styles.mainCon}>
+        <Swiper
+          className={styles.swiper}
+          spaceBetween={50}
+          slidesPerView={1}
+          modules={[Autoplay]}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          loop={true}>
+          <SwiperSlide>
+            <img src={NFtype} alt="외교형" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={NTtype} alt="분석형" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={SJtype} alt="관리자형" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={SPtype} alt="탐험가형" />
+          </SwiperSlide>
+        </Swiper>
 
-	return(
-		<>
-		<Container className={styles.container} >
-		<Navbar expand="lg" className="bg-body-tertiary ">
-        <Container>
-          {/* <Navbar.Brand href="#"><h1>Logo</h1></Navbar.Brand> */}
+        <Container className={styles.loginform}>
+          <Form className="Login-form" onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>아이디</Form.Label>
+              <Form.Control name="email" type="email" placeholder="Email" />
+              <p className={styles.alert}>{emailAlert}</p>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control name="password" type="password" placeholder="Password" />
+                <p className={styles.alert}>{pwdAlert}</p>
+              <Form.Text className="text-muted">
+                <Link to="#">아이디찾기 </Link>
+                <Link to="#">비밀번호찾기 </Link>
+                <Link to="/join">회원가입</Link>
+              </Form.Text>
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              로그인
+            </Button>
+          </Form>
         </Container>
-      </Navbar>
-    </Container>
-    <div className="Mainform">
-<Swiper
-spaceBetween={50}
-slidesPerView={1}
-modules={[Autoplay]}
-autoplay={{delay:2500,
-disableOnInteraction:false}}
-loop={true}
->
-<SwiperSlide><img src={NFtype} alt="외교형" /></SwiperSlide>
-  <SwiperSlide><img src={NTtype} alt="분석형" /></SwiperSlide>
-  <SwiperSlide><img src={SJtype} alt="관리자형" /></SwiperSlide>
-  <SwiperSlide><img src={SPtype} alt="탐험가형" /></SwiperSlide>
-</Swiper>
-	<Container>
-	<Form className='Login-form'>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>아이디</Form.Label>
-        <Form.Control type="email" placeholder="Email" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-		<Form.Text className="text-muted">
-        <a href="#">아이디찾기 </a>
-		<a href="#">비밀번호찾기 </a>
-		<a href="/Join">회원가입</a>
-		  </Form.Text>
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        로그인
-      </Button>
-    </Form>
-	</Container>
-  </div>
+      </Container>
 
-	<Container className='footer'>
-	<Button variant="dark">게시판이동</Button>
-	</Container>
-	
-		</>
-	)
-
+      <Container className="bottom">
+        <Button variant="dark">게시판이동</Button>
+      </Container>
+    </>
+  );
 }
 
 export default Main;
