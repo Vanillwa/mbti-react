@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+
 import {Swiper,SwiperSlide} from 'swiper/react';
 import {Autoplay} from 'swiper';
 import 'swiper/css';
@@ -15,6 +16,7 @@ import SJtype from '../images/Main/SJtype.JPG'
 import SPtype from '../images/Main/SPtype.JPG'
 
 
+
 function Main(){
 
 	return(
@@ -22,7 +24,7 @@ function Main(){
 		<Container className={styles.container} >
 		<Navbar expand="lg" className="bg-body-tertiary ">
         <Container>
-          <Navbar.Brand href="#"><h1>Logo</h1></Navbar.Brand>
+          {/* <Navbar.Brand href="#"><h1>Logo</h1></Navbar.Brand> */}
         </Container>
       </Navbar>
     </Container>

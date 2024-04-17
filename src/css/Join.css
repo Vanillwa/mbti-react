@@ -1,1 +1,19 @@
 /* 추후 디자인 할 예정 */
+
+
+.card {
+    max-width: 500px; 
+    margin: 0 auto; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .card-body {
+    padding: 20px; 
+  }
+  
+
+  @media (max-width: 768px) {
+    .card {
+      max-width: 95%; 
+    }
+  }

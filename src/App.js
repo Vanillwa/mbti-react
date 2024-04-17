@@ -7,6 +7,8 @@ import Join from "./pages/Join"; // './pages/Join' 경로에 있는 Join 컴포�
 import List from "./pages/List";
 import Layout from "./component/layout";
 
+
+
 function App() {
   return (
     <div className="App">
