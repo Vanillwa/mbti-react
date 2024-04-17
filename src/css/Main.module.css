@@ -1,0 +1,23 @@
+
+
+.container{
+    margin-bottom:200px;
+}
+
+.mainform{display:flex; justify-content: center; }
+
+
+.swiper{max-width: 600px; }
+.swiper img{width:600px; height:300px;}
+
+
+.loginform{width:600px;}
+.loginform a{text-decoration-line: none; color:black;}
+
+
+.footer{
+   display: flex;
+   justify-content: center;
+   margin-top:100px;
+}
+

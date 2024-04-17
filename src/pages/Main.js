@@ -3,23 +3,43 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+import {Swiper,SwiperSlide} from 'swiper/react';
+import {Autoplay} from 'swiper';
+import 'swiper/css';
 
-import '../css/Main.css'
+
+import styles from '../css/Main.module.css'
+import NFtype from '../images/Main/NFtype.JPG'
+import NTtype from '../images/Main/NTtype.JPG'
+import SJtype from '../images/Main/SJtype.JPG'
+import SPtype from '../images/Main/SPtype.JPG'
 
 
 function Main(){
-	
+
 	return(
 		<>
-		<Container>
+		<Container className={styles.container} >
 		<Navbar expand="lg" className="bg-body-tertiary ">
         <Container>
           <Navbar.Brand href="#"><h1>Logo</h1></Navbar.Brand>
         </Container>
       </Navbar>
     </Container>
-
-
+    <div className="Mainform">
+<Swiper
+spaceBetween={50}
+slidesPerView={1}
+modules={[Autoplay]}
+autoplay={{delay:2500,
+disableOnInteraction:false}}
+loop={true}
+>
+<SwiperSlide><img src={NFtype} alt="외교형" /></SwiperSlide>
+  <SwiperSlide><img src={NTtype} alt="분석형" /></SwiperSlide>
+  <SwiperSlide><img src={SJtype} alt="관리자형" /></SwiperSlide>
+  <SwiperSlide><img src={SPtype} alt="탐험가형" /></SwiperSlide>
+</Swiper>
 	<Container>
 	<Form className='Login-form'>
       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -40,6 +60,8 @@ function Main(){
       </Button>
     </Form>
 	</Container>
+  </div>
+
 	<Container className='footer'>
 	<Button variant="dark">게시판이동</Button>
 	</Container>
