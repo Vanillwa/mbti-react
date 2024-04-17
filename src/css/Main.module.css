@@ -18,7 +18,7 @@
     
     display: flex; justify-content: center;
 }
-.mainCon img{width:900px;}
+.mainCon img{width:500px;}
 .swiper{
     max-width:900px;
 }

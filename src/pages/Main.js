@@ -8,10 +8,24 @@ import { Autoplay} from "swiper";
 import "swiper/css";
 
 import styles from "../css/Main.module.css";
-import NFtype from "../images/Main/NFtype.JPG";
-import NTtype from "../images/Main/NTtype.JPG";
-import SJtype from "../images/Main/SJtype.JPG";
-import SPtype from "../images/Main/SPtype.JPG";
+
+import INTJ from "../images/Main/INTJ.JPG";
+import INTP from "../images/Main/INTP.JPG";
+import ENTJ from "../images/Main/ENTJ.JPG";
+import ENTP from "../images/Main/ENTP.JPG";
+import INFJ from "../images/Main/INFJ.JPG";
+import INFP from "../images/Main/INFP.JPG";
+import ENFJ from "../images/Main/ENFJ.JPG";
+import ENFP from "../images/Main/ENFP.JPG";
+import ISTJ from "../images/Main/ISTJ.JPG";
+import ISFJ from "../images/Main/ISFJ.JPG";
+import ESTJ from "../images/Main/ESTJ.JPG";
+import ESFJ from "../images/Main/ESFJ.JPG";
+import ISTP from "../images/Main/ISTP.JPG";
+import ISFP from "../images/Main/ISFP.JPG";
+import ESTP from "../images/Main/ESTP.JPG";
+import ESFP from "../images/Main/ESFP.JPG";
+
 import { fetchLogin } from "../service/api";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -61,16 +75,52 @@ const handleSubmit = async(e)=>{
           autoplay={{ delay: 3500, disableOnInteraction: false}}
           loop={true}>
           <SwiperSlide>
-            <img src={NFtype} alt="외교형" />
+            <img src={INTJ} alt="INTJ" />
           </SwiperSlide>
           <SwiperSlide>
-            <img src={NTtype} alt="분석형" />
+            <img src={INTP} alt="INTP" />
           </SwiperSlide>
           <SwiperSlide>
-            <img src={SJtype} alt="관리자형" />
+            <img src={ENTJ} alt="ENTJ" />
           </SwiperSlide>
           <SwiperSlide>
-            <img src={SPtype} alt="탐험가형" />
+            <img src={ENTP} alt="ENTP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={INFJ} alt="INFJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={INFP} alt="INFP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ENFJ} alt="ENFJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ENFP} alt="ENFP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ISTJ} alt="ISTJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ISFJ} alt="ISFJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ESTJ} alt="ESTJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ESFJ} alt="ESFJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ISTP} alt="ISTP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ISFP} alt="ISFP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ESTP} alt="ESTP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ESFP} alt="ESFP" />
           </SwiperSlide>
         </Swiper>
 
