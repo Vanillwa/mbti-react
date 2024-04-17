@@ -8,6 +8,11 @@ export const fetchLogin = async (body) => {
   return res.data;
 };
 
+export const checkDuplicationEmail = async (body)=>{
+  const res = await axios.post("/checkDuplicationEmail", body)
+  return res.data
+}
+
 export const fetchJoin = async (body) => {
   const res = await axios.post("/join", body);
   return res.data;
