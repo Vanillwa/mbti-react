@@ -2,6 +2,7 @@ import React from "react";
 import "../css/leftSidebar.css";
 import { Link } from "react-router-dom";
 import ListDropdown from "./ListDropdown";
+
 // 아직 모양만 구현한 상태
 const LeftSidebar = () => {
   return (
