@@ -32,12 +32,13 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
+
 function Main() {
   const {login} = useAuthContext()
   const [emailAlert,setEmailAlert] = useState() 
   const [pwdAlert,setPwdAlert] = useState()
 
- const navigate = useNavigate()
+const navigate = useNavigate()
 const handleSubmit = async(e)=>{
   e.preventDefault()
   let body= {
