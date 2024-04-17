@@ -7,8 +7,12 @@ import {Swiper,SwiperSlide} from 'swiper/react';
 import {Autoplay} from 'swiper';
 import 'swiper/css';
 
-import styles from '../css/Main.module.css'
 
+import styles from '../css/Main.module.css'
+import NFtype from '../images/Main/NFtype.JPG'
+import NTtype from '../images/Main/NTtype.JPG'
+import SJtype from '../images/Main/SJtype.JPG'
+import SPtype from '../images/Main/SPtype.JPG'
 
 
 function Main(){
@@ -18,27 +22,26 @@ function Main(){
 		<Container className={styles.container} >
 		<Navbar expand="lg" className="bg-body-tertiary ">
         <Container>
-          <Navbar.Brand href="#" ><h1>Logo</h1></Navbar.Brand>
+          <Navbar.Brand href="#"><h1>Logo</h1></Navbar.Brand>
         </Container>
       </Navbar>
     </Container>
-
-
-    <Container className={styles.mainform}>
-<Swiper className={styles.swiper}
+    <div className="Mainform">
+<Swiper
 spaceBetween={50}
 slidesPerView={1}
 modules={[Autoplay]}
 autoplay={{delay:2500,
-  disableOnInteraction: false,}}
-loop={true}>
-  <SwiperSlide><img src={process.env.PUBLIC_URL + '/images/Main/NFtype.JPG'} alt="외교형" /></SwiperSlide>
-  <SwiperSlide><img src={process.env.PUBLIC_URL + '/images/Main/NTtype.JPG'} alt="분석형" /></SwiperSlide>
-  <SwiperSlide><img src={process.env.PUBLIC_URL + '/images/Main/SJtype.JPG'} alt="관리자형" /></SwiperSlide>
-  <SwiperSlide><img src={process.env.PUBLIC_URL + '/images/Main/SPtype.JPG'} alt="탐험가형" /></SwiperSlide>
+disableOnInteraction:false}}
+loop={true}
+>
+<SwiperSlide><img src={NFtype} alt="외교형" /></SwiperSlide>
+  <SwiperSlide><img src={NTtype} alt="분석형" /></SwiperSlide>
+  <SwiperSlide><img src={SJtype} alt="관리자형" /></SwiperSlide>
+  <SwiperSlide><img src={SPtype} alt="탐험가형" /></SwiperSlide>
 </Swiper>
-	
-	<Form className={styles.loginform}>
+	<Container>
+	<Form className='Login-form'>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>아이디</Form.Label>
         <Form.Control type="email" placeholder="Email" />
@@ -52,13 +55,14 @@ loop={true}>
 		<a href="/Join">회원가입</a>
 		  </Form.Text>
       </Form.Group>
-      <Button  variant="primary" type="submit">
+      <Button variant="primary" type="submit">
         로그인
       </Button>
     </Form>
-  </Container>
+	</Container>
+  </div>
 
-	<Container className={styles.footer}>
+	<Container className='footer'>
 	<Button variant="dark">게시판이동</Button>
 	</Container>
 	
