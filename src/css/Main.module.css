@@ -1,4 +1,5 @@
-*{padding:0; margin:0; box-sizing: border-box;}
+*{padding:0; margin:0; box-sizing: border-box;
+background-color: beige;}
 
 
 .link {
@@ -8,28 +9,43 @@
 
 .topcontainer{
     margin-top:20px;
-    margin-bottom:200px;
+    margin-bottom:100px;
     text-align: center;
     
 }
 
 
 .mainCon{
-    
-    display: flex; justify-content: center;
+
+
 }
-.mainCon img{width:500px;}
+
 .swiper{
-    max-width:900px;
+    width:85%;
+  margin-right:200px;
 }
- 
+.swiper  img{
+width:100%;
+}
+.MbitExplain{
+    
+ text-align: center;
+    font-size:20px;
+    font-weight: bold;
+} 
+
 .loginform{
-    max-width:450px;
+    padding-top:30%;
+    width:120%;
+    
+    
 }
+
+
 
 .alert{color:red;}
 
 .bottom{
     display: flex; justify-content: center;
-    margin-top:150px;
+    
 }
