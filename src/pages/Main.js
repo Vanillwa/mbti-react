@@ -75,39 +75,10 @@ function Main() {
           spaceBetween={50}
           slidesPerView={1}
           modules={[Autoplay]}
-<<<<<<< HEAD
-          autoplay={{ delay: 2500, disableOnInteraction: false}}
-          loop={true}>
-       
-=======
           autoplay={{ delay: 3500, disableOnInteraction: false }}
           loop={true}
         >
-          <SwiperSlide>
-            <img src={INTJ} alt="INTJ" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={INTP} alt="INTP" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={ENTJ} alt="ENTJ" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={ENTP} alt="ENTP" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={INFJ} alt="INFJ" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={INFP} alt="INFP" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={ENFJ} alt="ENFJ" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={ENFP} alt="ENFP" />
-          </SwiperSlide>
->>>>>>> master
+
           <SwiperSlide>
             <img src={ISTJ} alt="ISTJ" />
             <p className={styles.MbitExplain}>책임감이 강하며, 현실적입니다.</p>
