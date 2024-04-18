@@ -24,17 +24,17 @@ const PostItems = ({ data, status }) => {
         return (
           <div className="post">
             <div className="post-header">
-              <Link to='/profile'>
+              <Link to={`/user/${item.User.userId}`}>
               {item.User.profileImage ? <img src alt="profile" className="profile-img" /> : <img src={notImg} alt='guest' className="profile-img" />}
               <span className="nickname">{item.User.nickname}</span>
               </Link>
-              <span className="date">{item.createdAt}</span>
+              <span className="date">{new Date(item.createdAt).toLocaleDateString()}</span>
             </div>
             <div className="post-body">
               <div className="img-section">
               {item.User.profileImage ? <img src={item.postImg} alt="post" className="post-img" /> : <div className="post-img"></div>}
               </div>
-              <Link to='/post/view' className="text-content ">
+              <Link to={`/post/view?postId=${item.postId}`} className="text-content ">
                 <div className="title">{item.title}</div>
                 <div className="content">{item.content}</div>
               </Link>

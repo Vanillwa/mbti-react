@@ -19,7 +19,7 @@ const LeftSidebar = () => {
         <div className='link'><IListDropdown/></div>
         <Link className='link' to={isLoggedIn ? '/freind' : '/'}>{isLoggedIn ? '친구' : '친구(로그인필요)'}</Link>
         <Link className='link' to={isLoggedIn ? '/message' : '/'}>{isLoggedIn ? '메세지' : '메세지(로그인필요)'}</Link>
-        <Link className='link' to={isLoggedIn ? '/profile' : '/'}>{isLoggedIn ? '프로필' : '프로필(로그인필요)'}</Link>
+        <Link className='link' to={isLoggedIn ? '/profile' : '/'}>{isLoggedIn ? '프로필' : '마이페이지(로그인필요)'}</Link>
         <Link className='link' to="/setting">설정</Link>
       </div>
     </>

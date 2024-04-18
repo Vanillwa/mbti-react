@@ -6,6 +6,8 @@ import Join from "./pages/Join"; // './pages/Join' 경로에 있는 Join 컴포�
 
 import PostList from "./pages/PostList";
 import Layout from "./component/layout";
+import PostView from './pages/PostView'
+import Profile from "./pages/Profile";
 
 
 
@@ -15,7 +17,13 @@ function App() {
     <div className="App">
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/post/list" element={<PostList />} />
+          <Route path="post">
+            <Route path="list" element={<PostList />} />
+            <Route path="view" element={<PostView/>}/>
+          </Route>
+          <Route path="user">
+            <Route path=":userId" element={<Profile/>}/>
+          </Route>
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />

@@ -48,4 +48,14 @@ export const getPostList = async (mbti) => {
   return res.data;
 };
 
+export const getPostView = async (postId) => {
+  const res = await axios.get(`/post/${postId}`);
+  return res.data;
+};
+
+export const getPostByUserId = async (userId) =>{
+  const res = await axios.get(`/user/${userId}`)
+  return res.data;
+}
+
 

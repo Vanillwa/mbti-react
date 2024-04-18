@@ -10,6 +10,7 @@
   padding: 10px;
   overflow-y: auto;
 }
+
 .sidebar {
   display: flex;
   flex-direction: column;
