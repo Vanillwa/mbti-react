@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay} from "swiper";
+import { Autoplay } from "swiper";
 import "swiper/css";
 
 import styles from "../css/Main.module.css";
@@ -34,38 +34,37 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
-
 function Main() {
-  const {login} = useAuthContext()
-  const [emailAlert,setEmailAlert] = useState() 
-  const [pwdAlert,setPwdAlert] = useState()
+  const { login } = useAuthContext();
+  const [emailAlert, setEmailAlert] = useState();
+  const [pwdAlert, setPwdAlert] = useState();
 
-const navigate = useNavigate()
-const handleSubmit = async(e)=>{
-  e.preventDefault()
-  let body= {
-    email:e.target.email.value,
-    password:e.target.password.value
-  }
-  console.log(body)
-  const res=await fetchLogin(body)
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let body = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+    console.log(body);
+    const res = await fetchLogin(body);
 
-  if(res.message === "success"){
-    login(res.userInfo)
-   navigate("/list")
-  }
-  else if(res.message === "NoExist"){
-    setEmailAlert("이메일을 다시 확인해주세요.")
-  }
-  else if(res.message === "PwdFail"){
-    setPwdAlert("비밀번호가 올바르지않습니다.")
-  }
-}
+    if (res.message === "success") {
+      login(res.userInfo);
+      navigate("/list");
+    } else if (res.message === "NoExist") {
+      setEmailAlert("이메일을 다시 확인해주세요.");
+    } else if (res.message === "PwdFail") {
+      setPwdAlert("비밀번호가 올바르지않습니다.");
+    }
+  };
 
   return (
     <>
       <Container className={styles.topcontainer}>
-             <Link to="#" className={styles.link}><h1 >Logo</h1></Link> 
+        <Link to="#" className={styles.link}>
+          <h1>Logo</h1>
+        </Link>
       </Container>
 
       <Container className={styles.mainCon}>
@@ -76,9 +75,39 @@ const handleSubmit = async(e)=>{
           spaceBetween={50}
           slidesPerView={1}
           modules={[Autoplay]}
+<<<<<<< HEAD
           autoplay={{ delay: 2500, disableOnInteraction: false}}
           loop={true}>
        
+=======
+          autoplay={{ delay: 3500, disableOnInteraction: false }}
+          loop={true}
+        >
+          <SwiperSlide>
+            <img src={INTJ} alt="INTJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={INTP} alt="INTP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ENTJ} alt="ENTJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ENTP} alt="ENTP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={INFJ} alt="INFJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={INFP} alt="INFP" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ENFJ} alt="ENFJ" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src={ENFP} alt="ENFP" />
+          </SwiperSlide>
+>>>>>>> master
           <SwiperSlide>
             <img src={ISTJ} alt="ISTJ" />
             <p className={styles.MbitExplain}>책임감이 강하며, 현실적입니다.</p>
@@ -172,12 +201,22 @@ const handleSubmit = async(e)=>{
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control name="password" type="password" placeholder="Password" />
-                <p className={styles.alert}>{pwdAlert}</p>
+              <Form.Control
+                name="password"
+                type="password"
+                placeholder="Password"
+              />
+              <p className={styles.alert}>{pwdAlert}</p>
               <Form.Text className="text-muted">
-                <Link to="#" className={styles.link} >아이디찾기 </Link>
-                <Link to="#" className={styles.link}>비밀번호찾기 </Link>
-                <Link to="/join" className={styles.link}>회원가입</Link>
+                <Link to="#" className={styles.link}>
+                  아이디찾기{" "}
+                </Link>
+                <Link to="#" className={styles.link}>
+                  비밀번호찾기{" "}
+                </Link>
+                <Link to="/join" className={styles.link}>
+                  회원가입
+                </Link>
               </Form.Text>
             </Form.Group>
             <Button variant="primary" type="submit">

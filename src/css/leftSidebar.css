@@ -16,12 +16,12 @@
   padding: 20px;
 }
 
-.sidebar a {
+.sidebar .link {
   padding: 10px 0;
   text-decoration: none;
   color: white;
 }
 
-.sidebar a:hover {
+.sidebar link:hover {
   color: grey;
 }

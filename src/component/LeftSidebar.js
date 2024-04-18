@@ -1,19 +1,26 @@
 import React from "react";
 import "../css/leftSidebar.css";
 import { Link } from "react-router-dom";
-import ListDropdown from "./ListDropdown";
+import EListDropdown from "./EListDropdown";
+import IListDropdown from "./IListDropdown";
+import { useAuthContext } from "../context/AuthContext";
 
 // 아직 모양만 구현한 상태
 const LeftSidebar = () => {
+  const {memoUserInfo} = useAuthContext();
+  const {isLoggedIn, userInfo} = memoUserInfo;
+
   return (
     <>
       <div className="sidebar">
-        <Link to="/list">홈</Link>
-        <Link><ListDropdown/></Link>
-        <Link to="/friends">친구</Link>
-        <Link to="/chatlist">메세지</Link>
-        <Link to="/profile">프로필</Link>
-        <Link to="/setting">설정</Link>
+        <Link className='link' to="/post/list">홈</Link>
+        <Link className='link' to="/post/list">전체 게시판</Link>
+        <Link className='link'><EListDropdown/></Link>
+        <Link className='link'><IListDropdown/></Link>
+        <Link className='link' to={isLoggedIn ? '/freind' : '/'}>{isLoggedIn ? '친구' : '친구(로그인필요)'}</Link>
+        <Link className='link' to={isLoggedIn ? '/message' : '/'}>{isLoggedIn ? '메세지' : '메세지(로그인필요)'}</Link>
+        <Link className='link' to={isLoggedIn ? '/profile' : '/'}>{isLoggedIn ? '프로필' : '프로필(로그인필요)'}</Link>
+        <Link className='link' to="/setting">설정</Link>
       </div>
     </>
   );
