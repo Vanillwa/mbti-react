@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/list" element={<PostList />} />
+          <Route path="/post/list" element={<PostList />} />
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
