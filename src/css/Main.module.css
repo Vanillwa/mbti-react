@@ -2,16 +2,15 @@
 background-color: beige;}
 
 
-.link {
-    text-decoration: none; 
-    color:grey;
-  }
 
 .topcontainer{
-    margin-top:20px;
-    margin-bottom:100px;
+    margin-top:10px;
+    margin-bottom:50px;
     text-align: center;
     
+}
+.topcontainer img{
+    width:300px;
 }
 
 
@@ -40,7 +39,13 @@ width:100%;
     
     
 }
-
+.link {
+    text-decoration: none; 
+    color:grey;
+  }
+  .link:hover{
+    color:black;
+  }
 
 
 .alert{color:red;}

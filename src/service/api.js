@@ -48,3 +48,13 @@ export const getPostList = async (mbti) => {
   const res = await axios.get(`/post/list?mbti=${mbti}`);
   return res.data;
 };
+
+export const requestCodeFindPwd = async (email)=>{
+  const res = await axios.post("/findPassword/requestEmailVerification",{email})
+  return res.data;
+}
+
+export const checkCodeFindPwd = async(verifyNumber)=>{
+  const res= await axios.post("/findPassword/checkEmailVerification",{verifyNumber})
+  return res.data;
+}
