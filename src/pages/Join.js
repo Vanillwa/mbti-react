@@ -4,41 +4,177 @@ import logo from '../images/logo.avif';
 import { Link } from "react-router-dom";
 import img from "../images/MBTI.png";
 import '../css/Join.css'
-import { checkDuplicationEmail } from '../service/api';
-
+import { checkDuplicationEmail, emailChanged } from '../service/api';
+import { checkDuplicationNickname } from '../service/api';
+import {checkEmailVerification}  from '../service/api'
+import { requestEmailVerification } from '../service/api';
 
 
 
 function Join() {
 
+// checkCertification
 
-  const [emailValidation, setEmailValidation] = useState(null);
-  const [email, setEmail] = useState()
-  const [emailAlert, setEmailAlert] = useState()
+
+// 이메일 인증
+const [certificationNumber, setCertificationNumber] = useState('');
+const [certificationValidation, setCertificationValidation] = useState(null);
+const [certificationAlert, setCertificationAlert] = useState('');
+
+
+
+// 이메일 발송번호 누를 시 input상태 disabled 해제 
+const [certificationDisabled, setcertificationDisabled] = useState(true)
+const [certificationInputDisabled,setCertificationInputDisabled] = useState(true)
+
+
+
+
+const handleCertificationNumberInput = async(e) => {
+  const input = e.target.value;
+  if (input.length === 6) {
+    const result = await checkEmailVerification(input)
+    if(result==="success"){
+      setCertificationAlert("인증번호가 확인되었습니다.");
+      setCertificationValidation('valid');
+    }
+    console.log(result)
+    
+  }
+};
+
+
+
+
+// 체크박스 밑에 발송 이랑 검사 버튼
+const handlecheckEmailVerification = async () => {
+  try {
+    const data = await checkEmailVerification({ certificationNumber });
+    // 여기서 certificationNumber 상태의 길이를 직접 확인합니다.
+    if (certificationNumber.length === 6) {
+      console.log("success")
+      setCertificationAlert("인증번호가 확인되었습니다.");
+      setCertificationValidation('valid');
+    } else {
+      setCertificationAlert("인증번호가 유효하지 않습니다.");
+      setCertificationValidation('invalid');
+    }
+  } catch (error) {
+    console.error('인증번호 확인 중 오류 발생:', error);
+    setCertificationAlert("인증번호 확인 중 오류가 발생했습니다.");
+    setCertificationValidation('invalid');
+  }
+};
+
+
+
   const navigate = (path) => {
     window.location.href = path;
   };
 
-  const handleEmailOninput = (e) => {
-    setEmail(e.target.value)
-  }
 
 
-  
+
+
+
+  // 이메일 중첩 확인
+  const [emailValidation, setEmailValidation] = useState(null);
+  const [email, setEmail] = useState()
+  const [emailAlert, setEmailAlert] = useState()
+
+
+  // const handleEmailOninput = (e) => {
+  //   setEmail(e.target.value)
+  // }
 
   const handleCheckDuplicationEmail = async () => {
     console.log("check");
+    if (!email || email.length < 1 || email.length > 30) {
+      setEmailAlert("최소 1~30글자 이상 넣어주세요.");
+      return;
+    }
     const data = await checkDuplicationEmail({ email });
-    if (data === "success") {
+    if (data.message === "success") {
       setEmailAlert("사용 가능.");
       setEmailValidation('valid'); // 이메일이 사용가능
+      setcertificationDisabled(false); //초기값 false
      
-    } else if (data === "duplicated") {
+    } else if (data.message === "duplicated") {
       setEmailAlert("이미 사용중.");
       setEmailValidation('invalid'); // 이메일이 중복
-      
     }
   };
+
+  // 이메일 발송 기능
+
+  const handleEmailOnInput = (e) => {
+    // 값 변경 시 onch
+    setEmail(e.target.value);
+
+  };
+
+
+  const [sendMessage,setSendMessage] =useState("")
+
+  
+  const handleRequestVerificationCode = async () => {
+    try {
+      const response = await requestEmailVerification(email);
+      if (response.message === 'success') {
+        // 이메일창 말고 콘솔창에서 보낸 코드 봄.
+        console.log(response.code)
+       
+         setSendMessage("인증 번호가 발송되었습니다.")
+         // false값으로 바꿈 이건 인풋상자
+         setCertificationInputDisabled(false)
+
+        // 인증번호를 받을 시 input상자 해제 
+       
+      } else {
+        alert('인증번호 발송에 실패했습니다. 나중에 다시 시도해주세요.');
+      }
+    } catch (error) {
+      console.error('인증번호 요청 중 오류 발생:', error);
+      alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
+    }
+  };
+
+
+  // 닉네임 중첩 확인
+
+  const [nicknameValidation, setNicknameValidation] = useState()
+  const [nickname, setNickname] = useState()
+  const [nicknameAlert, setNicknameAlert] = useState()
+
+  const handleNicknameOnInput =(e) =>{
+    setNickname(e.target.value)
+  }
+
+ const handleCheckDuplicationNickname = async () => {
+    if (!nickname || nickname.length < 1 || nickname.length > 20) {
+      setNicknameAlert("최소 1글자 이상 20글자 이하로 입력해주세요.");
+      return;
+    }
+    const data = await checkDuplicationNickname({ nickname });
+    if (data === "success") {
+
+      setNicknameAlert("사용 가능.");
+      setNicknameValidation('valid'); 
+
+    } else if (data === "duplicated") {
+
+      setNicknameAlert("이미 사용중.");
+      setNicknameValidation('invalid'); 
+    }
+  };
+ 
+  const handleEmailOnChange = async()=>{
+  const result = await emailChanged()
+
+  }
+
+
+
 
   return (
     <div className="container mt-5">
@@ -54,28 +190,42 @@ function Join() {
             </div>
             <div className="row g-3">
 
-
+              {/* email 전송  */}
               <div className="col-12">
                 <label htmlFor="email" className="form-label">이메일</label>
                 <div className='d-flex gap-2'>
-                  {/* <input type="text" className="form-control" name="email" id="email" placeholder="E-mail" onInput={handleEmailOninput} /> */}
-               <input type="text" className="form-control form-control-email" name="email" id="email" placeholder="E-mail" onInput={handleEmailOninput} /> 
+                  <input type="text" className="form-control form-control-email" name="email" id="email" placeholder="E-mail" onInput={handleEmailOnInput} onChange={handleEmailOnChange} /> 
                   <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationEmail}>체크</button>
-                  <p className='emailAlert' style={{color: emailValidation === 'valid' ? "green" : emailValidation === 'invalid' ? "red" : "black"}}>
-                    {emailAlert}
-                  </p>
-                  
                 </div>
-              </div>
-              <div className="hidden" id='certification'>
-                <div className='d-flex gap-2 '>
-                  <input type="text" className="form-control" name="email" id="email" placeholder="인증번호" />
-                  <button type='button' className='col-2 btn btn-sm btn-primary'>체크</button>
-                </div>
-              </div>
+                <p className='emailAlert' style={{color: emailValidation === 'valid' ? "green" : emailValidation === 'invalid' ? "red" : "black"}}>
+                  {emailAlert}
+                </p>
+              
+              </div> 
+                                                
+            <div className={(emailValidation === 'valid') ? "show" : 'hidden'} id='certification'>
+              <div className='d-flex gap-2 '>
+                <input type="text" className="form-control" placeholder="인증번호" onInput={handleCertificationNumberInput} 
+                //  disabled = 함수 적용된 값 
+                disabled = {certificationInputDisabled} />                             
+                    <button type='button' className='btn btn-sm btn-success' onClick={handleRequestVerificationCode} disabled = {certificationDisabled} >인증번호 전송</button>                              
+                  </div>
+                 <p style={{color: certificationValidation === 'valid' ? "green" : "red"}}>
+                 {certificationAlert}
+                 </p>  
+                 {/*  발송버튼 누를 시 락 해제 후  메세지 발생  */}
+                 <p style={{color : "green"}}>{sendMessage}</p>
+            </div>
+              {/*  닉네임 중복 확인 */}
               <div className="col-12">
                 <label htmlFor="nickname" className="form-label">닉네임</label>
-                <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" />
+                <div className='d-flex gap-2'>
+                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} />
+                  <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
+                </div>
+                <p className='nicknameAlert' style={{color: nicknameValidation === 'valid' ? "green" : nicknameValidation === 'invalid' ? "red" : "black"}}>
+                    {nicknameAlert}
+                </p>
               </div>
               <div className="col-12">
                 <label htmlFor="user-pw" className="form-label">비밀번호</label>

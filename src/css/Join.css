@@ -19,11 +19,12 @@
   }
 
   .hidden{
-    display: none;
+    /* display: none; */
 
   }
 
 .alert{
   color: red;
 }
+
 
