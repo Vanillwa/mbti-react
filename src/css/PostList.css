@@ -1,8 +1,71 @@
 h1{
   text-align: center;
 }
-.container{
-  width: 100%;
-  padding: 24px 200px;
-  margin-left: 200px;
+
+.post {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  margin: 20px;
+  padding: 10px;
+  width: 50vw;
+  position: relative;
+  left: 25%;
+  
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  width: 40px;
+  height: auto; 
+  border-radius: 25px;
+  margin-right: 10px;
+}
+
+.nickname, .date {
+  flex-grow: 1;
+}
+.date{
+  display: flex;
+  justify-content: end;
+}
+
+.post-body {
+  display: flex;
+}
+.img-section{
+  
+}
+
+.post-img {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.content {
+  font-size: 16px;
+}
+
+a{
+  text-decoration: none;
+  color: black;
 }

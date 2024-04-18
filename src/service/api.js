@@ -8,10 +8,10 @@ export const fetchLogin = async (body) => {
   return res.data;
 };
 
-export const checkDuplicationEmail = async (body)=>{
-  const res = await axios.post("/checkDuplicationEmail", body)
-  return res.data
-}
+export const checkDuplicationEmail = async (body) => {
+  const res = await axios.post("/checkDuplicationEmail", body);
+  return res.data;
+};
 
 export const fetchJoin = async (body) => {
   const res = await axios.post("/join", body);
@@ -44,7 +44,8 @@ export const getMessage = async (roomId) => {
 };
 
 export const getPostList = async (mbti) => {
-  console.log(mbti);
   const res = await axios.get(`/post/list?mbti=${mbti}`);
   return res.data;
 };
+
+

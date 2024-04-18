@@ -5,6 +5,7 @@ import img from "../images/MBTI.png";
 import logo from '../images/logo.avif'
 import { Outlet } from "react-router";
 import {useAuthContext} from '../context/AuthContext'
+import notImg from '../svg/person-circle.svg'
 
 // 디비에서 값 받아오면 수정할 예정
 // width height 수정 필요
@@ -24,7 +25,10 @@ const Nav = () => {
       <div className="navbar-user">
         <Link to={(isLoggedIn) ? '/profile' : '/'}>
         <span className="user-name">{(isLoggedIn) ? userInfo.nickname : '로그인 해주세요'}</span>
-        <img src={img} alt="회원사진" className="user-image" />
+        {isLoggedIn ? <img src={img} alt="회원사진" className="user-image" /> :
+          <img src={notImg} alt="회원사진" className="user-image" />
+        }
+        
         </Link>
       </div>
     </nav>

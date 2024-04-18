@@ -6,7 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color:beige;
   color: white;
   padding: 10px;
 }
@@ -53,4 +53,7 @@
   height: auto;
   margin-right: 1vw;
   margin-bottom: 5px;
+}
+a{
+  
 }
