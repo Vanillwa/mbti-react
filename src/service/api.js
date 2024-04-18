@@ -9,9 +9,15 @@ export const fetchLogin = async (body) => {
 };
 
 export const checkDuplicationEmail = async (body)=>{
-  const res = await axios.post("/checkDuplicationEmail", body)
+  const res = await axios.post("/join/checkDuplicationEmail", body)
   return res.data
 }
+
+export const checkDuplicationNickname = async (body)=>{
+  const res = await axios.post("/join/checkDuplicationNickname", body)
+  return res.data
+}
+
 
 export const fetchJoin = async (body) => {
   const res = await axios.post("/join", body);
@@ -48,4 +54,25 @@ export const getPostList = async (mbti)=>{
   const res = await axios.get(`/post/list?mbti=${mbti}`);
   return res.data;
   
+}
+
+
+//인증 번호 확인을 위한 api
+export const checkEmailVerification = async (code) => {
+  const res = await axios.post("/join/checkEmailVerification", {code});
+  return res.data;
+};
+
+
+
+// 인증번호 발송을 위한 api
+export const requestEmailVerification = async (email) => {
+  const res = await axios.post("/join/requestEmailVerification", { email });
+  return res.data;
+};
+
+// 회원가입 이메일 값 변경시 세션 삭제 api 
+export const emailChanged = async()=>{
+  const res = await axios.get("/join/emailChanged")
+  return res.data;
 }
