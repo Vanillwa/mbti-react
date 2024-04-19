@@ -27,7 +27,11 @@ console.log(result)
       }
     }
   };
-  const handleFindPwd = async () => {};
+  const ClickFindPwd = async () => {
+
+
+    
+  };
 
   //입력한 이메일값 받아오기
   const handleOnInput = e => {
@@ -105,9 +109,10 @@ console.log(result)
 
                 <div className="col-12">
                   <button
-                    disabled={isButtonDisabled}
+                  onClick={ClickFindPwd}
+                    // disabled={isButtonDisabled}
                     class="col-3 btn btn-sm btn-primary">
-                    비밀번호 찾기
+                   <Link to={"/resetpwd"}>비밀번호 찾기</Link> 
                   </button>
                 </div>
               </div>
