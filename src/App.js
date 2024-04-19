@@ -7,6 +7,9 @@ import PostList from "./pages/PostList";
 import Layout from "./component/layout";
 
 import PostView from "./pages/PostView";
+import Write from "./pages/Write";
+import Profile from "./pages/Profile";
+import FindPwd from "./pages/FindPwd";
 
 
 
