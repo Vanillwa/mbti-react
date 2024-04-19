@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import FindPwd from "./pages/FindPwd";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePwd from "./pages/UpdatePwd";
+import Write from "./pages/Write";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="post">
             <Route path="list" element={<PostList />} />
             <Route path="view" element={<PostView />}/>
+            <Route path="write" element={<Write/>}></Route>
           </Route>
           <Route path="user">
             <Route path=":userId" element={<Profile  />}/>

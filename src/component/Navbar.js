@@ -10,6 +10,11 @@ import SettingDropdown from "./SettingDropdown";
 import logo from "../images/logo.avif";
 import img from "../images/MBTI.png";
 import notImg from "../svg/person-circle.svg";
+import home from '../svg/house.svg'
+import list from '../svg/card-list.svg'
+import freind from '../svg/people-fill.svg'
+import profile from '../svg/person-square.svg'
+import chatting from '../svg/chat-dots.svg'
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -44,13 +49,14 @@ const Navbar = () => {
       {/*왼쪽 사이드바*/}
       <div className={`${styles.item} ${styles.leftSidebar}`}>
         <div className={styles.menuItems}>
-      <Link className={styles.menu} to="/post/list">홈</Link>
-        <Link className={styles.menu} to="/post/list">전체 게시판</Link>
+      <Link className={styles.menu} to="/post/list"><img src={home}/><span>홈</span></Link>
+      <Link className={styles.menu} to='/post/write'><span>글쓰기</span></Link>
+        <Link className={styles.menu} to="/post/list"><img src={list} />전체 게시판</Link>
         <div className={styles.menu}><EListDropdown/></div>
         <div className={styles.menu}><IListDropdown/></div>
-        <Link className={styles.menu} to={isLoggedIn ? '/freind' : '/'}>{isLoggedIn ? '친구' : '친구(로그인필요)'}</Link>
-        <Link className={styles.menu} to={isLoggedIn ? '/message' : '/'}>{isLoggedIn ? '메세지' : '메세지(로그인필요)'}</Link>
-        <Link className={styles.menu} to={isLoggedIn ? '/profile' : '/'}>{isLoggedIn ? '프로필' : '마이페이지(로그인필요)'}</Link>
+        <Link className={styles.menu} to={isLoggedIn ? '/freind' : '/'}><img src={freind}/>친구</Link>
+        <Link className={styles.menu} to={isLoggedIn ? '/message' : '/'}><img src={chatting}/>채팅</Link>
+        <Link className={styles.menu} to={isLoggedIn ? '/profile' : '/'}><img src={profile} />마이페이지</Link>
         </div>
         
         <div className={`${styles.menu} ${styles.setting}`}><SettingDropdown/></div>
