@@ -27,6 +27,7 @@ import ISTP from "../images/Main/ISTP.png";
 import ISFP from "../images/Main/ISFP.png";
 import ESTP from "../images/Main/ESTP.png";
 import ESFP from "../images/Main/ESFP.png";
+import logo from '../images/logo.avif';
 
 import { fetchLogin } from "../service/api";
 import { useNavigate } from "react-router";
@@ -63,7 +64,7 @@ function Main() {
     <>
       <Container className={styles.topcontainer}>
         <Link to="#" className={styles.link}>
-          <h1>Logo</h1>
+          <img src={logo}></img>
         </Link>
       </Container>
 
@@ -75,11 +76,9 @@ function Main() {
           spaceBetween={50}
           slidesPerView={1}
           modules={[Autoplay]}
-
           autoplay={{ delay: 3500, disableOnInteraction: false }}
           loop={true}
         >
-          
           <SwiperSlide>
             <img src={ISTJ} alt="ISTJ" />
             <p className={styles.MbitExplain}>책임감이 강하며, 현실적입니다.</p>
@@ -180,11 +179,9 @@ function Main() {
               />
               <p className={styles.alert}>{pwdAlert}</p>
               <Form.Text className="text-muted">
-                <Link to="#" className={styles.link}>
-                  아이디찾기{" "}
-                </Link>
-                <Link to="#" className={styles.link}>
-                  비밀번호찾기{" "}
+               
+                <Link to="/findpwd" className={styles.link}>
+                  비밀번호찾기
                 </Link>
                 <Link to="/join" className={styles.link}>
                   회원가입
@@ -198,12 +195,9 @@ function Main() {
           </Col>
           </Row>
       </Container>
-   
-
-
 
       <Container className={styles.bottom}>
-        <Button variant="dark">게시판이동</Button>
+        <Button variant="dark" >게시판이동</Button>
       </Container>
     </>
   );

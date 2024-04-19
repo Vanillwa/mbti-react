@@ -5,17 +5,21 @@
 }
 
 .link {
-  text-decoration: none;
-  color: grey;
+    text-decoration: none; 
+    color:grey;
+  }
+
+.topcontainer{
+    margin-top:20px;
+    margin-bottom:100px;
+    text-align: center;
+    
 }
 
-.topcontainer {
-  margin-top: 20px;
-  margin-bottom: 100px;
-  text-align: center;
-}
 
-.mainCon {
+.mainCon{
+
+
 }
 
 .swiper {
@@ -31,14 +35,16 @@
   font-weight: bold;
 }
 
-.loginform {
-  padding-top: 30%;
-  width: 120%;
+.loginform{
+    padding-top:30%;
+    width:120%;
+    
+    
 }
 
-.alert {
-  color: red;
-}
+
+
+.alert{color:red;}
 
 .bottom {
   display: flex;
