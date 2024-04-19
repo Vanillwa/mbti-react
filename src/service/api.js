@@ -89,7 +89,6 @@ export const emailChanged = async()=>{
 }
 
 
-
 export const requestCodeFindPwd = async (email)=>{
   const res = await axios.post("/findPassword/requestEmailVerification",{email})
   return res.data;
@@ -99,3 +98,5 @@ export const checkCodeFindPwd = async(verifyNumber)=>{
   const res= await axios.post("/findPassword/checkEmailVerification",{verifyNumber})
   return res.data;
 }
+
+

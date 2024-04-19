@@ -157,11 +157,11 @@ const handlecheckEmailVerification = async () => {
       return;
     }
     const data = await checkDuplicationNickname({ nickname });
+    console.log(data.message)
     if (data === "success") {
 
       setNicknameAlert("사용 가능.");
-      setNicknameValidation('valid'); 
-
+      setNicknameValidation('valid');   
     } else if (data === "duplicated") {
 
       setNicknameAlert("이미 사용중.");
@@ -264,6 +264,7 @@ const handleSubmit =async(e)=>{
                 <textarea className="form-control" style={{ resize: 'none' }} rows="3" readOnly>국립통일교육원은 국립통일교육원 홈페이지 회원가입과 관련하여 개인정보보호법 제15조(개인정보의 수집·이용), 제17조(개인정보의 제공), 제22조(동의를 받는 방법)에 따라 참가자의 동의를 받고 있습니다. 귀하의 개인정보는 수집 목적 외 다른 목적으로는 이용하지 않으며, 귀하의 개인정보에 대한 열람, 정정·삭제, 처리정지, 이의제기 하고자 할 때에는 개인정보보호책임자를 통해 요구할 수 있으며, 개인정보침해 시 개인정보처리방침에 명시된 권익침해 구제방법을 통해 구제받을 수 있습니다.</textarea>
               </div>
               <div className="col-12 d-flex justify-content-center">
+             
                 <button type="submit" className="btn btn-primary me-2" >가입하기</button>
                 <button type="button" className="btn btn-secondary" onClick={() => navigate('/')}>취소</button>
                 <Link to="/" className="text-decoration-none ms-2">이미 계정이 있으신가요? 로그인</Link>

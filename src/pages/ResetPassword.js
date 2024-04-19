@@ -16,12 +16,13 @@ function ResetPassword() {
     navigate("/findpwd");
   };
 
-  const handleInputPassword = e => {
+
+  const handleInputPassword = (e) => {
     const input = e.target.value;
     setPassword(input);
   };
 
-  const handleCheckInputPassword = e => {
+  const handleCheckInputPassword = (e) => {
     const input = e.target.value;
     setCheckpassword(input);
   };
@@ -105,6 +106,7 @@ function ResetPassword() {
                     disabled={isSame}
                     onClick={UpdatePwd}
                     class="col-3 btn btn-sm btn-primary">
+
                     재설정하기
                   </button>
                   <button
