@@ -10,9 +10,10 @@
   .card-body {
     padding: 20px; 
   }
-  .hidden{
-   
+ 
 
+  .cancelbtn{
+    margin-left:10px;
   }
 .alert{
   margin-top:10px;

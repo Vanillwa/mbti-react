@@ -17,6 +17,9 @@ const navigate = useNavigate();
   const isInputPwd = (email)=>{
   navigate("/resetpwd",{email})
   }
+  const goMain =()=>{
+    navigate("/")
+  }
   const handleFindPwd = async () => {};
 
   //입력한 이메일값 받아오기
@@ -111,9 +114,12 @@ const navigate = useNavigate();
                   <button
                  onClick={isInputPwd}
                     disabled={isButtonDisabled}
-                    class="col-3 btn btn-sm btn-primary">
+                    class={`col-3 btn btn-sm btn-primary ${styles.findbtn}`}>
                     비밀번호 찾기
-                  </button>
+                  </button>  
+                  <button
+                  onClick={goMain}
+                  class={`col-3 btn btn-sm btn-primary ${styles.mainbtn}`}>메인으로</button>
                 </div>
               </div>
             </form>

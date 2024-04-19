@@ -76,11 +76,11 @@ function Main() {
         
         navigation={true}
           className={styles.swiper}
-          spaceBetween={50}
-          slidesPerView={1}
-          modules={[Autoplay,Pagination, Navigation]}
-          autoplay={{ delay: 3500, disableOnInteraction: false }}
-          loop={true}
+          spaceBetween={50}//간격
+          slidesPerView={1}//한번에 보여질 갯수
+          modules={[Autoplay, Navigation]}
+          autoplay={{ delay: 2500 }}//자동슬라이드
+          loop={true}//무한반복 
         >
           <SwiperSlide>
             <img src={ISTJ} alt="ISTJ" />

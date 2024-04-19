@@ -11,49 +11,50 @@ function ResetPassword() {
   const [checkPassword, setCheckpassword] = useState("");
   const [checkCodeAlert, setCheckCodeAlert] = useState();
   const [isSame, setIsSame] = useState(true);
-  
+
+  const cancelBtn = () => {
+    navigate("/findpwd");
+  };
 
   const handleInputPassword = e => {
     const input = e.target.value;
     setPassword(input);
-   
   };
 
   const handleCheckInputPassword = e => {
     const input = e.target.value;
     setCheckpassword(input);
-    
   };
   const ComparePassword = () => {
     if (password === "") {
-        setCheckCodeAlert("")
-        setIsSame(true); 
+      setCheckCodeAlert("");
+      setIsSame(true);
       return;
     }
     if (checkPassword === "") {
-        setCheckCodeAlert("")
-        setIsSame(true);
+      setCheckCodeAlert("");
+      setIsSame(true);
       return;
     }
 
     if (password === checkPassword) {
-        setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치합니다.")
+      setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치합니다.");
       setIsSame(false);
     } else {
-        setIsSame(true);
+      setIsSame(true);
       setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
     }
   };
-useEffect(()=>{
-    ComparePassword()
-},[password,checkPassword])
+  useEffect(() => {
+    ComparePassword();
+  }, [password, checkPassword]);
 
-//비밀번호 재설정클릭시
-const navigate = useNavigate();
-  const UpdatePwd=()=>{
-    navigate("/updatepwd")
-  }
-  
+  //비밀번호 재설정클릭시
+  const navigate = useNavigate();
+  const UpdatePwd = () => {
+    navigate("/updatepwd");
+  };
+
   return (
     <>
       <div className="container mt-5">
@@ -62,7 +63,6 @@ const navigate = useNavigate();
         </Link>
         <div className={styles.card}>
           <div className="card-body">
-
             <form>
               <div className="text-center mb-5">
                 <img src={img} alt="회원사진" className="user-image" />
@@ -101,12 +101,16 @@ const navigate = useNavigate();
                 </div>
                 <p className={styles.alert}> {checkCodeAlert}</p>
                 <div className="col-12">
-                    
                   <button
-                    disabled={isSame} 
+                    disabled={isSame}
                     onClick={UpdatePwd}
-                class="col-3 btn btn-sm btn-primary">
+                    class="col-3 btn btn-sm btn-primary">
                     재설정하기
+                  </button>
+                  <button
+                    onClick={cancelBtn}
+                    class={`col-3 btn btn-sm btn-primary ${styles.cancelbtn}`}>
+                    취소
                   </button>
                 </div>
               </div>
