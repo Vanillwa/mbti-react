@@ -1,14 +1,15 @@
 import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper";
-import "swiper/css";
 
+import { Autoplay ,Pagination,Navigation} from "swiper";
+import "swiper/css";
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import styles from "../css/Main.module.css";
 
 import INTJ from "../images/Main/INTJ.png";
@@ -61,10 +62,10 @@ function Main() {
   };
 
   return (
-    <>
+    <div className={styles.body}>
       <Container className={styles.topcontainer}>
-        <Link to="#" className={styles.link}>
-          <img src={logo}></img>
+        <Link to="/" className={styles.link}>
+          <img className={styles.logo} src={logo}></img>
         </Link>
       </Container>
 
@@ -72,10 +73,12 @@ function Main() {
        <Row>
         <Col md={7}>
         <Swiper
+        
+        navigation={true}
           className={styles.swiper}
           spaceBetween={50}
           slidesPerView={1}
-          modules={[Autoplay]}
+          modules={[Autoplay,Pagination, Navigation]}
           autoplay={{ delay: 3500, disableOnInteraction: false }}
           loop={true}
         >
@@ -165,14 +168,16 @@ function Main() {
 
         <Col md={5}>
           <Form className={`Login-form ${styles.loginform}`} onSubmit={handleSubmit}>
+            <h2 className={styles.loginlogo}>Login</h2>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>아이디</Form.Label>
-              <Form.Control name="email" type="email" placeholder="Email" />
+              <Form.Control  name="email" type="email" placeholder="Email" />
               <p className={styles.alert}>{emailAlert}</p>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+              
                 name="password"
                 type="password"
                 placeholder="Password"
@@ -199,7 +204,7 @@ function Main() {
       <Container className={styles.bottom}>
         <Button variant="dark" >게시판이동</Button>
       </Container>
-    </>
+    </div>
   );
 }
 

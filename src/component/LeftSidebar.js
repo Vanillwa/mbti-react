@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
 import { useAuthContext } from "../context/AuthContext";
+import SettingDropdown from "./SettingDropdown";
 
 // 아직 모양만 구현한 상태
 const LeftSidebar = () => {
@@ -20,7 +21,7 @@ const LeftSidebar = () => {
         <Link className='link' to={isLoggedIn ? '/freind' : '/'}>{isLoggedIn ? '친구' : '친구(로그인필요)'}</Link>
         <Link className='link' to={isLoggedIn ? '/message' : '/'}>{isLoggedIn ? '메세지' : '메세지(로그인필요)'}</Link>
         <Link className='link' to={isLoggedIn ? '/profile' : '/'}>{isLoggedIn ? '프로필' : '마이페이지(로그인필요)'}</Link>
-        <Link className='link' to="/setting">설정</Link>
+        <div className='link'><SettingDropdown/></div>
       </div>
     </>
   );

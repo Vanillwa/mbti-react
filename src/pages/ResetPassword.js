@@ -3,7 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../images/logo.avif";
 import { Link } from "react-router-dom";
 import img from "../images/MBTI.png";
-import styles from "../css/FindPwd.module.css";
+import styles from "../css/ResetPwd.module.css";
+import { useNavigate } from "react-router";
 
 function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -46,6 +47,13 @@ function ResetPassword() {
 useEffect(()=>{
     ComparePassword()
 },[password,checkPassword])
+
+//비밀번호 재설정클릭시
+const navigate = useNavigate();
+  const UpdatePwd=()=>{
+    navigate("/updatepwd")
+  }
+  
   return (
     <>
       <div className="container mt-5">
@@ -91,11 +99,12 @@ useEffect(()=>{
                     />
                   </div>
                 </div>
-                <p> {checkCodeAlert}</p>
+                <p className={styles.alert}> {checkCodeAlert}</p>
                 <div className="col-12">
                     
                   <button
-                    disabled={isSame}   
+                    disabled={isSame} 
+                    onClick={UpdatePwd}
                 class="col-3 btn btn-sm btn-primary">
                     재설정하기
                   </button>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../images/logo.avif";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import img from "../images/MBTI.png";
 import styles from "../css/FindPwd.module.css";
 import { checkCodeFindPwd, requestCodeFindPwd } from "../service/api";
@@ -12,7 +13,11 @@ function FindPwd() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [checkCodeAlert, setCheckCodeAlert] = useState();
 
-  const handleFindPwd = async () => { };
+const navigate = useNavigate();
+  const isInputPwd = (email)=>{
+  navigate("/resetpwd",{email})
+  }
+  const handleFindPwd = async () => {};
 
   //입력한 이메일값 받아오기
   const handleOnInput = e => {
@@ -84,7 +89,7 @@ function FindPwd() {
                     onInput={handleOnInput}
                   />
 
-                  <button type="button" onClick={handleRequestCode}>
+                  <button className={styles.requestBtn} type="button" onClick={handleRequestCode}>
                     인증
                   </button>
                 </div>
@@ -104,8 +109,9 @@ function FindPwd() {
 
                 <div className="col-12">
                   <button
+                 onClick={isInputPwd}
                     disabled={isButtonDisabled}
-                    className="col-3 btn btn-sm btn-primary">
+                    class="col-3 btn btn-sm btn-primary">
                     비밀번호 찾기
                   </button>
                 </div>
