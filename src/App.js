@@ -8,6 +8,7 @@ import Layout from "./component/layout";
 import FindPwd from "./pages/FindPwd";
 import Profile from "./pages/Profile";
 import PostView from "./pages/PostView";
+import MemberRevise from "./pages/MemberRevise";
 
 
 
@@ -25,7 +26,8 @@ function App() {
           </Route>
         </Route>
         <Route path="/" element={<Main />} />
-        <Route path="/join" element={<Join />} />
+        <Route path="/MemberRevise" element={<MemberRevise />} /> 
+        <Route path="/join" element={<Join />} /> 
         <Route path="/findpwd" element={<FindPwd />}/>
       </Routes>
     </div>
