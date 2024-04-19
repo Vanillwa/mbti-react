@@ -5,9 +5,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper";
-import "swiper/css";
 
+import { Autoplay ,Pagination,Navigation} from "swiper";
+import "swiper/css";
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import styles from "../css/Main.module.css";
 
 import INTJ from "../images/Main/INTJ.png";
@@ -71,10 +73,12 @@ function Main() {
        <Row>
         <Col md={7}>
         <Swiper
+        
+        navigation={true}
           className={styles.swiper}
           spaceBetween={50}
           slidesPerView={1}
-          modules={[Autoplay]}
+          modules={[Autoplay,Pagination, Navigation]}
           autoplay={{ delay: 3500, disableOnInteraction: false }}
           loop={true}
         >
