@@ -19,9 +19,9 @@ const PostList = () => {
   );
 
   return (
-    <>
+    <div className="postBox">
       <PostItems data={data} status={status} />
-    </>
+    </div>
   );
 };
 

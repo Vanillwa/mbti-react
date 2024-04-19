@@ -1,13 +1,12 @@
 import React from 'react';
-import  Nav  from './Nav';
-import LeftSidebar from './LeftSidebar';
 import '../css/style.css'
+import  Navbar  from './Navbar';
+import styles from '../css/Nav.module.css'
 
 const Layout = () => {
   return (
-    <div className='grid-container'>
-      <Nav/>
-      <LeftSidebar/>
+    <div className={styles.container}>
+      <Navbar/>
     </div>
   );
 };
