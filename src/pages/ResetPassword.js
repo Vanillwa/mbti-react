@@ -99,7 +99,7 @@ const navigate = useNavigate();
                     />
                   </div>
                 </div>
-                <p> {checkCodeAlert}</p>
+                <p className={styles.alert}> {checkCodeAlert}</p>
                 <div className="col-12">
                     
                   <button

@@ -62,7 +62,7 @@ function Main() {
   };
 
   return (
-    <>
+    <div className={styles.body}>
       <Container className={styles.topcontainer}>
         <Link to="/" className={styles.link}>
           <img className={styles.logo} src={logo}></img>
@@ -168,14 +168,16 @@ function Main() {
 
         <Col md={5}>
           <Form className={`Login-form ${styles.loginform}`} onSubmit={handleSubmit}>
+            <h2 className={styles.loginlogo}>Login</h2>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>아이디</Form.Label>
-              <Form.Control name="email" type="email" placeholder="Email" />
+              <Form.Control  name="email" type="email" placeholder="Email" />
               <p className={styles.alert}>{emailAlert}</p>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+              
                 name="password"
                 type="password"
                 placeholder="Password"
@@ -202,7 +204,7 @@ function Main() {
       <Container className={styles.bottom}>
         <Button variant="dark" >게시판이동</Button>
       </Container>
-    </>
+    </div>
   );
 }
 
