@@ -12,26 +12,8 @@ function FindPwd() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [checkCodeAlert, setCheckCodeAlert] = useState();
 
-  //인증번호
-  const handleOnRequest = async (e) => {
-    const input = e.target.value;
-   
-    if (input.length == 6) {
-      const result = await checkCodeFindPwd(input);
-console.log(result)
-      if (result.message ==="success") {
-        setIsButtonDisabled(false);
-      } else {
-        setCheckCodeAlert("인증번호가 올바르지 않습니다.");
-        
-      }
-    }
-  };
-  const ClickFindPwd = async () => {
 
-
-    
-  };
+  const handleFindPwd = async () => {};
 
   //입력한 이메일값 받아오기
   const handleOnInput = e => {
@@ -54,6 +36,22 @@ console.log(result)
       alert("가입된 이메일이 아닙니다.");
     } else {
       alert("인증번호 발송이 실패했습니다.");
+    }
+  };
+  
+  //인증번호
+  const handleOnRequest = async (e) => {
+    const input = e.target.value;
+
+    if (input.length == 6) {
+      const result = await checkCodeFindPwd(input);
+      console.log(result)
+      if (result.message === "success") {
+        setIsButtonDisabled(false);
+      } else {
+        setCheckCodeAlert("인증번호가 올바르지 않습니다.");
+
+      }
     }
   };
   return (
@@ -94,9 +92,7 @@ console.log(result)
                 <label className="form-label">인증번호</label>
                 <div id="certification">
                   <div className="d-flex gap-2 ">
-                    <input
-                      disabled={isInputDisabled}
-                      type="text"
+                    <input disabled={isInputDisabled} type="text"
                       className="form-control"
                       name="requestNum"
                       id="requestNum"
@@ -109,10 +105,9 @@ console.log(result)
 
                 <div className="col-12">
                   <button
-                  onClick={ClickFindPwd}
-                    // disabled={isButtonDisabled}
+                    disabled={isButtonDisabled}
                     class="col-3 btn btn-sm btn-primary">
-                   <Link to={"/resetpwd"}>비밀번호 찾기</Link> 
+                    비밀번호 찾기
                   </button>
                 </div>
               </div>
