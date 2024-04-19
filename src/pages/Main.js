@@ -62,8 +62,8 @@ function Main() {
   return (
     <>
       <Container className={styles.topcontainer}>
-        <Link to="#" className={styles.link}>
-          <img src={logo}></img>
+        <Link to="/" className={styles.link}>
+          <img className={styles.logo} src={logo}></img>
         </Link>
       </Container>
 

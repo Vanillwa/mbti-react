@@ -3,12 +3,18 @@
   margin: 0;
   box-sizing: border-box;
 }
+.logo{
+  width:300px;
+}
+
 
 .link {
     text-decoration: none; 
     color:grey;
   }
-
+  .link:hover{
+    color:black;
+  }
 .topcontainer{
     margin-top:20px;
     margin-bottom:100px;
