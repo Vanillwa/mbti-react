@@ -39,7 +39,7 @@ const PostItems = ({ data, status }) => {
                 <div className="title">{item.title}</div>
                 <div className="content">{item.content}</div>
               </Link>
-              <div>{item.readhit} {item.comment}</div>
+              <div>{item.likes} {item.comment} {item.readhit}</div>
             </div>
           </div>
         );

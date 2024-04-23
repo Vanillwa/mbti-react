@@ -35,6 +35,9 @@
   font-size:12px;
   color:red;
 }
+.applyCode{
+  color:blue;
+}
   
   @media (max-width: 768px) {
     .card {

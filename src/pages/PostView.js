@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { getPostView } from "../service/api";
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
-
+import notImg from '../svg/person-circle.svg'
 function PostView() {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -34,6 +34,11 @@ function PostView() {
       </div>
     );
   }
+  let img = userInfo.profileImage;
+  if(img == null ){
+    img = notImg
+  }
+
   const createdAt = new Date(data.createdAt);
   const now = new Date();
   const differenceInMilliseconds = now - createdAt;
@@ -55,7 +60,11 @@ function PostView() {
     <div className={styles.container}>
       <div className={styles.mbti}>{data.category} 게시판</div>
       <div className={styles.header}>
-        <div className={styles.nickname}>{data.User.nickname}</div>
+        
+        <div className={styles.nickname}>
+          <img className={styles.userImg} src={data.User.profileImage ? data.User.profileImg : notImg}/>
+          {data.User.nickname}
+          </div>
         <div className={styles.date}>{dateDisplay}</div>
       </div>
       <div className={styles.main}>
@@ -64,9 +73,9 @@ function PostView() {
         <div className={styles.content}>{data.content}</div>
       </div>
       <form className={styles.commentForm}>
-        
-        <label id="comment">{userInfo.nickname}</label>
-        <input id="comment" className={styles.commentInput} />
+        <img className={styles.myImg} src={img}></img>
+        <span className={styles.label}>{userInfo.nickname} :</span>
+        <input className={styles.commentInput} />
         <div type="button">작성</div>
       </form>
       <div className={styles.comment}>

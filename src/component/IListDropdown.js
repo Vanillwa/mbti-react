@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../css/listDropdown.css";
-
+import styles from '../css/listDropdown.module.css'
+import mbtiI from '../images/mbtiI.png'
 
 function IListDropdown() {
   const [dropdown, setDropdown] = useState(false);
   const toggleDropdown = () => setDropdown(!dropdown);
   const closeDropdown = ()=>setDropdown(false)
   return (
-    <div className="list-menu">
-      <div className="dropbtn link" onClick={toggleDropdown}>
-        나는 I야!
+    <div className={styles.listMenu}>
+      <div className={`${styles.dropBtn} ${styles.link}`} onClick={toggleDropdown}>
+      <img className={styles.imgI} src={mbtiI}/><span className={styles.span}>나는 I야!</span>
       </div>
-      <div className={`dropdown-content ${dropdown ? "show" : ""}`}>
+      <div className={`${styles.dropdownContent} ${dropdown ? styles.show : ""}`}>
         
         <Link to="/post/list?mbti=ISTJ" onClick={closeDropdown}>ISTJ</Link>
         <Link to="/post/list?mbti=ISTP" onClick={closeDropdown}>ISTP</Link>

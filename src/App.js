@@ -12,8 +12,8 @@ import PostView from "./pages/PostView";
 import Write from "./pages/Write";
 import Profile from "./pages/Profile";
 import FindPwd from "./pages/FindPwd";
-import ResetPassword from "./pages/ResetPassword";
-import UpdatePwd from "./pages/UpdatePwd";
+import UpdatePassword from "./pages/UpdatePassword"
+
 
 
 
@@ -33,11 +33,10 @@ function App() {
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
-
         <Route path="/MemberRevise" element={<MemberRevise />} />
-
+        <Route path="/updatepwd" element={<UpdatePassword/>}/>
         <Route path="/findpwd" element={<FindPwd />}/>
-        <Route path="/updatepwd" element={<UpdatePwd/>}/>
+       
       </Routes>
     </div>
   );

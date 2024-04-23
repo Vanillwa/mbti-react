@@ -1,39 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../images/logo.avif";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import img from "../images/MBTI.png";
 import styles from "../css/FindPwd.module.css";
-import { checkCodeFindPwd, requestCodeFindPwd } from "../service/api";
+import { checkCodeFindPwd, emailChangedFindPwd, requestCodeFindPwd } from "../service/api";
 
 function FindPwd() {
-  const [email, setEmail] = useState("");
+ 
+   const emailRef = useRef();
+   const [email ,setEmail] = useState();
   const [isInputDisabled, setIsInputDisabled] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [checkCodeAlert, setCheckCodeAlert] = useState();
-
-const navigate = useNavigate();
-  const isInputPwd = (email)=>{
-  navigate("/resetpwd",{email})
-  }
-  const goMain =()=>{
-    navigate("/")
-  }
+  const [code, setCode] = useState();
+  const navigate = useNavigate();
+  const isInputPwd = email => {
+    navigate("/updatepwd", { email: email });
+  };
+  const goMain = () => {
+    navigate("/");
+  };
   const handleFindPwd = async () => {};
 
   //입력한 이메일값 받아오기
-  const handleOnInput = e => {
-    const input = e.target.value;
-    console.log(input);
-    setEmail(input);
+  const handleEmailOnInput = e => {
+    
+  };
+
+  const handleEmailOnBlur =async e => {
+   
+    if(email == emailRef.current.value){
+      setEmail()
+      return
+    }else{
+      setEmail(e.target.value)
+      setIsButtonDisabled(true);
+      setCheckCodeAlert('')
+      setCode("");
+  
+       const result = await emailChangedFindPwd();
+    }
+   
+    
+    // console.log(result.message)
   };
 
   //이메일 인증
   const handleRequestCode = async () => {
+    const email = emailRef.current.value;
     if (email === "") return;
     const result = await requestCodeFindPwd(email);
-    console.log(result.message);
+    //console.log(result.message);
 
     if (result.message === "success") {
       alert("인증번호가 발송되었습니다.");
@@ -45,22 +64,30 @@ const navigate = useNavigate();
       alert("인증번호 발송이 실패했습니다.");
     }
   };
-  
-  //인증번호
-  const handleOnRequest = async (e) => {
-    const input = e.target.value;
 
-    if (input.length == 6) {
-      const result = await checkCodeFindPwd(input);
-      console.log(result)
+  //인증번호
+  const handleCodeOnInput = async e => {
+   let inputCode = e.target.value
+    setCode(inputCode);
+    setCheckCodeAlert('')
+    if (inputCode.length == 6) {
+      const result = await checkCodeFindPwd(inputCode);
+      console.log(result);
+
       if (result.message === "success") {
         setIsButtonDisabled(false);
+        setCheckCodeAlert("인증번호가 일치합니다.");
+        
       } else {
         setCheckCodeAlert("인증번호가 올바르지 않습니다.");
-
       }
     }
+    if (inputCode.length < 6) {
+      setIsButtonDisabled(true);
+    }
   };
+  
+
   return (
     <>
       <div className="container mt-5">
@@ -84,42 +111,53 @@ const navigate = useNavigate();
 
                 <div className="d-flex gap-1">
                   <input
+                  ref={emailRef}
                     type="text"
                     className="form-control"
                     name="email"
                     id="email"
                     placeholder="E-mail"
-                    onInput={handleOnInput}
+                    onInput={handleEmailOnInput}
+                    onBlur={handleEmailOnBlur}
                   />
 
-                  <button className={styles.requestBtn} type="button" onClick={handleRequestCode}>
+                  <button
+                    className={styles.requestBtn}
+                    type="button"
+                    onClick={handleRequestCode}>
                     인증
                   </button>
                 </div>
                 <label className="form-label">인증번호</label>
                 <div id="certification">
                   <div className="d-flex gap-2 ">
-                    <input disabled={isInputDisabled} type="text"
+                    <input
+                      disabled={isInputDisabled}
+                      type="text"
                       className="form-control"
                       name="requestNum"
                       id="requestNum"
                       placeholder="인증번호"
-                      onInput={handleOnRequest}
+                      onInput={handleCodeOnInput}
+                      maxLength={6}
+                      value={code}
                     />
                   </div>
-                  <p className={styles.alert}>{checkCodeAlert}</p>
+                  <p id="codeAlertTag" className={styles.alert}>{checkCodeAlert}</p>
                 </div>
 
                 <div className="col-12">
                   <button
-                 onClick={isInputPwd}
+                    onClick={isInputPwd}
                     disabled={isButtonDisabled}
                     class={`col-3 btn btn-sm btn-primary ${styles.findbtn}`}>
                     비밀번호 찾기
-                  </button>  
+                  </button>
                   <button
-                  onClick={goMain}
-                  class={`col-3 btn btn-sm btn-primary ${styles.mainbtn}`}>메인으로</button>
+                    onClick={goMain}
+                    class={`col-3 btn btn-sm btn-primary ${styles.mainbtn}`}>
+                    메인으로
+                  </button>
                 </div>
               </div>
             </form>
