@@ -30,6 +30,11 @@ const Navbar = () => {
     userInfo.profileImg = notImg;
   }
 
+  const [dropdown, setDropdown] = useState(false);
+  const closeDropdown = ()=>{
+    setDropdown(false)
+  }
+
   return (
     <div className={styles.container}>
       {/* 상단 네브바 */}

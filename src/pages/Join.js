@@ -10,7 +10,6 @@ import { checkEmailVerification } from '../service/api'
 import { requestEmailVerification } from '../service/api';
 
 
-
 function Join() {
   console.log('rendered')
   const navigate = useNavigate()
@@ -81,7 +80,10 @@ function Join() {
       setEmailAlert("사용 가능.");
       setEmailValidation('valid'); // 이메일이 사용가능
       setcertificationDisabled(false); //초기값 false
-     
+<<<<<<<<< Temporary merge branch 1
+=========
+    
+>>>>>>>>> Temporary merge branch 2
     } else if (data.message === "duplicated") {
       setEmailAlert("이미 사용중.");
       setEmailValidation('invalid'); // 이메일이 중복
@@ -113,7 +115,7 @@ function Join() {
 
   // 인증번호 체크
   const handleCertificationNumberInput = async (e) => {
-   
+  
     const input = codeRef.current.value
     if (input.length === 6) {
       const result = await checkEmailVerification(input)
@@ -152,7 +154,6 @@ function Join() {
       setNicknameValidation('invalid');
     }
   };
-
 
 
   // 체크박스 밑에 발송 이랑 검사 버튼
@@ -239,8 +240,8 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="nickname" className="form-label">닉네임</label>
                 <div className='d-flex gap-2'>
-                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} maxLength={10}/>
-                  <button type='button'  className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
+                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} />
+                  <button type='button'  className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}onBlur={handleNickNameOnBlur} >체크</button>
                 </div>
                 <p className='nicknameAlert' style={{ color: nicknameValidation === 'valid' ? "green" : nicknameValidation === 'invalid' ? "red" : "black" }}>
                   {nicknameAlert}
