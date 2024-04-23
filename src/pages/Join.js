@@ -51,6 +51,7 @@ function Join() {
     }
   }
 
+  // 닉네임 입력
   const handleNickNameOnBlur = async (e) => {
     if (nickname === e.target.value) {
       return
@@ -136,14 +137,12 @@ function Join() {
   }
 
   const handleCheckDuplicationNickname = async () => {
-    if (!nickname || nickname.length < 1 || nickname.length > 20) {
-      setNicknameAlert("최소 1글자 이상 20글자 이하로 입력해주세요.");
+    if (!nickname || nickname.length < 1 || nickname.length > 10) {
+      setNicknameAlert("최소 1글자 이상 10글자 이하로 입력해주세요.");
       return;
     }
     const data = await checkDuplicationNickname({ nickname });
-    console.log(data.message)
     if (data.message === "success") {
-
       setNicknameAlert("사용 가능.");
       setNicknameValidation('valid');
     } else if (data.message === "duplicated") {
@@ -239,8 +238,8 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="nickname" className="form-label">닉네임</label>
                 <div className='d-flex gap-2'>
-                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} />
-                  <button type='button'  className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}onBlur={handleNickNameOnBlur} >체크</button>
+                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} maxLength={10}/>
+                  <button type='button'  className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
                 </div>
                 <p className='nicknameAlert' style={{ color: nicknameValidation === 'valid' ? "green" : nicknameValidation === 'invalid' ? "red" : "black" }}>
                   {nicknameAlert}
