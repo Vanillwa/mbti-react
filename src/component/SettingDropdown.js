@@ -25,7 +25,7 @@ const SettingDropdown = () => {
 
   return (
     <div  className={styles.menu}>
-      <div  type='button' onClick={toggleDropdown}>설정</div>
+      <div  type='button' onClick={toggleDropdown}><span>설정</span></div>
       <div className={`dropdown-content ${dropdown ? "show" : ""}`}>
         <div type="button" onClick={clickLogout}>로그아웃</div>
         <div onClick={closeDropdown} type='button'>다크모드</div>

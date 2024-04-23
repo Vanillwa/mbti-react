@@ -43,10 +43,30 @@
 .commentForm{
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 2vw;
+}
+.userImg{
+  width: 3.5vw;
+  height: auto;
+  margin-right: 5px;
+  border-radius: 25px;
+}
+.myImg{
+  width: 2.5vw;
+  height: auto;
+  margin-right: 5px;
 }
 
 .commentInput{
-  width: 70%;
+  width: 30vw;
+  height: 3vh;
   overflow: scroll;
+  margin: 0 10px;
+}
+
+@media screen and (max-width : 768px) {
+  .label{
+    display: none;
+  }
 }
