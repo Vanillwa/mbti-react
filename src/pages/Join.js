@@ -40,6 +40,13 @@ const handleCertificationNumberInput = async(e) => {
     }
     console.log(result)
     
+
+
+
+
+
+
+
   }
 };
 

@@ -71,7 +71,7 @@ const navigate = useNavigate();
           <div className="card-body">
             <form>
               <div className="text-center mb-5">
-                <img src={img} alt="회원사진" className="user-image" />
+                <img src={img} alt="회원사진" className={styles.mbtiImg} />
                 <h2 className="fw-bold" style={{ fontSize: "40px" }}>
                   비밀번호찾기
                 </h2>

@@ -10,7 +10,9 @@
   .card-body {
     padding: 20px; 
   }
- 
+ .mbtiImg{
+  width:150px;
+ }
 
   .cancelbtn{
     margin-left:10px;
