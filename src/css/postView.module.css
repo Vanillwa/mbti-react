@@ -1,0 +1,52 @@
+.container{
+  margin: 0 10vw;
+  border: 1px solid black;
+
+}
+.mbti{
+  text-align: start;
+  margin-left: 10px;
+  font-weight: bold;
+  color: skyblue;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  padding: 2vw;
+  border-bottom: 1px solid black;
+  
+}
+
+.nickname{
+  
+  margin-left: 10px;
+}
+.date{
+  
+  margin-right: 10px;
+}
+
+.title{
+  padding: 1vw;
+}
+.content{
+  padding: 2vw;
+  min-height: 30vh;
+  
+}
+
+.comment{
+  
+}
+
+.commentForm{
+  display: flex;
+  justify-content: center;
+  padding: 2vw;
+}
+
+.commentInput{
+  width: 70%;
+  overflow: scroll;
+}

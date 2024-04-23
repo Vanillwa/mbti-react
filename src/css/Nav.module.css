@@ -24,7 +24,8 @@
 }
 
 .logo{
-  height: 50px
+  height: 5vh;
+  margin-left: 1vw;
 }
 .navbarSearch input{
   width: 40vw;
@@ -68,6 +69,15 @@
 }
 
 .dialog{
-  
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
 }
 
+.userImg{
+  border-radius: 25px;
+  width: 4vw;
+  height: 4vw;
+  overflow: hidden;
+  margin-right: 1vw;
+  margin-left: 1vw;
+}
