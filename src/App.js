@@ -3,6 +3,8 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Join from "./pages/Join"; // './pages/Join' 경로에 있는 Join 컴포넌트를 import
+import MemberRevise from "./pages/MemberRevise"; // './pages/Join' 경로에 있는 Join 컴포넌트를 import
+
 import PostList from "./pages/PostList";
 import Layout from "./component/layout";
 
@@ -10,6 +12,8 @@ import PostView from "./pages/PostView";
 import Write from "./pages/Write";
 import Profile from "./pages/Profile";
 import FindPwd from "./pages/FindPwd";
+import UpdatePassword from "./pages/UpdatePassword"
+
 
 
 
@@ -29,7 +33,10 @@ function App() {
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/MemberRevise" element={<MemberRevise />} />
+        <Route path="/updatepwd" element={<UpdatePassword/>}/>
         <Route path="/findpwd" element={<FindPwd />}/>
+       
       </Routes>
     </div>
   );

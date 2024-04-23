@@ -13,6 +13,9 @@
   .mainbtn{
     
   }
+  .mbtiImg{
+    width:150px;
+  }
   .findbtn{
     margin-right:10px;
   }
@@ -31,6 +34,9 @@
 .alert{
   font-size:12px;
   color:red;
+}
+.applyCode{
+  color:blue;
 }
   
   @media (max-width: 768px) {

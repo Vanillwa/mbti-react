@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from '../css/listDropdown.module.css'
 import mbtiI from '../images/mbtiI.png'
@@ -7,8 +7,23 @@ function IListDropdown() {
   const [dropdown, setDropdown] = useState(false);
   const toggleDropdown = () => setDropdown(!dropdown);
   const closeDropdown = ()=>setDropdown(false)
+
+  const dropdownRef = useRef();
+
+  useEffect(()=>{
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return()=>{
+      document.addEventListener('mousedown', handleClickOutside);
+
+    }
+  }, [dropdownRef])
   return (
-    <div className={styles.listMenu}>
+    <div className={styles.listMenu} ref={dropdownRef}>
       <div className={`${styles.dropBtn} ${styles.link}`} onClick={toggleDropdown}>
       <img className={styles.imgI} src={mbtiI}/><span className={styles.span}>나는 I야!</span>
       </div>

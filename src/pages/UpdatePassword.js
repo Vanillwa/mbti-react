@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 import img from "../images/MBTI.png";
 import styles from "../css/ResetPwd.module.css";
 import { useNavigate } from "react-router";
+import { requestUpdatePwd } from "../service/api";
 
 function ResetPassword() {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckpassword] = useState("");
   const [checkCodeAlert, setCheckCodeAlert] = useState();
   const [isSame, setIsSame] = useState(true);
+
 
   const cancelBtn = () => {
     navigate("/findpwd");
@@ -50,10 +52,23 @@ function ResetPassword() {
     ComparePassword();
   }, [password, checkPassword]);
 
+
+
   //비밀번호 재설정클릭시
   const navigate = useNavigate();
-  const UpdatePwd = () => {
-    navigate("/updatepwd");
+
+  const UpdatePwd = async() => {
+   const result =await requestUpdatePwd(password)
+console.log(result.message)
+console.log(result)
+   if(result.message ==="success"){
+   alert("비밀번호 변경 완료.")
+    navigate("/");
+   }else{
+    alert("에러 발생")
+
+   }
+   
   };
 
   return (
@@ -66,7 +81,7 @@ function ResetPassword() {
           <div className="card-body">
             <form>
               <div className="text-center mb-5">
-                <img src={img} alt="회원사진" className="user-image" />
+                <img src={img} alt="회원사진" className={styles.mbtiImg} />
                 <h2 className="fw-bold" style={{ fontSize: "40px" }}>
                   비밀번호 재설정
                 </h2>
@@ -103,6 +118,7 @@ function ResetPassword() {
                 <p className={styles.alert}> {checkCodeAlert}</p>
                 <div className="col-12">
                   <button
+                  type="button"
                     disabled={isSame}
                     onClick={UpdatePwd}
                     class="col-3 btn btn-sm btn-primary">
