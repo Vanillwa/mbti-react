@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styles from "../css/Nav.module.css";
 import { Link, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
@@ -15,9 +15,28 @@ import list from '../svg/card-list.svg'
 import freind from '../svg/people-fill.svg'
 import profile from '../svg/person-square.svg'
 import chatting from '../svg/chat-dots.svg'
+import Modal from "./Modal";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
+
+  const dialogRef = useRef();
+  const handleopenModal = ()=>{
+    dialogRef.current.showModal();
+  }
+  const handleCloseModal = ()=>{
+    dialogRef.current.close();
+  }
+
+  const [showModal, setShowModal] = useState(false);
+  const openModal = ()=>{
+    setShowModal(true)
+  }
+  const closeModal = ()=>{
+    setShowModal(false)
+  }
+
+  
 
   return (
 
@@ -51,10 +70,22 @@ const Navbar = () => {
         <div className={styles.menuItems}>
       <Link className={styles.menu} to="/post/list"><img src={home}/><span>홈</span></Link>
       <Link className={styles.menu} to='/post/write'><span>글쓰기</span></Link>
-        <Link className={styles.menu} to="/post/list"><img src={list} />전체 게시판</Link>
+        <Link className={styles.menu} to="/post/list"><img src={list} />모두의 공간</Link>
         <div className={styles.menu}><EListDropdown/></div>
         <div className={styles.menu}><IListDropdown/></div>
-        <Link className={styles.menu} to={isLoggedIn ? '/freind' : '/'}><img src={freind}/>친구</Link>
+        {isLoggedIn ? <Link className={styles.menu} to='/freind'><img src={freind}/>친구</Link> :
+        <div >
+          <div type="button" className={styles.menu} onClick={handleopenModal}>친구</div>
+          <dialog className={styles.dialog} ref={dialogRef}>
+          <h2>로그인이 필요한 컨텐츠입니다.</h2>
+          <p>로그인 하시겠습니까?</p>
+          <Link to='/'>로그인 하러가기</Link>
+          <br/>
+          <div type='button' onClick={handleCloseModal}>닫기</div>
+          </dialog>
+        </div>
+        }
+        
         <Link className={styles.menu} to={isLoggedIn ? '/message' : '/'}><img src={chatting}/>채팅</Link>
         <Link className={styles.menu} to={isLoggedIn ? '/profile' : '/'}><img src={profile} />마이페이지</Link>
         </div>
@@ -66,7 +97,17 @@ const Navbar = () => {
       <div className={`${styles.item} ${styles.content}`}><Outlet/></div>
 
       {/* 오른쪽 사이드 바 */}
-      <div className={`${styles.item} ${styles.rightSidebar}`}>rightside</div>
+      <div className={`${styles.item} ${styles.rightSidebar}`}>
+        <div>
+          <button onClick={openModal}>안녕</button>
+          {showModal && (
+            <Modal onClose={closeModal}>
+              <h2>안녕하세요</h2>
+              <p>모달 실험용</p>
+            </Modal>
+          )}
+        </div>
+      </div>
       
     </div>
     
