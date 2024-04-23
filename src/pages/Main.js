@@ -53,7 +53,7 @@ function Main() {
 
     if (res.message === "success") {
       login(res.userInfo);
-      navigate("/list");
+      navigate("/post/list");
     } else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
     } else if (res.message === "PwdFail") {
@@ -202,7 +202,7 @@ function Main() {
       </Container>
 
       <Container className={styles.bottom}>
-        <Button variant="dark" >게시판이동</Button>
+        <Button variant="dark" onClick={() => window.location.href="/post/list"} >게시판이동</Button>
       </Container>
     </div>
   );

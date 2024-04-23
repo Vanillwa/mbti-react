@@ -1,4 +1,8 @@
 import axios from "axios";
+// import https from "https";
+// axios.defaults.httpsAgent = new https.Agent({
+//   rejectUnauthorized:false
+// });
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
@@ -88,15 +92,24 @@ export const emailChanged = async()=>{
   return res.data;
 }
 
-
+//비밀번호 찾기 이메일 인증
 export const requestCodeFindPwd = async (email)=>{
-  const res = await axios.post("/findPassword/requestEmailVerification",{email})
+  const res = await axios.post("/updatePassword/requestEmailVerification",{email})
   return res.data;
 }
 
 export const checkCodeFindPwd = async(verifyNumber)=>{
-  const res= await axios.post("/findPassword/checkEmailVerification",{verifyNumber})
+  const res= await axios.post("/updatePassword/checkEmailVerification",{verifyNumber})
   return res.data;
 }
 
+export const emailChangedFindPwd = async()=>{
+  const res = await axios.get("/updatePassword/emailChanged")
+  return res.data;
+}
+//비밀번호 재설정하기
+export const requestUpdatePwd = async(password)=>{
+  const res = await axios.post("/updatePassword",{password})
+  return res.data;
+}
 
