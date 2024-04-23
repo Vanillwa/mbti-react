@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/logo.avif';
 import { Link } from "react-router-dom";
@@ -9,7 +9,13 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 
 
-// 해야될것 나중에 input창에 현재 상태기능 추가 해야됨.
+// 로그인 상태를 불러옴
+import { loginStatus } from '../service/api';
+
+
+
+
+
 
 function MemberRevise() {
   // 닉네임버튼 초기값 지정
@@ -20,27 +26,69 @@ function MemberRevise() {
   // 이벤트 발생 시  setNicknameEditable 값 변역
   const nicknameChangeHandler = () => {  
     setNicknameEditable(!nicknameEditable);
-    
-    setNicknameButtonChange(!nicknameButtonChange);
+    setNicknameButtonChange(!nicknameButtonChange)
+   
   };
+
+ // 변경성공 메세지를 위해
+ const prevNicknameButtonChange = useRef(nicknameButtonChange);
+
+ 
+  useEffect(() => {
+    // 페이지 로딩 시에는 실행되지 않고, 실제로 닉네임 버튼 상태가 변경될 때만 "변경성공" 알림 표시
+    if (prevNicknameButtonChange.current !== nicknameButtonChange) {
+      alert("변경성공");
+    }
+    // 현재 상태를 이전 상태로 업데이트
+    prevNicknameButtonChange.current = nicknameButtonChange;
+  }, [nicknameButtonChange]);
+
+
+
+  // 닉네임 변경 버튼 누를 시 닉네임값 변경
+  
+
+
+
 
 
   
-  const navigate = (path) => {
-    window.location.href = path;
-  };
 
 
   
   // 비밀번호버튼 초기값 지정
   const [pwEditable,setPwEditable] = useState(false)
-  // ㅣㄴㄱ네임 버튼 클릭 시 모양변경
+  // 닉네임 버튼 클릭 시 모양변경
   const [pwButtonChange,setPwButtonChange] = useState(false)
 
   const pwChangeHandler =() => {
     setPwEditable (!pwEditable)
     setPwButtonChange(!pwButtonChange)
+   
   }
+
+
+
+ const handleNicknameChange = (e) => {
+    setCurrentNickname(e.target.value);
+  };
+
+  const[currenNickname,setCurrentNickname]=useState('')
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { nickname } = await loginStatus(); // API 호출을 통해 닉네임 정보 가져오기
+        setCurrentNickname(nickname); // 상태 업데이트
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+      }
+    };
+
+    fetchUser();
+  }, []); // 빈 배열을 넣어 컴포넌트 마운트 시에만 호출되도록 함
+
+
 
 
 
@@ -146,7 +194,7 @@ function MemberRevise() {
               <div>
               <label htmlFor="user-pw" className="form-label">닉네임 변경</label>
                 <div className='d-flex gap-2 '>                
-                  <input type="text" className="form-control" placeholder="현재 닉네임" disabled={!nicknameEditable} />
+                  <input type="text" className="form-control" placeholder={`${currenNickname}`} disabled={!nicknameEditable}  onChange={handleNicknameChange}/>
                   <button
                     type='button'
                     className={`btn btn-sm ${nicknameButtonChange ? 'btn-success' : 'btn-danger'}`}
@@ -197,7 +245,7 @@ function MemberRevise() {
                   </div>
                   <div className='button' style={{ paddingTop: '10px' }}>
                 <button type="submit" className="btn btn-primary me-2">확인</button>
-                <button type="button" className="btn btn-secondary" onClick={() => navigate('/')}>취소</button>
+                <button type="button" className="btn btn-secondary">취소</button>
               </div>
                </div>
             </div>
