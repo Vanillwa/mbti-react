@@ -88,6 +88,28 @@ export const emailChanged = async()=>{
   return res.data;
 }
 
+// 회원가입 닉네임 값 변경시 세션 삭제 api
+export const nickNameChanged = async()=>{
+  const res = await axios.get("/join/nickNameChanged")
+  return res.data;
+}
+
+
+
+// 현재 로그인된 유저 정보 받는 api
+export const loginStatus = async(id)=>{
+  const res = await axios.get(`/api/user/${id}`);
+  return res.data;
+}
+
+
+
+
+
+
+
+
+
 
 export const requestCodeFindPwd = async (email)=>{
   const res = await axios.post("/findPassword/requestEmailVerification",{email})
@@ -98,5 +120,7 @@ export const checkCodeFindPwd = async(verifyNumber)=>{
   const res= await axios.post("/findPassword/checkEmailVerification",{verifyNumber})
   return res.data;
 }
+
+
 
 
