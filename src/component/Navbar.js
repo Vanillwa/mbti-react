@@ -8,14 +8,13 @@ import SettingDropdown from "./SettingDropdown";
 
 
 import logo from "../images/logo.avif";
-import img from "../images/MBTI.png";
 import notImg from "../svg/person-circle.svg";
 import home from '../svg/house.svg'
 import list from '../svg/card-list.svg'
 import freind from '../svg/people-fill.svg'
 import profile from '../svg/person-square.svg'
 import chatting from '../svg/chat-dots.svg'
-import Modal from "./Modal";
+
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -27,16 +26,10 @@ const Navbar = () => {
   const handleCloseModal = ()=>{
     dialogRef.current.close();
   }
-
-  const [showModal, setShowModal] = useState(false);
-  const openModal = ()=>{
-    setShowModal(true)
-  }
-  const closeModal = ()=>{
-    setShowModal(false)
+  if(userInfo.profileImg === null){
+    userInfo.profileImg = notImg
   }
 
-  
 
   return (
 
@@ -56,9 +49,11 @@ const Navbar = () => {
               {isLoggedIn ? userInfo.nickname : "로그인 해주세요"}
             </span>
             {isLoggedIn ? (
-              <img src={img} alt="회원사진" className="user-image" />
+              (userInfo.profileImg == null ? <img className={styles.userImg} src={notImg}></img> :
+              <img src={userInfo.profileImg} className={styles.userImg}/>
+              )
             ) : (
-              <img src={notImg} alt="회원사진" className="user-image" />
+              <img src={notImg} alt="회원사진" className={styles.userImg} />
             )}
           </Link>
         </div>
@@ -70,7 +65,7 @@ const Navbar = () => {
         <div className={styles.menuItems}>
       <Link className={styles.menu} to="/post/list"><img src={home}/><span>홈</span></Link>
       <Link className={styles.menu} to='/post/write'><span>글쓰기</span></Link>
-        <Link className={styles.menu} to="/post/list"><img src={list} />모두의 공간</Link>
+        <Link className={styles.menu} to="/post/list"><img src={list} /><span>모두의공간</span></Link>
         <div className={styles.menu}><EListDropdown/></div>
         <div className={styles.menu}><IListDropdown/></div>
         {isLoggedIn ? <Link className={styles.menu} to='/freind'><img src={freind}/>친구</Link> :
@@ -90,7 +85,7 @@ const Navbar = () => {
         <Link className={styles.menu} to={isLoggedIn ? '/profile' : '/'}><img src={profile} />마이페이지</Link>
         </div>
         
-        <div className={`${styles.menu} ${styles.setting}`}><SettingDropdown/></div>
+        <div type='button' className={`${styles.menu} ${styles.setting}`}><SettingDropdown/></div>
       </div>
 
       {/* 컨텐츠 영역 */}
@@ -98,15 +93,7 @@ const Navbar = () => {
 
       {/* 오른쪽 사이드 바 */}
       <div className={`${styles.item} ${styles.rightSidebar}`}>
-        <div>
-          <button onClick={openModal}>안녕</button>
-          {showModal && (
-            <Modal onClose={closeModal}>
-              <h2>안녕하세요</h2>
-              <p>모달 실험용</p>
-            </Modal>
-          )}
-        </div>
+
       </div>
       
     </div>
