@@ -11,9 +11,7 @@
   ;
   text-align: center;
 }
-.item{
 
-}
 
 .nav{
   grid-area: nav;
@@ -24,7 +22,7 @@
 }
 
 .logo{
-  height: 5vh;
+  height: 7vh;
   margin-left: 1vw;
 }
 .navbarSearch input{
@@ -52,7 +50,9 @@
   padding: 12px 0;
   margin-top: 10px;
   border: 1px solid black;
-
+  display: flex;
+  align-items: center;
+  font-size: 15px;
 }
 .setting{
   margin-bottom: 50%;
@@ -75,9 +75,25 @@
 
 .userImg{
   border-radius: 25px;
+  max-height: 7vh;
   width: 4vw;
-  height: 4vw;
+  height: auto;
   overflow: hidden;
   margin-right: 1vw;
+  margin-left: 1vw;
+}
+.span{
+  text-align: center;
+}
+
+@media(max-width : 768px) {
+  .span{
+    display: none;
+  }
+}
+
+.svg{
+  width: auto;
+  height: 2.5vh;
   margin-left: 1vw;
 }

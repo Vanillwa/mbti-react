@@ -1,18 +1,18 @@
 .list-menu {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
 }
 
-.dropbtn {
+.dropBtn {
   color: black;
-  padding: 10px 20px;
   font-size: 16px;
   border: none;
   cursor: pointer;
   outline: none;
 }
 
-.dropdown-content {
+.dropdownContent {
   display: none;
   position: absolute;
   background-color: rgb(253, 253, 238);
@@ -32,7 +32,7 @@
   overflow-y: scroll;
 }
 
-.dropdown-content a {
+.dropdownContent a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
@@ -42,3 +42,24 @@
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
+
+.imgE{
+  width: auto;
+  height: 2.5vh;
+  margin-left: 0.7vw;
+}
+.imgI{
+  width: auto;
+  height: 2.5vh;
+  margin-left: 0.7vw;
+}
+
+@media(max-width : 768px){
+  .span{
+    display: none;
+  }
+  .dropBtn{
+    display: flex;
+  }
+}
+
