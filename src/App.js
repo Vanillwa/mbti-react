@@ -13,6 +13,7 @@ import PostWrite from "./pages/PostWrite";
 import Profile from "./pages/Profile";
 import FindPwd from "./pages/FindPwd";
 import UpdatePassword from "./pages/UpdatePassword"
+import CompleteLogin from "./pages/CompleteLogin";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/MemberRevise" element={<MemberRevise />} />
         <Route path="/updatepwd" element={<UpdatePassword/>}/>
         <Route path="/findpwd" element={<FindPwd />}/>
+       <Route path="/completelogin" element={<CompleteLogin/>}/>
       </Routes>
     </div>
   );
