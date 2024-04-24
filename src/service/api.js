@@ -74,7 +74,7 @@ export const checkEmailVerification = async (code) => {
   return res.data;
 };
 
-
+// join.js
 
 // 인증번호 발송을 위한 api
 export const requestEmailVerification = async (email) => {
@@ -95,6 +95,7 @@ export const nickNameChanged = async()=>{
 }
 
 
+// MemberRevise.js
 
 // 현재 로그인된 유저 정보 받는 api
 export const loginStatus = async(id)=>{

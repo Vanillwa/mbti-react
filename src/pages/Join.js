@@ -4,7 +4,7 @@ import logo from '../images/logo.avif';
 import { Link, useNavigate } from "react-router-dom";
 import img from "../images/MBTI.png";
 import '../css/Join.css'
-import { checkDuplicationEmail, emailChanged, fetchJoin,nickNameChanged } from '../service/api';
+import { checkDuplicationEmail, emailChanged, fetchJoin, nickNameChanged } from '../service/api';
 import { checkDuplicationNickname } from '../service/api';
 import { checkEmailVerification } from '../service/api'
 import { requestEmailVerification } from '../service/api';
@@ -33,6 +33,36 @@ function Join() {
   const [nicknameAlert, setNicknameAlert] = useState('')
 
 
+  const [password, setPassword] = useState('');
+  const [passwordAlert, setPasswordAlert] = useState('');
+  const [passwordValidation, setPasswordValidation] = useState('');
+
+ 
+
+  // 이메일 정규식
+  const handleEmailOnInput = (e) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const isValid = emailRegex.test(e.target.value);
+
+    setEmail(e.target.value);
+
+    if (isValid) {
+      setEmailAlert("올바른 형식의 이메일입니다.");
+      setEmailValidation("valid");
+    } else {
+      setEmailAlert("이메일 형식에 맞지않습니다.");
+      setEmailValidation("invalid");
+    }
+  };
+ 
+  
+
+
+
+
+
+
+
 
   // 이메일 입력
   const handleEmailOnBlur = async (e) => {
@@ -49,22 +79,6 @@ function Join() {
     }
   }
 
-  // 닉네임 입력
-  const handleNickNameOnBlur = async (e) => {
-    if (nickname === e.target.value) {
-      return
-    } else {
-      setNickname(e.target.value)
-      const result = await nickNameChanged();
-      codeRef.current.value = ''
-      setNicknameAlert('')
-      setCertificationAlert('')
-      setcertificationDisabled(true);
-      setCertificationInputDisabled(true)
-    }
-  }
-    
-    
 
 
 
@@ -76,7 +90,7 @@ function Join() {
     }
     const data = await checkDuplicationEmail({ email });
     if (data.message === "success") {
-      setEmailAlert("사용 가능.");
+      setEmailAlert("사용 가능한 이메일입니다.");
       setEmailValidation('valid'); // 이메일이 사용가능
       setcertificationDisabled(false); //초기값 false
     } else if (data.message === "duplicated") {
@@ -96,7 +110,7 @@ function Join() {
         console.log(response.code)
         setCertificationValidation('valid')
         setCertificationAlert("인증 번호가 발송되었습니다.")
-        
+
         setCertificationInputDisabled(false) // false값으로 바꿈 이건 인풋상자
 
       } else {
@@ -119,7 +133,7 @@ function Join() {
         setCertificationValidation('valid');
         setcertificationDisabled(true);
         setCertificationInputDisabled(true)
-      }else{
+      } else {
         setCertificationAlert("인증번호가 불일치합니다.");
         setCertificationValidation(null);
       }
@@ -128,20 +142,32 @@ function Join() {
     }
   };
 
-  // 닉네임 중첩 확인
+  // 닉네임 정규식
 
   const handleNicknameOnInput = (e) => {
     setNickname(e.target.value)
+    const nicknameRegex = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+    const isValid = nicknameRegex.test(e.target.value);
+
+    if (isValid) {
+      setNicknameAlert("올바른 형식의 닉네임입니다.");
+      setNicknameValidation("valid");
+    } else {
+      setNicknameAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");
+      setNicknameValidation("invalid");
+    }
+
   }
 
   const handleCheckDuplicationNickname = async () => {
-    if (!nickname || nickname.length < 1 || nickname.length > 10) {
+    if (!nickname || nickname.length < 2 || nickname.length > 20) {
       setNicknameAlert("최소 1글자 이상 10글자 이하로 입력해주세요.");
+      setNicknameValidation("invalid");
       return;
     }
     const data = await checkDuplicationNickname({ nickname });
     if (data.message === "success") {
-      setNicknameAlert("사용 가능.");
+      setNicknameAlert("사용 가능한 닉네임 입니다.");
       setNicknameValidation('valid');
     } else if (data.message === "duplicated") {
 
@@ -150,28 +176,39 @@ function Join() {
     }
   };
 
+  // 닉네임 입력
+  const handleNickNameOnBlur = async (e) => {
+    if (nickname === e.target.value) {
+      setNickname(e.target.value);
+      const result = await nickNameChanged();
+      codeRef.current.value = "";
+      setNicknameAlert("");
+      setCertificationAlert("");
+      setcertificationDisabled(true);
+      setCertificationInputDisabled(true);
+    }
+  };
 
 
-  // 체크박스 밑에 발송 이랑 검사 버튼
-  // const handlecheckEmailVerification = async () => {
-  //   try {
-  //     const data = await checkEmailVerification({ certificationNumber });
-  //     // 여기서 certificationNumber 상태의 길이를 직접 확인합니다.
-  //     if (certificationNumber.length === 6) {
-  //       console.log("success")
-  //       setCertificationAlert("인증번호가 확인되었습니다.");
-  //       setCertificationValidation('valid');
-  //     } else {
-  //       setCertificationAlert("인증번호가 유효하지 않습니다.");
-  //       setCertificationValidation('invalid');
-  //     }
-  //   } catch (error) {
-  //     console.error('인증번호 확인 중 오류 발생:', error);
-  //     setCertificationAlert("인증번호 확인 중 오류가 발생했습니다.");
-  //     setCertificationValidation('invalid');
-  //   }
-  // };
+  // 비밀번호 정규식
+  const handlePasswordOnInput = (e) => {
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,20}$/;
+    const isValid = passwordRegex.test(e.target.value);
 
+    setPassword(e.target.value);
+
+    if (isValid) {
+      setPasswordAlert("사용 가능한 비밀번호입니다.");
+      setPasswordValidation("valid");
+    } else {
+      setPasswordAlert("비밀번호는 최소 6자, 최대 20자이며 한글은 사용할 수 없습니다. 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.");
+      setPasswordValidation("invalid");
+    }
+  };
+
+
+
+  // 회원가입 
   const handleSubmit = async (e) => {
     e.preventDefault()
     console.log(e.target)
@@ -186,7 +223,7 @@ function Join() {
     const result = await fetchJoin(body)
 
     if (result.message === "success") {
-      alert("회원가입 성공하셨습니다.")
+      alert("회원가입 성공하셨습니다!.")
       navigate("/")
 
     }
@@ -211,7 +248,7 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="email" className="form-label">이메일</label>
                 <div className='d-flex gap-2'>
-                  <input type="text" className="form-control form-control-email" name="email" id="email" placeholder="E-mail" onBlur={handleEmailOnBlur} />
+                  <input type="email" className="form-control form-control-email" name="email" id="email" placeholder="E-mail" onBlur={handleEmailOnBlur} required  onInput={handleEmailOnInput}/>
                   <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationEmail}>체크</button>
                 </div>
                 <p className='emailAlert' style={{ color: emailValidation === 'valid' ? "green" : emailValidation === 'invalid' ? "red" : "black" }}>
@@ -222,7 +259,7 @@ function Join() {
 
               <div className={(emailValidation === 'valid') ? "show" : 'hidden'} id='certification'>
                 <div className='d-flex gap-2 '>
-                  <input type="text" className="form-control" placeholder="인증번호" onInput={handleCertificationNumberInput}
+                  <input type="text" className="form-control" placeholder="인증번호" onInput={handleCertificationNumberInput} required
                     //  disabled = 함수 적용된 값 
                     disabled={certificationInputDisabled}
                     ref={codeRef} maxLength={6} />
@@ -236,8 +273,8 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="nickname" className="form-label">닉네임</label>
                 <div className='d-flex gap-2'>
-                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} maxLength={10}/>
-                  <button type='button'  className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
+                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} maxLength={10} onBlur={handleNickNameOnBlur} required />
+                  <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
                 </div>
                 <p className='nicknameAlert' style={{ color: nicknameValidation === 'valid' ? "green" : nicknameValidation === 'invalid' ? "red" : "black" }}>
                   {nicknameAlert}
@@ -245,11 +282,21 @@ function Join() {
               </div>
               <div className="col-12">
                 <label htmlFor="user-pw" className="form-label">비밀번호</label>
-                <input type="password" className="form-control" name="password" id="user-pw" placeholder="Password" />
+                <input
+                  type="password"
+                  className={`form-control ${passwordValidation === 'valid' ? 'is-valid' : 'is-invalid'}`}
+                  name="password"
+                  id="user-pw"
+                  placeholder="Password"
+                  required
+                  value={password}
+                  onInput={handlePasswordOnInput}
+                />
+                <div className={`text-${passwordValidation === 'valid' ? 'success' : 'danger'}`}>{passwordAlert}</div>
               </div>
 
               <div className="d-flex gap-2">
-                <select className="form-control" name="mbti" id="user-mbti" >
+                <select className="form-control" name="mbti" id="user-mbti" required>
                   <option value="">MBTI를 선택해주세요.</option>
                   <option value="INTJ">INTJ - 전략가</option>
                   <option value="INTP">INTP - 논리술사</option>
@@ -267,18 +314,19 @@ function Join() {
                   <option value="ISFP">ISFP - 모험가</option>
                   <option value="ESTP">ESTP - 사업가</option>
                   <option value="ESFP">ESFP - 연예인</option>
+                  <option value="">미정 - 아직 잘 모르겠습니다.</option>
                 </select>
               </div>
               <div className="col-12">
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="checkBox1" />
+                  <input className="form-check-input" type="checkbox" id="checkBox1" required />
                   <label className="form-check-label" htmlFor="checkBox1">
                     <strong>[필수]</strong> 회원가입 이용약관 동의
                   </label>
                 </div>
               </div>
               <div className="col-12">
-                <textarea className="form-control" style={{ resize: 'none' }} rows="3" readOnly>국립통일교육원은 국립통일교육원 홈페이지 회원가입과 관련하여 개인정보보호법 제15조(개인정보의 수집·이용), 제17조(개인정보의 제공), 제22조(동의를 받는 방법)에 따라 참가자의 동의를 받고 있습니다. 귀하의 개인정보는 수집 목적 외 다른 목적으로는 이용하지 않으며, 귀하의 개인정보에 대한 열람, 정정·삭제, 처리정지, 이의제기 하고자 할 때에는 개인정보보호책임자를 통해 요구할 수 있으며, 개인정보침해 시 개인정보처리방침에 명시된 권익침해 구제방법을 통해 구제받을 수 있습니다.</textarea>
+                <textarea className="form-control" style={{ resize: 'none' }} rows="3" readOnly value={"국립통일교육원은 국립통일교육원 홈페이지 회원가입과 관련하여 개인정보보호법 제15조(개인정보의 수집·이용), 제17조(개인정보의 제공), 제22조(동의를 받는 방법)에 따라 참가자의 동의를 받고 있습니다. 귀하의 개인정보는 수집 목적 외 다른 목적으로는 이용하지 않으며, 귀하의 개인정보에 대한 열람, 정정·삭제, 처리정지, 이의제기 하고자 할 때에는 개인정보보호책임자를 통해 요구할 수 있으며, 개인정보침해 시 개인정보처리방침에 명시된 권익침해 구제방법을 통해 구제받을 수 있습니다."}></textarea>
               </div>
               <div className="col-12 d-flex justify-content-center">
 
