@@ -10,11 +10,10 @@ import { checkEmailVerification } from '../service/api'
 import { requestEmailVerification } from '../service/api';
 
 
+
 function Join() {
   console.log('rendered')
   const navigate = useNavigate()
-
-
 
   const [emailValidation, setEmailValidation] = useState(null);
   const [email, setEmail] = useState()
@@ -94,7 +93,6 @@ function Join() {
       setEmailAlert("사용 가능한 이메일입니다.");
       setEmailValidation('valid'); // 이메일이 사용가능
       setcertificationDisabled(false); //초기값 false
-
     } else if (data.message === "duplicated") {
       setEmailAlert("이미 사용중.");
       setEmailValidation('invalid'); // 이메일이 중복
@@ -126,7 +124,7 @@ function Join() {
 
   // 인증번호 체크
   const handleCertificationNumberInput = async (e) => {
-  
+    console.log('asdf')
     const input = codeRef.current.value
     if (input.length === 6) {
       const result = await checkEmailVerification(input)
@@ -161,6 +159,7 @@ function Join() {
 
   }
 
+  // 닉네임 중복 확인 
   const handleCheckDuplicationNickname = async () => {
     if (!nickname || nickname.length < 2 || nickname.length > 20) {
       setNicknameAlert("최소 1글자 이상 10글자 이하로 입력해주세요.");
@@ -178,10 +177,39 @@ function Join() {
     }
   };
 
+  // 닉네임 입력
+  const handleNickNameOnBlur = async (e) => {
+    if (nickname === e.target.value) {
+      setNickname(e.target.value);
+      const result = await nickNameChanged();
+      codeRef.current.value = "";
+      setNicknameAlert("");
+      setCertificationAlert("");
+      setcertificationDisabled(true);
+      setCertificationInputDisabled(true);
+    }
+  };
 
 
- 
+  // 비밀번호 정규식
+  const handlePasswordOnInput = (e) => {
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,20}$/;
+    const isValid = passwordRegex.test(e.target.value);
 
+    setPassword(e.target.value);
+
+    if (isValid) {
+      setPasswordAlert("사용 가능한 비밀번호입니다.");
+      setPasswordValidation("valid");
+    } else {
+      setPasswordAlert("비밀번호는 최소 6자, 최대 20자이며 한글은 사용할 수 없습니다. 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.");
+      setPasswordValidation("invalid");
+    }
+  };
+
+
+
+  // 회원가입 
   const handleSubmit = async (e) => {
     e.preventDefault()
     console.log(e.target)
@@ -202,20 +230,6 @@ function Join() {
     }
 
   }
-  const handlePasswordOnInput = (e) => {
-    const passwordRegex = /^(?=.[0-9])(?=.[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,20}$/;
-    const isValid = passwordRegex.test(e.target.value);
-
-    setPassword(e.target.value);
-
-    if (isValid) {
-      setPasswordAlert("사용 가능한 비밀번호입니다.");
-      setPasswordValidation("valid");
-    } else {
-      setPasswordAlert("비밀번호는 최소 6자, 최대 20자이며 한글은 사용할 수 없습니다. 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.");
-      setPasswordValidation("invalid");
-    }
-  };
 
   return (
     <div className="container mt-5">
@@ -260,8 +274,8 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="nickname" className="form-label">닉네임</label>
                 <div className='d-flex gap-2'>
-                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} maxLength={10}/>
-                  <button type='button'  className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
+                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} maxLength={10} onBlur={handleNickNameOnBlur} required />
+                  <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
                 </div>
                 <p className='nicknameAlert' style={{ color: nicknameValidation === 'valid' ? "green" : nicknameValidation === 'invalid' ? "red" : "black" }}>
                   {nicknameAlert}

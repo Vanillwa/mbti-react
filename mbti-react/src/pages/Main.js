@@ -35,21 +35,18 @@ import { useNavigate, useNavigationType } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
-
+import { redirect } from "react-router-dom";
 
 function Main() {
- 
   const { login } = useAuthContext();
   const [emailAlert, setEmailAlert] = useState();
   const [pwdAlert, setPwdAlert] = useState();
-
-  
+  const navigationType = useNavigationType();
   const navigate = useNavigate();
+
 
  //로그인 기능
   const handleSubmit = async e => {
-
-   
     e.preventDefault();
     let body = {
       email: e.target.email.value,
@@ -58,8 +55,6 @@ function Main() {
     console.log(body);
     const res = await fetchLogin(body);
 
-
-
     if (body.email === "") {
       setEmailAlert("이메일을 입력해주세요.");
       setPwdAlert("");
@@ -67,28 +62,31 @@ function Main() {
       setPwdAlert("비밀번호를 입력해주세요.");
       setEmailAlert("");
     }
-  
+
     
-    if (res.message === "success" ) {
+    if (res.message === "success" && navigationType === "PUSH") {
       login(res.userInfo);
-      navigate("/post/list");
+      navigate(-1);
     } else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
       setPwdAlert("");
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
-    } 
+    } else {
+      //이전페이지가 존재하지 않을 떄
+      //의도하지 않은 페이지 가는 것 방지
+      navigate("completelogin");
+    }
   };
- 
-  
+
   return (
     <div className={styles.body}>
-      <div className={styles.logo}>
+      <Container className={styles.topcontainer}>
         <Link to="/" className={styles.link}>
-          <img  src={logo}></img>
+          <img className={styles.logo} src={logo}></img>
         </Link>
-        </div>
+      </Container>
 
       <Container className={styles.mainCon}>
         <Row>
@@ -256,29 +254,21 @@ function Main() {
                   </Link>
                 </Form.Text>
               </Form.Group>
-              <div className={styles.loginbtn}>
               <Button variant="primary" type="submit">
                 로그인
               </Button>
-              </div>
             </Form>
-
-           
           </Col>
-          <div className="text-center">
-          <Button
+        </Row>
+      </Container>
+
+      <Container className={styles.bottom}>
+        <Button
           variant="dark"
           onClick={() => (window.location.href = "/post/list")}>
           게시판이동
         </Button>
-        </div>
-        </Row>
-       
       </Container>
-
-      
-     
-    
     </div>
   );
 }

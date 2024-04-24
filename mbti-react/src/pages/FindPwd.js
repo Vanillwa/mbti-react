@@ -92,7 +92,7 @@ function FindPwd() {
     <>
       <div className="container mt-5">
         <Link to="/" className="navbar-logo d-flex justify-content-center">
-          <img src={logo} alt="로고" className={styles.logo} />
+          <img src={logo} alt="로고" className="logo" />
         </Link>
         <div className={styles.card}>
           <div className="card-body">

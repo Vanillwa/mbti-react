@@ -1,0 +1,9 @@
+.menu{
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.show{
+  display: block;
+}

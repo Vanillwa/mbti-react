@@ -99,13 +99,7 @@ export const nickNameChanged = async()=>{
 }
 
 
-// MemberRevise.js
 
-// 현재 로그인된 유저 정보 받는 api
-export const loginStatus = async(id)=>{
-  const res = await axios.get(`/api/user/${id}`);
-  return res.data;
-}
 
 
 //비밀번호 찾기 이메일 인증
