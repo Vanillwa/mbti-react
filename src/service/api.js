@@ -129,5 +129,9 @@ export const requestUpdatePwd = async(password)=>{
   return res.data;
 }
 
+export const postPost = async(body)=>{
+  const res = await axios.post("/post", body)
+  return res.data;  
+}
 
 
