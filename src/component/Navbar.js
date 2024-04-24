@@ -26,9 +26,7 @@ const Navbar = () => {
   const handleCloseModal = () => {
     dialogRef.current.close();
   };
-  if (userInfo.profileImg === null) {
-    userInfo.profileImg = notImg;
-  }
+
 
   const [dropdown, setDropdown] = useState(false);
   const closeDropdown = ()=>{

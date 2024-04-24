@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../css/SettingDropdown.module.css'
 import { fetchLogout } from '../service/api';
-
+import { AuthContext, AuthProvider } from '../context/AuthContext';
 const SettingDropdown = () => {
   const navigate = useNavigate()
   const [dropdown, setDropdown] = useState(false);
   const toggleDropdown = () => setDropdown(!dropdown);
-
+const {logout} = useContext(AuthContext);
   const closeDropdown = async()=>{
     
     setDropdown(false)
@@ -15,12 +15,12 @@ const SettingDropdown = () => {
 
   const clickLogout= async()=>{
     const result =  await fetchLogout();
-    
-    if(result.message === "success"){
-      alert("로그아웃 완료!")
-      navigate("/")
+    console.log(result.message)
+    if(result.message === 'success'){
+      alert('로그아웃 완료')
+     logout();
     }
-    
+
   }
 
   return (
