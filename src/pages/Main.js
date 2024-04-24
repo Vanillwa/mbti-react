@@ -35,18 +35,20 @@ import { useNavigate, useNavigationType } from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
-import { redirect } from "react-router-dom";
+
 
 function Main() {
   const { login } = useAuthContext();
   const [emailAlert, setEmailAlert] = useState();
   const [pwdAlert, setPwdAlert] = useState();
   const navigationType = useNavigationType();
+  
   const navigate = useNavigate();
-
 
  //로그인 기능
   const handleSubmit = async e => {
+    
+   
     e.preventDefault();
     let body = {
       email: e.target.email.value,
@@ -54,6 +56,8 @@ function Main() {
     };
     console.log(body);
     const res = await fetchLogin(body);
+
+
 
     if (body.email === "") {
       setEmailAlert("이메일을 입력해주세요.");
@@ -64,22 +68,19 @@ function Main() {
     }
 
     
-    if (res.message === "success" && navigationType === "PUSH") {
+    if (res.message === "success" ) {
       login(res.userInfo);
-      navigate(-1);
+      navigate("/post/list");
     } else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
       setPwdAlert("");
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
-    } else {
-      //이전페이지가 존재하지 않을 떄
-      //의도하지 않은 페이지 가는 것 방지
-      navigate("completelogin");
-    }
+    } 
   };
-
+ 
+  
   return (
     <div className={styles.body}>
       <Container className={styles.topcontainer}>
