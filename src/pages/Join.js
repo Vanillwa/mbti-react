@@ -178,7 +178,20 @@ function Join() {
     }
   };
 
+  const handlePasswordOnInput = (e) => {
+    const passwordRegex = /^(?=.[0-9])(?=.[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,20}$/;
+    const isValid = passwordRegex.test(e.target.value);
 
+    setPassword(e.target.value);
+
+    if (isValid) {
+      setPasswordAlert("사용 가능한 비밀번호입니다.");
+      setPasswordValidation("valid");
+    } else {
+      setPasswordAlert("비밀번호는 최소 6자, 최대 20자이며 한글은 사용할 수 없습니다. 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.");
+      setPasswordValidation("invalid");
+    }
+  };
 
  
 
