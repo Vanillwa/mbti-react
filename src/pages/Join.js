@@ -80,10 +80,7 @@ function Join() {
       setEmailAlert("사용 가능.");
       setEmailValidation('valid'); // 이메일이 사용가능
       setcertificationDisabled(false); //초기값 false
-<<<<<<<<< Temporary merge branch 1
-=========
-    
->>>>>>>>> Temporary merge branch 2
+
     } else if (data.message === "duplicated") {
       setEmailAlert("이미 사용중.");
       setEmailValidation('invalid'); // 이메일이 중복
