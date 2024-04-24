@@ -38,16 +38,17 @@ import { useAuthContext } from "../context/AuthContext";
 
 
 function Main() {
+ 
   const { login } = useAuthContext();
   const [emailAlert, setEmailAlert] = useState();
   const [pwdAlert, setPwdAlert] = useState();
-  const navigationType = useNavigationType();
+
   
   const navigate = useNavigate();
 
  //로그인 기능
   const handleSubmit = async e => {
-    
+
    
     e.preventDefault();
     let body = {
@@ -66,7 +67,7 @@ function Main() {
       setPwdAlert("비밀번호를 입력해주세요.");
       setEmailAlert("");
     }
-
+  
     
     if (res.message === "success" ) {
       login(res.userInfo);
@@ -83,11 +84,11 @@ function Main() {
   
   return (
     <div className={styles.body}>
-      <Container className={styles.topcontainer}>
+      <div className={styles.logo}>
         <Link to="/" className={styles.link}>
-          <img className={styles.logo} src={logo}></img>
+          <img  src={logo}></img>
         </Link>
-      </Container>
+        </div>
 
       <Container className={styles.mainCon}>
         <Row>
@@ -255,21 +256,29 @@ function Main() {
                   </Link>
                 </Form.Text>
               </Form.Group>
+              <div className={styles.loginbtn}>
               <Button variant="primary" type="submit">
                 로그인
               </Button>
+              </div>
             </Form>
-          </Col>
-        </Row>
-      </Container>
 
-      <Container className={styles.bottom}>
-        <Button
+           
+          </Col>
+          <div className="text-center">
+          <Button
           variant="dark"
           onClick={() => (window.location.href = "/post/list")}>
           게시판이동
         </Button>
+        </div>
+        </Row>
+       
       </Container>
+
+      
+     
+    
     </div>
   );
 }
