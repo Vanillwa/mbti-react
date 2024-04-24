@@ -1,5 +1,8 @@
 /* 추후 디자인 할 예정 */
-
+.logo{
+  width:300px;
+  margin-bottom:50px;
+}
 
 .card {
     max-width: 500px; 
