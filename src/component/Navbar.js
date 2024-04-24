@@ -76,10 +76,10 @@ const Navbar = () => {
             <img className={styles.svg} src={list} />
             <div className={styles.span}>모두의공간</div>
           </Link>
-          <div className={styles.menu}>
+          <div className={`${styles.menu} ${styles.mbtiMenu}`}>
             <EListDropdown />
           </div>
-          <div className={styles.menu}>
+          <div className={`${styles.menu} ${styles.mbtiMenu}`}>
             <IListDropdown />
           </div>
           {isLoggedIn ? (
@@ -113,7 +113,7 @@ const Navbar = () => {
             <img className={styles.svg} src={chatting} />
             <div className={styles.span}>채팅</div>
           </Link>
-          <Link className={styles.menu} to={isLoggedIn ? "/profile" : "/"}>
+          <Link className={styles.menu} to={isLoggedIn ? "/memberrevise" : "/"}>
             <img className={styles.svg} src={profile} />
             <div className={styles.span}> 마이페이지</div>
           </Link>

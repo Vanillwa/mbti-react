@@ -24,7 +24,7 @@ function EListDropdown() {
   }, [dropdownRef])
   return (
     <div className={styles.listMenu} ref={dropdownRef}>
-      <div className={`${styles.dropBtn} ${styles.link}`} onClick={toggleDropdown}>
+      <div  className={`${styles.dropBtn} ${styles.link}`} onClick={toggleDropdown}>
       <img className={styles.imgE} src={mbtiE} /><span className={styles.span}>나는 E야!</span>
       </div>
       <div className={`${styles.dropdownContent} ${dropdown ? styles.show : ""}`}>

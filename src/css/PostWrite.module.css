@@ -4,14 +4,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin-top: 5vh;
+  margin-top: 2vh;
 }
 
 .form{
   border: 1px solid black;
   border-radius: 5px;
-  width: 60vw;
-  min-height: 50vh;
+  width: 80vw;
+  min-height: 70vh;
   padding: 1vw;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
   padding: 0.5vw;
   display: flex;
   justify-content: space-between;
-  width: 45vw;
+  width: 70vw;
 }
 .selectTitle{
   font-size: 1.7vh;
@@ -43,20 +43,25 @@
   padding: 1vw;
 }
 .titleInput{
-  width: 45vw;
+  width: 70vw;
   padding: 0.5vw;
   border-radius: 5px;
   border: 1px solid black;
 }
+.editorBox{
+  width: 70vw;
 
+  border-radius: 5px;
+}
 
 .contentBox{
   padding: 1vw;
+  height: 50vh;
 }
 
 .textarea{
   resize: none;
-  width: 45vw;
+  width: 70vw;
   height: 40vh;
   overflow: auto;
   border: 1px solid black;
@@ -77,3 +82,9 @@
   border-radius: 5px;
   background-color: white;
 }
+
+.imageBox{
+  display: flex;
+  justify-content: center;
+}
+

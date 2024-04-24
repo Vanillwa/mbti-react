@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  
 }
 
 .dropBtn {
@@ -10,6 +11,9 @@
   border: none;
   cursor: pointer;
   outline: none;
+  width: 12vw;
+  display: flex;
+  justify-content: start;
 }
 
 .dropdownContent {
