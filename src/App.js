@@ -9,12 +9,11 @@ import PostList from "./pages/PostList";
 import Layout from "./component/layout";
 
 import PostView from "./pages/PostView";
-import Write from "./pages/Write";
+import PostWrite from "./pages/PostWrite";
 import Profile from "./pages/Profile";
 import FindPwd from "./pages/FindPwd";
 import UpdatePassword from "./pages/UpdatePassword"
-
-
+import CompleteLogin from "./pages/CompleteLogin";
 
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
           <Route path="post">
             <Route path="list" element={<PostList />} />
             <Route path="view" element={<PostView />}/>
-            <Route path="write" element={<Write/>}></Route>
+            <Route path="write" element={<PostWrite/>}></Route>
           </Route>
           <Route path="user">
             <Route path=":userId" element={<Profile  />}/>
@@ -36,7 +35,7 @@ function App() {
         <Route path="/MemberRevise" element={<MemberRevise />} />
         <Route path="/updatepwd" element={<UpdatePassword/>}/>
         <Route path="/findpwd" element={<FindPwd />}/>
-       
+       <Route path="/completelogin" element={<CompleteLogin/>}/>
       </Routes>
     </div>
   );
