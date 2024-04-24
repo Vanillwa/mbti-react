@@ -17,8 +17,13 @@ const PostItems = ({ data, status }) => {
       </div>
     );
   }
-  console.log(data)
-
+  if(data.length == 0){
+    return(
+      <div>
+        <h1>작성된 글이 없습니다.</h1>
+      </div>
+    )
+  }
   return (
     <>
       {data.map((item) => {

@@ -18,6 +18,7 @@ import chatting from "../svg/chat-dots.svg";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
+  
 
   const dialogRef = useRef();
   const handleopenModal = () => {
@@ -26,7 +27,6 @@ const Navbar = () => {
   const handleCloseModal = () => {
     dialogRef.current.close();
   };
-
 
   const [dropdown, setDropdown] = useState(false);
   const closeDropdown = ()=>{
