@@ -1,0 +1,79 @@
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5vh;
+}
+
+.form{
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 60vw;
+  min-height: 50vh;
+  padding: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.selectBox{
+  padding: 0.5vw;
+  display: flex;
+  justify-content: space-between;
+  width: 45vw;
+}
+.selectTitle{
+  font-size: 1.7vh;
+}
+.mbtiSelectE, .mbtiSelectI{
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 1.7vh; 
+  font-weight: bold;
+}
+.mbtiSelectE{
+
+}
+.mbtiSelectI{
+
+}
+
+.titleBox{
+  padding: 1vw;
+}
+.titleInput{
+  width: 45vw;
+  padding: 0.5vw;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+
+.contentBox{
+  padding: 1vw;
+}
+
+.textarea{
+  resize: none;
+  width: 45vw;
+  height: 40vh;
+  overflow: auto;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.textarea::-webkit-scrollbar{
+  background: #d2efff;
+  border-radius: 12px;
+  width: 10px;
+}
+.textarea::-webkit-scrollbar-thumb{
+  background-color: rgb(135, 199, 255);
+  border-radius: 12px;
+}
+
+.submitBtn{
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
