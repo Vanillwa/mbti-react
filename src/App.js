@@ -32,10 +32,10 @@ function App() {
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
-        <Route path="/MemberRevise" element={<MemberRevise />} />
+        <Route path="/memberrevise" element={<MemberRevise />} />
         <Route path="/updatepwd" element={<UpdatePassword/>}/>
         <Route path="/findpwd" element={<FindPwd />}/>
-       <Route path="/completelogin" element={<CompleteLogin/>}/>
+        <Route path="/completelogin" element={<CompleteLogin/>}/>
       </Routes>
     </div>
   );

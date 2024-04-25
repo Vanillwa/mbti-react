@@ -51,7 +51,6 @@ h1{
 
 .text-content {
   display: flex;
-  flex-direction: column;
   margin-left: 50px;
 }
 
@@ -61,9 +60,6 @@ h1{
   margin-bottom: 10px;
 }
 
-.content {
-  font-size: 16px;
-}
 
 a{
   text-decoration: none;

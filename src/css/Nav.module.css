@@ -3,8 +3,8 @@
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-columns: 12% 1fr 12%;
-  grid-template-rows: 8% 1fr;
+  grid-template-columns: 12vw 1fr 12vw;
+  grid-template-rows: 8vh 1fr;
   grid-template-areas: 
   'nav nav nav'
   'leftSidebar content rightSidebar'
@@ -90,6 +90,9 @@
   .span{
     display: none;
   }
+}
+.mbtiMenu{
+  width: 100%;
 }
 
 .svg{
