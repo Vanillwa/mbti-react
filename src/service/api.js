@@ -129,10 +129,19 @@ export const requestUpdatePwd = async(password)=>{
   const res = await axios.post("/updatePassword",{password})
   return res.data;
 }
-
+/**글작성 */ 
 export const postPost = async(body)=>{
   const res = await axios.post("/post", body)
   return res.data;  
 }
-
+/**글삭제 */
+export const postDelete = async(postId)=>{
+  const res = await axios.delete(`/post/${postId}`)
+  return res.data;
+}
+/**글 수정 */
+export const postEdit = async(body)=>{
+  const res = await axios.put('/post', body)
+  return res.data
+}
 

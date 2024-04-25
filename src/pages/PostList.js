@@ -3,7 +3,8 @@ import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
 import { getPostList } from "../service/api";
 import PostItems from "../component/PostItems";
-import "../css/PostList.css";
+import styles from "../css/PostList.module.css";
+
 
 const PostList = () => {
   const [query, setQuery] = useSearchParams();
@@ -19,7 +20,7 @@ const PostList = () => {
   );
 
   return (
-    <div className="postBox">
+    <div className={styles.postBox}>
       
       <PostItems data={data} status={status} />
       

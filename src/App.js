@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Join from "./pages/Join"; // './pages/Join' 경로에 있는 Join 컴포넌트를 import
 import MemberRevise from "./pages/MemberRevise"; // './pages/Join' 경로에 있는 Join 컴포넌트를 import
-
 import PostList from "./pages/PostList";
 import Layout from "./component/layout";
 
@@ -14,6 +13,7 @@ import Profile from "./pages/Profile";
 import FindPwd from "./pages/FindPwd";
 import UpdatePassword from "./pages/UpdatePassword"
 import CompleteLogin from "./pages/CompleteLogin";
+import PostEdit from "./pages/PostEdit";
 
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
             <Route path="list" element={<PostList />} />
             <Route path="view" element={<PostView />}/>
             <Route path="write" element={<PostWrite/>}></Route>
+            <Route path="edit" element={<PostEdit/>}></Route>
           </Route>
           <Route path="user">
             <Route path=":userId" element={<Profile  />}/>
