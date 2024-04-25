@@ -20,7 +20,7 @@ function FindPwd() {
     navigate("/updatepwd", { email: email });
   };
   const goMain = () => {
-    navigate("/");
+    navigate("/",{state:'findPwd'});
   };
   const handleFindPwd = async () => {};
 
@@ -50,7 +50,10 @@ function FindPwd() {
   //이메일 인증
   const handleRequestCode = async () => {
     const email = emailRef.current.value;
-    if (email === "") return;
+    if (email === "") {
+    alert("이메일을 입력해주세요.")
+      return;
+    }
     const result = await requestCodeFindPwd(email);
     //console.log(result.message);
 
@@ -91,16 +94,18 @@ function FindPwd() {
   return (
     <>
       <div className="container mt-5">
+        <div className={styles.logo}>
         <Link to="/" className="navbar-logo d-flex justify-content-center">
-          <img src={logo} alt="로고" className={styles.logo} />
+          <img src={logo} alt="로고"  />
         </Link>
+        </div>
         <div className={styles.card}>
           <div className="card-body">
             <form>
               <div className="text-center mb-5">
                 <img src={img} alt="회원사진" className={styles.mbtiImg} />
                 <h2 className="fw-bold" style={{ fontSize: "40px" }}>
-                  비밀번호찾기
+                  이메일 인증
                 </h2>
               </div>
 
@@ -151,7 +156,7 @@ function FindPwd() {
                     onClick={isInputPwd}
                     disabled={isButtonDisabled}
                     class={`col-3 btn btn-sm btn-primary ${styles.findbtn}`}>
-                    비밀번호 찾기
+                    재설정하기
                   </button>
                   <button
                     onClick={goMain}

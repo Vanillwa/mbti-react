@@ -1,7 +1,11 @@
 /* 추후 디자인 할 예정 */
 
 .logo{
-  width:300px;
+
+}
+.logo img{
+  text-align: center;
+  width:200px;
   margin-bottom:50px;
 }
 .card {
@@ -17,6 +21,7 @@
     
   }
   .mbtiImg{
+    margin-bottom:20px;
     width:150px;
   }
   .findbtn{

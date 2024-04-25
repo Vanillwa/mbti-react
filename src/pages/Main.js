@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Autoplay, Navigation } from "swiper";
+import { Autoplay, Navigation ,Pagination} from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -31,24 +31,24 @@ import ESFP from "../images/Main/ESFP.png";
 import logo from "../images/logo.avif";
 
 import { fetchLogin } from "../service/api";
-import { useNavigate, useNavigationType } from "react-router";
+import { useNavigate ,useLocation,NavigationType} from "react-router";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
 
 function Main() {
- 
+  const navigate = useNavigate();
+
   const { login } = useAuthContext();
   const [emailAlert, setEmailAlert] = useState();
   const [pwdAlert, setPwdAlert] = useState();
-
+  const location = useLocation();
   
-  const navigate = useNavigate();
 
  //로그인 기능
   const handleSubmit = async e => {
-
+   
    
     e.preventDefault();
     let body = {
@@ -67,18 +67,27 @@ function Main() {
       setPwdAlert("비밀번호를 입력해주세요.");
       setEmailAlert("");
     }
-  
-    
-    if (res.message === "success" ) {
+    console.log(location,'location')
+ 
+    if (res.message ==="success" && location.state === 'updatePwd' || location.state === 'join' || location.state ==='findPwd' || location.state === null ) {
+      
       login(res.userInfo);
-      navigate("/post/list");
-    } else if (res.message === "NoExist") {
+      navigate("/post/list")
+    }
+    else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
       setPwdAlert("");
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
-    } 
+    } else if(res.message === "success" ){
+      login(res.userInfo);
+      navigate(-1)
+    }
+    
+
+     
+    
   };
  
   
@@ -94,13 +103,14 @@ function Main() {
         <Row>
           <Col md={7}>
             <Swiper
+              
               navigation={true}
               className={styles.swiper}
-              spaceBetween={50} //간격
               slidesPerView={1} //한번에 보여질 갯수
-              modules={[Autoplay, Navigation]}
+              modules={[Autoplay, Navigation,Pagination]}
               autoplay={{ delay: 2500 }} //자동슬라이드
               loop={true} //무한반복
+              pagination={{ clickable: true }} 
             >
               <SwiperSlide>
                 <img src={ISTJ} alt="ISTJ" />

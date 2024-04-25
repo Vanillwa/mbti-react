@@ -22,7 +22,7 @@ function ResetPassword() {
   const handleInputPassword = e => {
     const input = e.target.value;
     setPassword(input);
-    if(!passwordRegex.test(input) ){
+    if(!passwordRegex.test(input) || input.length <=5){
      return  setRegxAlert(" 숫자와  영어가 있어야 하며 총 길이가 6에서 20 사이여야 합니다.")    
      }else{
       setRegxAlert("올바른 형식입니다.")
@@ -44,11 +44,13 @@ function ResetPassword() {
       setIsSame(false);
       return;
     }
-
-    if (password === checkPassword ) {
+if(password.length <6){
+  setIsSame(false);
+}else  if (password === checkPassword ) {
       setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치합니다.");
       setIsSame(true);
-    } else {
+    }
+     else {
       setIsSame(false);
       setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
     }
@@ -62,14 +64,12 @@ function ResetPassword() {
 
   const UpdatePwd = async () => {
     
-
-
     const result = await requestUpdatePwd(password);
     console.log(result.message);
     console.log(result);
-    if (result.message === "success") {
+    if (result.message === "success" ) {
       alert("비밀번호 변경 완료.");
-      navigate("/");
+      navigate("/",{state:'updatePwd'});
     } else {
       alert("에러 발생");
     }

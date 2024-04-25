@@ -20,11 +20,11 @@ const {logout} = useContext(AuthContext);
     console.log(result.message)
     if(result.message === 'success'){
       logout();
-      navigate("/")
+      navigate("/",{state:"logout"})
      
     }
 
-  }
+  }  
 
   return (
     <div  className={styles.menu}>

@@ -197,7 +197,7 @@ function Join() {
 
     if (result.message === "success") {
       alert("회원가입 성공하셨습니다!.")
-      navigate("/")
+      navigate("/",{state:'join'})
 
     }
 
