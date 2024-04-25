@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../css/PostList.module.css";
 import notImg from '../svg/person-circle.svg'
 import { Link } from "react-router-dom";
 
 const PostItems = ({ data, status }) => {
   
+  const [posts, setPosts] = useState([]);
+
+  useEffect(()=>{
+    if (data){
+      const sortedData = [...data].sort((a,b)=>new Date(b.createdAt) - new Date(a.createdAt))
+      setPosts(sortedData)
+    }
+  }, [data])
+  console.log(posts)
+
   if (status === "loading") {
     return (
       <div className="container">
@@ -25,9 +35,10 @@ const PostItems = ({ data, status }) => {
       </div>
     )
   }
+  
   return (
     <>
-      {data.map((item) => {
+      {posts.map((item) => {
         const showImg = item.content.match(/<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/);
         const imgSrc = showImg ? showImg[1] : null;
         return (
