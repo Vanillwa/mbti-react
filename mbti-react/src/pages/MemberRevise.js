@@ -9,11 +9,14 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 
 
-// import { checkDuplicationNickname } from '../service/api';
 
 
 // 로그인 상태정보를 불러옴
 import { useAuthContext } from "../context/AuthContext";
+import { userCheckDuplicationNickname } from '../service/api';
+import { userNickNameChanged } from '../service/api';
+import { userUpdateNickname } from '../service/api';
+
 
 
 
@@ -22,28 +25,35 @@ import { useAuthContext } from "../context/AuthContext";
 function MemberRevise() {
   // 유저데이타 받아옴
   const { memoUserInfo } = useAuthContext();
-  const { userInfo } = memoUserInfo;
+  const { userInfo,isLoggedIn } = memoUserInfo;
+  
 
   console.log(userInfo)
+  console.log(isLoggedIn)
+  
+ 
 
 
 
 
   // 닉네임 
   const [nickname, setNickname] = useState()
+  // 중복확인용 
   const [nicknameAlert, setNicknameAlert] = useState('')
-  const [nicknameValidation, setNicknameValidation] = useState()
+  const [nicknameValidation, setNicknameValidation] = useState('')
   const [newNickname, setNewNickname] = useState(userInfo.nickname)
   const [nicknameEditable, setNicknameEditable] = useState(false);
- 
-  const [nicknameButtonChange, setNicknameButtonChange] = useState(false)
-  
+
+  const [nicknameButtonChange, setNicknameButtonChange] = useState("수정")
+
 
   // 패스워드
-  const [pw, setpw] = useState('')
-  const [newPwname, setNewpwname] = useState("")
-  const [pwEditable, setPwEditable] = useState(false)
-  const [pwButtonChange, setPwButtonChange] = useState(false)
+  const [pw, setPw] = useState('');
+  const [newPwName, setNewPwName] = useState('');
+  const [pwEditable, setPwEditable] = useState(false);
+  const [pwButtonChange, setPwButtonChange] = useState(false);
+  const [pwMessage, setPwMessage] = useState('');
+  const [pwName, setPwName] = useState('');
 
   // mbti
   const [mbti, setMbti] = useState(userInfo.mbti)
@@ -63,93 +73,69 @@ function MemberRevise() {
 
 
 
+ // 닉네임 정규식 
 
 
 
 
 
-  // 닉네임 중복 여부 확인 
-  const checkDuplicationNickname = async () => {
-
-    if (!nickname || nickname < 2 || nickname > 16) {
-
-
-      return;
-      const data = await checkDuplicationNickname(userInfo.nickname);
-    }
 
 
 
-  }
-
-
-// 미완성
-  checkDuplicationNickname({ userInfo })
-    .then((data) => {
-      if (data.message === "success") {
-        setNicknameAlert("사용 가능한 닉네임 입니다.");
-        setNicknameValidation('valid');
-      } else if (data.message === "duplicated") {
-        setNicknameAlert("이미 사용중.");
-        setNicknameValidation('invalid');
-      }
-    })
-    .catch((error) => {
-      console.error("Error checking nickname duplication:", error);
-
-    });
-
-
-
-  // 닉네임 중복 
-  const handleCheckDuplicationNickname = async () => {
-    if (!nickname || nickname.length < 2 || nickname.length > 20) {
-      setNicknameAlert("최소 1글자 이상 10글자 이하로 입력해주세요.");
-      setNicknameValidation("invalid");
-      return;
-    }
-    const data = await checkDuplicationNickname({ nickname });
+  //닉네임 중복 여부 확인 
+  const handleUserCheckDuplicationNickname = async () => {
+    // if (!nickname || nickname.length < 2 || nickname.length > 20) {
+    //   alert("최소 1글자 이상 10글자 이하로 입력해주세요.");
+    //   setNicknameValidation("invalid");
+    //   return;
+    // }
+    const data = await userCheckDuplicationNickname({ nickname });
+    console.log("data:", data)
     if (data.message === "success") {
-      setNicknameAlert("사용 가능한 닉네임 입니다.");
+      alert("사용 가능한 닉네임 입니다.");
       setNicknameValidation('valid');
     } else if (data.message === "duplicated") {
 
-      setNicknameAlert("이미 사용중.");
+      alert("이미 사용중.");
       setNicknameValidation('invalid');
     }
   };
 
+  
+
+
+
+
+
+
+
+
+  
+  
 
 
   // 닉네임 변경 
   const handleNicknameChange = (e) => {
     setNewNickname(e.target.value);
+   
   };
-  const nicknameChangeHandler = () => {
-    if (!nicknameEditable) {
-      setNicknameEditable(true);
-      setNicknameButtonChange(true);
-     
-      
-    }
 
-    
-    else {
+  const nicknameChangeHandler = async() => {
+    if (nicknameButtonChange === "수정") {
+      setNicknameEditable(true);
+      setNicknameButtonChange("중복");
+      
+    } else if (nicknameButtonChange === "중복") {
+      setNicknameEditable(true);
+      setNicknameButtonChange("변경");
+      await handleUserCheckDuplicationNickname()
+    } else if (nicknameButtonChange === "변경") {
       userInfo.nickname = newNickname;
       setNicknameEditable(false);
-      setNicknameButtonChange(false);
+      setNicknameButtonChange("수정");
       alert("닉네임이 변경되었습니다.");
     }
-
-
-
   };
-
-
-
-
-
-
 
 
 
@@ -158,23 +144,29 @@ function MemberRevise() {
 
   // 패스워드 변경
   const handlepwChange = (e) => {
-    setNewpwname(e.target.value)
+    setNewPwName(e.target.value)
   }
 
   const pwChangeHandler = () => {
     if (!pwEditable) {
-      setPwEditable(true)
-      setPwButtonChange(true)
+      setPwEditable(true);
+      setPwButtonChange(true);
+      setPwMessage('');
+      setPwName('');
+    } else if (pwEditable && pwMessage === '비밀번호를 한번 더 입력해주세요.') {
+      setPw(newPwName);
+      setPwEditable(false);
+      setPwButtonChange(false);
+      setPwMessage('');
+      alert('비밀번호가 변경되었습니다.');
+      console.log(pw);
     } else {
-      setpw(newPwname)
-      setPwEditable(false)
-      setPwButtonChange(false)
-      alert("비밀번호가 변경되었습니다.");
-      console.log(pw)
+      setPwEditable(true);
+      setPwButtonChange(true);
+      setPwMessage('비밀번호를 한번 더 입력해주세요.');
+      setPwName('');
     }
-
-
-  }
+  };
 
 
   // mbti변경
@@ -301,13 +293,13 @@ function MemberRevise() {
               <div>
                 <label htmlFor="user-pw" className="form-label">닉네임 변경</label>
                 <div className='d-flex gap-2 '>
-                  <input type="text" className="form-control" placeholder={newNickname} disabled={!nicknameEditable} onInput={handleNicknameChange} />
+                  <input type="text" className="form-control" placeholder={newNickname} disabled={!nicknameEditable} onInput={handleNicknameChange}  />
                   <button
                     type='button'
-                    className={`btn btn-sm ${nicknameButtonChange ? 'btn-success' : 'btn-danger'}`}
+                    className={`btn btn-sm ${nicknameButtonChange === '변경' ? 'btn-success' : nicknameButtonChange === '중복' ? 'btn-warning' : 'btn-danger'}`}
                     onClick={nicknameChangeHandler}
                   >
-                    {nicknameButtonChange ? '변경' : '수정'}
+                    {nicknameButtonChange === '변경' ? '변경' : nicknameButtonChange === '중복' ? '중복' : '수정'}
                   </button>
                 </div>
               </div>
@@ -316,7 +308,9 @@ function MemberRevise() {
               <div>
                 <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
                 <div className="d-flex gap-2">
-                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} onInput={handlepwChange} />
+                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} onInput={handlepwChange}
+                  value={pwName}
+                  onChange={(e) => setPwName(e.target.value)} />
                   <button
                     type='button'
                     className={`btn btn-sm ${pwButtonChange ? 'btn-success' : 'btn-danger'}`}
@@ -324,7 +318,10 @@ function MemberRevise() {
                   >
                     {pwButtonChange ? '변경' : '수정'}
                   </button>
+                 
                 </div>
+                <p style={{color:'green'}}>{pwMessage}</p>
+
               </div>
 
               <div>

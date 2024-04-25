@@ -56,6 +56,10 @@ function PostView() {
     dateDisplay = createdAt.toLocaleDateString("ko-KR");
   }
 
+  function ContentComponent({content}){
+    return <div dangerouslySetInnerHTML={{__html : content}}></div>
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.mbti}>{data.category} 게시판</div>
@@ -65,18 +69,20 @@ function PostView() {
           <img className={styles.userImg} src={data.User.profileImage ? data.User.profileImg : notImg}/>
           {data.User.nickname}
           </div>
+          <div className={styles.title}>{data.title}</div>
         <div className={styles.date}>{dateDisplay}</div>
       </div>
       <div className={styles.main}>
-        <div className={styles.title}>{data.title}</div>
-        <div className={styles.image}>{data.image}</div>
-        <div className={styles.content}>{data.content}</div>
+        
+        <div className={styles.content}>
+          <ContentComponent content={data.content}/>
+        </div>
       </div>
-      <form className={styles.commentForm}>
+      <form onSubmit='' className={styles.commentForm}>
         <img className={styles.myImg} src={img}></img>
         <span className={styles.label}>{userInfo.nickname} :</span>
-        <input className={styles.commentInput} />
-        <div type="button">작성</div>
+        <input className={styles.commentInput} required/>
+        <div type="submit">작성</div>
       </form>
       <div className={styles.comment}>
         <div className={styles.commentName}></div>
