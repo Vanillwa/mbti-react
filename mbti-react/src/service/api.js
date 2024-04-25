@@ -101,6 +101,32 @@ export const nickNameChanged = async()=>{
 
 
 
+//회원정보  닉네임 중복체크 
+export const userCheckDuplicationNickname = async(body)=>{
+  const res = await axios.post("/updateUserInfo/checkDuplicationNickname",body)
+  return res.data
+}
+
+//회원정보 닉네임 값 변경시  세션삭제 
+export const userNickNameChanged = async()=>{
+  const res = await axios.get("/updateUserInfo/nicknameChanged")
+  return res.data;
+}
+//회원정보 닉네임 변경 
+export const userUpdateNickname = async()=>{
+  const res = await axios.get("/updateUserInfo/updateNickname")
+  return res.data;
+}
+
+
+
+
+
+
+
+
+
+
 
 //비밀번호 찾기 이메일 인증
 
