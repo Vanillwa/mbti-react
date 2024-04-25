@@ -32,7 +32,7 @@ function App() {
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
-        <Route path="/memberrevise" element={<MemberRevise />} />
+        <Route path="/memberevise" element={<MemberRevise />} />
         <Route path="/updatepwd" element={<UpdatePassword/>}/>
         <Route path="/findpwd" element={<FindPwd />}/>
         <Route path="/completelogin" element={<CompleteLogin/>}/>

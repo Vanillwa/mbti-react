@@ -18,7 +18,6 @@ const PostItems = ({ data, status }) => {
       </div>
     );
   }
-  console.log(data[6].content.match('<img'))
   if(data.length == 0){
     return(
       <div>

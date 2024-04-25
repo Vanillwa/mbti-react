@@ -44,7 +44,7 @@ const Navbar = () => {
           <input type="text" placeholder="검색" />
         </div>
         <div className={styles.navbarUser}>
-          <Link to={isLoggedIn ? "/mypage" : "/"}>
+          <Link to={isLoggedIn ? "/memberevise" : "/"}>
             <span className={styles.userName}>
               {isLoggedIn ? userInfo.nickname : "로그인 해주세요"}
             </span>
@@ -113,7 +113,7 @@ const Navbar = () => {
             <img className={styles.svg} src={chatting} />
             <div className={styles.span}>채팅</div>
           </Link>
-          <Link className={styles.menu} to={isLoggedIn ? "/memberrevise" : "/"}>
+          <Link className={styles.menu} to={isLoggedIn ? "/memberevise" : "/"}>
             <img className={styles.svg} src={profile} />
             <div className={styles.span}> 마이페이지</div>
           </Link>

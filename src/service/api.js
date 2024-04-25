@@ -101,11 +101,23 @@ export const nickNameChanged = async()=>{
 
 // MemberRevise.js
 
-// 현재 로그인된 유저 정보 받는 api
-export const loginStatus = async(id)=>{
-  const res = await axios.get(`/api/user/${id}`);
+// 회원정보수정 - 닉네임 중복체크
+export const userCheckDuplicationNickname = async (body)=>{
+  const res = await axios.post("/updateUserInfo/checkDuplicationNickname", body)
+  return res.data
+}
+
+// 회원정보수정 - 닉네임값 변경시 세선 삭제
+export const userNickNameChanged = async()=>{
+  const res = await axios.get("/updateUserInfo/nicknameChanged")
   return res.data;
 }
+// 회원정보수정 - 닉네임 변경
+export const userUpdateNickname = async (body)=>{
+  const res = await axios.put("/updateUserInfo/nickname", body)
+  return res.data
+}
+
 
 
 //비밀번호 찾기 이메일 인증
