@@ -6,7 +6,7 @@ h1{
   flex-direction: column;
   align-items: center;
 }
-.post {
+.postWrap {
   display: flex;
   flex-direction: column;
   border: 1px solid #ddd;
@@ -16,14 +16,13 @@ h1{
   position: relative;
 }
 
-.post-header {
+.postHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
-.profile-img {
+.profileImg {
   width: 40px;
   height: auto; 
   border-radius: 25px;
@@ -38,26 +37,21 @@ h1{
   justify-content: end;
 }
 
-.post-body {
+.postBody {
   display: flex;
 }
 
-
-.post-img {
-  width: 100px;
-  height: 100px;
-  margin-right: 20px;
-}
-
-.text-content {
+.content {
+  padding: 0 1vw;
   display: flex;
-  margin-left: 50px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 2vh;
   margin-bottom: 10px;
+  margin-left: 2vw;
 }
 
 

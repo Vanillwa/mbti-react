@@ -1,14 +1,16 @@
 import React from "react";
 import styles from "../css/postView.module.css";
-import { useSearchParams } from "react-router-dom";
-import { getPostView } from "../service/api";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { getPostView, postDelete } from "../service/api";
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from '../svg/person-circle.svg'
 function PostView() {
+  const navigate = useNavigate();
+
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-
+  
   const [query, setQuery] = useSearchParams();
   const postId = query.get("postId");
 
@@ -38,6 +40,22 @@ function PostView() {
   if(img == null ){
     img = notImg
   }
+  const goEdit = ()=>{
+    navigate(`/post/edit?postId=${data.postId}`)
+  }
+
+  const handleDelete = async()=>{
+    try {
+      alert('정말 삭제하시겠습니까?')
+      await postDelete(postId)
+      alert('삭제 완료')
+      navigate('/post/list')
+
+    } catch (error) {
+      console.error('삭제중 오류', error)
+      alert('삭제 실패')
+    }
+  }
 
   const createdAt = new Date(data.createdAt);
   const now = new Date();
@@ -59,10 +77,14 @@ function PostView() {
   function ContentComponent({content}){
     return <div dangerouslySetInnerHTML={{__html : content}}></div>
   }
-
+  
+  console.log(data.User.userId)
+  console.log(userInfo)
+  
   return (
     <div className={styles.container}>
-      <div className={styles.mbti}>{data.category} 게시판</div>
+      <div className={styles.mbti}><span>{data.category} 게시판</span>{userInfo.userId == data.User.userId ? <div className="d-flex"><div className={styles.editBtn} type="button" onClick={goEdit}>수정</div><div onClick={handleDelete} className={styles.delBtn} type="button">삭제</div></div> : null}</div>
+      <div className={styles.editBox}></div>
       <div className={styles.header}>
         
         <div className={styles.nickname}>
