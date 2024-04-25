@@ -10,7 +10,7 @@
 .form{
   border: 1px solid black;
   border-radius: 5px;
-  width: 80vw;
+  width: 70vw;
   min-height: 70vh;
   padding: 1vw;
   display: flex;
@@ -21,7 +21,7 @@
   padding: 0.5vw;
   display: flex;
   justify-content: space-between;
-  width: 70vw;
+  width: 60vw;
 }
 .selectTitle{
   font-size: 1.7vh;
@@ -43,14 +43,14 @@
   padding: 1vw;
 }
 .titleInput{
-  width: 70vw;
+  width: 60vw;
   padding: 0.5vw;
   border-radius: 5px;
   border: 1px solid black;
 }
 .editorBox{
-  width: 70vw;
-
+  width: 60vw;
+  height: 40vh;
   border-radius: 5px;
 }
 
@@ -61,7 +61,7 @@
 
 .textarea{
   resize: none;
-  width: 70vw;
+  width: 60vw;
   height: 40vh;
   overflow: auto;
   border: 1px solid black;
@@ -83,8 +83,18 @@
   background-color: white;
 }
 
-.imageBox{
+.imageWrap{
+  border: 1px solid black;
+  width: 40vw;
   display: flex;
   justify-content: center;
+  overflow-x: auto;
 }
 
+
+.imgBox{
+  width: 20vw;
+}
+.showImg{
+  width: 20vw;
+}
