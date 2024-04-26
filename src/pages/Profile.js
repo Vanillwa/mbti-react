@@ -29,7 +29,6 @@ const Profile = () => {
       </div>
     );
   }
-  console.log(data)
   return (
     <div className='post'>
       {data.userInfo.nickname}

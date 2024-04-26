@@ -6,8 +6,8 @@ import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
 import SettingDropdown from "./SettingDropdown";
 
+import RUT from '../images/areyout.png'
 import write from "../svg/pencil-square.svg";
-import logo from "../images/logo.avif";
 import notImg from "../svg/person-circle.svg";
 import home from "../svg/house.svg";
 import list from "../svg/card-list.svg";
@@ -43,7 +43,7 @@ const compareLogin =()=>{
       {/* 상단 네브바 */}
       <nav className={`${styles.item} ${styles.nav}`}>
         <Link to="/post/list" className={styles.navbarLogo}>
-          <img src={logo} className={styles.logo}></img>
+          <img src={RUT} className={styles.logo}></img>
         </Link>
         <div className={styles.navbarSearch}>
           <input type="text" placeholder="검색" />
