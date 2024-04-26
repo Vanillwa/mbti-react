@@ -58,8 +58,15 @@
 
 }
 
-.comment{
-  
+.commentContainer{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+.commentBox{
+  display: flex;
+  justify-content: space-between;
 }
 .unLabel{
   display: none;
