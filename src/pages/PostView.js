@@ -57,8 +57,8 @@ function PostView() {
     );
   }
   
-  let img = userInfo.profileImage;
-  if(img == null ){
+  let img = userInfo?.profileImage;
+  if(img == null && !isLoggedIn){
     img = notImg
   }
   const goEdit = ()=>{
@@ -98,13 +98,10 @@ function PostView() {
   function ContentComponent({content}){
     return <div dangerouslySetInnerHTML={{__html : content}}></div>
   }
-  
-  console.log(data.User.userId)
-  console.log(userInfo)
-  
+
   return (
     <div className={styles.container} >
-      <div className={styles.mbti}><span>{data.category} 게시판</span>{userInfo.userId == data.User.userId ? <div className="d-flex"><div className={styles.editBtn} type="button" onClick={goEdit}>수정</div><div onClick={handleDelete} className={styles.delBtn} type="button">삭제</div></div> : null}</div>
+      <div className={styles.mbti}><span>{data.category} 게시판</span>{userInfo?.userId == data.User.userId && !isLoggedIn? <div className="d-flex"><div className={styles.editBtn} type="button" onClick={goEdit}>수정</div><div onClick={handleDelete} className={styles.delBtn} type="button">삭제</div></div> : null}</div>
       <div className={styles.editBox}></div>
       <div className={styles.header}>
         <div className={styles.nickname}>
@@ -120,12 +117,15 @@ function PostView() {
           <ContentComponent content={data.content}/>
         </div>
       </div>
-      <form onSubmit='' className={styles.commentForm}>
+      {isLoggedIn ? (<form onSubmit='' className={styles.commentForm}>
         <img className={styles.myImg} src={img}></img>
-        <span className={styles.label}>{userInfo.nickname} :</span>
+        <span className={styles.label}>{userInfo?.nickname} :</span>
         <input className={styles.commentInput} required/>
         <div type="submit">작성</div>
-      </form>
+      </form>) :
+      <div className={styles.commentForm}>로그인 후 댓글서비스 이용이 가능합니다. <Link className="fw-bold" to='/'>로그인 하기</Link></div>
+      }
+      
       <div className={styles.comment}>
         <div className={styles.commentName}></div>
         <div className={styles.commentContent}></div>
