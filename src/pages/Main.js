@@ -28,7 +28,7 @@ import ISTP from "../images/Main/ISTP.png";
 import ISFP from "../images/Main/ISFP.png";
 import ESTP from "../images/Main/ESTP.png";
 import ESFP from "../images/Main/ESFP.png";
-import logo from "../images/logo.avif";
+import logo from "../images/RUT.png";
 
 import { fetchLogin } from "../service/api";
 import { useNavigate ,useLocation,NavigationType} from "react-router";
