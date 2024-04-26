@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import logo from "../images/logo.avif";
+import logo from "../images/areyout.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import img from "../images/MBTI.png";
 import styles from "../css/FindPwd.module.css";
 import { checkCodeFindPwd, emailChangedFindPwd, requestCodeFindPwd } from "../service/api";
+import { useAuthContext } from "../context/AuthContext";
 
 function FindPwd() {
- 
+  const emailRegx = "([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])"
    const emailRef = useRef();
    const [email ,setEmail] = useState();
   const [isInputDisabled, setIsInputDisabled] = useState(true);
@@ -25,8 +26,12 @@ function FindPwd() {
   const handleFindPwd = async () => {};
 
   //입력한 이메일값 받아오기
-  const handleEmailOnInput = e => {
-    
+
+  const handleEmailOnInput = (e)=> {
+    const input = e.target.value
+    if(input === '' || input != emailRegx){
+      setIsInputDisabled(true);
+    }
   };
 
   const handleEmailOnBlur =async e => {
@@ -103,9 +108,8 @@ function FindPwd() {
           <div className="card-body">
             <form>
               <div className="text-center mb-5">
-                <img src={img} alt="회원사진" className={styles.mbtiImg} />
                 <h2 className="fw-bold" style={{ fontSize: "40px" }}>
-                  이메일 인증
+                  비밀번호 재설정
                 </h2>
               </div>
 

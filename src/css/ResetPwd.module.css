@@ -3,6 +3,9 @@
   width:300px;
   margin-bottom:50px;
 }
+.logo img{
+  width:40vw;
+}
 
 .card {
     max-width: 500px; 

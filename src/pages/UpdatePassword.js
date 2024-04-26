@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import logo from "../images/logo.avif";
+import logo from "../images/areyout.png";
 import { Link } from "react-router-dom";
 import img from "../images/MBTI.png";
 import styles from "../css/ResetPwd.module.css";
 import { useNavigate } from "react-router";
 import { requestUpdatePwd } from "../service/api";
+import { useAuthContext } from "../context/AuthContext";
 
 
 
 function ResetPassword() {
+  const { memoUserInfo } = useAuthContext();
+  const {  userInfo } = memoUserInfo;
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckpassword] = useState("");
   const [checkCodeAlert, setCheckCodeAlert] = useState();
@@ -87,7 +90,6 @@ if(password.length <6){
           <div className="card-body">
             <form>
               <div className="text-center mb-5">
-                <img src={img} alt="회원사진" className={styles.mbtiImg} />
                 <h2 className="fw-bold" style={{ fontSize: "40px" }}>
                   비밀번호 재설정
                 </h2>
