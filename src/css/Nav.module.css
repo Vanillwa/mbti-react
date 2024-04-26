@@ -122,3 +122,7 @@
   height: 2.5vh;
   margin-left: 1vw;
 }
+.profileBtn{
+  border: 0; 
+  background-color: rgba(0, 0, 0, 0);
+}

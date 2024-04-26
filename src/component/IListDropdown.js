@@ -2,19 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from '../css/listDropdown.module.css'
 import mbtiI from '../images/mbtiI.png'
-import { useLocation } from "react-router-dom";
+
 function IListDropdown() {
   const [dropdown, setDropdown] = useState(false);
   const toggleDropdown = () => setDropdown(!dropdown);
   const closeDropdown = ()=>setDropdown(false)
-const location = useLocation();
-const state = location.state;
+
   const dropdownRef = useRef();
 
   useEffect(()=>{
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         closeDropdown();
+        
       }
     };
     document.addEventListener('mousedown', handleClickOutside);

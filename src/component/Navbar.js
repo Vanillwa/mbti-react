@@ -14,12 +14,12 @@ import list from "../svg/card-list.svg";
 import freind from "../svg/people-fill.svg";
 import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
-
+import { useLocation,useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-  
-
+  const location =useLocation()
+const navigate = useNavigate()
   const dialogRef = useRef();
   const handleopenModal = () => {
     dialogRef.current.showModal();
@@ -32,6 +32,11 @@ const Navbar = () => {
   const closeDropdown = ()=>{
     setDropdown(false)
   }
+const compareLogin =()=>{
+  isLoggedIn
+  ? navigate("/memberevise", { state: { state: "mypage" } })
+  : navigate("/", { state: { state: "login" } });
+}
 
   return (
     <div className={styles.container}>
@@ -44,7 +49,7 @@ const Navbar = () => {
           <input type="text" placeholder="검색" />
         </div>
         <div className={styles.navbarUser}>
-          <Link to={isLoggedIn ? "/memberevise" : "/"}>
+          <button className={styles.profileBtn} type="button" onClick={compareLogin}>
             <span className={styles.userName}>
               {isLoggedIn ? userInfo.nickname : "로그인 해주세요"}
             </span>
@@ -57,7 +62,7 @@ const Navbar = () => {
             ) : (
               <img src={notImg} alt="회원사진" className={styles.userImg} />
             )}
-          </Link>
+          </button>
         </div>
       </nav>
 
@@ -100,7 +105,7 @@ const Navbar = () => {
               <dialog className={styles.dialog} ref={dialogRef}>
                 <h2>로그인이 필요한 컨텐츠입니다.</h2>
                 <p>로그인 하시겠습니까?</p>
-                <Link to="/">로그인 하러가기</Link>
+                <Link to={`/`} >로그인 하러가기</Link>
                 <br />
                 <div type="button" onClick={handleCloseModal}>
                   닫기
