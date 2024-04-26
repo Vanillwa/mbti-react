@@ -118,6 +118,37 @@ export const userUpdateNickname = async (body)=>{
   return res.data
 }
 
+// 회원정보수정 - 비밀번호 변경
+export const userUpdatePassword = async (body)=>{
+  const res = await axios.put("/updateUserInfo/password", body)
+  return res.data
+}
+
+// 회원정보수정 - 유저 프로필 변경
+export const userUpdateImg = async(body)=>{
+  const res = await axios.put("/updateUserInfo/updateProfileImage",body)
+  return res.data
+}
+
+
+
+
+
+// 회원정보수정 - 유저 mbti 변경
+export const userUpdateMbti = async(body)=>{
+  const res = await axios.put("/updateUserInfo/mbti",body)
+  return res.data
+}
+
+// 회원정보수정 - 유저 Img 삭제
+
+export const userDeleteImage = async(body)=>{
+  const res = await axios.delete('/updateUserInfo/deleteProfileImage',body)
+  return res.data
+}
+
+
+
 
 
 //비밀번호 찾기 이메일 인증

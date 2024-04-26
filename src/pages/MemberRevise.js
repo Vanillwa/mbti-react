@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/logo.avif';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import img from "../images/MBTI.png";
 // 프로필 수정삭제 구현하기 위해 만듬
 import Modal from 'react-bootstrap/Modal';
 // 프로필 수정아이콘 클릭시 선팝업창 뜨게 만들려고 씀
 import Button from 'react-bootstrap/Button'
+import '../css/MemberRevise.css'
 
 
 // import { checkDuplicationNickname } from '../service/api';
@@ -15,8 +16,11 @@ import Button from 'react-bootstrap/Button'
 // 로그인 상태정보를 불러옴
 import { useAuthContext } from "../context/AuthContext";
 import { userCheckDuplicationNickname } from '../service/api';
-import { userNickNameChanged } from '../service/api';
 import { userUpdateNickname } from '../service/api';
+import { userUpdatePassword } from '../service/api';
+import { userUpdateMbti } from '../service/api';
+import { userDeleteImage } from '../service/api';
+import axios from 'axios';
 
 
 
@@ -31,10 +35,12 @@ function MemberRevise() {
   console.log(userInfo)
   console.log(isLoggedIn)
 
+  const navigate = useNavigate()
 
 
 
 
+  const [imgUrl,setImgUrl] =useState(userInfo.profileImage)
   // 닉네임 
 
   const nicknameRef = useRef();
@@ -45,35 +51,79 @@ function MemberRevise() {
 
 
   // 패스워드
-  const [pw, setpw] = useState('')
-  const [newPwname, setNewpwname] = useState("")
+  const passwordRef = useRef();
+  const [pwMessage, setPwmessage] = useState('')
+  //const [newPwname, setNewpwname] = useState("")
   const [pwEditable, setPwEditable] = useState(false)
-  const [pwButtonChange, setPwButtonChange] = useState(false)
+  //const [pwButtonChange, setPwButtonChange] = useState(false)
   const [passwordBtn, setPasswordBtn] = useState('수정')
+  const [pwAlert, setPwAlert] = useState('')
 
 
-  const [pwAlert,setPwAlert ] = useState('')
 
 
   // mbti
+  const mbtiRef = useRef()
   const [mbti, setMbti] = useState(userInfo.mbti)
-  const [newMbti, setNewMbti] = useState()
-  const [mbtiChange, setMbtiChange] = useState()
+  // const [newMbti, setNewMbti] = useState()
+  // const [mbtiChange, setMbtiChange] = useState()
 
 
-  // 불러온 사진 업로드 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [preview, setPreview] = useState('');
+//  
+ 
+
+  // 이미지 
+  const imageRef = useRef();
+  
 
 
-  // 프로필란에 수정 및 사진변경 기능을 추가하기 위한 코드
-  // 프로필 사진 변경 모달을 위한 상태
-  const [showModal, setShowModal] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+
+
+
+
+
+
+  // 이미지 수정
+  const imageHandler = async() => {
+      console.log('온체인지');
+      const file = imageRef.current.files[0];
+      // multer에 맞는 형식으로 데이터 만들어준다.
+      const formData = new FormData();
+      formData.append('img', file); // formData는 키-밸류 구조
+      // 백엔드 multer라우터에 이미지를 보낸다.
+      try {
+        const result = await axios.put('https://192.168.5.17:10000/api/updateUserInfo/updateProfileImage', formData);
+        console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
+  
+        setImgUrl (result.data.url)
+        logout()
+        login(result.data.newUserInfo)
+        
+
+        imageRef.current.value = null
+      } catch (error) {
+        console.log('실패했어요ㅠ');
+      }
+    
+  };
+
+  // 이미지 삭제 
+   const imageDeleteHandler = async()=>{
+    const result = await userDeleteImage() 
+        setImgUrl(result.url) 
+        logout()
+        login(result.newUserInfo) 
+        
+      }
+     
+      
+
+   
 
 
   // 닉네임 중복 
   const handleCheckDuplicationNickname = async () => {
+    
     let nickname = nicknameRef.current.value
     if (!nickname || nickname.length < 2 || nickname.length > 20) {
       alert("최소 1글자 이상 10글자 이하로 입력해주세요.");
@@ -112,37 +162,43 @@ function MemberRevise() {
         setNicknameBtn("수정")
         logout()
         login(result.newUserInfo)
+      } else {
+        console.log('nickname change failed:', result.message);
       }
     }
   }
 
-  // 패스워드 변경 
-  const handlepwChange = (e) => {
-    setNewpwname(e.target.value)
-  }
 
 
-  
 
   const handlePasswordBtnOnclick = async () => {
     if (passwordBtn == '수정') {
       setPwEditable(true)
-      setPasswordBtn('체크')
-      setPwAlert("비밀번호를 한번 더 입력해주세요.")
+      setPasswordBtn('확인')
       return
     }
-      else if(pwEditable && pwAlert  ){
-        
-
-      }
-
-    if (passwordBtn == '체크') {
-      setpw(newPwname)
-      setPwEditable(false)
-      setPwButtonChange(false)
-      alert("비밀번호가 변경되었습니다.");
-
+    if (passwordBtn == '확인') {
+      setPwEditable(true)
+      setPwmessage("비밀번호를 한번더 입력해주세요.")
+      setPasswordBtn('변경')
     }
+
+
+
+    if (passwordBtn == '변경') {
+      const result = await userUpdatePassword({ password: passwordRef.current.value })
+      if (result.message === 'success') {
+        alert(' 패스워드 변경 완료')
+        setPwEditable(false)
+        setPwAlert("");
+        setPasswordBtn("수정")
+
+
+      } else {
+        console.log('Password change failed:', result.message);
+      }
+    }
+
 
   }
 
@@ -152,103 +208,22 @@ function MemberRevise() {
 
 
   // mbti변경
-  const handleMbtichange = (e) => {
-    const selectedMbti = e.target.value;
-    setNewMbti(selectedMbti);
-    mbtiChangeHandler(selectedMbti);
-  };
-
-  const mbtiChangeHandler = (selectedMbti) => {
-    if (selectedMbti) {
-      setMbti(selectedMbti);
+  const handleMbtiChange = async () => {
+    const result = await userUpdateMbti({ mbti: mbtiRef.current.value });
+    if (result.message === 'success') {
       alert("MBTI가 변경되었습니다.");
-      userInfo.mbti = selectedMbti;
+      // 크롬 브라우저 세선 스토러지에서 로그인정보를 지웠다가 로그인 다시 하면 새로운 정보값을 채워줌.
+      logout()
+      login(result.newUserInfo)
+    } else {
+      alert("MBTI 변경에 실패했습니다.");
     }
   };
 
 
-
-
-
-
-
-  // 이미지 파일 
-  const handleFileChange = event => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-
-      // 이미지 미리보기
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-
-
-
-  // 팝업 제어 함수
-  const handleShowPopup = () => setShowPopup(true);
-  const handleClosePopup = () => setShowPopup(false);
-
-  // 모달 제어 함수
-  const handleShowModal = () => {
-    setShowPopup(false);
-    setShowModal(true);
-  };
-  const handleCloseModal = () => setShowModal(false);
-
-  const Popup = () => (
-    <div style={{ position: 'absolute', top: '5%', left: '20%', transform: 'translate(-50%, -50%)', background: 'white', padding: '20px', zIndex: 100, borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-      <h5>프로필 사진 변경</h5>
-      <Button variant="primary" onClick={handleShowModal}>이미지 변경</Button>
-      <Button variant="secondary" onClick={handleClosePopup} style={{ marginLeft: '10px' }}>닫기</Button>
-    </div>
-  );
-
-
-
-  // 업로드 사진
-  const handleSave = async () => {
-    if (!selectedFile) {
-      return;
-    }
-    console.log(handleSave)
-
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-
-    try {
-      const response = await fetch('YOUR_API_ENDPOINT', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        console.log('업로드 성공');
-        // 업로드 성공 후 필요한 로직 추가
-      } else {
-        console.log('업로드 실패');
-        // 실패 처리 로직 추가
-      }
-    } catch (error) {
-      console.error('업로드 중 에러 발생', error);
-      // 에러 처리 로직 추가
-    }
-  };
-
-  const handleSubmit = async (e) => {
-
-  }
-
-
-
-
-
-
+  console.log(passwordBtn)
+  console.log(passwordRef)
+  console.log(mbtiRef)
 
   return (
     <div className="container mt-5">
@@ -257,13 +232,17 @@ function MemberRevise() {
       </Link>
       <div className="card">
         <div className="card-body">
-          <form onSubmit={handleSubmit}>
+          <form >
             <div className="text-center mb-5">
-              <img src={preview} alt="회원사진" className="user-image" />
-              <div onClick={handleShowPopup} style={{ cursor: "pointer" }}>✏</div>
-              {showPopup && <Popup />}
+              <img src={imgUrl} alt="회원사진" className="user-image" />
+            
+            
               <h2 className="fw-bold" style={{ fontSize: '40px' }}>프로필 편집</h2>
             </div>
+            <div>
+              <input type="file" onChange={imageHandler} ref={imageRef}/>
+            </div>
+            <button type='button' onClick={imageDeleteHandler}>삭제</button>
             <div className="row g-3">
               <div className="col-12">
                 <label htmlFor="email" className="form-label">이메일</label>
@@ -278,7 +257,7 @@ function MemberRevise() {
                   <input type="text" className="form-control" defaultValue={userInfo.nickname} disabled={!nicknameEditable} ref={nicknameRef} />
                   <button
                     type='button'
-                    onClick={handleNicknameBtnOnclick}
+                    onClick={handleNicknameBtnOnclick} 
                   >
                     {nicknameBtn}
                   </button>
@@ -291,62 +270,61 @@ function MemberRevise() {
               <div>
                 <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
                 <div className="d-flex gap-2">
-                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} onInput={handlepwChange} />
+                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef} />
                   <button
-                    type='button'                  
+                    type='button'
                     onClick={handlePasswordBtnOnclick}
-                  >      
-                  {passwordBtn}            
+                  >
+                    {passwordBtn}
                   </button>
                 </div>
+                <input type="password" className={`form-control ${passwordBtn == '수정' || passwordBtn == "확인" ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef} />
+                <p style={{ color: "green" }}>{pwMessage}</p>
               </div>
 
               <div>
                 <label htmlFor="user-pw" className="form-label">MBTI</label>
                 <div className="d-flex gap-2">
-                  <select className="form-control" name="mbti" id="user-mbti" onChange={handleMbtichange} >
+                  <select
+                    className="form-control"
+                    name="mbti"
+                    id="user-mbti"
+                    onChange={handleMbtiChange}
+                    ref={mbtiRef}
+                  >
+                    <option value="">{userInfo.mbti}</option>
                     <option value="">MBTI 재선택</option>
-                    <option value="INTJ">INTJ - 전략가</option>
-                    <option value="INTP">INTP - 논리술사</option>
-                    <option value="ENTJ">ENTJ - 지도자</option>
-                    <option value="ENTP">ENTP - 변론가</option>
-                    <option value="INFJ">INFJ - 옹호자</option>
-                    <option value="INFP">INFP - 중재자</option>
-                    <option value="ENFJ">ENFJ - 선도자</option>
-                    <option value="ENFP">ENFP - 활동가</option>
-                    <option value="ISTJ">ISTJ - 논리주의자</option>
-                    <option value="ISFJ">ISFJ - 수호자</option>
-                    <option value="ESTJ">ESTJ - 행정관</option>
-                    <option value="ESFJ">ESFJ - 친선대사</option>
-                    <option value="ISTP">ISTP - 장인</option>
-                    <option value="ISFP">ISFP - 모험가</option>
-                    <option value="ESTP">ESTP - 사업가</option>
-                    <option value="ESFP">ESFP - 연예인</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="INTP">INTP</option>
+                    <option value="ENTJ">ENTJ</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INFP">INFP</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="ISFJ">ISFJ</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ISTP">ISTP</option>
+                    <option value="ISFP">ISFP</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="ESFP">ESFP</option>
                   </select>
                 </div>
                 <div className='button' style={{ paddingTop: '10px' }}>
-                  <button type="submit" className="btn btn-primary me-2">확인</button>
-                  <button type="button" className="btn btn-secondary">취소</button>
+
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => navigate('/post/list')}
+                  >게시판으로 이동</button>
                 </div>
               </div>
             </div>
           </form>
         </div>
       </div>
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>사진 변경</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input type='file' className='form-control' onChange={handleFileChange} />
-        </Modal.Body>
-        <Modal.Footer>
-          <button className='btn btn-secondary' onClick={handleCloseModal}>
-            닫기
-          </button>
-          <button className='btn btn-primary' onClick={handleCloseModal} type='button'>저장</button>
-        </Modal.Footer>
-      </Modal>
 
     </div>
 
