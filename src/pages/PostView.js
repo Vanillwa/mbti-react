@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "../css/postView.module.css";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getPostView, postDelete } from "../service/api";
@@ -7,6 +7,27 @@ import { useAuthContext } from "../context/AuthContext";
 import notImg from '../svg/person-circle.svg'
 function PostView() {
   const navigate = useNavigate();
+
+  /**좌우스크롤 먼저 실행되게 하는 함수*/
+  const contentRef = useRef(null);
+
+  useEffect(()=>{
+    const handleWheel = (e)=> {
+      if (e.deltaY != 0){
+        e.preventDefault();
+        contentRef.current.scrollLeft += e.deltaY + e.deltaX
+      }
+    }
+    let contentElement = contentRef.current;
+    if(contentElement){
+      contentElement.addEventListener('wheel',handleWheel, {passive : false})
+    }
+    return()=>{
+      if(contentElement){
+        contentElement.removeEventListener('wheel', handleWheel)
+      }
+    }
+  })
 
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -22,7 +43,6 @@ function PostView() {
       refetchOnWindowFocus: false,
     }
   );
-  console.log(data);
   if (status === "loading") {
     return (
       <div className="container">
@@ -36,6 +56,7 @@ function PostView() {
       </div>
     );
   }
+  
   let img = userInfo.profileImage;
   if(img == null ){
     img = notImg
@@ -59,10 +80,7 @@ function PostView() {
 
   const createdAt = new Date(data.createdAt);
   const now = new Date();
-  const differenceInMilliseconds = now - createdAt;
-  const differenceInSeconds = Math.floor(differenceInMilliseconds / 1000);
-  const differenceInMinutes = Math.floor(differenceInSeconds / 60);
-  const differenceInHours = Math.floor(differenceInMinutes / 60);
+  const differenceInHours = Math.floor((now - createdAt)/1000/ 60 / 60);
   const differenceInDays = Math.floor(differenceInHours / 24);
 
   let dateDisplay;
@@ -74,6 +92,9 @@ function PostView() {
     dateDisplay = createdAt.toLocaleDateString("ko-KR");
   }
 
+  
+
+
   function ContentComponent({content}){
     return <div dangerouslySetInnerHTML={{__html : content}}></div>
   }
@@ -82,11 +103,10 @@ function PostView() {
   console.log(userInfo)
   
   return (
-    <div className={styles.container}>
+    <div className={styles.container} >
       <div className={styles.mbti}><span>{data.category} 게시판</span>{userInfo.userId == data.User.userId ? <div className="d-flex"><div className={styles.editBtn} type="button" onClick={goEdit}>수정</div><div onClick={handleDelete} className={styles.delBtn} type="button">삭제</div></div> : null}</div>
       <div className={styles.editBox}></div>
       <div className={styles.header}>
-        
         <div className={styles.nickname}>
           <img className={styles.userImg} src={data.User.profileImage ? data.User.profileImg : notImg}/>
           {data.User.nickname}
@@ -96,7 +116,7 @@ function PostView() {
       </div>
       <div className={styles.main}>
         
-        <div className={styles.content}>
+        <div className={styles.content} ref={contentRef}>
           <ContentComponent content={data.content}/>
         </div>
       </div>
