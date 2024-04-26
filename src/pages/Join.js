@@ -10,60 +10,38 @@ import { checkEmailVerification } from '../service/api'
 import { requestEmailVerification } from '../service/api';
 
 
+
 function Join() {
   console.log('rendered')
   const navigate = useNavigate()
 
-
-
-  const [emailValidation, setEmailValidation] = useState(null);
+  // email
   const [email, setEmail] = useState()
+  const emailRef = useRef()
   const [emailAlert, setEmailAlert] = useState()
+  const [emailValidation, setEmailValidation] = useState('invalid');
 
+  // 인증번호
   const [certificationNumber, setCertificationNumber] = useState('');
   const codeRef = useRef()
-  const [certificationValidation, setCertificationValidation] = useState(null);
+  const [certificationValidation, setCertificationValidation] = useState('invalid');
   const [certificationAlert, setCertificationAlert] = useState('');
 
   // 이메일 발송번호 누를 시 input상태 disabled 해제 
-  const [certificationDisabled, setcertificationDisabled] = useState(true)
+  const [certificationDisabled, setCertificationDisabled] = useState(true)
   const [certificationInputDisabled, setCertificationInputDisabled] = useState(true)
 
-  const [nicknameValidation, setNicknameValidation] = useState('')
+  // 닉네임
   const [nickname, setNickname] = useState('')
+  const nicknameRef = useRef()
   const [nicknameAlert, setNicknameAlert] = useState('')
+  const [nicknameValidation, setNicknameValidation] = useState('invalid')
 
-
+  // 비밀번호
   const [password, setPassword] = useState('');
+  const passwordRef = useRef()
   const [passwordAlert, setPasswordAlert] = useState('');
-  const [passwordValidation, setPasswordValidation] = useState('');
-
- 
-
-  // 이메일 정규식
-  const handleEmailOnInput = (e) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const isValid = emailRegex.test(e.target.value);
-
-    setEmail(e.target.value);
-
-    if (isValid) {
-      setEmailAlert("올바른 형식의 이메일입니다.");
-      setEmailValidation("valid");
-    } else {
-      setEmailAlert("이메일 형식에 맞지않습니다.");
-      setEmailValidation("invalid");
-    }
-  };
- 
-  
-
-
-
-
-
-
-
+  const [passwordValidation, setPasswordValidation] = useState('invalid');
 
   // 이메일 입력
   const handleEmailOnBlur = async (e) => {
@@ -75,30 +53,28 @@ function Join() {
       codeRef.current.value = ''
       setEmailAlert('')
       setCertificationAlert('')
-      setcertificationDisabled(true);
+      setCertificationDisabled(true);
       setCertificationInputDisabled(true)
     }
   }
 
-
-
-
   // 이메일 중복 확인
   const handleCheckDuplicationEmail = async () => {
-    if (!email || email.length < 1 || email.length > 30) {
-      setEmailAlert("최소 1~30글자 이상 넣어주세요.");
-      return;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(emailRef.current.value)) {
+      setEmailAlert("이메일 형식에 맞지않습니다.");
+      return
     }
+
     const data = await checkDuplicationEmail({ email });
     if (data.message === "success") {
       setEmailAlert("사용 가능한 이메일입니다.");
       setEmailValidation('valid'); // 이메일이 사용가능
-      setcertificationDisabled(false); //초기값 false
-
+      setCertificationDisabled(false); //초기값 false
     } else if (data.message === "duplicated") {
       setEmailAlert("이미 사용중.");
       setEmailValidation('invalid'); // 이메일이 중복
-      setcertificationDisabled(true);
+      setCertificationDisabled(true);
     }
   };
 
@@ -107,14 +83,11 @@ function Join() {
   const handleRequestVerificationCode = async () => {
     try {
       const response = await requestEmailVerification(email);
-      console.log(response.message)
       if (response.message === 'success') {
-        console.log(response.code)
-        setCertificationValidation('valid')
+        console.log("인증번호 : ",response.code)
+        setCertificationValidation('valid');
         setCertificationAlert("인증 번호가 발송되었습니다.")
-
         setCertificationInputDisabled(false) // false값으로 바꿈 이건 인풋상자
-
       } else {
         alert('인증번호 발송에 실패했습니다. 나중에 다시 시도해주세요.');
       }
@@ -126,89 +99,64 @@ function Join() {
 
   // 인증번호 체크
   const handleCertificationNumberInput = async (e) => {
-  
     const input = codeRef.current.value
     if (input.length === 6) {
       const result = await checkEmailVerification(input)
       if (result.message === "success") {
         setCertificationAlert("인증번호가 확인되었습니다.");
         setCertificationValidation('valid');
-        setcertificationDisabled(true);
+        setCertificationDisabled(true);
         setCertificationInputDisabled(true)
       } else {
         setCertificationAlert("인증번호가 불일치합니다.");
-        setCertificationValidation(null);
+        setCertificationValidation('invalid');
       }
-      console.log(result)
-
+    }else{
+      setCertificationAlert("");
     }
   };
 
-  // 닉네임 정규식
-
-  const handleNicknameOnInput = (e) => {
-    setNickname(e.target.value)
-    const nicknameRegex = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
-    const isValid = nicknameRegex.test(e.target.value);
-
-    if (isValid) {
-      setNicknameAlert("올바른 형식의 닉네임입니다.");
-      setNicknameValidation("valid");
+   // 닉네임 입력
+   const handleNickNameOnBlur = async (e) => {
+    if (nickname === e.target.value) {
+      return
     } else {
-      setNicknameAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");
-      setNicknameValidation("invalid");
+      setNickname(e.target.value);
+      const result = await nickNameChanged();
+      setNicknameAlert("");
     }
+  };
 
-  }
-
+  // 닉네임 중복 체크
   const handleCheckDuplicationNickname = async () => {
-    if (!nickname || nickname.length < 2 || nickname.length > 20) {
-      setNicknameAlert("최소 1글자 이상 10글자 이하로 입력해주세요.");
-      setNicknameValidation("invalid");
-      return;
+    const nicknameRegex = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,16}$/;
+    if (!nicknameRegex.test(nicknameRef.current.value)) {
+      setNicknameAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");
+      return
     }
-    const data = await checkDuplicationNickname({ nickname });
+    const data = await checkDuplicationNickname({ nickname })
+
     if (data.message === "success") {
       setNicknameAlert("사용 가능한 닉네임 입니다.");
       setNicknameValidation('valid');
     } else if (data.message === "duplicated") {
-
       setNicknameAlert("이미 사용중.");
       setNicknameValidation('invalid');
     }
   };
 
-
-
  
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    console.log(e.target)
-    const mbtiValue = e.target.mbti.value;
-
-    const body = {
-      email: e.target.email.value,
-      nickname: e.target.nickname.value,
-      password: e.target.password.value,
-      mbti: mbtiValue
-    }
-    const result = await fetchJoin(body)
-
-    if (result.message === "success") {
-      alert("회원가입 성공하셨습니다!.")
-      navigate("/",{state:'join'})
-
-    }
-
-  }
+  // 비밀번호 정규식
   const handlePasswordOnInput = (e) => {
-    const passwordRegex = /^(?=.[0-9])(?=.[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,20}$/;
-    const isValid = passwordRegex.test(e.target.value);
-
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,20}$/;
     setPassword(e.target.value);
 
-    if (isValid) {
+    if(e.target.value === ''){
+      setPasswordAlert("");
+      setPasswordValidation("invalid");
+      return
+    }
+    if (passwordRegex.test(e.target.value)) {
       setPasswordAlert("사용 가능한 비밀번호입니다.");
       setPasswordValidation("valid");
     } else {
@@ -216,6 +164,46 @@ function Join() {
       setPasswordValidation("invalid");
     }
   };
+
+
+  // 회원가입 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if(emailValidation === 'invalid'){
+      alert('이메일 중복체크 요망')
+      emailRef.current.focus()
+      return
+    }
+    if(certificationValidation === 'invalid'){
+      alert('이메일 인증 요망')
+      return
+    }
+    if(nicknameValidation === 'invalid'){
+      alert('닉네임 중복체크 요망')
+      nicknameRef.current.focus()
+      return
+    }
+    if(passwordValidation === 'invalid'){
+      alert('올바르지 않은 비밀번호 형식')
+      passwordRef.current.focus()
+      return
+    }
+
+    const body = {
+      email: e.target.email.value,
+      nickname: e.target.nickname.value,
+      password: e.target.password.value,
+      mbti: e.target.mbti.value
+    }
+    const result = await fetchJoin(body)
+
+    if (result.message === "success") {
+      alert("회원가입 성공하셨습니다!.")
+      navigate("/")
+
+    }
+
+  }
 
   return (
     <div className="container mt-5">
@@ -235,7 +223,7 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="email" className="form-label">이메일</label>
                 <div className='d-flex gap-2'>
-                  <input type="email" className="form-control form-control-email" name="email" id="email" placeholder="E-mail" onBlur={handleEmailOnBlur} required  onInput={handleEmailOnInput}/>
+                  <input type="email" className="form-control form-control-email" name="email" id="email" placeholder="E-mail" ref={emailRef} onBlur={handleEmailOnBlur} required />
                   <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationEmail}>체크</button>
                 </div>
                 <p className='emailAlert' style={{ color: emailValidation === 'valid' ? "green" : emailValidation === 'invalid' ? "red" : "black" }}>
@@ -260,8 +248,8 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="nickname" className="form-label">닉네임</label>
                 <div className='d-flex gap-2'>
-                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" onInput={handleNicknameOnInput} maxLength={10}/>
-                  <button type='button'  className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
+                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" maxLength={16} onBlur={handleNickNameOnBlur} ref={nicknameRef} required />
+                  <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
                 </div>
                 <p className='nicknameAlert' style={{ color: nicknameValidation === 'valid' ? "green" : nicknameValidation === 'invalid' ? "red" : "black" }}>
                   {nicknameAlert}
@@ -278,6 +266,7 @@ function Join() {
                   required
                   value={password}
                   onInput={handlePasswordOnInput}
+                  ref={passwordRef}
                 />
                 <div className={`text-${passwordValidation === 'valid' ? 'success' : 'danger'}`}>{passwordAlert}</div>
               </div>
