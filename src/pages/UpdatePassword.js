@@ -2,24 +2,20 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../images/areyout.png";
 import { Link } from "react-router-dom";
-import img from "../images/MBTI.png";
 import styles from "../css/ResetPwd.module.css";
 import { useNavigate } from "react-router";
 import { requestUpdatePwd } from "../service/api";
-import { useAuthContext } from "../context/AuthContext";
-
-
 
 function ResetPassword() {
-  const { memoUserInfo } = useAuthContext();
-  const {  userInfo } = memoUserInfo;
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckpassword] = useState("");
   const [checkCodeAlert, setCheckCodeAlert] = useState();
   const [isSame, setIsSame] = useState(false);
-  const [regxAlert ,setRegxAlert] = useState('');
-  const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_-]{6,20}$/
-                        
+  const [regxAlert, setRegxAlert] = useState("");
+  const [checkRegx, setCheckRex] = useState(false);
+  const passwordRegex =
+    /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_-]{6,20}$/;
+
   const cancelBtn = () => {
     navigate("/findpwd");
   };
@@ -27,17 +23,28 @@ function ResetPassword() {
   const handleInputPassword = e => {
     const input = e.target.value;
     setPassword(input);
-    if(!passwordRegex.test(input) || input.length <=5){
-     return  setRegxAlert(" 숫자와  영어가 있어야 하며 총 길이가 6에서 20 사이여야 합니다.")    
-     }else{
-      setRegxAlert("올바른 형식입니다.")
-     }
+    if (password === "" || !passwordRegex.test(input)) {
+      setCheckRex(false);
+    
+    }
+
+    if (!passwordRegex.test(input) || 5 >= input.length > 20) {
+      setRegxAlert(
+        " 숫자와  영어가 있어야 하며 총 길이가 6에서 20 사이여야 합니다."
+      );
+
+      setIsSame(false);
+    } else {
+      setCheckRex(true);
+      setRegxAlert("올바른 형식입니다.");
+    }
   };
 
   const handleCheckInputPassword = e => {
     const input = e.target.value;
     setCheckpassword(input);
   };
+
   const ComparePassword = () => {
     if (password === "") {
       setCheckCodeAlert("");
@@ -49,13 +56,13 @@ function ResetPassword() {
       setIsSame(false);
       return;
     }
-if(password.length <6){
-  setIsSame(false);
-}else  if (password === checkPassword ) {
+    if (password.length < 6 || password.length > 20) {
+      setIsSame(false);
+    }
+     else if (password === checkPassword) {
       setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치합니다.");
       setIsSame(true);
-    }
-     else {
+    } else if (password != checkPassword) {
       setIsSame(false);
       setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
     }
@@ -68,13 +75,12 @@ if(password.length <6){
   const navigate = useNavigate();
 
   const UpdatePwd = async () => {
-    
     const result = await requestUpdatePwd(password);
     console.log(result.message);
     console.log(result);
-    if (result.message === "success" ) {
+    if (result.message === "success") {
       alert("비밀번호 변경 완료.");
-      navigate("/",{state:'updatePwd'});
+      navigate("/", { state: "updatePwd" });
     } else {
       alert("에러 발생");
     }
@@ -115,6 +121,7 @@ if(password.length <6){
                 <div id="certification">
                   <div className="d-flex gap-2 ">
                     <input
+                      disabled={!checkRegx}
                       type="password"
                       className="form-control"
                       name="checkPassword"
