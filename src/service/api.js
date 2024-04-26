@@ -157,3 +157,18 @@ export const postEdit = async(body)=>{
   return res.data
 }
 
+/** 댓글 조회 */
+export const getViewComment = async(postId)=>{
+  const res = await axios.get(`/comment?postId=${postId}`)
+  return res.data 
+}
+/** 댓글 작성 */
+export const postViewComment = async(body)=>{
+  const res = await axios.post(`/comment`, body)
+  return res.data
+}
+/**댓글 삭제 */
+export const deleteViewComment = async(commentId)=>{
+  const res = await axios.delete(`/comment/${commentId}`)
+  return res.data
+}
