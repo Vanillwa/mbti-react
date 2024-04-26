@@ -15,7 +15,6 @@
 
 .nav{
   grid-area: nav;
-  background-color: aliceblue;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,8 +27,8 @@
 }
 
 .logo{
-  height: 6.5vh;
-  margin-left: 1vw;
+  height: auto;
+  width: 15vw;
 }
 .navbarSearch input{
   width: 40vw;

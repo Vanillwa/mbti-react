@@ -10,11 +10,11 @@
 
 .logo{
   text-align: center;
-  margin:20px;
 
 }
 .logo img{
-  width:200px;
+  width: 40vw;
+
 }
 
 
@@ -30,7 +30,6 @@
 
 
 .mainCon{
-  
   margin-bottom:20px;
   background-color: white;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
