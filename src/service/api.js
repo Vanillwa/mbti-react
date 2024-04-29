@@ -130,10 +130,6 @@ export const userUpdateImg = async(body)=>{
   return res.data
 }
 
-
-
-
-
 // 회원정보수정 - 유저 mbti 변경
 export const userUpdateMbti = async(body)=>{
   const res = await axios.put("/updateUserInfo/mbti",body)
@@ -146,6 +142,26 @@ export const userDeleteImage = async(body)=>{
   const res = await axios.delete('/updateUserInfo/deleteProfileImage',body)
   return res.data
 }
+
+
+
+
+// 회원탈퇴 - 비밀번호 확인
+export const deletePasswordCheck = async (body)=>{
+  const res = await axios.post("/deleteUser/passwordCheck", body)
+  return res.data
+}
+
+
+
+
+
+// 회원탈퇴 - 회원정보 삭제
+export const deleteUser = async()=>{
+const res = await axios.delete("/user")
+return res.data
+}
+
 
 
 

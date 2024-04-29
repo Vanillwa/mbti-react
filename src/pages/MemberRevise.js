@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from '../images/logo.avif';
+
+import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
 // import img from "../images/MBTI.png";
 // 프로필 수정삭제 구현하기 위해 만듬
@@ -32,15 +33,15 @@ function MemberRevise() {
   const { memoUserInfo, login, logout } = useAuthContext();
   const { userInfo, isLoggedIn } = memoUserInfo;
 
-  console.log(userInfo)
-  console.log(isLoggedIn)
 
+
+  
   const navigate = useNavigate()
 
 
 
 
-  const [imgUrl,setImgUrl] =useState(userInfo.profileImage)
+  const [imgUrl, setImgUrl] = useState(userInfo.profileImage)
   // 닉네임 
 
   const nicknameRef = useRef();
@@ -51,7 +52,9 @@ function MemberRevise() {
 
 
   // 패스워드
-  const passwordRef = useRef();
+  const passwordRef1 = useRef();
+  const passwordRef2 = useRef();
+
   const [pwMessage, setPwmessage] = useState('')
   //const [newPwname, setNewpwname] = useState("")
   const [pwEditable, setPwEditable] = useState(false)
@@ -69,12 +72,12 @@ function MemberRevise() {
   // const [mbtiChange, setMbtiChange] = useState()
 
 
-//  
- 
+  //  
+
 
   // 이미지 
   const imageRef = useRef();
-  
+
 
 
 
@@ -84,58 +87,62 @@ function MemberRevise() {
 
 
   // 이미지 수정
-  const imageHandler = async() => {
-      console.log('온체인지');
-      const file = imageRef.current.files[0];
-      // multer에 맞는 형식으로 데이터 만들어준다.
-      const formData = new FormData();
-      formData.append('img', file); // formData는 키-밸류 구조
-      // 백엔드 multer라우터에 이미지를 보낸다.
-      try {
-        const result = await axios.put('https://192.168.5.17:10000/api/updateUserInfo/updateProfileImage', formData);
-        console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
-  
-        setImgUrl (result.data.url)
-        logout()
-        login(result.data.newUserInfo)
-        
+  const imageHandler = async () => {
+    console.log('온체인지');
+    const file = imageRef.current.files[0];
+    // multer에 맞는 형식으로 데이터 만들어준다.
+    const formData = new FormData();
+    formData.append('img', file); // formData는 키-밸류 구조
+    // 백엔드 multer라우터에 이미지를 보낸다.
+    try {
+      const result = await axios.put('https://192.168.5.17:10000/api/updateUserInfo/updateProfileImage', formData);
+      console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
 
-        imageRef.current.value = null
-      } catch (error) {
-        console.log('실패했어요ㅠ');
-      }
-    
+      setImgUrl(result.data.url)
+      logout()
+      login(result.data.newUserInfo)
+
+
+      imageRef.current.value = null
+    } catch (error) {
+      console.log('실패했어요ㅠ');
+    }
+
   };
 
   // 이미지 삭제 
-   const imageDeleteHandler = async()=>{
-    const result = await userDeleteImage() 
-        setImgUrl(result.url) 
-        logout()
-        login(result.newUserInfo) 
-        
-      }
-     
-      
+  const imageDeleteHandler = async () => {
+    const result = await userDeleteImage()
+    setImgUrl(result.url)
+    logout()
+    login(result.newUserInfo)
 
-   
+  }
+
+
+
+
 
 
   // 닉네임 중복 
   const handleCheckDuplicationNickname = async () => {
-    
-    let nickname = nicknameRef.current.value
-    if (!nickname || nickname.length < 2 || nickname.length > 20) {
-      alert("최소 1글자 이상 10글자 이하로 입력해주세요.");
+    let nickname = nicknameRef.current.value;
+    const nicknameRegex = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,16}$/;
+
+    // 정규식을 사용하여 닉네임 유효성 검사
+    if (!nicknameRegex.test(nickname)) {
+      setNicknameAlert("닉네임은 영문자, 숫자, 한글을 포함하여 2글자 이상 16글자 이하로 입력해주세요.");
       setNicknameValidation("invalid");
       return;
     }
-    const data = await userCheckDuplicationNickname({ nickname });
-    return data
 
+    // 닉네임 중복 검사
+    const data = await userCheckDuplicationNickname({ nickname });
+    return data;
   };
 
   const handleNicknameBtnOnclick = async () => {
+    
     if (nicknameBtn == '수정') {
       setNicknameEditable(true)
       setNicknameBtn('체크')
@@ -144,18 +151,21 @@ function MemberRevise() {
     if (nicknameBtn == '체크') {
       const result = await handleCheckDuplicationNickname()
       console.log(result)
-      if (result.message === "success") {
+      if (result?.message === "success") {
         setNicknameAlert("사용 가능한 닉네임 입니다.");
         setNicknameValidation('valid');
         setNicknameBtn('변경')
-      } else if (result.message === "duplicated") {
+      } else if (result?.message === "duplicated") {
         setNicknameAlert("이미 사용중.");
         setNicknameValidation('invalid');
       }
     }
-    if (nicknameBtn == '변경') {
+    if (nicknameBtn == '변경') 
+    {
+     
       const result = await userUpdateNickname({ nickname: nicknameRef.current.value })
-      if (result.message === 'success') {
+    
+      if (result?.message === 'success') {
         alert('닉네임 변경 완료')
         setNicknameEditable(false)
         setNicknameAlert("");
@@ -172,31 +182,47 @@ function MemberRevise() {
 
 
   const handlePasswordBtnOnclick = async () => {
+
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_.-]{6,20}$/;
     if (passwordBtn == '수정') {
       setPwEditable(true)
       setPasswordBtn('확인')
       return
     }
     if (passwordBtn == '확인') {
-      setPwEditable(true)
-      setPwmessage("비밀번호를 한번더 입력해주세요.")
-      setPasswordBtn('변경')
+     
+      if(!passwordRegex.test(passwordRef1.current.value)){
+        setPwmessage("비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요.");    
+        setPwEditable(true);      
+       
+         return
+
+      }else{
+        setPwEditable(true)
+        setPwmessage("비밀번호를 한번더 입력해주세요.")
+        setPasswordBtn('변경')
+      }
+    
     }
 
 
 
     if (passwordBtn == '변경') {
-      const result = await userUpdatePassword({ password: passwordRef.current.value })
+       if(passwordRef1.current.value != passwordRef2.current.value){
+        setPwmessage("형식에 맞게 다시 입력해주시길 바랍니다.");    
+        return
+       }
+      const result = await userUpdatePassword({ password: passwordRef1.current.value })
       if (result.message === 'success') {
         alert(' 패스워드 변경 완료')
         setPwEditable(false)
+        setPwmessage("")
         setPwAlert("");
         setPasswordBtn("수정")
 
 
-      } else {
-        console.log('Password change failed:', result.message);
       }
+      
     }
 
 
@@ -222,7 +248,7 @@ function MemberRevise() {
 
 
   console.log(passwordBtn)
-  console.log(passwordRef)
+  console.log(passwordRef1)
   console.log(mbtiRef)
 
   return (
@@ -235,12 +261,12 @@ function MemberRevise() {
           <form >
             <div className="text-center mb-5">
               <img src={imgUrl} alt="회원사진" className="user-image" />
-            
-            
+
+
               <h2 className="fw-bold" style={{ fontSize: '40px' }}>프로필 편집</h2>
             </div>
             <div>
-              <input type="file" onChange={imageHandler} ref={imageRef}/>
+              <input type="file" onChange={imageHandler} ref={imageRef} />
             </div>
             <button type='button' onClick={imageDeleteHandler}>삭제</button>
             <div className="row g-3">
@@ -257,20 +283,24 @@ function MemberRevise() {
                   <input type="text" className="form-control" defaultValue={userInfo.nickname} disabled={!nicknameEditable} ref={nicknameRef} />
                   <button
                     type='button'
-                    onClick={handleNicknameBtnOnclick} 
+                    onClick={handleNicknameBtnOnclick}
                   >
                     {nicknameBtn}
                   </button>
 
                 </div>
-                {nicknameAlert}
+                {nicknameAlert && (
+                  <div style={{ color: nicknameValidation === 'valid' ? 'green' : 'red' }}>
+                    {nicknameAlert}
+                  </div>
+                )}
               </div>
 
 
               <div>
                 <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
                 <div className="d-flex gap-2">
-                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef} />
+                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} />
                   <button
                     type='button'
                     onClick={handlePasswordBtnOnclick}
@@ -278,8 +308,8 @@ function MemberRevise() {
                     {passwordBtn}
                   </button>
                 </div>
-                <input type="password" className={`form-control ${passwordBtn == '수정' || passwordBtn == "확인" ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef} />
-                <p style={{ color: "green" }}>{pwMessage}</p>
+                <input type="password" className={`form-control ${passwordBtn == '수정' || passwordBtn == "확인" ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} />
+                <p style={{ color: pwMessage === "" ? "green" : "red" }}>{pwMessage}</p>
               </div>
 
               <div>
@@ -319,6 +349,7 @@ function MemberRevise() {
                     className="btn btn-secondary"
                     onClick={() => navigate('/post/list')}
                   >게시판으로 이동</button>
+                  <button type='button' className='btn btn-secondary' onClick={() => navigate('/userdelete')}>회원탈퇴</button>
                 </div>
               </div>
             </div>
@@ -334,4 +365,4 @@ function MemberRevise() {
 
 
 
-export default MemberRevise;
+export default MemberRevise

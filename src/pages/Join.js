@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
-import img from "../images/MBTI.png";
 import '../css/Join.css'
 import { checkDuplicationEmail, emailChanged, fetchJoin, nickNameChanged } from '../service/api';
 import { checkDuplicationNickname } from '../service/api';
@@ -131,7 +130,7 @@ function Join() {
   const handleCheckDuplicationNickname = async () => {
     const nicknameRegex = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,16}$/;
     if (!nicknameRegex.test(nicknameRef.current.value)) {
-      setNicknameAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");
+      setNicknasetNicknameAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");meAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");
       return
     }
     const data = await checkDuplicationNickname({ nickname })
@@ -214,7 +213,7 @@ function Join() {
         <div className="card-body">
           <form onSubmit={handleSubmit}>
             <div className="text-center mb-5">
-              <img src={img} alt="회원사진" className="user-image" />
+              
               <h2 className="fw-bold" style={{ fontSize: '40px' }}>가입하기</h2>
             </div>
             <div className="row g-3">
