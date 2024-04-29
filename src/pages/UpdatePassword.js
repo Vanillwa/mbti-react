@@ -19,7 +19,7 @@ function ResetPassword() {
   const cancelBtn = () => {
     navigate("/findpwd");
   };
-
+//비밀번호의 onInput 함수
   const handleInputPassword = e => {
     const input = e.target.value;
     setPassword(input);
@@ -39,12 +39,14 @@ function ResetPassword() {
       setRegxAlert("올바른 형식입니다.");
     }
   };
-
+//비밀번호 확인의 onInput 함수
   const handleCheckInputPassword = e => {
     const input = e.target.value;
     setCheckpassword(input);
   };
+ 
 
+//비밀번호 검증
   const ComparePassword = () => {
     if (password === "") {
       setCheckCodeAlert("");
