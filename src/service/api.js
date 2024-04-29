@@ -144,6 +144,10 @@ export const userDeleteImage = async(body)=>{
   return res.data
 }
 
+export const deleteUser = async()=>{
+  const res = await axios.delete('/user')
+  return res.data;
+}
 
 
 
