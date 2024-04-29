@@ -63,6 +63,7 @@ function UserDelete() {
       const result = await deleteUser()
       console.log(result.message)
       if(result.message==="success"){
+        
         alert("회원탈퇴가 성공했습니다.")
         logout()
         navigate("/")

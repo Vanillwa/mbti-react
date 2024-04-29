@@ -114,6 +114,7 @@ function MemberRevise() {
   const imageDeleteHandler = async () => {
     const result = await userDeleteImage()
     setImgUrl(result.url)
+    console.log(result.url)
     logout()
     login(result.newUserInfo)
 
