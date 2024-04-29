@@ -25,7 +25,7 @@ function UserDelete() {
 // 비밀번호
     const [passwordBtn,setPasswordBtn] =useState("수정")
     const [pwEditable, setPwEditable] = useState(false)
-    const [pwEditable2, setPwEditable2] = useState(false)
+
     const [pwMessage, setPwmessage] = useState('')
     const passwordRef = useRef();
   
@@ -40,21 +40,17 @@ function UserDelete() {
       }
     
       if (passwordBtn === '확인') {
-        const result = await deletePasswordCheck()
+        const result = await deletePasswordCheck({password:passwordRef.current.value})
         console.log(result)
-        if (!passwordRegex.test(passwordRef.current.value)) {
+        if (result.message ==="success") {
           
-          setPwmessage("비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요.");
+         
           setPwEditable(true);
-          
-        } else {
-        
-
           setPwmessage("비밀번호 검증이 완료되었습니다.");
           setPasswordBtn('완료');
-          setPwEditable(false);
-          setPwEditable2(true); 
-          
+        } else if(result.message === "fail"){
+      
+          setPwmessage("비밀번호가 틀렸습니다.")        
         }
         return;
       }
@@ -129,7 +125,7 @@ function UserDelete() {
                 </div>
                 <div>
                 <div className='button' style={{ paddingTop: '10px' }}>
-                  <button type="btn btn-secondary" className="btn btn-secondary"disabled={!pwEditable2} onClick={handleDeleteOnclick}>회원탈퇴</button>                 
+                  <button type="btn btn-secondary" className="btn btn-secondary"disabled={!pwEditable} onClick={handleDeleteOnclick}>회원탈퇴</button>                 
                 </div>
                 <div className='button' style={{ paddingTop: '10px' }}>
                   <button type="button" className="btn btn-secondary">뒤로가기</button>
