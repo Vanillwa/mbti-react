@@ -14,6 +14,7 @@ import FindPwd from "./pages/FindPwd";
 import UpdatePassword from "./pages/UpdatePassword"
 import CompleteLogin from "./pages/CompleteLogin";
 import PostEdit from "./pages/PostEdit";
+import UserDelete from "./pages/UserDelete";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
         <Route path="/memberevise" element={<MemberRevise />} />
+        <Route path="/userdelete" element={<UserDelete />} />
         <Route path="/updatepwd" element={<UpdatePassword/>}/>
         <Route path="/findpwd" element={<FindPwd />}/>
         <Route path="/completelogin" element={<CompleteLogin/>}/>

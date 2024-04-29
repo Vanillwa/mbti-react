@@ -8,6 +8,7 @@ const PostItems = ({ data, status }) => {
   const [posts, setPosts] = useState([]);
   const [readhit, setReadhit] = useState(0)
 
+
   useEffect(()=>{
     if (data){
       const sortedData = [...data].sort((a,b)=>new Date(b.createdAt) - new Date(a.createdAt))
