@@ -58,7 +58,6 @@ function UserDelete() {
         }
         return;
       }
- 
     };
 
     const handleDeleteOnclick =async()=>{
@@ -73,7 +72,6 @@ function UserDelete() {
         navigate("/")
       }else if(result.message==="fail")
       setPwmessage("회원탈퇴에 실패하셨습니다.")
-     
     } 
 
 
@@ -107,7 +105,6 @@ function UserDelete() {
                     <option value="">이 사이트가 재미가없습니다.</option>
                     <option value="">더 좋은 사이트를 찾았습니다.</option>
                     <option value="">현질유도가 심합니다.</option>
-                 
                   </select>
                 </div>
               </div>
@@ -118,14 +115,12 @@ function UserDelete() {
                   <input type="password" className="form-control" id="user-pw" placeholder="password" disabled={!pwEditable}  ref={passwordRef}/>
                   <button type='button' onClick={handlePasswordBtnOnclick}>{passwordBtn}</button>
                 </div>
-               
                 <p style={{ color: "green" }}>{pwMessage}</p>
               </div>
   
               <div>
                 <label htmlFor="user-mbti" className="form-label">계속하시면 회원님의 회원정보가 삭제됩니다. 삭제를 원하시면 하단의 회원정보 탈퇴 버튼을 눌러주세요.</label>
                 <div className="d-flex gap-2">
-                 
                 </div>
                 <div>
                 <div className='button' style={{ paddingTop: '10px' }}>

@@ -127,7 +127,10 @@ export const userUpdateImg = async(body)=>{
   return res.data
 }
 
-
+export const deletePasswordCheck = async (body)=>{
+  const res = await axios.post("/deleteUser/passwordCheck", body)
+  return res.data
+}
 
 
 

@@ -116,7 +116,7 @@ function Join() {
   };
 
    // 닉네임 입력
-   const handleNickNameOnBlur = async (e) => {
+    const handleNickNameOnBlur = async (e) => {
     if (nickname === e.target.value) {
       return
     } else {
@@ -130,7 +130,7 @@ function Join() {
   const handleCheckDuplicationNickname = async () => {
     const nicknameRegex = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,16}$/;
     if (!nicknameRegex.test(nicknameRef.current.value)) {
-      setNicknameAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");meAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");
+      setNicknameAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");
       return
     }
     const data = await checkDuplicationNickname({ nickname })
