@@ -79,9 +79,8 @@ function MemberRevise() {
   const imageRef = useRef();
 
 
-
-
-
+  //미완성 버튼 css변경하기위해
+ const customBtn = document.getElementById("custom-button")
 
 
 
@@ -266,10 +265,12 @@ function MemberRevise() {
 
               <h2 className="fw-bold" style={{ fontSize: '40px' }}>프로필 편집</h2>
             </div>
-            <div>
-              <input type="file" onChange={imageHandler} ref={imageRef} />
+            <div className='buttonWrap'>
+              <input type="file" hidden="hidden" onChange={imageHandler} ref={imageRef}  />
+              <button type="button" id="custom-button"className='buttonsim'>파일 선택</button>
+              <button type='button' onClick={imageDeleteHandler} className='buttonjun'>삭제</button>
             </div>
-            <button type='button' onClick={imageDeleteHandler}>삭제</button>
+            
             <div className="row g-3">
               <div className="col-12">
                 <label htmlFor="email" className="form-label">이메일</label>
@@ -284,6 +285,7 @@ function MemberRevise() {
                   <input type="text" className="form-control" defaultValue={userInfo.nickname} disabled={!nicknameEditable} ref={nicknameRef} />
                   <button
                     type='button'
+                    className='btn btn-sm btn-primary'
                     onClick={handleNicknameBtnOnclick}
                   >
                     {nicknameBtn}
@@ -303,6 +305,7 @@ function MemberRevise() {
                 <div className="d-flex gap-2">
                   <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} />
                   <button
+                  className='btn btn-sm btn-primary'
                     type='button'
                     onClick={handlePasswordBtnOnclick}
                   >
@@ -343,14 +346,14 @@ function MemberRevise() {
                     <option value="ESFP">ESFP</option>
                   </select>
                 </div>
-                <div className='button' style={{ paddingTop: '10px' }}>
+                <div className='buttondong d-flex gap-2' style={{ paddingTop: '10px' }}>
 
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className='btn btn-sm btn-primary'
                     onClick={() => navigate('/post/list')}
                   >게시판으로 이동</button>
-                  <button type='button' className='btn btn-secondary' onClick={() => navigate('/userdelete')}>회원탈퇴</button>
+                  <button type='button'className='btn btn-sm btn-primary' onClick={() => navigate('/userdelete')}>회원탈퇴</button>
                 </div>
               </div>
             </div>
