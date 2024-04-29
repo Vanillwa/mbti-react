@@ -38,9 +38,11 @@ function Main() {
     };
    
     const res = await fetchLogin(body);
-console.log(res)
+    console.log(res)
+
+
     if (
-      (res.status != "deleted" && res.message === "success" && location.state === "updatePwd") ||
+      (res.status == "ok" && res.message === "success" && location.state === "updatePwd") ||
       location.state === "join" ||
       location.state === "findPwd" ||
       location.state === null
