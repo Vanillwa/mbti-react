@@ -34,12 +34,13 @@ function Main() {
     let body = {
       email: e.target.email.value,
       password: e.target.password.value,
+      
     };
-    console.log(body);
+   
     const res = await fetchLogin(body);
-
+console.log(res)
     if (
-      (res.message === "success" && location.state === "updatePwd") ||
+      (res.status != "deleted" && res.message === "success" && location.state === "updatePwd") ||
       location.state === "join" ||
       location.state === "findPwd" ||
       location.state === null
