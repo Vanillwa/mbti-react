@@ -139,6 +139,7 @@ function MemberRevise() {
     // 닉네임 중복 검사
     const data = await userCheckDuplicationNickname({ nickname });
     return data;
+  
   };
 
   const handleNicknameBtnOnclick = async () => {
