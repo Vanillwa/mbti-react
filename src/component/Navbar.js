@@ -54,11 +54,7 @@ const compareLogin =()=>{
               {isLoggedIn ? userInfo.nickname : "로그인 해주세요"}
             </span>
             {isLoggedIn ? (
-              userInfo.profileImg == null ? (
-                <img className={styles.userImg} src={notImg}></img>
-              ) : (
-                <img src={userInfo.profileImg} className={styles.userImg} />
-              )
+                <img src={userInfo.profileImage} className={styles.userImg} />
             ) : (
               <img src={notImg} alt="회원사진" className={styles.userImg} />
             )}
