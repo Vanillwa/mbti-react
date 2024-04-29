@@ -46,7 +46,7 @@ const PostItems = ({ data, status }) => {
           <div className={styles.postWrap}>
             <div className={styles.postHeader}>
               <Link to={`/user/${item.User.userId}`}>
-              {item.User.profileImage ? <img src alt="profile" className={styles.profileImg} /> : <img src={notImg} alt='guest' className={styles.profileImg} />}
+              {item.User.profileImage ? <img src={item.User.profileImage} alt="profile" className={styles.profileImg} /> : <img src={notImg} alt='guest' className={styles.profileImg} />}
               <span className={styles.nickname}>{item.User.nickname}</span>
               </Link>
               <div className={styles.dateReadhitBox}>

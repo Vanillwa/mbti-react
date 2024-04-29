@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../css/postView.module.css";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { QueryClient, useQuery } from "react-query";
+import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
 import { deleteViewComment, getViewComment, postViewComment } from "../service/api";
 function ViewComment() {
   const queryClient = new QueryClient()
 
-  const navigate = useNavigate();
+  const writeComment = useMutation((body)=>postViewComment(body), {
+    onSuccess : ()=>{
+      queryClient.invalidateQueries(['getViewComment', postId])
+    }
+  });
+  
 
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -36,7 +41,7 @@ function ViewComment() {
       alert('정말 삭제하시겠습니까?')
       await deleteViewComment(commentId)
       alert('삭제 완료')
-      queryClient.invalidateQueries({queryKey:['getViewComment']})
+      queryClient.invalidateQueries({queryKey:['getViewComment', postId]})
     } catch (error) {
       console.error('삭제중 오류', error)
       alert('삭제 실패')
@@ -50,11 +55,13 @@ function ViewComment() {
       content: e.target.content.value,
       userId: userInfo.userId,
     };
-    const result = postViewComment(body);
-    if (result.message == "success") {
-      alert("작성 완료");
-      navigate(`/post/comment?${postId}`)
-    }
+    const result = writeComment.mutate(body);
+    
+    // if (result.message == "success") {
+    //   alert("작성 완료");
+      
+    // }
+    alert('작성완료')
   };
 
 
@@ -95,7 +102,7 @@ function ViewComment() {
             <div className={styles.commentBox}>
               <div className={styles.commentName}>{item.User.nickname}</div>
               <div className={styles.commentContent}>{item.content}</div>
-              <div className={styles.commentDate}>{item.createdAt}</div>
+              <div className={styles.commentDate}>{new Date(item.createdAt).toLocaleDateString()}</div>
               {userInfo?.userId == item.userId ? <div className={styles.buttonBox}>
               <div onClick='' type='button'>수정</div>
               <div onClick={()=>handleDelete(item.commentId)} type='button'>삭제</div>
