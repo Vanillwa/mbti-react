@@ -3,7 +3,7 @@ import styles from "../css/PostList.module.css";
 import { Link } from "react-router-dom";
 import noImg from '../images/noImg.png'
 const PostItems = ({ data, status }) => {
-  
+    
   const [posts, setPosts] = useState([]);
   const [readhit, setReadhit] = useState(0)
 
@@ -14,6 +14,9 @@ const PostItems = ({ data, status }) => {
     }
   }, [data])
 
+  const handleListClick=()=>{
+    setReadhit(readhit + 1)
+  }
   if (status === "loading") {
     return (
       <div className="container">
@@ -35,7 +38,6 @@ const PostItems = ({ data, status }) => {
     )
   }
   
-
   return (
     <>
       {posts.map((item) => {
@@ -46,7 +48,7 @@ const PostItems = ({ data, status }) => {
             <div className={styles.postHeader}>
               <Link to={`/user/${item.User.userId}`}>
               </Link>
-              <div className={styles.dateReadhitBox}>
+              <div className={styles.dateReadhitBox} onClick={handleListClick}>
                 <div className={styles.readhit}>조회수 : {item.readhit}</div>
                 <div className={styles.date}>작성일 : {new Date(item.createdAt).toLocaleDateString()}</div>
               </div>

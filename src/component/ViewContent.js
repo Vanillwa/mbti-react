@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styles from "../css/postView.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getPostView, postDelete } from "../service/api";
+import { ClickPostLikes, getPostView, postDelete } from "../service/api";
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from '../svg/person-circle.svg'
@@ -43,19 +43,7 @@ function ViewContent() {
       refetchOnWindowFocus: false,
     }
   );
-  if (status === "loading") {
-    return (
-      <div className="container">
-        <h1>Loading...</h1>
-      </div>
-    );
-  } else if (status === "error") {
-    return (
-      <div className="container">
-        <h1>error!</h1>
-      </div>
-    );
-  }
+  
   
   let img = userInfo?.profileImage;
   if(img == null && !isLoggedIn){
@@ -78,6 +66,35 @@ function ViewContent() {
     }
   }
 
+  const handleLikeClick = async()=>{
+    const response = await ClickPostLikes(data.postId)
+    if(response.message == 'success'){
+      console.log('좋아요 누름')
+    }
+  }
+
+
+
+
+
+  function ContentComponent({content}){
+    return <div dangerouslySetInnerHTML={{__html : content}}></div>
+  }
+
+  if (status === "loading") {
+    return (
+      <div className="container">
+        <h1>Loading...</h1>
+      </div>
+    );
+  } else if (status === "error") {
+    return (
+      <div className="container">
+        <h1>error!</h1>
+      </div>
+    );
+  }
+
   const createdAt = new Date(data.createdAt);
   const now = new Date();
   const differenceInHours = Math.floor((now - createdAt)/1000/ 60 / 60);
@@ -91,18 +108,10 @@ function ViewContent() {
   } else {
     dateDisplay = createdAt.toLocaleDateString("ko-KR");
   }
-
-  
-
-
-  function ContentComponent({content}){
-    return <div dangerouslySetInnerHTML={{__html : content}}></div>
-  }
-
   return (
     <>
     <div className={styles.container} >
-      <div className={styles.mbti}><span>{data.category} 게시판</span>{userInfo?.userId == data.User.userId && !isLoggedIn? <div className="d-flex"><div className={styles.editBtn} type="button" onClick={goEdit}>수정</div><div onClick={handleDelete} className={styles.delBtn} type="button">삭제</div></div> : null}</div>
+      <div className={styles.mbti}><span>{data.category} 게시판</span>{userInfo?.userId == data.User.userId && isLoggedIn ? <div className="d-flex"><div className={styles.editBtn} type="button" onClick={goEdit}>수정</div><div onClick={handleDelete} className={styles.delBtn} type="button">삭제</div></div> : null}</div>
       <div className={styles.editBox}></div>
       <div className={styles.header}>
         <div className={styles.nickname}>
@@ -117,6 +126,7 @@ function ViewContent() {
         <div className={styles.content} ref={contentRef}>
           <ContentComponent content={data.content}/>
         </div>
+        <div className={styles.likesBox}><div type='button' className="" onClick={handleLikeClick}>❤</div></div>
       </div>
       
       
