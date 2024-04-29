@@ -17,13 +17,16 @@ function FindPwd() {
   const [checkCodeAlert, setCheckCodeAlert] = useState();
   const [code, setCode] = useState();
   const navigate = useNavigate();
+
+
   const isInputPwd = email => {
     navigate("/updatepwd", { email: email });
   };
+
+
   const goMain = () => {
     navigate("/",{state:'findPwd'});
   };
-  const handleFindPwd = async () => {};
 
   //입력한 이메일값 받아오기
 
@@ -45,11 +48,11 @@ function FindPwd() {
       setCheckCodeAlert('')
       setCode("");
   
-       const result = await emailChangedFindPwd();
+      const result = await emailChangedFindPwd();
     }
    
     
-    // console.log(result.message)
+    
   };
 
   //이메일 인증
@@ -60,8 +63,6 @@ function FindPwd() {
       return;
     }
     const result = await requestCodeFindPwd(email);
-    //console.log(result.message);
-
     if (result.message === "success") {
       alert("인증번호가 발송되었습니다.");
       setIsInputDisabled(false);

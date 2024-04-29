@@ -1,55 +1,46 @@
-
-
-.logo{
-  margin-bottom:50px;
+.logo {
+  margin-bottom: 50px;
 }
-.logo img{
+
+.logo img {
   text-align: center;
-  width:40vw;
- 
+  width: 30vw;
+
 }
+
 .card {
-    max-width: 500px; 
-    margin: 0 auto; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  }
-  
-  .card-body {
-    padding: 20px; 
-  }
-  .mainbtn{
-    
-  }
-  .mbtiImg{
-    margin-bottom:20px;
-    width:150px;
-  }
-  .findbtn{
-    margin-right:10px;
-  }
-   .requestBtn{
-    border:none;
-
-    color:white;
-    border-radius: 5px;
-    font-weight: 800;
-   }
-   .requestBtn:hover{
-    background-color: white;
-    color:black;
-   }
-
-.alert{
-  font-size:12px;
-  color:red;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.applyCode{
-  color:blue;
-}
-  
-  @media (max-width: 768px) {
-    .card {
-      max-width: 95%; 
-    }
-  }
 
+.card-body {
+  padding: 20px;
+}
+
+
+.findbtn {
+  margin-right: 10px;
+}
+
+.requestBtn {
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+
+.alert {
+  font-size: 12px;
+  color: red;
+}
+
+.applyCode {
+  color: blue;
+}
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 95%;
+  }
+}

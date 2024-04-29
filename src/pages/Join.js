@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from '../images/logo.avif';
+import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
 import img from "../images/MBTI.png";
 import '../css/Join.css'

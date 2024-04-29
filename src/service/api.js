@@ -157,7 +157,7 @@ export const requestCodeFindPwd = async (email)=>{
   const res = await axios.post("/updatePassword/requestEmailVerification",{email})
   return res.data;
 }
-
+// 비밀번호 찾기 인증번호 발급
 export const checkCodeFindPwd = async(verifyNumber)=>{
   const res= await axios.post("/updatePassword/checkEmailVerification",{verifyNumber})
   return res.data;

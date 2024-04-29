@@ -23,7 +23,8 @@ function ResetPassword() {
   const handleInputPassword = e => {
     const input = e.target.value;
     setPassword(input);
-    if (password === "" || !passwordRegex.test(input)) {
+
+ if (password === "" || !passwordRegex.test(input)) {
       setCheckRex(false);
     
     }
@@ -116,6 +117,8 @@ function ResetPassword() {
                     id="password"
                     placeholder="Password"
                     onInput={handleInputPassword}
+                    maxLength={20}
+                  
                   />
                 </div>
                 <p className={styles.regxAlert}>{regxAlert}</p>
@@ -130,6 +133,8 @@ function ResetPassword() {
                       id="checkPassword"
                       placeholder="CheckPassword"
                       onInput={handleCheckInputPassword}
+                      
+                      
                     />
                   </div>
                 </div>

@@ -32,6 +32,7 @@ import styles from "../css/Main.module.css";
         <Swiper
               navigation={true}
               className={styles.swiper}
+             
               slidesPerView={1} //한번에 보여질 갯수
               modules={[Autoplay, Navigation, Pagination]}
               autoplay={{ delay: 2500 }} //자동슬라이드
