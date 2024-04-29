@@ -104,5 +104,23 @@
 }
 
 .commentName{
+  width: 15%;
+}
+.commentContent{
+  width: 30%;
+}
+.commentDate{
 
+}
+.editInput{
+  width: 80%;
+  margin-right: 10px;
+}
+.editBtn{
+  
+}
+.editCommentForm{
+  display: flex;
+  justify-content: end;
+  width: 100%;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../css/postView.module.css";
 
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
-import { deleteViewComment, getViewComment, postViewComment } from "../service/api";
+import { EditViewComment, deleteViewComment, getViewComment, postViewComment } from "../service/api";
 function ViewComment() {
   const queryClient = new QueryClient()
 
@@ -15,6 +15,10 @@ function ViewComment() {
 
   const [query, setQuery] = useSearchParams();
   const postId = query.get("postId");
+
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingContent, setEditingContent] = useState(""); // 수정 중인 댓글의 내용을 임시 저장합니다.
+
 
   // 댓글 리스트 조회
   const { data, status , refetch } = useQuery(["getViewComment", postId], () => getViewComment(postId),
@@ -27,6 +31,10 @@ function ViewComment() {
   //등록 뮤테이트
   const postMutate = useMutation(body => {
     return postViewComment(body)
+  })
+  //수정뮤테이트
+  const EditMutate = useMutation(body=>{
+    return EditViewComment(body)
   })
 
   //삭제 뮤테이트
@@ -57,6 +65,30 @@ function ViewComment() {
     })
 
   };
+
+  const handleEditClick = (commentId, content) => {
+    setEditingCommentId(commentId);
+    setEditingContent(content); // 현재 댓글의 내용을 임시 state에 저장합니다.
+  };
+
+  const handleEditSubmit = (event, commentId)=>{
+    event.preventDefault();
+    const body = {
+      commentId : commentId,
+      postId : postId,
+      content : editingContent,
+    };
+
+    EditMutate.mutate(body,{
+      onSuccess : async()=>{
+        await queryClient.invalidateQueries(["getViewComment"],postId)
+        setEditingCommentId(null)
+        await refetch()
+        return
+      }
+    })
+  }
+  
 
   // 삭제 핸들러
   const handleCommentDelete = (commentId) => {
@@ -107,11 +139,24 @@ function ViewComment() {
           return (
             <div key={item.commentId} className={styles.commentBox}>
               <div className={styles.commentName}>{item.User.nickname}</div>
-              <div className={styles.commentContent}>{item.content}</div>
-              <div className={styles.commentDate}>{new Date(item.createdAt).toLocaleDateString()}</div>
+              {editingCommentId === item.commentId ? (<form className={styles.editCommentForm} onSubmit={(event)=>handleEditSubmit(event, item.commentId)}><input
+                className={styles.editInput}
+                value={editingContent}
+                onChange={(e) => setEditingContent(e.target.value)}
+              /> 
+                <button className={styles.editBtn}>완료</button>
+              </form>) : (<><div className={styles.commentContent}>{item.content}</div>
+                <div className={styles.commentDate}>{new Date(item.createdAt).toLocaleDateString()}</div>
+              </>)}
+              
+              
               {userInfo?.userId == item.userId ? <div className={styles.buttonBox}>
-                <button type='button'>수정</button>
-                <button type='button' onClick={() => handleCommentDelete(item.commentId)}>삭제</button>
+                {editingCommentId === item.commentId ? <></> : <>
+                  <button className={styles.editBtn} type='button' onClick={()=>{
+                    handleEditClick(item.commentId, item.content)
+                  }}>수정</button>
+                  <button type='button' onClick={() => handleCommentDelete(item.commentId)}>삭제</button>
+                </>}
               </div> : <div></div>}
             </div>
           );

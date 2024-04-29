@@ -134,8 +134,6 @@ const compareLogin =()=>{
         <Outlet />
       </div>
 
-      {/* 오른쪽 사이드 바 */}
-      <div className={`${styles.item} ${styles.rightSidebar}`}></div>
     </div>
   );
 };
