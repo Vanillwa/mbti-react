@@ -1,12 +1,12 @@
-/* 추후 디자인 할 예정 */
+
 
 .logo{
-
+  margin-bottom:50px;
 }
 .logo img{
   text-align: center;
   width:40vw;
-  margin-bottom:50px;
+ 
 }
 .card {
     max-width: 500px; 
@@ -28,8 +28,8 @@
     margin-right:10px;
   }
    .requestBtn{
-    
-    background-color: black;
+    border:none;
+
     color:white;
     border-radius: 5px;
     font-weight: 800;

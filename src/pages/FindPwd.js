@@ -131,7 +131,7 @@ function FindPwd() {
                   />
 
                   <button
-                    className={styles.requestBtn}
+                    className={`col-2 btn btn-primary ${styles.requestBtn}`}
                     type="button"
                     onClick={handleRequestCode}>
                     인증

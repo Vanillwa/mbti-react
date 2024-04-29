@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../images/areyout.png";
 import { Link } from "react-router-dom";
-import styles from "../css/ResetPwd.module.css";
+import styles from "../css/UpdatePwd.module.css";
 import { useNavigate } from "react-router";
 import { requestUpdatePwd } from "../service/api";
 
