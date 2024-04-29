@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/PostList.module.css";
-import notImg from '../svg/person-circle.svg'
 import { Link } from "react-router-dom";
 import noImg from '../images/noImg.png'
 const PostItems = ({ data, status }) => {
@@ -46,8 +45,6 @@ const PostItems = ({ data, status }) => {
           <div className={styles.postWrap}>
             <div className={styles.postHeader}>
               <Link to={`/user/${item.User.userId}`}>
-              {item.User.profileImage ? <img src alt="profile" className={styles.profileImg} /> : <img src={notImg} alt='guest' className={styles.profileImg} />}
-              <span className={styles.nickname}>{item.User.nickname}</span>
               </Link>
               <div className={styles.dateReadhitBox}>
                 <div className={styles.readhit}>조회수 : {item.readhit}</div>
