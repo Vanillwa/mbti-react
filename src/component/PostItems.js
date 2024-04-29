@@ -38,6 +38,8 @@ const PostItems = ({ data, status }) => {
       </div>
     )
   }
+  console.log(data)
+  
   
   return (
     <>
@@ -48,8 +50,11 @@ const PostItems = ({ data, status }) => {
           <div className={styles.postWrap}>
             <div className={styles.postHeader}>
               <Link to={`/user/${item.User.userId}`}>
+              <img src={item.User.profileImage} alt="profile" className={styles.profileImg} />
+              <span className={styles.nickname}>{item.User.nickname}</span>
               </Link>
               <div className={styles.dateReadhitBox} onClick={handleListClick}>
+                <div className={styles.likes}>❤  {item.like}</div>
                 <div className={styles.readhit}>조회수 : {item.readhit}</div>
                 <div className={styles.date}>작성일 : {new Date(item.createdAt).toLocaleDateString()}</div>
               </div>
