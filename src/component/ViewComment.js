@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../css/postView.module.css";
-import { Link, useSearchParams } from "react-router-dom";
+
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
@@ -37,7 +39,6 @@ function ViewComment() {
     img = notImg;
   }
 
-  // 등록 핸들러
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     const body = {
@@ -45,6 +46,7 @@ function ViewComment() {
       content: e.target.content.value,
       userId: userInfo.userId,
     };
+    
     postMutate.mutate(body, {
       onSuccess: async () => {
         console.log('onSuccess')
@@ -53,6 +55,7 @@ function ViewComment() {
         return
       }
     })
+
   };
 
   // 삭제 핸들러
@@ -105,7 +108,7 @@ function ViewComment() {
             <div key={item.commentId} className={styles.commentBox}>
               <div className={styles.commentName}>{item.User.nickname}</div>
               <div className={styles.commentContent}>{item.content}</div>
-              <div className={styles.commentDate}>{item.createdAt}</div>
+              <div className={styles.commentDate}>{new Date(item.createdAt).toLocaleDateString()}</div>
               {userInfo?.userId == item.userId ? <div className={styles.buttonBox}>
                 <button type='button'>수정</button>
                 <button type='button' onClick={() => handleCommentDelete(item.commentId)}>삭제</button>
