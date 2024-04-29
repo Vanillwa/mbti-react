@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../css/postView.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ClickPostLikes, getPostView, postDelete } from "../service/api";
@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from '../svg/person-circle.svg'
 function ViewContent() {
+  const [likes, setLikes] = useState('checked')
   const navigate = useNavigate();
 
   /**좌우스크롤 먼저 실행되게 하는 함수*/
@@ -67,10 +68,12 @@ function ViewContent() {
   }
 
   const handleLikeClick = async()=>{
-    const response = await ClickPostLikes(data.postId)
-    if(response.message == 'success'){
-      console.log('좋아요 누름')
+    const result = await ClickPostLikes(data.postId)
+    if(result.message == 'success'){
+      console.log('좋아요 눌렀음.')
+    }else if (result.message == 'duplicated'){
     }
+    console.log(result.message)
   }
 
 
@@ -126,7 +129,7 @@ function ViewContent() {
         <div className={styles.content} ref={contentRef}>
           <ContentComponent content={data.content}/>
         </div>
-        <div className={styles.likesBox}><div type='button' className="" onClick={handleLikeClick}>❤</div></div>
+        <div className={styles.likesBox}><div type='button' className={styles[likes]} onClick={handleLikeClick}>asd</div></div>
       </div>
       
       
