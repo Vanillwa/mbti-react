@@ -14,6 +14,7 @@ import list from "../svg/card-list.svg";
 import friend from "../svg/people-fill.svg";
 import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
+import { PiSirenFill } from "react-icons/pi";
 import { useLocation, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
@@ -191,7 +192,11 @@ const Navbar = () => {
                 </div>
               </dialog>
             </div>
+            
           )}
+          {userInfo.role ==="admin" ? 
+          <Link className={styles.menu} to={"/reportlist"}><PiSirenFill/>신고목록</Link>
+          :  "" }
         </div>
 
         <div type="button" className={`${styles.menu} ${styles.setting}`}>

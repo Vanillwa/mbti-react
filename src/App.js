@@ -16,6 +16,7 @@ import CompleteLogin from "./pages/CompleteLogin";
 import PostEdit from "./pages/PostEdit";
 import UserDelete from "./pages/UserDelete";
 import FriendList from "./pages/FriendList";
+import ReportList from "./pages/ReportList";
 
 
 function App() {
@@ -28,13 +29,13 @@ function App() {
             <Route path="view" element={<PostView />}/>
             <Route path="write" element={<PostWrite/>}></Route>
             <Route path="edit" element={<PostEdit/>}></Route>
+           
           </Route>
+          <Route path="reportlist" element={<ReportList/>}/>
           <Route path="user">
             <Route path=":userId" element={<Profile  />}/>
           </Route>
           <Route path="friend" element={<FriendList/>}/>
-        
-
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
@@ -43,6 +44,7 @@ function App() {
         <Route path="/updatepwd" element={<UpdatePassword/>}/>
         <Route path="/findpwd" element={<FindPwd />}/>
         <Route path="/completelogin" element={<CompleteLogin/>}/>
+       
       </Routes>
     </div>
   );

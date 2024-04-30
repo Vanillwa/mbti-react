@@ -245,9 +245,16 @@ export const PostReport = async (body) =>{
   const res = await axios.post("/post/report",body)
   return res.data;
 }
+
 /**친구 요청 거절 */
 export const rejectFriend = async (friendId)=>{
   const res = await axios.delete(`/friend/reject?friendId=${friendId}`)
   return res.data
-  
+}
+
+
+export const getPostReportList = async ()=>{
+  const res = await axios.get("/report/post")
+  return res.data;
+
 }
