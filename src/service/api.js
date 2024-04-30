@@ -244,3 +244,8 @@ export const PostReport = async (body) =>{
   const res = await axios.post("/post/report",body)
   return res.data;
 }
+
+export const getPostReportList = async ()=>{
+  const res = await axios.get("/report/post")
+  return res.data;
+}

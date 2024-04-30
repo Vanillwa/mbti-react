@@ -1,0 +1,23 @@
+.reportList{
+   border:1px solid black;
+  
+
+}
+
+.reportBox{
+
+    justify-content: center;
+    
+}
+
+.reportListBox{
+    display: flex;
+    justify-content: center;
+   
+}
+.reportLink{
+    padding:15px;
+}
+.banBtn{
+    width:50px;
+}
