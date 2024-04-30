@@ -235,12 +235,19 @@ export const getRequestFriend  =async()=>{
   return res.data
 }
 /**친구 요청 수락 */
-export const acceptFriend = async (targetId)=>{
-  const res = await axios.get(`/friend/accept?targetId=${targetId}`)
+export const acceptFriend = async (friendId)=>{
+  const res = await axios.get(`/friend/accept?friendId=${friendId}`)
   return res.data
 }
+
 //신고하기
 export const PostReport = async (body) =>{
   const res = await axios.post("/post/report",body)
   return res.data;
+}
+/**친구 요청 거절 */
+export const rejectFriend = async (friendId)=>{
+  const res = await axios.delete(`/friend/reject?friendId=${friendId}`)
+  return res.data
+  
 }
