@@ -222,3 +222,8 @@ export const ClickPostLikes = async (postId)=>{
   
   return res.data;
 }
+//신고하기
+export const PostReport = async (body) =>{
+  const res = await axios.post("/post/report",body)
+  return res.data;
+}
