@@ -12,8 +12,9 @@ import logo from "../images/areyout.png";
 import { fetchLogin } from "../service/api";
 import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
+import { useCookies } from "react-cookie";
 
 function Main() {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ function Main() {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn,userInfo } = memoUserInfo;
   
+  
+
 
   const checkCapsLock = e => {
     let capsLock = e.getModifierState("CapsLock");
@@ -127,6 +130,7 @@ function Main() {
                   required
                 />
                 <p className={styles.alert}>{pwdAlert}</p>
+              
                 <Form.Text className={`text-muted ${styles.linktag}`}>
                   <Link to="/findpwd" className={styles.link}>
                     비밀번호찾기

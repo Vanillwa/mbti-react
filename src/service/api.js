@@ -239,3 +239,8 @@ export const acceptFriend = async (targetId)=>{
   const res = await axios.get(`/friend/accept?targetId=${targetId}`)
   return res.data
 }
+//신고하기
+export const PostReport = async (body) =>{
+  const res = await axios.post("/post/report",body)
+  return res.data;
+}
