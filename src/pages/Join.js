@@ -149,6 +149,7 @@ function Join() {
 
 
   // 비밀번호 같은지 체크
+  // 오늘한거 
   const comparePassword = () => {
     if (passwordRef1.current.value === passwordRef2.current.value) {
       setPasswordAlert2("일치합니다")
@@ -187,6 +188,7 @@ function Join() {
   };
 
   // 두번째 비밀번호 재입력
+  //오늘한거
   const handlePasswordOnInput2 = (e) => {
     comparePassword()
   }
@@ -215,6 +217,7 @@ function Join() {
       return
     }
 
+      //오늘한거
     if (!passwordSame) {
       alert("비밀번호가 일치하지 않습니다.")
       passwordRef2.current.focus()
@@ -305,7 +308,7 @@ function Join() {
                 <div className={`text-${passwordValidation === 'valid' ? 'success' : 'danger'}`}>{passwordAlert}</div>
 
 
-                <input type="password" className={`form-control ${passwordValidation === 'valid' ? '' : 'hidden'}`} name="password" id="user-pw" placeholder="password" ref=
+                <input type="password" className={`form-control ${passwordValidation === 'valid' ? '' : 'hidden'}`} name="repassword" id="user-pw" placeholder="password" ref=
                   {passwordRef2} onInput={handlePasswordOnInput2} />
                 <div className={`text-${passwordSame === 'false' ? 'danger' : 'success'}`}>{passwordAlert2}</div>
               </div>

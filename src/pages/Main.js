@@ -14,7 +14,7 @@ import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
-import { useCookies } from "react-cookie";
+
 
 function Main() {
   const navigate = useNavigate();
