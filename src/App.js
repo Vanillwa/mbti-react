@@ -15,6 +15,7 @@ import UpdatePassword from "./pages/UpdatePassword"
 import CompleteLogin from "./pages/CompleteLogin";
 import PostEdit from "./pages/PostEdit";
 import UserDelete from "./pages/UserDelete";
+import FriendList from "./pages/FriendList";
 
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
           <Route path="user">
             <Route path=":userId" element={<Profile  />}/>
           </Route>
+          <Route path="friend" element={<FriendList/>}/>
+        
+
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />

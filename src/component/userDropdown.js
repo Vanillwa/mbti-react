@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { requestFreind } from "../service/api";
+import { requestFriend } from "../service/api";
 import styles from "../css/PostList.module.css";
 const UserDropdown = ({ item }) => {
   const { memoUserInfo } = useAuthContext();
@@ -9,11 +9,11 @@ const UserDropdown = ({ item }) => {
 
   const [friend, setFriend] = useState("");
 
-  const [clicked, setClicked] = useState(false);
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
+
   const handleRequestFreind = async (userId) => {
-    const result = await requestFreind(userId);
+    const result = await requestFriend(userId);
 
     if (result.message == "success") {
       setFriend("친구 요청 완료");
@@ -49,7 +49,8 @@ const UserDropdown = ({ item }) => {
           />
           <span className={styles.nickname}>{item.User.nickname}</span>
         </div>
-        <div type="button"
+        {userInfo.userId == item.User.userId ? null : <>
+          <div type="button"
           onClick={() => handleDropdownClick(item.User.userId)}
           className={styles.userInfoBtn}
         >
@@ -72,7 +73,8 @@ const UserDropdown = ({ item }) => {
               차단하기
             </div>
           </li>
-        </ul>
+        </ul></>}
+        
       </div>
     </>
   );

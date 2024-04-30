@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AsyncCompiler } from "sass";
 // import https from "https";
 // axios.defaults.httpsAgent = new https.Agent({
 //   rejectUnauthorized:false
@@ -219,7 +220,22 @@ export const ClickPostLikes = async (postId) => {
 };
 
 /**친구 요청 기능 */
-export const requestFreind = async (targetId) => {
+export const requestFriend = async (targetId) => {
   const res = await axios.get(`/friend/request?targetId=${targetId}`);
   return res.data;
 };
+/**친구 조회 */
+export const getFriend = async ()=>{
+  const res = await axios.get(`/friend`)
+  return res.data
+}
+/**친구 요청 조회 */
+export const getRequestFriend  =async()=>{
+  const res = await axios.get(`/friend/getRequest`)
+  return res.data
+}
+/**친구 요청 수락 */
+export const acceptFriend = async (targetId)=>{
+  const res = await axios.get(`/friend/accept?targetId=${targetId}`)
+  return res.data
+}

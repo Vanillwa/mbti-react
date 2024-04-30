@@ -14,6 +14,7 @@
 
 
 .nav{
+  background-color: #ebf7ff;
   grid-area: nav;
   display: flex;
   justify-content: space-between;
@@ -36,7 +37,7 @@
 }
 
 .leftSidebar, .rightSidebar{
-  background-color: rgb(233, 245, 255);
+  background-color: #ebf7ff;
   position: fixed;
   top: 8vh;
   z-index: 10;
