@@ -13,7 +13,7 @@ h1{
   margin: 20px;
   padding: 10px;
   width: 50vw;
-  position: relative;
+
 }
 
 .postHeader {
@@ -22,6 +22,30 @@ h1{
   align-items: center;
   padding: 0 0 1vh 0 ;
   border-bottom: 1px solid black;
+  position: relative;
+}
+.userBox{
+  display: flex;
+  align-items: center;
+  width: 50%;
+  position: relative;
+}
+.userInfoBtn{ 
+
+}
+.dropdown{
+  display: none;
+}
+.dropdownOpen{
+  position: absolute;
+  background-color:white;
+  border: 1px solid black;
+  list-style: none;
+  top: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 12vw;
+  text-align: start;
 }
 
 .profileImg {
