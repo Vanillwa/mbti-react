@@ -23,12 +23,12 @@
 
 
 .mainCon{
-
   margin-bottom:20px;
   background-color: white;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   border-radius: 10px;
 }
+
 
 .swiper {
   width: 100%;
@@ -54,32 +54,43 @@
   font-weight: bold;
   margin-bottom:24px;
 }
-
+.isLoggedInBox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .nickname{
   margin-top:20%;
- 
+ margin-bottom: 30px;
   text-align: center;
-  font-size:24px;
+  font-size:19px;
  
 }
 .imageBox{
+  
   display: flex;
   align-items: center;
-  justify-content: center;
-  width:300px;
-  height: 300px;
+  width:270px;
+  height: 270px;
   border:1px solid black;
   border-radius: 50%;
   overflow: hidden;
+  margin-bottom:20px;
 }
 .profileImage{
+
  object-fit: fill;
- 
- width: 90%;
+
+ width: 101%;
   
  
 }
+.goodDay{
+  text-align: center;
+  font-size:18px;
+  
 
+}
 .loginlogo{
 font-weight: bold;
   text-align: center;

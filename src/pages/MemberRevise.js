@@ -267,7 +267,7 @@ function MemberRevise() {
               <h2 className="fw-bold" style={{ fontSize: '40px' }}>프로필 편집</h2>
             </div>
             <div className='buttonWrap'>
-              <input type="file" hidden="hidden" onChange={imageHandler} ref={imageRef}  />
+              <input type="file" hidden="hidden"  onChange={imageHandler} ref={imageRef}  />
               <button type="button" id="custom-button"className='buttonsim'>파일 선택</button>
               <button type='button' onClick={imageDeleteHandler} className='buttonjun'>삭제</button>
             </div>

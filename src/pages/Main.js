@@ -91,11 +91,14 @@ function Main() {
           <Col md={5}>
          {isLoggedIn 
          ? 
-         <>
-         <div className={styles.nickname}>{userInfo.nickname}님 어서오세요 반갑습니다. 
+         <div className={styles.isLoggedInBox}>
+         <div className={styles.nickname}>🎉{userInfo.nickname}님 어서오세요 반갑습니다. 
         </div>
-        <div className={styles.imageBox}><img className={styles.profileImage} src={userInfo.profileImage} alt="유저 프로필사진"/> </div>
-        </>
+        <Link to={"/memberevise"}>
+        <div className={styles.imageBox}><img className= {styles.profileImage} src={userInfo.profileImage} alt="유저 프로필사진"/> </div></Link>
+        <p className={styles.goodDay}>😀즐거운 하루 되세요~</p>
+        </div>
+        
          :
          
             <Form
