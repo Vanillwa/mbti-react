@@ -122,17 +122,15 @@ export const userUpdatePassword = async (body) => {
 };
 
 // 회원정보수정 - 유저 프로필 변경
-export const userUpdateImg = async(body)=>{
-  const res = await axios.put("/updateUserInfo/updateProfileImage",body)
-  return res.data
-}
+export const userUpdateImg = async (body) => {
+  const res = await axios.put("/updateUserInfo/updateProfileImage", body);
+  return res.data;
+};
 
-export const deletePasswordCheck = async (body)=>{
-  const res = await axios.post("/deleteUser/passwordCheck", body)
-  return res.data
-}
-
-
+export const deletePasswordCheck = async (body) => {
+  const res = await axios.post("/deleteUser/passwordCheck", body);
+  return res.data;
+};
 
 // 회원정보수정 - 유저 mbti 변경
 export const userUpdateMbti = async (body) => {
@@ -142,18 +140,15 @@ export const userUpdateMbti = async (body) => {
 
 // 회원정보수정 - 유저 Img 삭제
 
-export const userDeleteImage = async(body)=>{
-  const res = await axios.delete('/updateUserInfo/deleteProfileImage',body)
-  return res.data
-}
-
-export const deleteUser = async()=>{
-  const res = await axios.delete('/user')
+export const userDeleteImage = async (body) => {
+  const res = await axios.delete("/updateUserInfo/deleteProfileImage", body);
   return res.data;
-}
+};
 
-
-
+export const deleteUser = async () => {
+  const res = await axios.delete("/user");
+  return res.data;
+};
 
 //비밀번호 찾기 이메일 인증
 
@@ -162,10 +157,12 @@ export const requestCodeFindPwd = async (email) => {
     email,
   });
   return res.data;
-}
+};
 
-export const checkCodeFindPwd = async(verifyNumber)=>{
-  const res= await axios.post("/updatePassword/checkEmailVerification",{verifyNumber})
+export const checkCodeFindPwd = async (verifyNumber) => {
+  const res = await axios.post("/updatePassword/checkEmailVerification", {
+    verifyNumber,
+  });
   return res.data;
 };
 
@@ -216,9 +213,13 @@ export const EditViewComment = async (body) => {
 };
 
 /**좋아요 누름*/
-export const ClickPostLikes = async (postId)=>{
-  console.log('이거', postId)
-  const res = await axios.get(`/addLike/${postId}`)
-  
+export const ClickPostLikes = async (postId) => {
+  const res = await axios.get(`/addLike/${postId}`);
   return res.data;
-}
+};
+
+/**친구 요청 기능 */
+export const requestFreind = async (targetId) => {
+  const res = await axios.get(`/friend/request?targetId=${targetId}`);
+  return res.data;
+};

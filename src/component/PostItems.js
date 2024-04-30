@@ -2,22 +2,20 @@ import React, { useEffect, useState } from "react";
 import styles from "../css/PostList.module.css";
 import { Link } from "react-router-dom";
 import noImg from '../images/noImg.png'
+import UserDropdown from "./userDropdown";
 const PostItems = ({ data, status }) => {
-    
-  const [posts, setPosts] = useState([]);
+
   const [readhit, setReadhit] = useState(0)
 
 
-  useEffect(()=>{
-    if (data){
-      const sortedData = [...data].sort((a,b)=>new Date(b.createdAt) - new Date(a.createdAt))
-      setPosts(sortedData)
-    }
-  }, [data])
+
+
 
   const handleListClick=()=>{
     setReadhit(readhit + 1)
   }
+
+
   if (status === "loading") {
     return (
       <div className="container">
@@ -38,21 +36,18 @@ const PostItems = ({ data, status }) => {
       </div>
     )
   }
-  console.log(data)
   
   
   return (
     <>
-      {posts.map((item) => {
+      {data.map((item) => {
         const showImg = item.content.match(/<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/);
         const imgSrc = showImg ? showImg[1] : noImg;
         return (
-          <div className={styles.postWrap}>
+          <div className={styles.postWrap} key={item.id}>
             <div className={styles.postHeader}>
-              <Link to={`/user/${item.User.userId}`}>
-              <img src={item.User.profileImage} alt="profile" className={styles.profileImg} />
-              <span className={styles.nickname}>{item.User.nickname}</span>
-              </Link>
+            <UserDropdown item={item} />
+              
               <div className={styles.dateReadhitBox} onClick={handleListClick}>
                 <div className={styles.likes}>❤  {item.like}</div>
                 <div className={styles.readhit}>조회수 : {item.readhit}</div>

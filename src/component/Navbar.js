@@ -11,7 +11,7 @@ import write from "../svg/pencil-square.svg";
 import notImg from "../svg/person-circle.svg";
 import home from "../svg/house.svg";
 import list from "../svg/card-list.svg";
-import freind from "../svg/people-fill.svg";
+import friend from "../svg/people-fill.svg";
 import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -111,8 +111,8 @@ const Navbar = () => {
             <IListDropdown />
           </div>
           {isLoggedIn ? (
-            <Link className={styles.menu} to="/freind">
-              <img className={styles.svg} src={freind} />
+            <Link className={styles.menu} to="/friend">
+              <img className={styles.svg} src={friend} />
               <div className={styles.span}>친구</div>
             </Link>
           ) : (
@@ -122,7 +122,7 @@ const Navbar = () => {
                 className={styles.menu}
                 onClick={handleopenModal}
               >
-                <img className={styles.svg} src={freind} />
+                <img className={styles.svg} src={friend} />
                 <div className={styles.span}>친구</div>
               </div>
               <dialog className={styles.dialog} ref={dialogRef}>
@@ -181,12 +181,13 @@ const Navbar = () => {
                 <div className={styles.span}>마이페이지</div>
               </div>
               <dialog className={styles.dialog} ref={dialogRef}>
-                <h2>로그인이 필요한 컨텐츠입니다.</h2>
+                <h2 className="pt-2 pb-2">로그인이 필요한 컨텐츠입니다.</h2>
                 <p>로그인 하시겠습니까?</p>
-                <Link to={`/`}>로그인 하러가기</Link>
-                <br />
-                <div type="button" onClick={handleCloseModal}>
-                  닫기
+                <div className="d-flex justify-content-end">
+                  <Link className={styles.goLogin} to={`/`}>로그인 하러가기</Link>
+                  <div type="button" onClick={handleCloseModal}>
+                    닫기
+                  </div>
                 </div>
               </dialog>
             </div>
