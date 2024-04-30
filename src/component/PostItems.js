@@ -29,14 +29,14 @@ const PostItems = ({ data, status }) => {
       </div>
     );
   }
-  if(data.length == 0){
+  if(data.length == 0 ){
     return(
       <div>
         <h1>작성된 글이 없습니다.</h1>
       </div>
     )
   }
-  
+  console.log(data)
   
   return (
     <>
@@ -47,6 +47,7 @@ const PostItems = ({ data, status }) => {
           <div className={styles.postWrap} key={item.id}>
             <div className={styles.postHeader}>
             <UserDropdown item={item} />
+            {console.log(item)}
               
               <div className={styles.dateReadhitBox} onClick={handleListClick}>
                 <div className={styles.likes}>❤  {item.like}</div>
