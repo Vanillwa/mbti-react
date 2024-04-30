@@ -8,3 +8,31 @@
 
 .text-center img{width: 80px; border-radius: 50%;}
 
+.buttonWrap{
+  display: flex;
+  justify-content: end;
+}
+.buttonsim, .buttonjun{
+  padding: 2px;
+  margin: 0 0.5vw;
+  width: 7vw;
+  
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  }
+  
+.buttonjun{
+  background-color: rgb(255, 51, 112);
+  color: white;
+}
+
+.buttonsim{
+  background-color: rgb(107, 186, 255);
+  color: white;
+}
+
+.buttondong{
+  display: flex;
+  justify-content: end;
+}

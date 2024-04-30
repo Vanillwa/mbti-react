@@ -55,6 +55,31 @@
   margin-bottom:24px;
 }
 
+.nickname{
+  margin-top:20%;
+ 
+  text-align: center;
+  font-size:24px;
+ 
+}
+.imageBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:300px;
+  height: 300px;
+  border:1px solid black;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profileImage{
+ object-fit: fill;
+ 
+ width: 90%;
+  
+ 
+}
+
 .loginlogo{
 font-weight: bold;
   text-align: center;

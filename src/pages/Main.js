@@ -22,6 +22,9 @@ function Main() {
   const [emailAlert, setEmailAlert] = useState();
   const [pwdAlert, setPwdAlert] = useState();
   const location = useLocation();
+  const { memoUserInfo } = useAuthContext();
+  const { isLoggedIn,userInfo } = memoUserInfo;
+  
 
   const checkCapsLock = e => {
     let capsLock = e.getModifierState("CapsLock");
@@ -42,22 +45,26 @@ function Main() {
 
 
     if (
-      (res.status == "ok" && res.message === "success" && location.state === "updatePwd") ||
-      location.state === "join" ||
-      location.state === "findPwd" ||
-      location.state === null
+        res.message === "success" && (location.state === "updatePwd" ||
+      location.state === "join" || 
+      location.state === "findPwd" || 
+      location.state === null)
     ) {
       login(res.userInfo);
       navigate("/post/list");
+      return;
     } else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
       setPwdAlert("");
+      return;
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
+      return;
     } else if (res.message === "success") {
       login(res.userInfo);
       navigate(-1);
+      return;
     }
   };
 
@@ -82,6 +89,15 @@ function Main() {
           </Col>
 
           <Col md={5}>
+         {isLoggedIn 
+         ? 
+         <>
+         <div className={styles.nickname}>{userInfo.nickname}님 어서오세요 반갑습니다. 
+        </div>
+        <div className={styles.imageBox}><img className={styles.profileImage} src={userInfo.profileImage} alt="유저 프로필사진"/> </div>
+        </>
+         :
+         
             <Form
               className={`Login-form ${styles.loginform}`}
               onSubmit={handleSubmit}>
@@ -135,6 +151,7 @@ function Main() {
                 </Button>
               </div>
             </Form>
+            } 
           </Col>
           <div className={`text-center ${styles.noLoginBtn} `}>
             <Button onClick={noLogin}>게시판이동</Button>
