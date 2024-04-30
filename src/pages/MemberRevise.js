@@ -3,9 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
-// import img from "../images/MBTI.png";
-// 프로필 수정삭제 구현하기 위해 만듬
-import Modal from 'react-bootstrap/Modal';
+
+// 모달지움 
 // 프로필 수정아이콘 클릭시 선팝업창 뜨게 만들려고 씀
 import Button from 'react-bootstrap/Button'
 import '../css/MemberRevise.css'
@@ -273,9 +272,8 @@ function MemberRevise() {
             </div>
             <div className='buttonWrap'>
 
-              <input type="file" hidden="hidden"  onChange={imageHandler} ref={imageRef}  />
-              <button type="button" id="custom-button"className='buttonsim'>파일 선택</button>
-
+            <input type="file" hidden="hidden" onChange={imageHandler} ref={imageRef} />
+              <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}>파일 선택</button>
 
               <button type='button' onClick={imageDeleteHandler} className='buttonjun'>삭제</button>
             </div>
