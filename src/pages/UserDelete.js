@@ -89,14 +89,14 @@ function UserDelete() {
           <div className="card-body">
             <div className="text-center mb-5">
             
-              <h2 className="fw-bold" style={{ fontSize: '40px' }}>회원탈퇴</h2>
+              <h2 className="fw-bold" style={{ fontSize: '40px', color:"#0866ff"}}>회원탈퇴</h2>
             </div>
        
-            <p>그 동안 AreYouT를 사랑해주셔서 감사합니다. 하단에는 삭제하는 기능과 해당 사유란이 있으니 설정 부탁드리겠습니다.  </p>
+            <p >그 동안 AreYouT를 사랑해주셔서 감사합니다. 하단에는 삭제하는 기능과 해당 사유란이 있으니 설정 부탁드리겠습니다.  </p>
             <div className="row g-3">
               <div className="col-12">
                 <div className='d-flex gap-2'>
-                <label htmlFor="email" className="form-label">계정을 삭제하려는 이유가 뭔가요?</label>
+                <label htmlFor="email" className="form-label mt-3">계정을 삭제하려는 이유가 뭔가요?</label>
                 </div>
                 <div className='d-flex gap-2'>
                 <select className="form-control" id="user-mbti">
@@ -119,9 +119,17 @@ function UserDelete() {
                 </div>
                 <p style={{ color: "green" }}>{pwMessage}</p>
               </div>
-  
               <div>
-                <label htmlFor="user-mbti" className="form-label">계속하시면 회원님의 회원정보가 삭제됩니다. 삭제를 원하시면 하단의 회원정보 탈퇴 버튼을 눌러주세요.</label>
+          
+              <h5 style={{color:"#0866ff"}} className='mb-3'>회원탈퇴를 신청하기전에, 내용을 꼭확인해주세요. </h5>
+              <li>고객정보 및 개인형 서비스 이용 기록은 정보보호처리 기준에따라 삭제됩니다.</li>
+              <li>회원탈퇴 시 보유하시던 적립금은 회원정보에 등록된 계좌로 자동이체 됩니다.</li>
+              <li>회원탈퇴 시 더이상 AreYouT 서비스를 이용불가능 합니다.</li>          
+              </div>
+
+
+              <div>
+                <label htmlFor="user-mbti" className="form-label mt-5">계속하시면 회원님의 회원정보가 <strong style={{color:"red"}}>삭제</strong>됩니다. <strong>삭제</strong>를 원하시면 하단의 회원정보 탈퇴 버튼을 눌러주세요.</label>
                 <div className="d-flex gap-2">
                 </div>
                 <div className='col-12 d-flex justify-content-center'>

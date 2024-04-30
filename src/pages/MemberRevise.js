@@ -35,7 +35,7 @@ function MemberRevise() {
 
 
 
-  
+
   const navigate = useNavigate()
 
 
@@ -54,13 +54,13 @@ function MemberRevise() {
   // 패스워드
   const passwordRef1 = useRef();
   const passwordRef2 = useRef();
-
   const [pwMessage, setPwmessage] = useState('')
-  //const [newPwname, setNewpwname] = useState("")
   const [pwEditable, setPwEditable] = useState(false)
-  //const [pwButtonChange, setPwButtonChange] = useState(false)
   const [passwordBtn, setPasswordBtn] = useState('수정')
-  const [pwAlert, setPwAlert] = useState('')
+
+  
+ 
+
 
 
 
@@ -68,19 +68,17 @@ function MemberRevise() {
   // mbti
   const mbtiRef = useRef()
   const [mbti, setMbti] = useState(userInfo.mbti)
-  // const [newMbti, setNewMbti] = useState()
-  // const [mbtiChange, setMbtiChange] = useState()
-
-
-  //  
 
 
   // 이미지 
   const imageRef = useRef();
 
 
-  //미완성 버튼 css변경하기위해
- const customBtn = document.getElementById("custom-button")
+
+  // 인풋타입 file대체 하기 위해 
+  const handleButtonOnClick = () => {
+    imageRef.current.click()
+  }
 
 
 
@@ -139,14 +137,15 @@ function MemberRevise() {
     // 닉네임 중복 검사
     const data = await userCheckDuplicationNickname({ nickname });
     return data;
-  
+
   };
 
   const handleNicknameBtnOnclick = async () => {
-    
+
     if (nicknameBtn == '수정') {
       setNicknameEditable(true)
       setNicknameBtn('체크')
+
       return
     }
     if (nicknameBtn == '체크') {
@@ -161,11 +160,16 @@ function MemberRevise() {
         setNicknameValidation('invalid');
       }
     }
-    if (nicknameBtn == '변경') 
-    {
-     
+
+
+
+
+
+
+    if (nicknameBtn == '변경') {
+
       const result = await userUpdateNickname({ nickname: nicknameRef.current.value })
-    
+
       if (result?.message === 'success') {
         alert('닉네임 변경 완료')
         setNicknameEditable(false)
@@ -191,43 +195,44 @@ function MemberRevise() {
       return
     }
     if (passwordBtn == '확인') {
-     
-      if(!passwordRegex.test(passwordRef1.current.value)){
-        setPwmessage("비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요.");    
-        setPwEditable(true);      
-       
-         return
 
-      }else{
-        setPwEditable(true)
-        setPwmessage("비밀번호를 한번더 입력해주세요.")
-        setPasswordBtn('변경')
+      if (!passwordRegex.test(passwordRef1.current.value)) {
+        setPwmessage("비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요.");
+        return
+      } else if (passwordRef2.current.value != passwordRef1.current.value) {
+        setPwmessage("비밀번호가 일치하지 않습니다")
+        return
       }
-    
+      setPwmessage("비밀번호가 일치합니다.")
+
+      setPasswordBtn('변경')
     }
 
 
-
     if (passwordBtn == '변경') {
-       if(passwordRef1.current.value != passwordRef2.current.value){
-        setPwmessage("형식에 맞게 다시 입력해주시길 바랍니다.");    
-        return
-       }
+
       const result = await userUpdatePassword({ password: passwordRef1.current.value })
       if (result.message === 'success') {
         alert(' 패스워드 변경 완료')
         setPwEditable(false)
         setPwmessage("")
-        setPwAlert("");
         setPasswordBtn("수정")
-
-
+       
+       
+        
+        return
       }
-      
     }
 
 
   }
+
+  const handlePasswordChange = (e) => {
+    setPasswordBtn('확인');
+    setPwmessage("")
+    return
+  };
+
 
 
 
@@ -264,14 +269,17 @@ function MemberRevise() {
               <img src={imgUrl} alt="회원사진" className="user-image" />
 
 
-              <h2 className="fw-bold" style={{ fontSize: '40px' }}>프로필 편집</h2>
+              <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>프로필 편집</h2>
             </div>
             <div className='buttonWrap'>
+
               <input type="file" hidden="hidden"  onChange={imageHandler} ref={imageRef}  />
               <button type="button" id="custom-button"className='buttonsim'>파일 선택</button>
+
+
               <button type='button' onClick={imageDeleteHandler} className='buttonjun'>삭제</button>
             </div>
-            
+
             <div className="row g-3">
               <div className="col-12">
                 <label htmlFor="email" className="form-label">이메일</label>
@@ -304,17 +312,17 @@ function MemberRevise() {
               <div>
                 <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
                 <div className="d-flex gap-2">
-                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} />
+                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange}  />
                   <button
-                  className='btn btn-sm btn-primary'
+                    className='btn btn-sm btn-primary'
                     type='button'
                     onClick={handlePasswordBtnOnclick}
                   >
                     {passwordBtn}
                   </button>
                 </div>
-                <input type="password" className={`form-control ${passwordBtn == '수정' || passwordBtn == "확인" ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} />
-                <p style={{ color: pwMessage === "" ? "green" : "red" }}>{pwMessage}</p>
+                <input type="password" className={`form-control ${passwordBtn == '수정' ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} v/>
+                <p style={{ color: pwMessage === "" ? "red" : "green" }}>{pwMessage}</p>
               </div>
 
               <div>
@@ -354,7 +362,7 @@ function MemberRevise() {
                     className='btn btn-sm btn-primary'
                     onClick={() => navigate('/post/list')}
                   >게시판으로 이동</button>
-                  <button type='button'className='btn btn-sm btn-primary' onClick={() => navigate('/userdelete')}>회원탈퇴</button>
+                  <button type='button' className='btn btn-sm btn-primary' onClick={() => navigate('/userdelete')}>회원탈퇴</button>
                 </div>
               </div>
             </div>

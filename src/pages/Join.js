@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import { requestEmailVerification } from '../service/api';
 function Join() {
   console.log('rendered')
   const navigate = useNavigate()
+
 
   // email
   const [email, setEmail] = useState()
@@ -37,10 +38,12 @@ function Join() {
   const [nicknameValidation, setNicknameValidation] = useState('invalid')
 
   // 비밀번호
-  const [password, setPassword] = useState('');
-  const passwordRef = useRef()
+  const passwordRef1 = useRef()
+  const passwordRef2 = useRef()
   const [passwordAlert, setPasswordAlert] = useState('');
+  const [passwordAlert2, setPasswordAlert2] = useState('');
   const [passwordValidation, setPasswordValidation] = useState('invalid');
+  const [passwordSame, setPasswordSame] = useState(false);
 
   // 이메일 입력
   const handleEmailOnBlur = async (e) => {
@@ -83,7 +86,7 @@ function Join() {
     try {
       const response = await requestEmailVerification(email);
       if (response.message === 'success') {
-        console.log("인증번호 : ",response.code)
+        console.log("인증번호 : ", response.code)
         setCertificationValidation('valid');
         setCertificationAlert("인증 번호가 발송되었습니다.")
         setCertificationInputDisabled(false) // false값으로 바꿈 이건 인풋상자
@@ -110,13 +113,13 @@ function Join() {
         setCertificationAlert("인증번호가 불일치합니다.");
         setCertificationValidation('invalid');
       }
-    }else{
+    } else {
       setCertificationAlert("");
     }
   };
 
-   // 닉네임 입력
-    const handleNickNameOnBlur = async (e) => {
+  // 닉네임 입력
+  const handleNickNameOnBlur = async (e) => {
     if (nickname === e.target.value) {
       return
     } else {
@@ -145,45 +148,76 @@ function Join() {
   };
 
 
-  // 비밀번호 정규식
+  // 비밀번호 같은지 체크
+  const comparePassword = () => {
+    if (passwordRef1.current.value === passwordRef2.current.value) {
+      setPasswordAlert2("일치합니다")
+      setPasswordSame(true)
+    } else {
+      setPasswordAlert2("일치하지 않습니다")
+      setPasswordSame(false)
+    }
+    console.log(passwordSame)
+  }
+
+  // 첫번째 비밀번호 입력
   const handlePasswordOnInput = (e) => {
     const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,20}$/;
-    setPassword(e.target.value);
 
-    if(e.target.value === ''){
+    if (e.target.value === '') {
       setPasswordAlert("");
       setPasswordValidation("invalid");
+      setPasswordAlert2("")
+      setPasswordSame(false)
       return
     }
     if (passwordRegex.test(e.target.value)) {
-      setPasswordAlert("사용 가능한 비밀번호입니다.");
+
+      setPasswordAlert("형식이 올바릅니다.");
       setPasswordValidation("valid");
-    } else {
+      comparePassword()
+    }
+    else {
+      passwordRef2.current.value = ''
       setPasswordAlert("비밀번호는 최소 6자, 최대 20자이며 한글은 사용할 수 없습니다. 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.");
       setPasswordValidation("invalid");
     }
+
+
   };
+
+  // 두번째 비밀번호 재입력
+  const handlePasswordOnInput2 = (e) => {
+    comparePassword()
+  }
 
   // 회원가입 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if(emailValidation === 'invalid'){
+    if (emailValidation === 'invalid') {
       alert('이메일 중복체크 요망')
       emailRef.current.focus()
       return
     }
-    if(certificationValidation === 'invalid'){
+    if (certificationValidation === 'invalid') {
       alert('이메일 인증 요망')
       return
     }
-    if(nicknameValidation === 'invalid'){
+    if (nicknameValidation === 'invalid') {
       alert('닉네임 중복체크 요망')
       nicknameRef.current.focus()
       return
     }
-    if(passwordValidation === 'invalid'){
+
+    if (passwordValidation === 'invalid') {
       alert('올바르지 않은 비밀번호 형식')
-      passwordRef.current.focus()
+      passwordRef1.current.focus()
+      return
+    }
+
+    if (!passwordSame) {
+      alert("비밀번호가 일치하지 않습니다.")
+      passwordRef2.current.focus()
       return
     }
 
@@ -196,10 +230,12 @@ function Join() {
     const result = await fetchJoin(body)
 
     if (result.message === "success") {
-      alert("회원가입 성공하셨습니다!.")
+      alert("회원가입 성공하셨습니다.")
       navigate("/")
-
+    } else {
+      alert("회원가입에 실패하셨습니다.")
     }
+
 
   }
 
@@ -212,8 +248,8 @@ function Join() {
         <div className="card-body">
           <form onSubmit={handleSubmit}>
             <div className="text-center mb-5">
-              
-              <h2 className="fw-bold" style={{ fontSize: '40px' }}>가입하기</h2>
+
+              <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>가입하기</h2>
             </div>
             <div className="row g-3">
 
@@ -262,11 +298,16 @@ function Join() {
                   id="user-pw"
                   placeholder="Password"
                   required
-                  value={password}
+
                   onInput={handlePasswordOnInput}
-                  ref={passwordRef}
+                  ref={passwordRef1}
                 />
                 <div className={`text-${passwordValidation === 'valid' ? 'success' : 'danger'}`}>{passwordAlert}</div>
+
+
+                <input type="password" className={`form-control ${passwordValidation === 'valid' ? '' : 'hidden'}`} name="password" id="user-pw" placeholder="password" ref=
+                  {passwordRef2} onInput={handlePasswordOnInput2} />
+                <div className={`text-${passwordSame === 'false' ? 'danger' : 'success'}`}>{passwordAlert2}</div>
               </div>
 
               <div className="d-flex gap-2">
@@ -295,7 +336,7 @@ function Join() {
                 <div className="form-check">
                   <input className="form-check-input" type="checkbox" id="checkBox1" required />
                   <label className="form-check-label" htmlFor="checkBox1">
-                    <strong>[필수]</strong> 회원가입 이용약관 동의
+                    <strong>[<strong style={{ color: "red" }}>필수</strong>] </strong>회원가입 이용약관 동의
                   </label>
                 </div>
               </div>
