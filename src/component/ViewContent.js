@@ -129,7 +129,7 @@ function ViewContent() {
         <div className={styles.content} ref={contentRef}>
           <ContentComponent content={data.content}/>
         </div>
-        <div className={styles.likesBox}><div type='button' className={styles[likes]} onClick={handleLikeClick}>asd</div></div>
+        <div className={styles.likesBox}><div type='button' className={styles[likes]} onClick={handleLikeClick}>좋아요❤</div></div>
       </div>
       
       
