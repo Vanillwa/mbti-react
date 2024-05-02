@@ -13,11 +13,20 @@
 .reportListBox{
     display: flex;
     justify-content: center;
-   
+   width:100%;
+   border-bottom: 1px solid black;
 }
+.reportListBox
 .reportLink{
     padding:15px;
+    margin-bottom: 10px;
+    
 }
 .banBtn{
+    margin:5px;
     width:50px;
+}
+.cancelBtn{
+    width:50px;
+    margin:5px;
 }
