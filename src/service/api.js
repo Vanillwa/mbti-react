@@ -261,4 +261,13 @@ export const blockFriend = async (friendId)=>{
 export const getPostReportList = async ()=>{
   const res = await axios.get("/report/post")
   return res.data;
+
 }
+
+
+
+export const getProfileList = async (userId)=>{
+  const res =  await axios.get(`/profile?userId=${userId}`)
+  return res.data;
+}
+
