@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { getPostList } from "../service/api";
 import PostItems from "../component/PostItems";
 import styles from "../css/PostList.module.css";
+import Profile from "./Profile";
 
 
 const PostList = () => {
@@ -23,6 +24,7 @@ const PostList = () => {
     <div className={styles.postBox}>
       
       <PostItems data={data} status={status} />
+      
       
     </div>
   );
