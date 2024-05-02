@@ -49,7 +49,7 @@ const UserDropdown = ({ item }) => {
           />
           <span className={styles.nickname}>{item.User.nickname}</span>
         </div>
-        {userInfo.userId == item.User.userId ? null : <>
+        {userInfo?.userId == item.User.userId ? null : <>
           <div type="button"
           onClick={() => handleDropdownClick(item.User.userId)}
           className={styles.userInfoBtn}

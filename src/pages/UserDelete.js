@@ -68,8 +68,10 @@ function UserDelete() {
         alert("회원탈퇴가 성공했습니다.")
         logout()
         navigate("/")
-      }else if(result.message==="fail")
-      setPwmessage("회원탈퇴에 실패하셨습니다.")
+      }else if(result.message==="fail"){
+        setPwmessage("회원탈퇴에 실패하셨습니다.")
+      }
+      
     } 
 
 
