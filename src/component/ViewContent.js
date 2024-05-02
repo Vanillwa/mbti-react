@@ -16,7 +16,6 @@ function ViewContent() {
   const navigate = useNavigate();
 
 
-
   /**좌우스크롤 먼저 실행되게 하는 함수*/
   const contentRef = useRef(null);
 
@@ -78,8 +77,10 @@ function ViewContent() {
     if (result.message == "success") {
       console.log("좋아요 눌렀음.");
     } else if (result.message == "duplicated") {
+
     }
     console.log(result.message);
+    
   };
 
   function ContentComponent({ content }) {
@@ -113,11 +114,14 @@ function ViewContent() {
   } else {
     dateDisplay = createdAt.toLocaleDateString("ko-KR");
   }
+  console.log(data)
   return (
     <>
       <div className={styles.container}>
         <div className={styles.mbti}>
           <span>{data.category} 게시판</span>
+          <div className={styles.readhit}>조회 : {data.readhit}</div>
+          <div className={styles.like}>좋아요 : {data.like}</div>
           <div>
           <ReportModal/>
           {userInfo?.userId == data.User.userId && isLoggedIn ? (

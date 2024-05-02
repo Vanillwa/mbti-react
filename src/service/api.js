@@ -53,8 +53,8 @@ export const getMessage = async (roomId) => {
   return res.data;
 };
 
-export const getPostList = async (mbti) => {
-  const res = await axios.get(`/post/list?mbti=${mbti}`);
+export const getPostList = async (mbti, size, sort, order, page) => {
+  const res = await axios.get(`/post/list?mbti=${mbti}&size=${size}&sort=${sort}&order=${order}&page=${page}`);
   return res.data;
 };
 
@@ -261,5 +261,4 @@ export const blockFriend = async (friendId)=>{
 export const getPostReportList = async ()=>{
   const res = await axios.get("/report/post")
   return res.data;
-
 }

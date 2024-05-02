@@ -8,9 +8,6 @@ const PostItems = ({ data, status }) => {
   const [readhit, setReadhit] = useState(0)
 
 
-  const [mbti, setMbti] = useState()
-
-
   const handleListClick=()=>{
     setReadhit(readhit + 1)
   }
@@ -29,25 +26,23 @@ const PostItems = ({ data, status }) => {
       </div>
     );
   }
-  if(data.length == 0 ){
+  if(data.list.length == 0 ){
     return(
       <div>
         <h1>작성된 글이 없습니다.</h1>
       </div>
     )
   }
-  console.log(data)
   
   return (
     <>
-      {data.map((item) => {
+      {data.list.map((item) => {
         const showImg = item.content.match(/<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/);
         const imgSrc = showImg ? showImg[1] : noImg;
         return (
-          <div className={styles.postWrap} key={item.id}>
+          <div className={styles.postWrap} key={item.postId}>
             <div className={styles.postHeader}>
             <UserDropdown item={item} />
-            {console.log(item)}
               
               <div className={styles.dateReadhitBox} onClick={handleListClick}>
                 <div className={styles.likes}>❤  {item.like}</div>
@@ -69,7 +64,7 @@ const PostItems = ({ data, status }) => {
           </div>
         );
       })}
-      <div style={{border : 'none'}} className="post d-flex align-items-center" >1</div>
+      
     </>
   );
 };

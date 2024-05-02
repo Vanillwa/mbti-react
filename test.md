@@ -7,4 +7,6 @@
 - 친구요청 차단 게시물까지? 채팅만? 
 - 친구페이지 친구 목록 차단 목록 요청 목록(받은거 보낸거 둘 다) 
 
-post/list?mbti=ESTP&sort=createdAt&order=desc
+post/list?mbti=mbti&sort=createdAt&order=desc?
+
+## 
