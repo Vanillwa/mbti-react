@@ -3,14 +3,12 @@ import styles from "../css/postView.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   ClickPostLikes,
-  PostReport,
   getPostView,
   postDelete,
 } from "../service/api";
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
-import Button from "react-bootstrap/Button";
 import ReportModal from "./ReportModal";
 
 function ViewContent() {
@@ -139,6 +137,7 @@ function ViewContent() {
           </div>
           
           
+
         </div>
         <div className={styles.editBox}></div>
         <div className={styles.header}>

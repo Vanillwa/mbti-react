@@ -15,11 +15,10 @@ import friend from "../svg/people-fill.svg";
 import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
 import { PiSirenFill } from "react-icons/pi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-  const location = useLocation();
   const navigate = useNavigate();
   const dialogRef = useRef();
   const handleopenModal = () => {

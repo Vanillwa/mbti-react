@@ -1,14 +1,14 @@
 import React from "react";
 import styles from "../css/friend.module.css";
 import { useQuery } from "react-query";
-import { acceptFriend, getFriend, getRequestFriend, rejectFriend } from "../service/api";
+import { acceptFriend, blockFriend, getFriend, getRequestFriend, rejectFriend } from "../service/api";
 import { useAuthContext } from "../context/AuthContext";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 const FriendList = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-
+  
   const { data : requestData,  status : requestStatus , refetch} = useQuery(
     ["getRequestFriend"],
     () => getRequestFriend(),
@@ -47,12 +47,26 @@ const FriendList = () => {
   const handleRequestBlock = ()=>{
     
   }
+  const handleFriendBlock = async(friendId)=>{
+    window.confirm('정말 차단하시겠습니까?')
+    const result = await blockFriend(friendId)
+    if(result.message == "success"){
+      alert('차단 완료')
+      refetch()
+    }
+  }
+  const handleFriendRefuse = async(friendId)=>{
+
+  }
 
 
   if (requestStatus === "loading" || friendStatus === "loading") {
     return <div>Loding...</div>;
   } else if (requestStatus === "error" || friendStatus === "error") {
     return <div>Error...</div>;
+  }
+  if(!isLoggedIn){
+    return(<><h3>로그인 후 이용해주세요</h3><Link to='/'>로그인 하러가기</Link></>)
   }
 
 
@@ -69,7 +83,7 @@ const FriendList = () => {
             </Link>
             <div className={styles.btnBox}>
               <Link to={`chat`}><div type='button' className={styles.button}>채팅하기</div></Link>
-            <div type='button' className={styles.button} onClick='handleFriendBlock'>너 차단</div>
+            <div type='button' className={styles.button} onClick={()=>handleFriendBlock(friendData.friendId)}>너 차단</div>
             <div type='button' className={styles.button} onClick='handleFriendRefuse'>너 삭제</div>
 
             </div>
