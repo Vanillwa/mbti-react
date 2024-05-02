@@ -33,7 +33,7 @@ function App() {
           </Route>
           <Route path="reportlist" element={<ReportList/>}/>
           <Route path="user">
-            <Route path=":userId" element={<Profile  />}/>
+            <Route path=":userId" element={<Profile/>}/>
           </Route>
           <Route path="friend" element={<FriendList/>}/>
         </Route>

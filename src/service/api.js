@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AsyncCompiler } from "sass";
+
 // import https from "https";
 // axios.defaults.httpsAgent = new https.Agent({
 //   rejectUnauthorized:false
@@ -249,6 +249,11 @@ export const PostReport = async (body) =>{
 /**친구 요청 거절 */
 export const rejectFriend = async (friendId)=>{
   const res = await axios.delete(`/friend/reject?friendId=${friendId}`)
+  return res.data
+}
+/** 친구 차단 */
+export const blockFriend = async (friendId)=>{
+  const res = await axios.put(`/friend/block?friendId=${friendId}`)
   return res.data
 }
 

@@ -125,7 +125,7 @@ function ViewComment() {
             <img className={styles.myImg} src={img} alt=""></img>
             <span className={styles.label}>{userInfo?.nickname} :</span>
             <input className={styles.commentInput} name="content" />
-            <button type="submit">작성</button>
+            <div type="submit">작성</div>
           </form>
         ) : (
           <div className={styles.commentForm}>

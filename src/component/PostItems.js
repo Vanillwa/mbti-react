@@ -8,7 +8,7 @@ const PostItems = ({ data, status }) => {
   const [readhit, setReadhit] = useState(0)
 
 
-
+  const [mbti, setMbti] = useState()
 
 
   const handleListClick=()=>{

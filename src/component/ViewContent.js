@@ -194,7 +194,7 @@ function ViewContent() {
                   controlId="exampleForm.ControlInput1">
                   <Form.Label>신고자</Form.Label>
                   <Form.Control
-                    value={userInfo.nickname}
+                    value={userInfo?.nickname}
                     autoFocus
                     disabled="true"
                   />

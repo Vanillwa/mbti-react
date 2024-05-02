@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "../css/PostWrite.module.css";
 import { useAuthContext } from "../context/AuthContext";
 import { getPostView, postEdit} from "../service/api";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import ReactQuill from "react-quill";

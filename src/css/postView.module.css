@@ -88,6 +88,7 @@
   width: auto;
   height: 2.5vh;
   margin-right: 5px;
+  border-radius: 50%;
 }
 
 .commentInput{
