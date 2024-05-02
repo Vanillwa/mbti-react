@@ -97,7 +97,7 @@ const PostEdit = () => {
   
   console.log(data)
 
-  const handleEMbtiChange = (e) => {
+  const handleEMbtiChange = (e) => { 
     setSelectEMbti(e.target.value);
     setSelectIMbti("I게시판");
   };
