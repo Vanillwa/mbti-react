@@ -3,8 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
-
-// 모달지움 
+// import img from "../images/MBTI.png";
+// 프로필 수정삭제 구현하기 위해 만듬
+import Modal from 'react-bootstrap/Modal';
 // 프로필 수정아이콘 클릭시 선팝업창 뜨게 만들려고 씀
 import Button from 'react-bootstrap/Button'
 import '../css/MemberRevise.css'
@@ -275,6 +276,7 @@ function MemberRevise() {
             <input type="file" hidden="hidden" onChange={imageHandler} ref={imageRef} />
               <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}>파일 선택</button>
 
+
               <button type='button' onClick={imageDeleteHandler} className='buttonjun'>삭제</button>
             </div>
 
@@ -320,7 +322,7 @@ function MemberRevise() {
                   </button>
                 </div>
                 <input type="password" className={`form-control ${passwordBtn == '수정' ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} v/>
-                <p style={{ color: pwMessage === "" ? "red" : "green" }}>{pwMessage}</p>
+                <p style={{ color: pwMessage === "비밀번호가 일치하지 않습니다" ? "red" : "green" }}>{pwMessage}</p>
               </div>
 
               <div>

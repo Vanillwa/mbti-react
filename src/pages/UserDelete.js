@@ -57,20 +57,27 @@ function UserDelete() {
       }
     };
 
-    const handleDeleteOnclick =async()=>{
-      if(!window.confirm("정말 삭제하시겠습니까?")){
+    const handleDeleteOnclick = async () => {
+      if (!window.confirm("정말 삭제하시겠습니까?")) {
         return;
       }
-      const result = await deleteUser()
-      console.log(result.message)
-      if(result.message==="success"){
-        
-        alert("회원탈퇴가 성공했습니다.")
-        logout()
-        navigate("/")
-      }else if(result.message==="fail")
-      setPwmessage("회원탈퇴에 실패하셨습니다.")
-    } 
+    
+      try {
+        const result = await deleteUser();
+        if (result.message === "success") {
+          alert("회원탈퇴가 성공했습니다.");
+          logout();
+          navigate("/");
+        } else if (result.message === "fail") {
+          setPwmessage("회원탈퇴에 실패하셨습니다.");
+        } else {
+          setPwmessage("알 수 없는 오류가 발생했습니다.");
+        }
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        setPwmessage("회원탈퇴에 실패하셨습니다.");
+      }
+    };
 
 
 
@@ -117,7 +124,7 @@ function UserDelete() {
                   <input type="password" className="form-control" id="user-pw" placeholder="password" disabled={!pwEditable}  ref={passwordRef}/>
                   <button type ='button'className='btn btn-sm btn-primary' onClick={handlePasswordBtnOnclick}>{passwordBtn}</button>
                 </div>
-                <p style={{ color: "green" }}>{pwMessage}</p>
+                <p style={{ color: pwMessage === "비밀번호가 틀렸습니다." ? "red" : "green"}}>{pwMessage}</p>
               </div>
               <div>
           
