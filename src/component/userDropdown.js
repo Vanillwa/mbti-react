@@ -37,7 +37,7 @@ const UserDropdown = ({ item }) => {
       setOpenDropdownId(id); // 새로운 드롭다운을 엽니다.
     }
   };
-
+  console.log()
   return (
     <>
       <div className={`${styles.userBox}`}>

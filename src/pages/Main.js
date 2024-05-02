@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
-
 function Main() {
   const navigate = useNavigate();
   const [capsLockFlag, setCapsLockFlag] = useState(false);
