@@ -7,7 +7,7 @@ import { checkDuplicationEmail, emailChanged, fetchJoin, nickNameChanged } from 
 import { checkDuplicationNickname } from '../service/api';
 import { checkEmailVerification } from '../service/api'
 import { requestEmailVerification } from '../service/api';
-
+import backgroundImg from '../images/backgroundImg.png';
 
 
 function Join() {
@@ -242,7 +242,17 @@ function Join() {
 
   }
 
+  const backgroundStyle = {
+    backgroundImage: `url(${backgroundImg})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    opacity: 0.9
+  };
+
+
+
   return (
+    <body style={backgroundStyle}>
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className="logo" />
@@ -357,6 +367,7 @@ function Join() {
         </div>
       </div>
     </div>
+    </body>
   );
 }
 

@@ -54,6 +54,11 @@ const Chat = () => {
               </div>
               <div className="d-flex gap-2 justify-content-center"> 
                 <p>채팅목록</p>
+                {/* {data.map((chat) => (
+                <div key={chat.id} className="chat-room">
+                  {chat.name}
+                </div>
+              ))} */}
               </div>
             </div>
           </div>

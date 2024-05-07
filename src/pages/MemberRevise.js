@@ -22,7 +22,7 @@ import { userUpdatePassword } from '../service/api';
 import { userUpdateMbti } from '../service/api';
 import { userDeleteImage } from '../service/api';
 import axios from 'axios';
-
+import backgroundImg from '../images/backgroundImg.png';
 
 
 
@@ -257,7 +257,21 @@ function MemberRevise() {
   console.log(passwordRef1)
   console.log(mbtiRef)
 
+
+  const backgroundStyle = {
+    backgroundImage: `url(${backgroundImg})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    opacity: 0.9
+  };
+
+
+
+
+
+
   return (
+    <body style={backgroundStyle}>
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className="logo" />
@@ -371,7 +385,7 @@ function MemberRevise() {
       </div>
 
     </div>
-
+    </body>
 
   );
 }

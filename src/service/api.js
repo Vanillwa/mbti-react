@@ -48,6 +48,14 @@ export const getChatList = async () => {
   return res.data;
 };
 
+// 채팅 요청
+
+export const getChat = async ()=>{
+  const res = axios.get("/chat/request")
+  return res.data;
+
+}
+
 export const getMessage = async (roomId) => {
   const res = await axios.get(`/chat/${roomId}`);
   return res.data;
