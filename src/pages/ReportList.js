@@ -34,6 +34,7 @@ const handleSubmit=async(e)=>{
   const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
   const blockDate = new Date(now.getTime() + addDay);
    const result = await suspendUser(report.Post.postId,report.Post.User.userId,blockDate)
+   alert("정지 완료")
 }
 
   const { data, status } = useQuery(

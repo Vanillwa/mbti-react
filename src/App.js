@@ -17,6 +17,7 @@ import PostEdit from "./pages/PostEdit";
 import UserDelete from "./pages/UserDelete";
 import FriendList from "./pages/FriendList";
 import ReportList from "./pages/ReportList";
+import UserList from "./pages/UserList";
 
 
 function App() {
@@ -32,7 +33,9 @@ function App() {
            
           </Route>
           <Route path="reportlist" element={<ReportList/>}/>
+          
           <Route path="user">
+            <Route index element={<UserList/>}/>
             <Route path=":userId" element={<Profile/>}/>
           </Route>
           <Route path="friend" element={<FriendList/>}/>

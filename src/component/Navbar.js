@@ -6,6 +6,7 @@ import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
 import SettingDropdown from "./SettingDropdown";
 
+import User from "../svg/people-fill.svg"
 import RUT from "../images/areyout.png";
 import write from "../svg/pencil-square.svg";
 import notImg from "../svg/person-circle.svg";
@@ -52,8 +53,7 @@ const Navbar = () => {
           <button
             className={styles.profileBtn}
             type="button"
-            onClick={compareLogin}
-          >
+            onClick={compareLogin}>
             <span className={styles.userName}>
               {isLoggedIn ? userInfo.nickname : "로그인 해주세요"}
             </span>
@@ -83,8 +83,7 @@ const Navbar = () => {
               <div
                 type="button"
                 className={styles.menu}
-                onClick={handleopenModal}
-              >
+                onClick={handleopenModal}>
                 <img className={styles.svg} src={write} />
                 <div className={styles.span}>글쓰기</div>
               </div>
@@ -120,8 +119,7 @@ const Navbar = () => {
               <div
                 type="button"
                 className={styles.menu}
-                onClick={handleopenModal}
-              >
+                onClick={handleopenModal}>
                 <img className={styles.svg} src={friend} />
                 <div className={styles.span}>친구</div>
               </div>
@@ -146,8 +144,7 @@ const Navbar = () => {
               <div
                 type="button"
                 className={styles.menu}
-                onClick={handleopenModal}
-              >
+                onClick={handleopenModal}>
                 <img className={styles.svg} src={chatting} />
                 <div className={styles.span}>채팅</div>
               </div>
@@ -165,8 +162,7 @@ const Navbar = () => {
           {isLoggedIn ? (
             <Link
               className={styles.menu}
-              to={isLoggedIn ? "/memberevise" : "/"}
-            >
+              to={isLoggedIn ? "/memberevise" : "/"}>
               <img className={styles.svg} src={profile} />
               <div className={styles.span}> 마이페이지</div>
             </Link>
@@ -175,8 +171,7 @@ const Navbar = () => {
               <div
                 type="button"
                 className={styles.menu}
-                onClick={handleopenModal}
-              >
+                onClick={handleopenModal}>
                 <img className={styles.svg} src={profile} />
                 <div className={styles.span}>마이페이지</div>
               </div>
@@ -184,21 +179,31 @@ const Navbar = () => {
                 <h2 className="pt-2 pb-2">로그인이 필요한 컨텐츠입니다.</h2>
                 <p>로그인 하시겠습니까?</p>
                 <div className="d-flex justify-content-end">
-                  <Link className={styles.goLogin} to={`/`}>로그인 하러가기</Link>
+                  <Link className={styles.goLogin} to={`/`}>
+                    로그인 하러가기
+                  </Link>
                   <div type="button" onClick={handleCloseModal}>
                     닫기
                   </div>
                 </div>
               </dialog>
             </div>
-            
           )}
 
-          {userInfo != null &&userInfo.role ==="admin" ? 
-
-          <Link className={styles.menu} to={"/reportlist"}><PiSirenFill/>신고목록</Link>
-          
-          :  "" }
+          {userInfo != null && userInfo.role === "admin" ? (
+            <>
+              <Link className={styles.menu} to={"/reportlist"}>
+                <PiSirenFill />
+                신고목록
+              </Link>
+              <Link className={styles.menu} to={"/user"}>
+                <img src={User}/>
+                회원목록
+              </Link>
+            </>
+          ) : (
+            ""
+          )}
         </div>
 
         <div type="button" className={`${styles.menu} ${styles.setting}`}>

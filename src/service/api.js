@@ -33,8 +33,8 @@ export const fetchLogout = async () => {
   return res.data;
 };
 
-export const getUserList = async () => {
-  const res = await axios.get("/user");
+export const getUserList = async (filter,keyword,type) => {
+  const res = await axios.get(`/user?filter=${filter}&keyword=${keyword}&type=${type}`);
   return res.data;
 };
 
@@ -266,12 +266,18 @@ export const getPostReportList = async ()=>{
 //신고처리
 export const updatePostReport = async (reportId)=>{
   const res = await axios.put(`/report/post/${reportId}`)
+  return res.data;
 }
 //계정정지
 export const suspendUser = async(postId,userId,blockDate)=>{
   const res = await axios.put(`/user/block?postId=${postId}&userId=${userId}&blockDate=${blockDate}`)
+  return res.data;
 }
-
+//차단해제
+export const releaseUser = async(userId)=>{
+  const res =await axios.put(`/user/unblock?userId=${userId}`)
+  return res.data;
+}
 
 export const getProfileList = async (userId)=>{
   const res =  await axios.get(`/user/${userId}`)
