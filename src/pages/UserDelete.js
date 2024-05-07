@@ -6,14 +6,10 @@ import '../css/UserDelete.css'
 import { useAuthContext } from "../context/AuthContext";
 import { deletePasswordCheck } from '../service/api';
 import { deleteUser } from '../service/api';
-
-
-
-
+import backgroundImg from '../images/backgroundImg.png';
 
 function UserDelete() {
      const navigate = useNavigate()
-
 
     const { memoUserInfo, login, logout } = useAuthContext();
     const { userInfo, isLoggedIn } = memoUserInfo;
@@ -21,6 +17,12 @@ function UserDelete() {
    console.log(userInfo)
 
 
+   const backgroundStyle = {
+    backgroundImage: `url(${backgroundImg})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    opacity: 0.9
+  };
 
 // 비밀번호
     const [passwordBtn,setPasswordBtn] =useState("수정")
@@ -80,15 +82,9 @@ function UserDelete() {
       }
     };
 
-
-
-
-    
-
-
-
     return (
-      <div className="container mt-5">
+      <body style={backgroundStyle}>
+      <div className="container mt-5" >
         <a href="/" className="navbar-logo d-flex justify-content-center">
       
           <img src={logo} alt="로고" className="logo" />
@@ -156,6 +152,7 @@ function UserDelete() {
         </div>
       
       </div>
+      </body>
     );
   }
 
