@@ -10,6 +10,7 @@ import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
 import ReportModal from "./ReportModal";
+import UserDropdown from "./userDropdown";
 
 function ViewContent() {
   const [likes, setLikes] = useState("checked");
@@ -139,10 +140,9 @@ function ViewContent() {
             
           ) : null}
           </div>
-          
-          
-
         </div>
+
+        
         <div className={styles.editBox}></div>
         <div className={styles.header}>
           <div className={styles.nickname}>
@@ -151,6 +151,7 @@ function ViewContent() {
               src={data.User.profileImage ? data.User.profileImg : notImg}
             />
             {data.User.nickname}
+          
           </div>
           <div className={styles.title}>{data.title}</div>
           <div className={styles.date}>{dateDisplay}</div>

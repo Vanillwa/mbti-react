@@ -257,13 +257,20 @@ export const blockFriend = async (friendId)=>{
   return res.data
 }
 
-
+//신고목록
 export const getPostReportList = async ()=>{
   const res = await axios.get("/report/post")
   return res.data;
 
 }
-
+//신고처리
+export const updatePostReport = async (reportId)=>{
+  const res = await axios.put(`/report/post/${reportId}`)
+}
+//계정정지
+export const suspendUser = async(postId,userId,blockDate)=>{
+  const res = await axios.put(`/user/block?postId=${postId}&userId=${userId}&blockDate=${blockDate}`)
+}
 
 
 export const getProfileList = async (userId)=>{

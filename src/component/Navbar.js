@@ -197,6 +197,7 @@ const Navbar = () => {
           {userInfo != null &&userInfo.role ==="admin" ? 
 
           <Link className={styles.menu} to={"/reportlist"}><PiSirenFill/>신고목록</Link>
+          
           :  "" }
         </div>
 

@@ -71,7 +71,12 @@ function ReportModal() {
     }
     console.log(body);
     const result = await PostReport(body);
-    alert("신고가 완료되었습니다.");
+
+    if(result.message === "success"){
+      alert("신고가 완료되었습니다.");
+    }else if(result.message === "duplicated"){
+      alert("이미 신고한 글입니다.")
+    }
     setShow(false);
   };
 

@@ -1,43 +1,58 @@
+.title {
+    margin-bottom: 5vh;
+}
+.reportBox {
 
-.reportList{
-   border:1px solid black;
-  width: 60vw;
+    display: flex;
+
+    justify-content: center;
+
+
+}
+.reportList {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 60vw;
 
 }
 
-.reportBox{
 
-display: flex;
 
-justify-content: center;
+.reportListBox {
+    padding: 2vw;
+    border-bottom: 1px solid black;
 
-    
 }
 
-.reportListBox{
-   padding: 2vw;
-   border-bottom: 1px solid black;
+.reportListBox:last-of-type {
+    border-bottom: 0px;
 }
 
-.reportLink{
-     display: flex;
-    justify-content: space-between;
-}
-.reportContent{
+.reportLink {
     display: flex;
     justify-content: space-between;
 }
-.reportId,.reportPerson,.reportType{
+
+.reportContent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reportId,
+.reportPerson,
+.reportType {
     margin-right: 5vw;
 }
-.btnBox{
+
+.btnBox {
     display: flex;
     justify-content: end;
 }
-.banBtn{
-  margin-right: 1vw;
-}
-.cancelBtn{
-    margin-right: 2vw;
+
+.banBtn,.cancelBtn{
+    background-color: white;
+    margin-right: 1vw;
+    border-radius: 20%;
 
 }
+
