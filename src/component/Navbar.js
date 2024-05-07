@@ -135,8 +135,9 @@ const Navbar = () => {
             </div>
           )}
           {isLoggedIn ? (
-            <Link className={styles.menu} to="/message">
-              <img className={styles.svg} src={chatting} />
+            // 채팅창 이동
+            <Link className={styles.menu} to="/chat">
+              <img className={styles.svg} src={chatting}/>
               <div className={styles.span}>채팅</div>
             </Link>
           ) : (
@@ -146,7 +147,7 @@ const Navbar = () => {
                 className={styles.menu}
                 onClick={handleopenModal}>
                 <img className={styles.svg} src={chatting} />
-                <div className={styles.span}>채팅</div>
+                <div className={styles.span} >채팅</div>
               </div>
               <dialog className={styles.dialog} ref={dialogRef}>
                 <h2>로그인이 필요한 컨텐츠입니다.</h2>

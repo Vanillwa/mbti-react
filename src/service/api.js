@@ -42,7 +42,7 @@ export const requestChat = async (targetId) => {
   const res = await axios.get(`/chat/request?targetId=${targetId}`);
   return res.data;
 };
-
+// 채팅 리스트
 export const getChatList = async () => {
   const res = await axios.get("/chat");
   return res.data;
@@ -279,8 +279,12 @@ export const releaseUser = async(userId)=>{
   return res.data;
 }
 
+// 단일 게시글 조회
+
 export const getProfileList = async (userId)=>{
   const res =  await axios.get(`/user/${userId}`)
   return res.data;
 }
+
+
 

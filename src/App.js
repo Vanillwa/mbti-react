@@ -17,7 +17,11 @@ import PostEdit from "./pages/PostEdit";
 import UserDelete from "./pages/UserDelete";
 import FriendList from "./pages/FriendList";
 import ReportList from "./pages/ReportList";
+
 import UserList from "./pages/UserList";
+
+import Chat from "./pages/Chat";
+
 
 
 function App() {
@@ -39,9 +43,12 @@ function App() {
             <Route path=":userId" element={<Profile/>}/>
           </Route>
           <Route path="friend" element={<FriendList/>}/>
+          <Route path="/chat" element={<Chat />} />
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
+        
+
         <Route path="/memberevise" element={<MemberRevise />} />
         <Route path="/userdelete" element={<UserDelete />} />
         <Route path="/updatepwd" element={<UpdatePassword/>}/>

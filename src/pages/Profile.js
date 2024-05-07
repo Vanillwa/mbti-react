@@ -1,12 +1,12 @@
-import { useContext, useState, useEffect } from 'react';
-// import { UserContext } from '../context/UserContext';
+// import { useContext, useState, useEffect } from 'react';
+//  import { UserContext } from '../context/UserContext';
 import { getProfileList } from '../service/api';
 import styles from '../css/PostList.module.css';
 import { Link, useParams } from 'react-router-dom';
 import noImg from '../images/noImg.png';
 import { useQuery } from "react-query";
 // import UserDropdown from "../component/userDropdown";
-import PostPagination from "../component/PostPagination";
+// import PostPagination from "../component/PostPagination";
 
 function Profile() {
   // userId값을 받아옴
@@ -24,7 +24,7 @@ const {userId} = useParams()
 
 
 
-   
+  
   if (status === "loading") {
     return (
       <div className="container">
