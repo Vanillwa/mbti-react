@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { getPostList } from "../service/api";
 import PostItems from "../component/PostItems";
 import styles from "../css/PostList.module.css";
+
 import PostPagination from "../component/PostPagination";
 
 const PostList = () => {
@@ -36,7 +37,9 @@ const PostList = () => {
         <option value="like">like</option>
       </select>
       <PostItems data={data} status={status} />
+
       <PostPagination data={data} status={status} page={page} setPage={setPage}/>
+
     </div>
   );
 };
