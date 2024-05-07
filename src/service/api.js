@@ -267,7 +267,7 @@ export const getPostReportList = async ()=>{
 
 
 export const getProfileList = async (userId)=>{
-  const res =  await axios.get(`/profile?userId=${userId}`)
+  const res =  await axios.get(`/user/${userId}`)
   return res.data;
 }
 

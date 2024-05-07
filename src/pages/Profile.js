@@ -2,29 +2,29 @@ import { useContext, useState, useEffect } from 'react';
 // import { UserContext } from '../context/UserContext';
 import { getProfileList } from '../service/api';
 import styles from '../css/PostList.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import noImg from '../images/noImg.png';
-import UserDropdown from "../component/userDropdown";
-import { useAuthContext } from "../context/AuthContext";
+import { useQuery } from "react-query";
+// import UserDropdown from "../component/userDropdown";
+import PostPagination from "../component/PostPagination";
 
-const Profile = () => {
-  const { userInfo } = useAuthContext();
-  const [data, setData] = useState([]);
-  const [status, setStatus] = useState('loading');
+function Profile() {
+  // userId값을 받아옴
+const {userId} = useParams()
 
-  useEffect(() => {
-    const fetchProfileList = async () => {
-      try {
-        const profileData = await getProfileList(userInfo.userId);
-        setData(profileData);
-        setStatus('success');
-      } catch (error) {
-        setStatus('error');
-      }
-    };
-    fetchProfileList();
-  }, [userInfo.userId]);
 
+  const { data, status } = useQuery(
+    ['getProfileList',userId],
+    () => getProfileList(userId),
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+
+
+   
   if (status === "loading") {
     return (
       <div className="container">
@@ -39,8 +39,7 @@ const Profile = () => {
     );
   }
 
-  // Render a message if there are no posts
-  if (data.length === 0) {
+  if (data.length == 0) {
     return (
       <div>
         <h1>작성된 글이 없습니다.</h1>
@@ -48,41 +47,47 @@ const Profile = () => {
     );
   }
 
-  console.log(data);
+ 
+  const {nickname} = data.userInfo
 
-
+  console.log(data)
   return (
-    <>
-      {data.map((item) => {
-        const showImg = item.content.match(/<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/);
-        const imgSrc = showImg ? showImg[1] : noImg;
-        return (
-          <div className={styles.postWrap} key={item.id}>
-            <div className={styles.postHeader}>
-              <UserDropdown item={item} />
-              {console.log(item)}
-              <div className={styles.dateReadhitBox}>
-                <div className={styles.likes}>❤ {item.like}</div>
-                <div className={styles.readhit}>조회수 : {item.readhit}</div>
-                <div className={styles.date}>작성일 : {new Date(item.createdAt).toLocaleDateString()}</div>
-              </div>
-            </div>
-            <div className={styles.postBody}>
-              <Link to={`/post/view?postId=${item.postId}`} className={styles.content}>
-                <div className={styles.imgBox}>
-                  <div className={styles.thumbnail}><img className={styles.img} src={imgSrc} /></div>
-                </div>
-                <div className={styles.titleBox}>
-                  <div className={styles.title}>{item.title}</div>
-                </div>
-              </Link>
+    <>  
+     <div className="container">
+        <h2>{nickname}님의 게시글</h2>
+     
+      </div>
+      {data.recentPost.map((userdata) => (
+        <div className={styles.postBox}>
+        <div className={styles.postWrap} key={userdata.writerId}>
+          <div className={styles.postHeader}>
+              
+              <div className={styles.dateReadhitBox}>         
+              <div className={styles.readhit}>작성자:{nickname}</div>
+              <div className={styles.likes}>❤ {userdata.like}</div>
+              <div className={styles.readhit}>Views: {userdata.readhit}</div>
+              <div className={styles.date}>Created: {new Date(userdata.createdAt).toLocaleDateString()}</div>
             </div>
           </div>
-        );
-      })}
-      <div style={{ border: 'none' }} className="post d-flex align-items-center">1</div>
+          <div className={styles.postBody}>
+            <Link to={`/post/view?postId=${userdata.postId}`} className={styles.content}>
+              <div className={styles.imgBox}>
+                <div className={styles.thumbnail}>
+                  <img className={styles.img} src={userdata.content.match(/<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/)?.[1] || noImg} />
+                </div>
+              </div>
+              <div className={styles.titleBox}>
+                <div className={styles.title}>{userdata.title}</div>
+              </div>
+            </Link>
+          </div>
+        </div>
+        </div>
+      ))}
+      <div style={{ border: 'none' }} className="post d-flex align-items-center"></div>
+      
     </>
   );
-};
+}
 
 export default Profile;

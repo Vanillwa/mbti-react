@@ -28,7 +28,7 @@ const PostList = () => {
     setSort(e.target.value);
     setOrder(!order);
   };
-
+  console.log(data)
   return (
     <div className={styles.postBox}>
       <select >
