@@ -1,32 +1,43 @@
+
 .reportList{
    border:1px solid black;
-  
+  width: 60vw;
 
 }
 
 .reportBox{
 
-    justify-content: center;
+display: flex;
+
+justify-content: center;
+
     
 }
 
 .reportListBox{
-    display: flex;
-    justify-content: center;
-   width:100%;
+   padding: 2vw;
    border-bottom: 1px solid black;
 }
-.reportListBox
+
 .reportLink{
-    padding:15px;
-    margin-bottom: 10px;
-    
+     display: flex;
+    justify-content: space-between;
+}
+.reportContent{
+    display: flex;
+    justify-content: space-between;
+}
+.reportId,.reportPerson,.reportType{
+    margin-right: 5vw;
+}
+.btnBox{
+    display: flex;
+    justify-content: end;
 }
 .banBtn{
-    margin:5px;
-    width:50px;
+  margin-right: 1vw;
 }
 .cancelBtn{
-    width:50px;
-    margin:5px;
+    margin-right: 2vw;
+
 }

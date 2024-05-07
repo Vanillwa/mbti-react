@@ -6,8 +6,6 @@ import styles from "../css/ReportList.module.css";
 import { Button } from "bootstrap";
 
 function ReportList() {
-
-
   const { data, status } = useQuery(
     ["getPostReportList"],
     () => getPostReportList(),
@@ -30,7 +28,7 @@ function ReportList() {
       </div>
     );
   }
-  console.log(data)
+  console.log(data);
 
   if (data.length == 0) {
     return (
@@ -40,32 +38,43 @@ function ReportList() {
     );
   }
 
- 
   return (
+
+    <>
+    <h2>신고목록</h2>
     <div className={styles.reportBox}>
-      <h1>신고 목록</h1>
+      
       <div className={styles.reportList}>
         {data.map(item => {
           return (
             <div className={styles.reportListBox} key={item.reportId}>
               <Link
-                className={`col-6 ${styles.reportLink}`}
+                className={`${styles.reportLink}`}
                 to={`/post/view?postId=${item.Post.postId}`}>
-                <div>
-                <span >글번호:{item.Post.title}</span>
-                    <span>신고자:{item.User.nickname}</span>
-                    <span>신고유형:{item.type}</span>
+                <div className={styles.reportContent}>
+                  <span className={styles.reportId}>
+                    글번호:{item.Post.postId}
+                  </span>
+                  <span className={styles.reportPerson}>
+                    신고자:{item.User.nickname}
+                  </span>
+                  <span>신고유형:{item.type}</span>
+                </div>
+                <div className={styles.btnBox}>
+                  <button type="button" className={styles.banBtn}>
+                    차단
+                  </button>
+                  <button type="button" className={styles.cancelBtn}>
+                    취소
+                  </button>
                 </div>
               </Link>
-              <button className={styles.banBtn}>차단</button>
-              <button  className={styles.cancelBtn}>
-                취소
-              </button>
             </div>
           );
         })}
       </div>
     </div>
+    </>
   );
 }
 
