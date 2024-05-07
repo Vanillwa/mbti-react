@@ -68,7 +68,7 @@ function Main() {
       navigate(-1);
       return;
     }
-  };
+  }
 
   const noLogin = () => {
     navigate("/post/list");
