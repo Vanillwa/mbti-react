@@ -55,7 +55,10 @@ function Main() {
       login(res.userInfo);
       navigate("/post/list");
       return;
-    } else if (res.message === "NoExist") {
+    }else if(res.message ==="blocked"){
+      setEmailAlert(`${res.blockDate}까지 차단된 계정입니다`)
+    }
+     else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
       setPwdAlert("");
       return;
