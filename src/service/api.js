@@ -274,7 +274,7 @@ export const suspendUser = async(postId,userId,blockDate)=>{
 
 
 export const getProfileList = async (userId)=>{
-  const res =  await axios.get(`/profile?userId=${userId}`)
+  const res =  await axios.get(`/user/${userId}`)
   return res.data;
 }
 
