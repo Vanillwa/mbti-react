@@ -33,7 +33,6 @@ const PostList = () => {
     }else if (e.target.value == 'createdAt'){
       setSort('createdAt')
     }
-
     
   };
   const handleOrderChange = (e)=>{
