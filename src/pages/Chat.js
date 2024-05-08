@@ -9,37 +9,37 @@ const Chat = () => {
 
 
 
-  // const { data, status } = useQuery(
-  //   ['getChatList'],
-  //   () => getChatList(),
-  //   {
-  //     retry: false,
-  //     refetchOnWindowFocus: false,
-  //   }
-  // );
+  const { data, status } = useQuery(
+    ['getChatList'],
+    () => getChatList(),
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
-  // if (status === "loading") {
-  //   return (
-  //     <div className="container">
-  //       <h1>Loading...</h1>
-  //     </div>
-  //   );
-  // } else if (status === "error") {
-  //   return (
-  //     <div className="container">
-  //       <h1>error!</h1>
-  //     </div>
-  //   );
-  // }
+  if (status === "loading") {
+    return (
+      <div className="container">
+        <h1>Loading...</h1>
+      </div>
+    );
+  } else if (status === "error") {
+    return (
+      <div className="container">
+        <h1>error!</h1>
+      </div>
+    );
+  }
 
-  // if (data.length == 0) {
-  //   return (
-  //     <div>
-  //       <h1>작성된 글이 없습니다.</h1>
-  //     </div>
-  //   );
-  // }
-  // console.log(data)
+  if (data.length == 0) {
+    return (
+      <div>
+        <h1>작성된 글이 없습니다.</h1>
+      </div>
+    );
+  }
+  console.log(data)
 
 
   return (
@@ -54,11 +54,11 @@ const Chat = () => {
               </div>
               <div className="d-flex gap-2 justify-content-center"> 
                 <p>채팅목록</p>
-                {/* {data.map((chat) => (
+                {data.map((chat) => (
                 <div key={chat.id} className="chat-room">
                   {chat.name}
                 </div>
-              ))} */}
+              ))}
               </div>
             </div>
           </div>

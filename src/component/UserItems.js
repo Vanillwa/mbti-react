@@ -4,7 +4,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Modal from "react-bootstrap/Modal";
 import { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
-
+import styles from "../css/UserList.module.css"
 function UserItems({ filter, keyword, type }) {
   const blockRef = useRef();
   const [show, setShow] = useState(false);
@@ -109,23 +109,23 @@ setShow(true)
           </Button>
         </Modal.Footer>
       </Modal>
-
       {data.map(item => {
         return (
           <>
-            <div key={item.userId}>
-              <span>유저ID:{item.userId}</span>
-              <span>이메일 :{item.email}</span>
-              <span> 닉네임:{item.nickname}</span>
-              <span>상태 :{item.status}</span>
+         
+            <div className={styles.userinfo} key={item.userId}>
+              <span>유저ID: {item.userId}</span>
+              <span>이메일: {item.email}</span>
+              <span> 닉네임: {item.nickname}</span>
+              <span>상태: {item.status}</span>
            
 
             {item.status === "blocked" ? (
-              <button type="button" onClick={() => handleRelease(item.userId)}>
+              <button type="button" className={`btn btn-primary btn-ghost ${styles.blockBtn}`} onClick={() => handleRelease(item.userId)}>
                 차단해제
               </button>
             ) : (
-              <button type="button" onClick={()=>handleShowModal(item)}>
+              <button type="button" className={`btn btn-primary btn-ghost ${styles.blockBtn}`} onClick={()=>handleShowModal(item)}>
                 차단하기
               </button>
             )}

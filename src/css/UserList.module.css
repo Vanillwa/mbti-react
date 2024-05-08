@@ -1,0 +1,66 @@
+*{
+    padding:0; margin:0;
+    box-sizing: border-box;}
+
+    a,li,ul{
+        list-style: none;
+    }
+
+
+@font-face {
+    font-family: 'KCC-Hanbit';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/KCC-Hanbit.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.userinfo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border:1px solid black;
+    padding:5px;
+    font-family: 'KCC-Hanbit';
+}
+
+.blockBtn:hover{
+    
+}
+
+.searchBtn{
+    font-family: 'KCC-Hanbit';
+width:5vw;
+border:0px;
+border-radius: 3px;
+background-color: cornflowerblue;
+color:white;
+}
+.searchUserType{
+    border: 1px solid #40d1e7;
+    font-family: 'KCC-Hanbit';
+    border-radius: 10px;
+    padding:5px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+}
+.searchBox{
+    width:20vw;
+    border-radius: 5px;
+    font-family: 'KCC-Hanbit';
+}
+.showUserType{
+    width:10vw;
+    border: 1px solid #40d1e7;
+    font-family: 'KCC-Hanbit';
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+}
+.showUserType:focus{
+    border: 1px solid #9B51E0;
+    outline: 2px solid #F8E4FF;
+
+}
