@@ -17,12 +17,12 @@ function UserDelete() {
    console.log(userInfo)
 
 
-   const backgroundStyle = {
-    backgroundImage: `url(${backgroundImg})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    opacity: 0.9
-  };
+  //  const backgroundStyle = {
+  //   backgroundImage: `url(${backgroundImg})`,
+  //   backgroundSize: 'cover',
+  //   backgroundPosition: 'center',
+  //   opacity: 0.9
+  // };
 
 // 비밀번호
     const [passwordBtn,setPasswordBtn] =useState("수정")
@@ -83,7 +83,7 @@ function UserDelete() {
     };
 
     return (
-      <body style={backgroundStyle}>
+      <body>
       <div className="container mt-5" >
         <a href="/" className="navbar-logo d-flex justify-content-center">
       
@@ -93,10 +93,10 @@ function UserDelete() {
           <div className="card-body">
             <div className="text-center mb-5">
             
-              <h2 className="fw-bold" style={{ fontSize: '40px', color:"#0866ff"}}>회원탈퇴</h2>
+              <h2 className="fw-bold" style={{ fontSize: '45px', color:"#0866ff"}}>회원탈퇴</h2>
             </div>
        
-            <p >그 동안 AreYouT를 사랑해주셔서 감사합니다. 하단에는 삭제하는 기능과 해당 사유란이 있으니 설정 부탁드리겠습니다.  </p>
+            <p >그 동안 <strong style={{color:"#0866ff"}}>R U T ?</strong>를 사랑해주셔서 감사합니다. 하단에는 삭제하는 기능과 해당 사유란이 있으니 설정 부탁드리겠습니다.  </p>
             <div className="row g-3">
               <div className="col-12">
                 <div className='d-flex gap-2'>
@@ -125,10 +125,10 @@ function UserDelete() {
               </div>
               <div>
           
-              <h5 style={{color:"#0866ff"}} className='mb-3'>회원탈퇴를 신청하기전에, 내용을 꼭확인해주세요. </h5>
+              <h5 style={{color:"red"}} className='mb-3'>회원탈퇴를 신청하기전에, 내용을 꼭 확인해주세요. </h5>
               <li>고객정보 및 개인형 서비스 이용 기록은 정보보호처리 기준에따라 삭제됩니다.</li>
               <li>회원탈퇴 시 보유하시던 적립금은 회원정보에 등록된 계좌로 자동이체 됩니다.</li>
-              <li>회원탈퇴 시 더이상 AreYouT 서비스를 이용불가능 합니다.</li>          
+              <li>회원탈퇴 시 더이상 <strong style={{color:"#0866ff"}}>R U T ?</strong>서비스를 이용불가능 합니다.</li>          
               </div>
 
 
