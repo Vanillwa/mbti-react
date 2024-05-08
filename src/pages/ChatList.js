@@ -10,6 +10,8 @@ const ChatList = () => {
     refetchOnWindowFocus: false,
   });
 
+  
+
   if (status === "loading") {
     return (
       <div className="container">
