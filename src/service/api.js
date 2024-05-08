@@ -201,8 +201,8 @@ export const postEdit = async (body) => {
 };
 
 /** 댓글 조회 */
-export const getViewComment = async (postId) => {
-  const res = await axios.get(`/comment?postId=${postId}`);
+export const getViewComment = async (postId, page, size, order) => {
+  const res = await axios.get(`/comment?postId=${postId}&page=${page}&size=${size}&order=${order}`);
   return res.data;
 };
 /** 댓글 작성 */

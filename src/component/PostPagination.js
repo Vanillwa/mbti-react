@@ -14,10 +14,9 @@ function PostPagination({data, status, page, setPage}){
       </div>
     );
   }
-  console.log(data.paging)
+
   const {startPage, lastPage, totalPage} = data.paging
   let array = [...Array(lastPage - startPage +1 )]
-  console.log(array)
   const handlePageClick = (number)=>{
     setPage(number)
   }
