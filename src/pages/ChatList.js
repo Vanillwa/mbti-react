@@ -34,24 +34,23 @@ const ChatList = () => {
   console.log(data);
 
   return (
+    <>
     <div className={styles.container}>
       <Navbar />
-
       <div className={styles.postBox}>
-        <h2 className={styles.h2name}>유저 채팅방!</h2>
         <div className="card">
           <div className="card-body">
             <div className="row g-5 col">
-            <h3>채팅목록</h3>
-              <div className="d-flex gap-2 justify-content-center"></div>
-
-              <div className=" gap-2 justify-content-center">
-                
+              <div className="d-flex gap-2 justify-content-center">
+                <h2 className={styles.h2name}>유저 채팅방!</h2>
+              </div>
+              <div className="d-flex gap-2 justify-content-center">
+                <p>채팅목록</p>
                 {data.map(chat => (
                   <Link to={`/chat/list/${chat.roomId}`}>
-                    <div key={chat.id} className="chat-room">
-                      {chat.title}
-                    </div>
+                  <div key={chat.id} className="chat-room">
+                    {chat.title}
+                  </div>
                   </Link>
                 ))}
               </div>
@@ -60,6 +59,7 @@ const ChatList = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

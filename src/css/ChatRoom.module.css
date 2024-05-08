@@ -21,7 +21,12 @@
   .mine {
     justify-content: end;
   }
-  
+  .myMessageInner{
+    padding: 5px 12px;
+    background-color: #F9EB54;
+    color: black;
+    border-radius: 5px;
+  }
   .messageInner {
     padding: 5px 12px;
     background-color: #ddd;

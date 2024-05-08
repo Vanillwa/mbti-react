@@ -66,14 +66,14 @@ function ChatRoom() {
           if (userInfo.userId == message.userId) {
             return (
               <div key={message.messageId} className={`${styles.message} ${styles.mine}`}>
-                <div className={styles.messageInner}>{message.message}</div>
+                <div className={styles.myMessageInner}>{message.message}</div>
               </div>
             );
           } else {
             return (
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.messageInner}>
-                  {message.User.nickname} | {message.message}
+                  {message.User.nickname} : {message.message}
                 </div>
               </div>
             );

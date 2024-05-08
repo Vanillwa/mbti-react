@@ -89,15 +89,15 @@ function UserItems({ filter, keyword, type }) {
         <Modal.Header closeButton>
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleSubmit}>
+        <Modal.Body >
+          <form className= {styles.blockModalForm}  onSubmit={handleSubmit}>
             {user?.nickname}
-            <select ref={blockRef}>
+            <select className="me-2" ref={blockRef}>
               <option value={1}>1일</option>
-              <option value={3}>3일</option>
+              <option  value={3}>3일</option>
               <option value={7}>7일</option>
             </select>
-            <button type="submit">정지</button>
+            <button className={styles.blockModalBtn} type="submit">정지</button>
           </form>
         </Modal.Body>
         <Modal.Footer>

@@ -20,9 +20,8 @@ ul {
 
 .userinfo {
     display: flex;
-
     justify-content: center;
-    text-align: start;
+   text-align: start;
     align-items: center;
     border: 1px solid black;
     padding: 5px;
@@ -71,4 +70,17 @@ ul {
     border: 1px solid #9B51E0;
     outline: 2px solid #F8E4FF;
 
+}
+.blockModalForm{
+    display: flex;
+    justify-content: center;
+     
+}
+.blockModalBtn{
+    font-family: 'KCC-Hanbit';
+width:3vw;
+border:0px;
+border-radius: 3px;
+background-color: cornflowerblue;
+color:white;
 }

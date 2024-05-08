@@ -26,17 +26,17 @@ function ReportList() {
     setShow(true);
   };
 
-  const completeMutate = useMutation(reportId =>{
-    return  updatePostReport(reportId);
-  })
-  const handleComplete = async (reportId) => {
-   completeMutate.mutate(reportId,{
-    onSuccess:async()=>{
-    await queryClient.invalidateQueries(["getPostReportList"]);
-    await refetch();
-    return;
-    },
-   })
+  const completeMutate = useMutation(reportId => {
+    return updatePostReport(reportId);
+  });
+  const handleComplete = async reportId => {
+    completeMutate.mutate(reportId, {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["getPostReportList"]);
+        await refetch();
+        return;
+      },
+    });
     setShow(false);
   };
   const handleSubmit = async e => {
@@ -52,7 +52,7 @@ function ReportList() {
     alert("정지 완료");
   };
 
-  const { data, status,refetch } = useQuery(
+  const { data, status, refetch } = useQuery(
     ["getPostReportList"],
     () => getPostReportList(),
     {
@@ -95,22 +95,25 @@ function ReportList() {
         </Modal.Header>
         <Modal.Body>
           <form className={styles.blockModalForm} onSubmit={handleSubmit}>
-          {report?.Post.User.nickname}
-            <select ref={blockRef}>
+            <span className="me-2">닉네임: {report?.Post.User.nickname}</span>
+            <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
               <option value={7}>7일</option>
             </select>
-            <button className={styles.blockModalBtn} type="submit">정지</button>
+            <button className={styles.blockModalBtn} type="submit">
+              정지
+            </button>
           </form>
         </Modal.Body>
         <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => handleComplete(report.reportId)}>
+            처리완료
+          </Button>
           <Button variant="primary" onClick={handleClose}>
             Close
-          </Button>
-
-          <Button variant="secondary" onClick={()=>handleComplete(report.reportId)}>
-            처리완료
           </Button>
         </Modal.Footer>
       </Modal>
@@ -121,29 +124,33 @@ function ReportList() {
           <Accordion>
             {data.map(item => {
               return (
-                <Accordion.Item eventKey={item.reportId} >
-                  <Accordion.Header>
-                    
-                    <div className= {styles.reportListBox}>
-                      <div className={styles.reportContent}>
-                        <span className={styles.reportId}>
+                <Accordion.Item eventKey={item.reportId}>
+                  <Accordion.Header  >
+                    <div className="container">
+                  <div className={`row   ${styles.reportContent}`}>
+                        <span className={`col-3 ${styles.reportId}`}>
                           글번호:{item.Post.postId}
                         </span>
-                        <span className={styles.reportId}>
+                        <span className={`col-3  ${styles.reportId}`}>
                           작성자:{item.Post.User.nickname}
                         </span>
-                        <span className={styles.reportPerson}>
+                        <span className={`col-3 ${styles.reportPerson}`}>
                           신고자:{item.User.nickname}
                         </span>
-                        <span>신고유형:{item.type}</span>
+                        <span className={`col-3`}>신고유형:{item.type}</span>
                       </div>
-                    </div>
+                      </div>
                   </Accordion.Header>
                   <Accordion.Body>
                     <div className={styles.postTitle}>{item.Post.title}</div>
-                    <div className={styles.postContent}><ContentComponent content={item.Post.content} /></div>
-                    
-                    <button className={styles.reportBtn} type="button" onClick={() => handleReport(item)}>
+                    <div className={styles.postContent}>
+                      <ContentComponent content={item.Post.content} />
+                    </div>
+
+                    <button
+                      className={styles.reportBtn}
+                      type="button"
+                      onClick={() => handleReport(item)}>
                       처리
                     </button>
                   </Accordion.Body>
