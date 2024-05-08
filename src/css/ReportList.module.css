@@ -1,4 +1,13 @@
+
+@font-face {
+    font-family: 'KCC-Hanbit';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/KCC-Hanbit.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .title {
+    font-weight: bold;
     margin-bottom: 5vh;
 }
 .reportBox {
@@ -36,6 +45,9 @@
 .reportContent {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    font-family: 'TTHakgyoansimMonggeulmonggeulR';
+    font-size:22px;
 }
 
 .reportId,
@@ -57,12 +69,33 @@
 }
 
 .postTitle{
-
+    font-family: 'KCC-Hanbit';
 }
 .postContent{
-
+    font-family: 'KCC-Hanbit';
+overflow: auto;
 }
 
 .reportBtn{
+    font-family: 'KCC-Hanbit';
+width:5vw;
+border:0px;
+border-radius: 3px;
+background-color: cornflowerblue;
+color:white;
+}
+
+/* 모달 */
+.blockModalBtn{
+    font-family: 'KCC-Hanbit';
+width:3vw;
+border:0px;
+border-radius: 3px;
+background-color: cornflowerblue;
+color:white;
+}
+.blockModalForm{
+    display: flex;
+    justify-content: center;
     
 }

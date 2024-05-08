@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { requestChat, requestFriend } from "../service/api";
 import styles from "../css/PostList.module.css";
+
 const UserDropdown = ({ item }) => {
+const navigate =  useNavigate();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
@@ -13,15 +15,15 @@ const UserDropdown = ({ item }) => {
 
   const handleRequestChat = async(targetId)=>{
     const result = await requestChat(targetId);
-
+    
     if(result.message ==="success"){
-
+      navigate(`/chat/list/${result.roomId}`)
     }else if(result.message ==="noAuth"){
       alert("로그인이 필요한 서비스입니다.")
     }else if(result.message ==="notFriend"){
       alert("친구가 아닙니다.")
     }else if(result.message ==="duplicated"){
-      
+      navigate(`/chat/list/${result.roomId}`)
     }
   }
 
@@ -50,7 +52,7 @@ const UserDropdown = ({ item }) => {
       setOpenDropdownId(id); // 새로운 드롭다운을 엽니다.
     }
   };
-  console.log()
+
   return (
     <>
       <div className={`${styles.userBox}`}>

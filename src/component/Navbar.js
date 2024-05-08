@@ -194,12 +194,17 @@ const Navbar = () => {
           {userInfo != null && userInfo.role === "admin" ? (
             <>
               <Link className={styles.menu} to={"/reportlist"}>
-                <PiSirenFill />
+               
+                <PiSirenFill className={styles.svg} />
+                <div className={styles.span}>
                 신고목록
+                </div>
               </Link>
               <Link className={styles.menu} to={"/user"}>
-                <img src={User}/>
+                <img className={styles.svg} src={User}/>
+                <div className={styles.span}>
                 회원목록
+                </div>
               </Link>
             </>
           ) : (

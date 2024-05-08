@@ -124,9 +124,12 @@ const FriendList = () => {
               {item.receiveUser.nickname}
             </Link>
             <div className={styles.btnBox}>
+
+
               <div onClick={()=>handleRequestChat(item.receiveUser.userId)} type='button' className={styles.button}>채팅하기</div>
             <div type='button' className={styles.button} onClick={()=>handleFriendBlock(item.friendId)}>너 차단</div>
             <div type='button' className={styles.button} onClick={()=>handleFriendRefuse(item.friendId)}>너 삭제</div>
+
 
             </div>
 

@@ -108,6 +108,7 @@ function UserItems({ filter, keyword, type }) {
       </Modal>
       {data.map((item) => {
         return (
+
           <div className="container">
             <div className={`row ${styles.userinfo}`} key={item.userId}>
               <span className="col-2">유저ID: {item.userId}</span>
@@ -134,6 +135,7 @@ function UserItems({ filter, keyword, type }) {
               )}
             </div>
           </div>
+
         );
       })}
     </>
