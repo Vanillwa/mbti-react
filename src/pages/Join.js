@@ -7,6 +7,7 @@ import { checkDuplicationEmail, emailChanged, fetchJoin, nickNameChanged } from 
 import { checkDuplicationNickname } from '../service/api';
 import { checkEmailVerification } from '../service/api'
 import { requestEmailVerification } from '../service/api';
+import Swal from "sweetalert2"
 //import backgroundImg from '../images/backgroundImg.png';
 
 
@@ -232,9 +233,19 @@ function Join() {
     }
     const result = await fetchJoin(body)
 
+
     if (result.message === "success") {
-      alert("회원가입 성공하셨습니다.")
-      navigate("/")
+      Swal.fire({
+        title: '성공!',
+        text: '회원가입에 성공하셨습니다.',
+        icon: 'success',
+        confirmButtonText: '확인'
+      }).then(()=>{
+        if(result.message === "success"){
+          navigate("/")
+        }  
+      })
+     
     } else {
       alert("회원가입에 실패하셨습니다.")
     }
@@ -242,13 +253,7 @@ function Join() {
 
   }
 
-  // const backgroundStyle = {
-  //   backgroundImage: `url(${backgroundImg})`,
-  //   backgroundSize: 'cover',
-  //   backgroundPosition: 'center',
-  //   opacity: 0.9
-  // };
-
+  
 
 
   return (
@@ -368,6 +373,9 @@ function Join() {
       </div>
     </div>
     </body>
+
+
+
   );
 }
 
