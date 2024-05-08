@@ -1,0 +1,43 @@
+.section {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .chatForm {
+    height: 700px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 18px;
+    background-color: #333;
+  }
+  
+  .message {
+    display: flex;
+    padding: 3px 0;
+    font-size: 18px;
+  }
+  
+  .mine {
+    justify-content: end;
+  }
+  
+  .messageInner {
+    padding: 5px 12px;
+    background-color: #555;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .inputForm {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding: 12px 0 0;
+  }
+  
+  .inputForm > input {
+    width: 100%;
+    font-size: 18px;
+    padding: 0 7px;
+  }
