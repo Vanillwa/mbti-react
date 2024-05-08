@@ -1,14 +1,16 @@
 import React from "react";
 import styles from "../css/friend.module.css";
-import { useQuery } from "react-query";
-import { acceptFriend, blockFriend, getFriend, getRequestFriend, rejectFriend } from "../service/api";
+import { QueryClient, useMutation, useQuery } from "react-query";
+import { acceptFriend, blockFriend, deleteFriend, getFriend, getRequestFriend, rejectFriend, requestChat } from "../service/api";
 import { useAuthContext } from "../context/AuthContext";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 const FriendList = () => {
+  const queryClient = new QueryClient()
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-  
+  const navigate = useNavigate()
+
   const { data : requestData,  status : requestStatus , refetch} = useQuery(
     ["getRequestFriend"],
     () => getRequestFriend(),
@@ -18,45 +20,85 @@ const FriendList = () => {
     }
   );
 
-  const { data : friendData, status : friendStatus} = useQuery(
+  const { data : friendData, status : friendStatus, refetch : listRefetch} = useQuery(
     ['getFriend'],()=> getFriend(),
     {
       retry:false,
       refetchOnWindowFocus: false,
     }
   )
+  const  acceptMutate = useMutation(friendId=>{
+    return acceptFriend(friendId)
+  })
+  const refuseMutate = useMutation(friendId=>{
+    return rejectFriend(friendId)
+  })
+  const friendBlockMutate = useMutation(friendId=>{
+    return blockFriend(friendId)
+  })
+  const deleteMutate = useMutation(friendId=> {
+    return deleteFriend(friendId)
+  })
   
 
 
   const handleRequestAccept = async(friendId)=>{
-    const result = await acceptFriend(friendId)
-    if(result.message == "success"){
-      alert('수락했음.')
-      refetch()
-    }
+
+    acceptMutate.mutate(friendId, {
+      onSuccess:async()=>{
+        
+        await queryClient.invalidateQueries(['getFriend','getRequestFriend'])
+        await listRefetch()
+        await refetch()
+        return
+      }
+    })
   }
 
   const handleRequestRefuse = async(friendId)=>{
-    const result = await rejectFriend(friendId)
-    if(result.message == "success"){
-      alert('거절헀음.')
-      refetch()
-    }
+    refuseMutate.mutate(friendId, {
+      onSuccess:async()=>{
+        await queryClient.invalidateQueries(['getRequestFriend'])
+        await refetch()
+        return
+      }
+    })
   }
 
-  const handleRequestBlock = ()=>{
-    
+  const handleRequestBlock = (friendId)=>{
+    friendBlockMutate.mutate(friendId,{
+      onSuccess : async()=>{
+        await queryClient.invalidateQueries(['getRequestFriend'])
+        await refetch()
+        return
+      }
+    })
   }
-  const handleFriendBlock = async(friendId)=>{
-    window.confirm('정말 차단하시겠습니까?')
-    const result = await blockFriend(friendId)
-    if(result.message == "success"){
-      alert('차단 완료')
-      refetch()
-    }
+  const handleFriendBlock = (friendId)=>{
+    friendBlockMutate.mutate(friendId,{
+      onSuccess : async()=>{
+        await queryClient.invalidateQueries(['getRequestFriend'])
+        await refetch()
+        return
+      }
+    })
   }
+
   const handleFriendRefuse = async(friendId)=>{
+    deleteMutate.mutate(friendId,{
+      onSuccess : async()=>{
+        await queryClient.invalidateQueries(['getFriend'])
+        await listRefetch()
+        return
+      }
+    })
+  }
 
+  const handleRequestChat = async(targetId)=>{
+    const result = await requestChat(targetId)
+    if(result.message == "success" || result.message == 'duplicated'){
+      navigate(`/chat/list/${result.roomId}`)
+    }
   }
 
 
@@ -77,14 +119,17 @@ const FriendList = () => {
       <div className={styles.friendList}>
         <div className={styles.friendListTitle}>친구 목록</div>
         {friendData.length > 0 ? friendData.map((item)=>{
-          return(<div key={item?.id} className={styles.friendListContent}>
+          return(<div key={item.friendId} className={styles.friendListContent}>
             <Link to={`/user/${item.receiveUser.userId}`} className={styles.friendName}>
               {item.receiveUser.nickname}
             </Link>
             <div className={styles.btnBox}>
-              <Link to={`/chat/list/${item.roomId}`}><div type='button' className={styles.button}>채팅하기</div></Link>
-            <div type='button' className={styles.button} onClick={()=>handleFriendBlock(friendData.friendId)}>너 차단</div>
-            <div type='button' className={styles.button} onClick='handleFriendRefuse'>너 삭제</div>
+
+
+              <div onClick={()=>handleRequestChat(item.receiveUser.userId)} type='button' className={styles.button}>채팅하기</div>
+            <div type='button' className={styles.button} onClick={()=>handleFriendBlock(item.friendId)}>너 차단</div>
+            <div type='button' className={styles.button} onClick={()=>handleFriendRefuse(item.friendId)}>너 삭제</div>
+
 
             </div>
 

@@ -20,6 +20,8 @@ ul {
 
 .userinfo {
     display: flex;
+
+    justify-content: center;
     text-align: start;
     align-items: center;
     border: 1px solid black;

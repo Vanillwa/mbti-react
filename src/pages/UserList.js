@@ -34,7 +34,9 @@ function UserList() {
           검색
         </button>
       </div>
+
       <h1 className="p-2">회원목록</h1>
+
       <select className={`mb-4 ${styles.showUserType}`}  onChange={handleFilterOnChange}>
         <option value="">전체보기</option>
         <option value="blocked">차단된 유저</option>
