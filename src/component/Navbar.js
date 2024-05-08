@@ -136,7 +136,7 @@ const Navbar = () => {
           )}
           {isLoggedIn ? (
             // 채팅창 이동
-            <Link className={styles.menu} to="/chat">
+            <Link className={styles.menu} to="/chat/list">
               <img className={styles.svg} src={chatting}/>
               <div className={styles.span}>채팅</div>
             </Link>

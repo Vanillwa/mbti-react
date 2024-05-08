@@ -11,7 +11,7 @@ import PostView from "./pages/PostView";
 import PostWrite from "./pages/PostWrite";
 import Profile from "./pages/Profile";
 import FindPwd from "./pages/FindPwd";
-import UpdatePassword from "./pages/UpdatePassword"
+import UpdatePassword from "./pages/UpdatePassword";
 import CompleteLogin from "./pages/CompleteLogin";
 import PostEdit from "./pages/PostEdit";
 import UserDelete from "./pages/UserDelete";
@@ -20,9 +20,8 @@ import ReportList from "./pages/ReportList";
 
 import UserList from "./pages/UserList";
 
-import Chat from "./pages/Chat";
-
-
+import ChatList from "./pages/ChatList";
+import ChatRoom from "./pages/ChatRoom";
 
 function App() {
   return (
@@ -31,30 +30,34 @@ function App() {
         <Route element={<Layout />}>
           <Route path="post">
             <Route path="list" element={<PostList />} />
-            <Route path="view" element={<PostView />}/>
-            <Route path="write" element={<PostWrite/>}></Route>
-            <Route path="edit" element={<PostEdit/>}></Route>
-           
+            <Route path="view" element={<PostView />} />
+            <Route path="write" element={<PostWrite />}></Route>
+            <Route path="edit" element={<PostEdit />}></Route>
           </Route>
-          <Route path="reportlist" element={<ReportList/>}/>
-          
+          <Route path="reportlist" element={<ReportList />} />
+
           <Route path="user">
-            <Route index element={<UserList/>}/>
-            <Route path=":userId" element={<Profile/>}/>
+            <Route index element={<UserList />} />
+            <Route path=":userId" element={<Profile />} />
           </Route>
-          <Route path="friend" element={<FriendList/>}/>
-          <Route path="/chat" element={<Chat />} />
+          <Route path="friend" element={<FriendList />} />
+
+          <Route path="chat">
+            <Route path="list">
+              <Route index element={<ChatList/>}/>
+              
+              <Route path=":roomId" element={<ChatRoom/>}/>
+            </Route>
+          </Route>
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />
-        
 
-        <Route path="/memberevise" element={<MemberRevise />} />
-        <Route path="/userdelete" element={<UserDelete />} />
-        <Route path="/updatepwd" element={<UpdatePassword/>}/>
-        <Route path="/findpwd" element={<FindPwd />}/>
-        <Route path="/completelogin" element={<CompleteLogin/>}/>
-       
+        <Route path="memberevise" element={<MemberRevise />} />
+        <Route path="userdelete" element={<UserDelete />} />
+        <Route path="updatepwd" element={<UpdatePassword />} />
+        <Route path="findpwd" element={<FindPwd />} />
+        <Route path="completelogin" element={<CompleteLogin />} />
       </Routes>
     </div>
   );

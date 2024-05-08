@@ -37,7 +37,7 @@ export const getUserList = async (filter,keyword,type) => {
   const res = await axios.get(`/user?filter=${filter}&keyword=${keyword}&type=${type}`);
   return res.data;
 };
-
+// 채팅 요청
 export const requestChat = async (targetId) => {
   const res = await axios.get(`/chat/request?targetId=${targetId}`);
   return res.data;
@@ -48,15 +48,9 @@ export const getChatList = async () => {
   return res.data;
 };
 
-// 채팅 요청
 
-export const getChat = async ()=>{
-  const res = axios.get("/chat/request")
-  return res.data;
-
-}
-
-export const getMessage = async (roomId) => {
+//채팅방
+export const getChatRoom = async (roomId) => {
   const res = await axios.get(`/chat/${roomId}`);
   return res.data;
 };

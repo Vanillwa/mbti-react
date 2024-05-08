@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { requestFriend } from "../service/api";
+import { requestChat, requestFriend } from "../service/api";
 import styles from "../css/PostList.module.css";
 const UserDropdown = ({ item }) => {
   const { memoUserInfo } = useAuthContext();
@@ -11,6 +11,19 @@ const UserDropdown = ({ item }) => {
 
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
+  const handleRequestChat = async(targetId)=>{
+    const result = await requestChat(targetId);
+
+    if(result.message ==="success"){
+
+    }else if(result.message ==="noAuth"){
+      alert("로그인이 필요한 서비스입니다.")
+    }else if(result.message ==="notFriend"){
+      alert("친구가 아닙니다.")
+    }else if(result.message ==="duplicated"){
+      
+    }
+  }
 
   const handleRequestFreind = async (userId) => {
     const result = await requestFriend(userId);
@@ -75,7 +88,7 @@ const UserDropdown = ({ item }) => {
             </div>
           </li>
           <li>
-            <div type="button" onClick="">
+            <div type="button" onClick={()=>handleRequestChat(item.User.userId)}>
               채팅하기
             </div>
           </li>
