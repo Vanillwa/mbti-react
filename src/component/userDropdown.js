@@ -60,7 +60,7 @@ const UserDropdown = ({ item }) => {
           <li>
             <Link to={`/user/${item.User.userId}`}>프로필 보기</Link>
           </li>
-          <li>
+          {isLoggedIn ? <><li>
             <div
               type="button"
               onClick={() => handleRequestFreind(item.User.userId)}
@@ -73,6 +73,8 @@ const UserDropdown = ({ item }) => {
               차단하기
             </div>
           </li>
+          </> : null}
+          
         </ul></>}
         
       </div>

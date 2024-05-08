@@ -43,7 +43,7 @@ function ViewContent() {
   const [query, setQuery] = useSearchParams();
   const postId = query.get("postId");
 
-  const { data, status } = useQuery(
+  const { data, status, refetch } = useQuery(
     ["getPostView", postId],
     () => getPostView(postId),
     {
@@ -76,6 +76,7 @@ function ViewContent() {
     const result = await ClickPostLikes(data.postId);
     if (result.message == "success") {
       console.log("좋아요 눌렀음.");
+      refetch()
     } else if (result.message == "duplicated") {
 
     }
@@ -121,7 +122,6 @@ function ViewContent() {
         <div className={styles.mbti}>
           <span>{data.category} 게시판</span>
           <div className={styles.readhit}>조회 : {data.readhit}</div>
-          <div className={styles.like}>좋아요 : {data.like}</div>
           <div>
           <ReportModal/>
           {userInfo?.userId == data.User.userId && isLoggedIn ? (
@@ -164,7 +164,7 @@ function ViewContent() {
               type="button"
               className={styles[likes]}
               onClick={handleLikeClick}>
-              좋아요❤
+              좋아요 : {data.like}
             </div>
           </div>
         </div>
