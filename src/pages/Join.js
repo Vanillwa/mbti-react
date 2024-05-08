@@ -242,17 +242,17 @@ function Join() {
 
   }
 
-  const backgroundStyle = {
-    backgroundImage: `url(${backgroundImg})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    opacity: 0.9
-  };
+  // const backgroundStyle = {
+  //   backgroundImage: `url(${backgroundImg})`,
+  //   backgroundSize: 'cover',
+  //   backgroundPosition: 'center',
+  //   opacity: 0.9
+  // };
 
 
 
   return (
-    <body style={backgroundStyle}>
+    <body>
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className="logo" />
@@ -262,7 +262,7 @@ function Join() {
           <form onSubmit={handleSubmit}>
             <div className="text-center mb-5">
 
-              <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>가입하기</h2>
+              <h2 className="fw-bold" style={{ fontSize: '45px', color: "#0866ff" }}>가입하기</h2>
             </div>
             <div className="row g-3">
 
@@ -360,7 +360,7 @@ function Join() {
 
                 <button type="submit" className="btn btn-primary me-2" >가입하기</button>
                 <button type="button" className="btn btn-secondary" onClick={() => navigate('/')}>취소</button>
-                <Link to="/" className="text-decoration-none ms-2">이미 계정이 있으신가요? 로그인</Link>
+                <Link to="/" className="text-decoration-none ms-2"><strong>이미 계정이 있으신가요? 로그인</strong></Link>
               </div>
             </div>
           </form>

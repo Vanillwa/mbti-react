@@ -257,13 +257,13 @@ function MemberRevise() {
   console.log(passwordRef1)
   console.log(mbtiRef)
 
-
-  const backgroundStyle = {
-    backgroundImage: `url(${backgroundImg})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    opacity: 0.9
-  };
+// 배경화면 가독성 안좋아서 일단 보류
+  // const backgroundStyle = {
+  //   backgroundImage: `url(${backgroundImg})`,
+  //   backgroundSize: 'cover',
+  //   backgroundPosition: 'center',
+  //   opacity: 0.9
+  // };
 
 
 
@@ -271,7 +271,7 @@ function MemberRevise() {
 
 
   return (
-    <body style={backgroundStyle}>
+    <body>
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className="logo" />
@@ -283,15 +283,15 @@ function MemberRevise() {
               <img src={imgUrl} alt="회원사진" className="user-image" />
 
 
-              <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>프로필 편집</h2>
+              <h2 className="fw-bold" style={{ fontSize: '45px', color: "#0866ff" }}>프로필 편집</h2>
             </div>
             <div className='buttonWrap'>
 
             <input type="file" hidden="hidden" onChange={imageHandler} ref={imageRef} />
-              <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}>파일 선택</button>
+              <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}><strong>파일 선택</strong></button>
 
 
-              <button type='button' onClick={imageDeleteHandler} className='buttonjun'>삭제</button>
+              <button type='button' onClick={imageDeleteHandler} className='buttonjun'><strong>삭제</strong></button>
             </div>
 
             <div className="row g-3">
@@ -375,8 +375,8 @@ function MemberRevise() {
                     type="button"
                     className='btn btn-sm btn-primary'
                     onClick={() => navigate('/post/list')}
-                  >게시판으로 이동</button>
-                  <button type='button' className='btn btn-sm btn-primary' onClick={() => navigate('/userdelete')}>회원탈퇴</button>
+                  ><strong>게시판으로 이동</strong></button>
+                  <button type='button' className='btn btn-sm btn-primary' onClick={() => navigate('/userdelete')}><strong>회원탈퇴</strong></button>
                 </div>
               </div>
             </div>
