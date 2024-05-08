@@ -2,12 +2,12 @@ import React, { useRef, useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
-import '../css/Join.css'
+import styles from '../css/Join.module.css';
 import { checkDuplicationEmail, emailChanged, fetchJoin, nickNameChanged } from '../service/api';
 import { checkDuplicationNickname } from '../service/api';
 import { checkEmailVerification } from '../service/api'
 import { requestEmailVerification } from '../service/api';
-import backgroundImg from '../images/backgroundImg.png';
+//import backgroundImg from '../images/backgroundImg.png';
 
 
 function Join() {
@@ -255,14 +255,14 @@ function Join() {
     <body>
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
-        <img src={logo} alt="로고" className="logo" />
+        <img src={logo} alt="로고" className={styles.logo} />
       </Link>
-      <div className="card">
-        <div className="card-body">
+      <div className={styles.card}>
+        <div className={styles.cardbody}>
           <form onSubmit={handleSubmit}>
             <div className="text-center mb-5">
 
-              <h2 className="fw-bold" style={{ fontSize: '45px', color: "#0866ff" }}>가입하기</h2>
+              <h2 className="fw-bold" style={{ fontSize: '45px', color: "#0866ff" }}>회원가입</h2>
             </div>
             <div className="row g-3">
 

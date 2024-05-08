@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, redirect, useNavigate } from "react-router-dom";
 import logo from '../images/areyout.png';
-import '../css/UserDelete.css'
+import styles from '../css/UserDelete.module.css';
 import { useAuthContext } from "../context/AuthContext";
 import { deletePasswordCheck } from '../service/api';
 import { deleteUser } from '../service/api';
@@ -83,14 +83,14 @@ function UserDelete() {
     };
 
     return (
-      <body>
+    
       <div className="container mt-5" >
         <a href="/" className="navbar-logo d-flex justify-content-center">
       
           <img src={logo} alt="로고" className="logo" />
         </a>
-        <div className="card">
-          <div className="card-body">
+        <div className={styles.card}>
+          <div className={styles.cardbody}>
             <div className="text-center mb-5">
             
               <h2 className="fw-bold" style={{ fontSize: '45px', color:"#0866ff"}}>회원탈퇴</h2>
@@ -152,7 +152,7 @@ function UserDelete() {
         </div>
       
       </div>
-      </body>
+   
     );
   }
 
