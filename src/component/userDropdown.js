@@ -73,11 +73,6 @@ const UserDropdown = ({ item }) => {
               차단하기
             </div>
           </li>
-          <li>
-            <div type="button" onClick="">
-              신고처리
-            </div>
-          </li>
         </ul></>}
         
       </div>
