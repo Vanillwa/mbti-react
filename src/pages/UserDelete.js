@@ -7,7 +7,7 @@ import { useAuthContext } from "../context/AuthContext";
 import { deletePasswordCheck } from '../service/api';
 import { deleteUser } from '../service/api';
 import backgroundImg from '../images/backgroundImg.png';
-
+import Swal from "sweetalert2"
 function UserDelete() {
      const navigate = useNavigate()
 
@@ -17,12 +17,6 @@ function UserDelete() {
    console.log(userInfo)
 
 
-  //  const backgroundStyle = {
-  //   backgroundImage: `url(${backgroundImg})`,
-  //   backgroundSize: 'cover',
-  //   backgroundPosition: 'center',
-  //   opacity: 0.9
-  // };
 
 // 비밀번호
     const [passwordBtn,setPasswordBtn] =useState("수정")
@@ -60,26 +54,38 @@ function UserDelete() {
     };
 
     const handleDeleteOnclick = async () => {
-      if (!window.confirm("정말 삭제하시겠습니까?")) {
-        return;
-      }
-
-    
-      try {
-        const result = await deleteUser();
-        if (result.message === "success") {
-          alert("회원탈퇴가 성공했습니다.");
-          logout();
-          navigate("/");
-        } else if (result.message === "fail") {
-          setPwmessage("회원탈퇴에 실패하셨습니다.");
-        } else {
-          setPwmessage("알 수 없는 오류가 발생했습니다.");
+      Swal.fire({
+        title: "정말 삭제하시겠습니까?",
+        text: "이 작업이 끝나면 영구적으로 회원정보가 삭제됩니다.",
+        icon: "error",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "네 삭제 하겠습니다.",
+        cancelButtonText: "아니요 다시 한번 생각해보겠습니다."
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const result = await deleteUser();
+            if (result.message === "success") {
+              Swal.fire({
+                title: '탈퇴되셨습니다.',
+                icon: 'success',
+                confirmButtonText: '확인'
+              })
+              logout();
+              navigate("/");
+            } else if (result.message === "fail") {
+              setPwmessage("회원탈퇴에 실패하셨습니다.");
+            } else {
+              setPwmessage("알 수 없는 오류가 발생했습니다.");
+            }
+          } catch (error) {
+            console.error("Error deleting user:", error);
+            setPwmessage("회원탈퇴에 실패하셨습니다.");
+          }
         }
-      } catch (error) {
-        console.error("Error deleting user:", error);
-        setPwmessage("회원탈퇴에 실패하셨습니다.");
-      }
+      });
     };
 
     return (
