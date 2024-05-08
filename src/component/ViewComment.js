@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/postView.module.css";
 
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Form, Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
 import { EditViewComment, deleteViewComment, getViewComment, postViewComment } from "../service/api";
+import PostPagination from "../component/PostPagination";
+
 function ViewComment() {
   const queryClient = new QueryClient()
 
@@ -16,12 +18,18 @@ function ViewComment() {
   const [query, setQuery] = useSearchParams();
   const postId = query.get("postId");
 
+  const [inputContent, setInputContent] = useState("")
+
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingContent, setEditingContent] = useState(""); // 수정 중인 댓글의 내용을 임시 저장합니다.
 
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const [order, setOrder] = useState("desc");
+
 
   // 댓글 리스트 조회
-  const { data, status , refetch } = useQuery(["getViewComment", postId], () => getViewComment(postId),
+  const { data, status , refetch } = useQuery(["getViewComment", postId, page, size, order], () => getViewComment(postId,page, size, order),
     {
       retry: false,
       refetchOnWindowFocus: false,
@@ -60,6 +68,7 @@ function ViewComment() {
         console.log('onSuccess')
         await queryClient.invalidateQueries(["getViewComment", postId])
         await refetch()
+        setInputContent("");
         return
       }
     })
@@ -98,9 +107,17 @@ function ViewComment() {
         console.log('onSuccess')
         await queryClient.invalidateQueries(["getViewComment", postId])
         await refetch()
+
         return
       }
     })
+  }
+  const handleOrderChange = (e)=>{
+    if(e.target.value == 'desc'){
+      setOrder('desc')
+    }else if (e.target.value == 'asc'){
+      setOrder('asc')
+    }
   }
 
   if (status === "loading") {
@@ -116,6 +133,7 @@ function ViewComment() {
       </div>
     );
   }
+  console.log(data)
 
   return (
     <div className={styles.container}>
@@ -124,7 +142,7 @@ function ViewComment() {
           <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
             <img className={styles.myImg} src={img} alt=""></img>
             <span className={styles.label}>{userInfo?.nickname} :</span>
-            <input className={styles.commentInput} name="content" />
+            <input className={styles.commentInput} name="content" value={inputContent} onChange={(e)=>setInputContent(e.target.value)}/>
             <button type="submit">작성</button>
           </form>
         ) : (
@@ -135,7 +153,11 @@ function ViewComment() {
             </Link>
           </div>
         )}
-        {data.map((item) => {
+        <select onChange={handleOrderChange}>
+          <option value='desc'>최신순</option>
+          <option value='asc'>오래된순</option>
+        </select>
+                {data.commentList.map((item) => {
           return (
             <div key={item.commentId} className={styles.commentBox}>
               <div className={styles.commentName}>{item.User.nickname}</div>
@@ -162,6 +184,9 @@ function ViewComment() {
           );
         })
         }
+        <div className="d-flex justify-content-center mt-3">
+          <PostPagination  data={data} status={status} page={page} setPage={setPage}/>
+        </div>
       </div>
     </div>
   );

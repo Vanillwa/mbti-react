@@ -24,18 +24,42 @@ const PostList = () => {
     }
   );
 
-  const handleSortClick = (e) => {
-    setSort(e.target.value);
-    setOrder(!order);
+  const handleSortChange = (e) => {
+    e.preventDefault()
+    if(e.target.value == 'readhit'){
+      setSort('readhit');
+    }else if(e.target.value == 'like'){
+      setSort('like')
+    }else if (e.target.value == 'createdAt'){
+      setSort('createdAt')
+    }
+
+    
   };
-  console.log(data)
+  const handleOrderChange = (e)=>{
+    const orderValue = e.target.value
+    if(orderValue == '최신순' || orderValue == '많은순'){
+      setOrder('desc')
+    }else{
+      setOrder('asc')
+    }
+    console.log(order)
+  }
+
   return (
     <div className={styles.postBox}>
-      <select >
-        <option value='createdAt'>createdAt</option>
-        <option value="readhit">readhit</option>
-        <option value="like">like</option>
+      <div className="d-flex">
+      <select  onChange={handleSortChange} >
+        <option value='createdAt' >날짜순</option>
+        <option value="readhit">조회순</option>
+        <option value="like">좋아요순</option>
       </select>
+      <select onChange={handleOrderChange}>
+        {sort == 'createdAt' ? <><option>최신순</option>
+        <option>오래된순</option></> : <><option>많은순</option><option>적은순</option></>}
+        
+      </select>
+      </div>
       <PostItems data={data} status={status} />
 
       <PostPagination data={data} status={status} page={page} setPage={setPage}/>
