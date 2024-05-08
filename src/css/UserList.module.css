@@ -1,10 +1,14 @@
-*{
-    padding:0; margin:0;
-    box-sizing: border-box;}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
-    a,li,ul{
-        list-style: none;
-    }
+a,
+li,
+ul {
+    list-style: none;
+}
 
 
 @font-face {
@@ -14,43 +18,44 @@
     font-style: normal;
 }
 
-.userinfo{
+.userinfo {
     display: flex;
-    justify-content: space-between;
+    text-align: start;
     align-items: center;
-    border:1px solid black;
-    padding:5px;
+    border: 1px solid black;
+    padding: 5px;
     font-family: 'KCC-Hanbit';
 }
 
-.blockBtn:hover{
-    
+.blockBtn:hover {}
+
+.searchBtn {
+    font-family: 'KCC-Hanbit';
+    width: 5vw;
+    border: 0px;
+    border-radius: 3px;
+    background-color: cornflowerblue;
+    color: white;
 }
 
-.searchBtn{
-    font-family: 'KCC-Hanbit';
-width:5vw;
-border:0px;
-border-radius: 3px;
-background-color: cornflowerblue;
-color:white;
-}
-.searchUserType{
+.searchUserType {
     border: 1px solid #40d1e7;
     font-family: 'KCC-Hanbit';
     border-radius: 10px;
-    padding:5px;
+    padding: 5px;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
 }
-.searchBox{
-    width:20vw;
+
+.searchBox {
+    width: 20vw;
     border-radius: 5px;
     font-family: 'KCC-Hanbit';
 }
-.showUserType{
-    width:10vw;
+
+.showUserType {
+    width: 10vw;
     border: 1px solid #40d1e7;
     font-family: 'KCC-Hanbit';
     border-radius: 10px;
@@ -59,7 +64,8 @@ color:white;
     font-weight: 400;
     font-size: 14px;
 }
-.showUserType:focus{
+
+.showUserType:focus {
     border: 1px solid #9B51E0;
     outline: 2px solid #F8E4FF;
 

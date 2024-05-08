@@ -114,18 +114,18 @@ setShow(true)
           <>
          
             <div className={styles.userinfo} key={item.userId}>
-              <span>유저ID: {item.userId}</span>
-              <span>이메일: {item.email}</span>
-              <span> 닉네임: {item.nickname}</span>
-              <span>상태: {item.status}</span>
+              <span className={`col-2`}>유저ID: {item.userId}</span>
+              <span className={`col-4`}>이메일: {item.email}</span>
+              <span className={`col-3`}> 닉네임: {item.nickname}</span>
+              <span className={`col-2`}>상태: {item.status}</span>
            
 
             {item.status === "blocked" ? (
-              <button type="button" className={`btn btn-primary btn-ghost ${styles.blockBtn}`} onClick={() => handleRelease(item.userId)}>
+              <button type="button" className={`col-1 btn btn-primary btn-ghost ${styles.blockBtn}`} onClick={() => handleRelease(item.userId)}>
                 차단해제
               </button>
             ) : (
-              <button type="button" className={`btn btn-primary btn-ghost ${styles.blockBtn}`} onClick={()=>handleShowModal(item)}>
+              <button type="button" className={`col-1 btn btn-primary btn-ghost ${styles.blockBtn}`} onClick={()=>handleShowModal(item)}>
                 차단하기
               </button>
             )}

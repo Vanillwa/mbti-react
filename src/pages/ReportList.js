@@ -94,14 +94,14 @@ function ReportList() {
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit}>
+          <form className={styles.blockModalForm} onSubmit={handleSubmit}>
           {report?.Post.User.nickname}
             <select ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
               <option value={7}>7일</option>
             </select>
-            <button type="submit">정지</button>
+            <button className={styles.blockModalBtn} type="submit">정지</button>
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -124,7 +124,7 @@ function ReportList() {
                 <Accordion.Item eventKey={item.reportId} >
                   <Accordion.Header>
                     
-                    <div className={styles.reportListBox}>
+                    <div className= {styles.reportListBox}>
                       <div className={styles.reportContent}>
                         <span className={styles.reportId}>
                           글번호:{item.Post.postId}
