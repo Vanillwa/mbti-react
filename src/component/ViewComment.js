@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/postView.module.css";
 
-import { Form, Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";

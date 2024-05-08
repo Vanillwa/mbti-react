@@ -258,6 +258,11 @@ export const blockFriend = async (friendId)=>{
   const res = await axios.put(`/friend/block?friendId=${friendId}`)
   return res.data
 }
+/**친구 삭제 */
+export const deleteFriend = async(friendId)=>{
+  const res = await axios.delete(`friend/delete?friendId=${friendId}`)
+  return res.data
+}
 
 //신고목록
 export const getPostReportList = async ()=>{
