@@ -34,7 +34,7 @@ const ChatList = () => {
 
   return (
     <>
-<<<<<<< HEAD
+
       <div className={styles.container}>
         <h2>채팅목록</h2>
         <div className={styles.chatBox}>
@@ -46,26 +46,7 @@ const ChatList = () => {
             return(<div className={styles.itemBox}>
               <div className="">상대방 : {matches[0]}</div>
               <Link to={`/chat/list/${item.roomId}`} className={styles.btn}>채팅하기</Link>
-=======
-    <div className={styles.container}>
-      <Navbar />
-      <div className={styles.postBox}>
-        <div className="card">
-          <div className="card-body">
-            <div className="row g-5 col">
-              <div className="d-flex gap-2 justify-content-center">
-                <h2 className={styles.h2name}>유저 채팅방!</h2>
-              </div>
-              <div className="d-flex gap-2 justify-content-center">
-                <p>채팅목록</p>
-                {data.map(chat => (
-                  <Link to={`/chat/list/${chat.roomId}`}>
-                  <div key={chat.id} className="chat-room">
-                    {chat.title}
-                  </div>
-                  </Link>
-                ))}
->>>>>>> wogns
+
               </div>
             )
             
@@ -73,13 +54,10 @@ const ChatList = () => {
         </div>
         </div>
       </div>
-<<<<<<< HEAD
+
     </>
   
-=======
-    </div>
-    </>
->>>>>>> wogns
+
   );
 };
 
