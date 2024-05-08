@@ -194,7 +194,7 @@ const Navbar = () => {
           {userInfo != null && userInfo.role === "admin" ? (
             <>
               <Link className={styles.menu} to={"/reportlist"}>
-               
+              
                 <PiSirenFill className={styles.svg} />
                 <div className={styles.span}>
                 신고목록

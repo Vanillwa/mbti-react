@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "../css/Chat.module.css";
-import Navbar from "../component/Navbar";
 import { useQuery } from "react-query";
 import { getChatList } from "../service/api";
 import { Link } from "react-router-dom";
@@ -10,7 +9,6 @@ const ChatList = () => {
     refetchOnWindowFocus: false,
   });
 
-  
 
   if (status === "loading") {
     return (
@@ -33,35 +31,29 @@ const ChatList = () => {
       </div>
     );
   }
-  console.log(data);
 
   return (
-    <div className={styles.container}>
-      <Navbar />
-
-      <div className={styles.postBox}>
-        <h2 className={styles.h2name}>유저 채팅방!</h2>
-        <div className="card">
-          <div className="card-body">
-            <div className="row g-5 col">
-            <h3>채팅목록</h3>
-              <div className="d-flex gap-2 justify-content-center"></div>
-
-              <div className=" gap-2 justify-content-center">
-                
-                {data.map(chat => (
-                  <Link to={`/chat/list/${chat.roomId}`}>
-                    <div key={chat.id} className="chat-room">
-                      {chat.title}
-                    </div>
-                  </Link>
-                ))}
+    <>
+      <div className={styles.container}>
+        <h2>채팅목록</h2>
+        <div className={styles.chatBox}>
+        <div className={styles.chatItems}>
+          {data.map((item)=>{
+            const title = item.title
+            const regex = /(?:^|\s)([\w가-힣]+)(?=님)/g;
+            const matches = title.match(regex)
+            return(<div className={styles.itemBox}>
+              <div className="">상대방 : {matches[0]}</div>
+              <Link to={`/chat/list/${item.roomId}`} className={styles.btn}>채팅하기</Link>
               </div>
-            </div>
-          </div>
+            )
+            
+          })}
+        </div>
         </div>
       </div>
-    </div>
+    </>
+  
   );
 };
 

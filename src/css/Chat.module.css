@@ -1,12 +1,29 @@
-.container {
-    display: flex;
-    flex-direction: column;
-  }
+.container{
   
-  .postBox {
-    
-    margin-top: -800px;
-  }
-  
+}
 
-  .h2name{}
+.chatBox {
+    display: flex;
+    justify-content: center;
+    
+  }
+
+  .chatItems{
+    width: 70%;
+
+  }
+
+  .itemBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    padding: 2vw;
+    margin-bottom: 0.5vh;
+  }
+  .btn{
+    border: 1px solid black;
+    padding: 3px;
+    border-radius: 12px;
+    
+  }
