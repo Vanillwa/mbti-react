@@ -8,65 +8,35 @@
 
 .title {
     font-weight: bold;
-    margin-bottom: 5vh;
+    margin-bottom:7vh;
 }
 .reportBox {
+   margin:10px; 
+   display: flex;
 
-    display: flex;
-
-    justify-content: center;
-
+   justify-content: center;
 
 }
+
 .reportList {
     border: 1px solid black;
     border-radius: 5px;
-    width: 60vw;
-
-}
-
-
-
-.reportListBox {
-   
-    border-bottom: 1px solid black;
-
-}
-
-.reportListBox:last-of-type {
-    border-bottom: 0px;
-}
-
-.reportLink {
-    display: flex;
-    justify-content: space-between;
+    width:100%;
 }
 
 .reportContent {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: start;
     align-items: center;
     font-family: 'TTHakgyoansimMonggeulmonggeulR';
     font-size:22px;
 }
 
-.reportId,
-.reportPerson,
-.reportType {
-    margin-right: 5vw;
-}
 
-.btnBox {
-    display: flex;
-    justify-content: end;
-}
 
-.banBtn,.cancelBtn{
-    background-color: white;
-    margin-right: 1vw;
-    border-radius: 20%;
 
-}
+
 
 .postTitle{
     font-family: 'KCC-Hanbit';
