@@ -9,7 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 // 프로필 수정아이콘 클릭시 선팝업창 뜨게 만들려고 씀
 import Button from 'react-bootstrap/Button'
 import '../css/MemberRevise.css'
-
+import Swal from "sweetalert2"
 
 // import { checkDuplicationNickname } from '../service/api';
 
@@ -171,7 +171,12 @@ function MemberRevise() {
       const result = await userUpdateNickname({ nickname: nicknameRef.current.value })
 
       if (result?.message === 'success') {
-        alert('닉네임 변경 완료')
+        Swal.fire({
+          title: '성공!',
+          text: '닉네임이 성공적으로 변경되었습니다!.',
+          icon: 'success',
+          confirmButtonText: '확인'
+        })
         setNicknameEditable(false)
         setNicknameAlert("");
         setNicknameBtn("수정")
@@ -182,6 +187,8 @@ function MemberRevise() {
       }
     }
   }
+
+
 
 
 
@@ -213,7 +220,12 @@ function MemberRevise() {
 
       const result = await userUpdatePassword({ password: passwordRef1.current.value })
       if (result.message === 'success') {
-        alert(' 패스워드 변경 완료')
+        Swal.fire({
+          title: '성공!',
+          text: '비밀번호가 성공적으로 변경되었습니다!.',
+          icon: 'success',
+          confirmButtonText: '확인'
+        })
         setPwEditable(false)
         setPwmessage("")
         setPasswordBtn("수정")
