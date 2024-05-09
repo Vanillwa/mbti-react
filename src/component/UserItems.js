@@ -2,7 +2,7 @@ import { QueryClient, useMutation, useQuery } from "react-query";
 
 
 import { releaseUser, suspendUser } from "../service/api/reportAPI";
-
+import { getUserList } from "../service/api/userAPI";
 import Accordion from "react-bootstrap/Accordion";
 import Modal from "react-bootstrap/Modal";
 import { useRef, useState } from "react";
@@ -23,14 +23,27 @@ function UserItems({data,status, filter, keyword, type , refetch}) {
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const alertResult = await sweetalert.question('정말 정지시키겠습니까?','','네','아니오')
+    if(alertResult.dismiss) return;
+    
+     
     const now = new Date();
     const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
     const blockDate = new Date(now.getTime() + addDay);
-    const result = await suspendUser({ userId: user.userId, blockDate });
-    sweetalert.success('정지 완료')
+    const result = await suspendUser({postId:null,userId: user.userId,blockDate} );
+    if(result.message === "success"){
+      sweetalert.success('정지 완료')
+      setShow(false)
+      refetch()
+    }else if(result.message === "fail"){
+      sweetalert.warning('오류 발생')
+    }
+    
   };
 
-  const handleRelease = (userId) => {
+  const handleRelease =async (userId) => {
+    const alertResult =await sweetalert.question('차단해제 하시겠습니까','','네','아니오')
+    if(alertResult.dismiss)return;
     releaseMutate.mutate(userId, {
       onSuccess: async () => {
         await queryClient.invalidateQueries([
@@ -132,7 +145,7 @@ function UserItems({data,status, filter, keyword, type , refetch}) {
               ) : (
                 <button
                   type="button"
-                  className={`col-1 btn btn-primary btn-ghost ${styles.blockBtn}`}
+                  className={`col-1 btn btn-danger btn-ghost ${styles.blockBtn}`}
                   onClick={() => handleShowModal(item)}
                 >
                   차단하기

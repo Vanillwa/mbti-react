@@ -1,12 +1,13 @@
 import React, { useRef, useState } from "react";
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
-
+import Form from "react-bootstrap/Form";
 import {
+  getCommentReportList,
   getPostReportList,
   suspendUser,
   updatePostReport,
-} from "../service/api/reportAPI"
+} from "../service/api/reportAPI";
 import styles from "../css/ReportList.module.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -17,44 +18,72 @@ import sweetalert from "../component/sweetalert";
 function ReportList() {
   const queryClient = new QueryClient();
   const [show, setShow] = useState(false);
-  const [report, setReport] = useState();
-
+  const [user, setUser] = useState({nickname:''});
+  const [type,setType] = useState("post");
+  const [report,setReport] = useState();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const blockRef = useRef();
 
-  const handleReport = report => {
-    setReport(report);
+  const handlePostReport = (userData,reportData) => {
+    setUser(userData);
+    setReport(reportData);
     setShow(true);
+    
   };
+  // const handleCommentReport = report=>{
+  //   setReport(report);
+  //   setShow(true)
+  // }
 
   const completeMutate = useMutation(reportId => {
     return updatePostReport(reportId);
   });
+
+const handleRadioOnchange = (e)=>{
+  setType(e.target.value)
+
+
+}
+
   const handleComplete = async reportId => {
     completeMutate.mutate(reportId, {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["getPostReportList"]);
-        await refetch();
+        await postRefetch();
         return;
       },
     });
     setShow(false);
   };
+
+
+
   const handleSubmit = async e => {
+    console.log(report)
     e.preventDefault();
     const now = new Date();
     const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
     const blockDate = new Date(now.getTime() + addDay);
-    const result = await suspendUser(
-      report.Post.postId,
-      report.Post.User.userId,
-      blockDate
+    const result = await suspendUser({
+    postId: report.Post?.postId,
+    userId: user.userId,
+    commentId:report.Comment?.commentId,
+    blockDate,
+    
+    }
     );
-    sweetalert.success('정지 완료')
+    if(result.message === "success"){
+      sweetalert.success("정지 완료");
+      handleComplete(report.reportId)
+      setShow(false);
+    }else if(result.message === "fail"){
+      sweetalert.warning("정지 실패")
+    }
+    
   };
 
-  const { data, status, refetch } = useQuery(
+  const { data:postData, status:postStatus, refetch:postRefetch } = useQuery(
     ["getPostReportList"],
     () => getPostReportList(),
     {
@@ -62,23 +91,32 @@ function ReportList() {
       refetchOnWindowFocus: false,
     }
   );
+    const {data:commentData, status:commentStatus,refetch:commentRefetch} = useQuery(
+      ["getCommentReportList"],
+      ()=> getCommentReportList(),
+      {
+        retry: false,
+        refetchOnWindowFocus: false,
+      }
+    )
 
-  if (status === "loading") {
+
+  if (postStatus === "loading"|| commentStatus === "loading") {
     return (
       <div className="container">
         <h1>Loading...</h1>
       </div>
     );
-  } else if (status === "error") {
+  } else if (postStatus === "error" || commentStatus === "error") {
     return (
       <div className="container">
         <h1>error!</h1>
       </div>
     );
   }
-  console.log(data);
+ 
 
-  if (data.length == 0) {
+  if (postData.length == 0 || commentData.length== 0) {
     return (
       <div>
         <h1>작성된 글이 없습니다.</h1>
@@ -91,13 +129,23 @@ function ReportList() {
   }
   return (
     <>
+      <Form onChange={handleRadioOnchange}>
+        <div className="mb-3 radio">
+          <Form.Check inline label="게시글 신고" value="post" name="group1" type="radio" checked={type ==="post"} />
+          <Form.Check inline label="댓글 신고" value="comment" name="group1" type="radio" />
+          <Form.Check inline label="채팅 신고" value="chat" name="group1" type="radio" />
+        </div>
+      </Form>
+
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className={styles.blockModalForm} onSubmit={handleSubmit}>
-            <span className="me-2">닉네임: {report?.Post.User.nickname}</span>
+            <span className="me-2">닉네임: {user.nickname}</span>
+            {console.log(user)}
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
@@ -121,15 +169,19 @@ function ReportList() {
       </Modal>
 
       <h2 className={styles.title}>신고목록</h2>
+
+
       <div className={styles.reportBox}>
         <div className={styles.reportList}>
+
           <Accordion>
-            {data.map(item => {
+            
+            {type ==="post" ?        postData.map(item => {
               return (
                 <Accordion.Item eventKey={item.reportId}>
-                  <Accordion.Header  >
+                  <Accordion.Header>
                     <div className="container">
-                  <div className={`row   ${styles.reportContent}`}>
+                      <div className={`row   ${styles.reportContent}`}>
                         <span className={`col-3 ${styles.reportId}`}>
                           글번호:{item.Post.postId}
                         </span>
@@ -141,7 +193,7 @@ function ReportList() {
                         </span>
                         <span className={`col-3`}>신고유형:{item.type}</span>
                       </div>
-                      </div>
+                    </div>
                   </Accordion.Header>
                   <Accordion.Body>
                     <div className={styles.postTitle}>{item.Post.title}</div>
@@ -152,13 +204,53 @@ function ReportList() {
                     <button
                       className={styles.reportBtn}
                       type="button"
-                      onClick={() => handleReport(item)}>
+                      onClick={() => handlePostReport(item.Post.User,item)}>
                       처리
                     </button>
                   </Accordion.Body>
                 </Accordion.Item>
               );
-            })}
+            }): type === "comment" ? commentData.map(item=>{
+              
+              return(
+                <>
+                {console.log(item)}
+                <Accordion.Item eventKey={item.reportId}>
+                  <Accordion.Header>
+                    <div className="container">
+                      <div className={`row   ${styles.reportContent}`}>
+                        <span className={`col-3 ${styles.reportId}`}>
+                          글번호:{item.Comment.commentId}
+                        </span>
+                        <span className={`col-3  ${styles.reportId}`}>
+                          작성자:{item.Comment.User.nickname}
+                        </span>
+                        <span className={`col-3 ${styles.reportPerson}`}>
+                          신고자:{item.User.nickname}
+                        </span>
+                        <span className={`col-3`}>신고유형:{item.type}</span>
+                      </div>
+                    </div>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <div className={styles.postTitle}>{item.Comment.title}</div>
+                    <div className={styles.postContent}>
+                      <ContentComponent content={item.Comment.content} />
+                    </div>
+
+                    <button
+                      className={styles.reportBtn}
+                      type="button"
+                      onClick={() => handlePostReport(item.Comment.User,item)}>
+                      처리
+                    </button>
+                  </Accordion.Body>
+                </Accordion.Item>
+                </>
+              )
+            }): null}
+
+            
           </Accordion>
         </div>
       </div>
