@@ -33,8 +33,8 @@ export const reportPost = async (body) =>{
   }
   
   //계정정지
-export const suspendUser = async(postId,userId,blockDate)=>{
-  const res = await axios.put(`/user/block?postId=${postId}&userId=${userId}&blockDate=${blockDate}`)
+export const suspendUser = async(body)=>{
+  const res = await axios.put(`/user/block`,body)
   return res.data;
 }
 //차단해제
