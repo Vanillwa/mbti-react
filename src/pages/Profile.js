@@ -1,6 +1,6 @@
 // import { useContext, useState, useEffect } from 'react';
 //  import { UserContext } from '../context/UserContext';
-import { getProfileList } from "../service/api/api";
+import { getProfileList } from "../service/api/userAPI";
 import styles from '../css/PostList.module.css';
 import { Link, useParams } from 'react-router-dom';
 import noImg from '../images/noImg.png';

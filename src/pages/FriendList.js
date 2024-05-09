@@ -8,7 +8,6 @@ import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRe
 import { requestChat} from "../service/api/chatAPI"
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate} from "react-router-dom";
-import { requestChat } from "../service/api/api";
 
 const FriendList = () => {
   const queryClient = new QueryClient()

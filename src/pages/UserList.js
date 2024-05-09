@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getUserList } from "../service/api/api";
+import { getUserList } from "../service/api/userAPI";
 import { useRef, useState } from "react";
 import UserItems from "../component/UserItems";
 import styles from "../css/UserList.module.css"
