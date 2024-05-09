@@ -63,6 +63,7 @@ function ViewComment() {
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
+
     const body = {
       postId: postId,
       content: e.target.content.value,
@@ -116,6 +117,7 @@ function ViewComment() {
     });
   };
   const handleOrderChange = (e) => {
+    
     if (e.target.value == "desc") {
       setOrder("desc");
     } else if (e.target.value == "asc") {
@@ -150,6 +152,8 @@ function ViewComment() {
               name="content"
               value={inputContent}
               onChange={(e) => setInputContent(e.target.value)}
+              required
+              placeholder="댓글"
             />
             <button type="submit">작성</button>
           </form>
