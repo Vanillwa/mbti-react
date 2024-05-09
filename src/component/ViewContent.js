@@ -1,11 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../css/postView.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  ClickPostLikes,
-  getPostView,
-  postDelete,
-} from "../service/api/postApi";
+import {ClickPostLikes,getPostView,postDelete,} from "../service/api/postAPI";
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
