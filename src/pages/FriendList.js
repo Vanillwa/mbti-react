@@ -4,11 +4,11 @@ import { QueryClient, useMutation, useQuery } from "react-query";
 
 import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRequestFriend, rejectFriend, unblockUser } from "../service/api/friendAPI";
 
-
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate} from "react-router-dom";
 
 import { requestChat } from "../service/api/chatAPI";
+import sweetalert from "../component/sweetalert";
 
 
 const FriendList = () => {
@@ -18,7 +18,6 @@ const FriendList = () => {
   const navigate = useNavigate()
 
   const [btn, setBtn] = useState('friend')
-
 
   const { data : requestData,  status : requestStatus , refetch} = useQuery(
     ["getRequestFriend"],
@@ -86,28 +85,39 @@ const FriendList = () => {
     })
   }
 
-  const handleRequestBlock = (friendId)=>{
+  const handleRequestBlock = async(friendId)=>{
+    const result = await sweetalert.question('차단 할거야?','', '네', '아니오')
+    
+    if(result.dismiss)return
     friendBlockMutate.mutate(friendId,{
       onSuccess : async()=>{
         await queryClient.invalidateQueries(['getRequestFriend'])
+        sweetalert.success('차단 완료')
         await refetch()
         return
       }
     })
   }
-  const handleFriendBlock = (targetId)=>{
+  const handleFriendBlock = async(targetId)=>{
+    const result = await sweetalert.question('차단 할거야?','', '네', '아니오')
+    if(result.dismiss)return
+
     friendBlockMutate.mutate(targetId,{
       onSuccess : async()=>{
         await queryClient.invalidateQueries(['getFriend'])
+        sweetalert.success('차단 완료')
         await listRefetch()
         return
       }
     })
   }
-  const handleReleaseUser = (userId)=>{
+  const handleReleaseUser = async(userId)=>{
+    const result = await sweetalert.question('차단 해제 할거야?','', '네', '아니오')
+    if(result.dismiss)return
     releaseMutate.mutate(userId,{
       onSuccess : async()=>{
         await queryClient.invalidateQueries(['getBlockUser', 'getFriend'])
+        sweetalert.success('해제 완료')
         await listRefetch()
         await blockRefetch()
         return
@@ -116,6 +126,8 @@ const FriendList = () => {
   }
 
   const handleFriendRefuse = async(friendId)=>{
+    const result = await sweetalert.question('삭제 할거야?','', '네', '아니오')
+    if(result.dismiss)return
     deleteMutate.mutate(friendId,{
       onSuccess : async()=>{
         await queryClient.invalidateQueries(['getFriend'])

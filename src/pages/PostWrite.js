@@ -77,9 +77,7 @@ const PostWrite = () => {
     'blockquote',
     'image',
   ];
-
   
-
   const handleEMbtiChange = (e) => {
     setSelectEMbti(e.target.value);
     setSelectIMbti("I게시판");

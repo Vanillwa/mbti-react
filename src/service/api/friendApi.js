@@ -43,7 +43,7 @@ export const blockFriend = async (targetId)=>{
 }
 /** 친구 차단 해제 */
 export const unblockUser = async(userId)=>{
-  const res = await axios.put(`/friend/unBlock?userId=${userId}`)
+  const res = await axios.delete(`/friend/unBlock?targetId=${userId}`)
   return res.data
 }
 /**친구 삭제 */
