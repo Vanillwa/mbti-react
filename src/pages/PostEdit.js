@@ -136,7 +136,7 @@ const PostEdit = () => {
     const result = await postEdit(body);
 
     if (result.message == "success") {
-      sweetalert.success('수정 완료', '', '확인')
+      sweetalert.success('수정 완료', '', '확인',)
       navigate(`/post/view?postId=${postId}`);
     }else if(result.message == 'noAuth'){
       console.log('권한 없음')
@@ -159,9 +159,9 @@ const PostEdit = () => {
     <>
       <div className={styles.container}>
         {mbti == null ? (
-          <h3>전체 게시판에 글쓰기</h3>
+          <h3>전체게시판 글 수정하기</h3>
         ) : (
-          <h3>{mbti} 게시판에 글쓰기</h3>
+          <h3>{mbti} 게시판 글 수정하기</h3>
         )}
         <form className={styles.form} onSubmit={handleEditSubmit}>
           <div className={styles.selectBox}>

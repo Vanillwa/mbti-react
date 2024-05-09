@@ -1,6 +1,6 @@
 import { Pagination } from "react-bootstrap";
 
-function PostPagination({data, status, page, setPage}){
+function Paging({data, status, page, setPage}){
   if (status === "loading") {
     return (
       <div className="container">
@@ -40,4 +40,4 @@ function PostPagination({data, status, page, setPage}){
   )
 }
 
-export default PostPagination
+export default Paging

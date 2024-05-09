@@ -20,13 +20,13 @@ const confirm = (
     title,
     text,
     confirmButtonText,
-    timer : showConfirmButton ? '' : 1500
+    timer : 3000
   })
 }
 
 const sweetalert = {
-    success(title, text, showConfirmButton, buttonText){
-      return confirm('success', title, text, buttonText, showConfirmButton)
+    success(title, text, showConfirmButton, buttonText, timer){
+      return confirm('success', title, text, buttonText, showConfirmButton, timer)
     },
     error(title, text, buttonText){
       return confirm('error', title, text, buttonText)
