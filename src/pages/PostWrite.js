@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import styles from "../css/PostWrite.module.css";
 import { useAuthContext } from "../context/AuthContext";
-import { postPost } from "../service/api/api";
+import { postPost } from "../service/api/postApi";
 import { Link, useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
