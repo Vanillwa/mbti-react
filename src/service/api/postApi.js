@@ -34,3 +34,10 @@ export const ClickPostLikes = async (postId) => {
   const res = await axios.get(`/addLike/${postId}`);
   return res.data;
 };
+
+// 단일 게시글 조회
+
+export const getProfileList = async (userId)=>{
+  const res =  await axios.get(`/user/${userId}`)
+  return res.data;
+}
