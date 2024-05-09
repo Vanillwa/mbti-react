@@ -14,7 +14,6 @@ import {
   reportComment,
 } from "../service/api/api";
 import Paging from "../component/Paging";
-import ReportModal from "./PostReportModal";
 import CommentReportModal from "./CommentReportModal";
 
 function ViewComment() {
@@ -119,12 +118,14 @@ function ViewComment() {
       },
     });
   };
+
   //댓글신고
   const handleReportComment = async () => {
     const result = await reportComment();
   };
 
   const handleOrderChange = e => {
+
     if (e.target.value == "desc") {
       setOrder("desc");
     } else if (e.target.value == "asc") {
