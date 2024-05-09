@@ -26,6 +26,7 @@ ul {
     border: 1px solid black;
     padding: 5px;
     font-family: 'KCC-Hanbit';
+    margin-bottom: 5px;
 }
 
 .blockBtn:hover {}
@@ -83,4 +84,8 @@ border:0px;
 border-radius: 3px;
 background-color: cornflowerblue;
 color:white;
+}
+.userPaging{
+    display: flex;
+    justify-content: center;
 }
