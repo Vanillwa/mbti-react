@@ -3,7 +3,7 @@ import { getUserList } from "../service/api";
 import { useRef, useState } from "react";
 import UserItems from "../component/UserItems";
 import styles from "../css/UserList.module.css"
-import PostPagination from "../component/PostPagination";
+import Paging from "../component/Paging";
 import { useSearchParams } from "react-router-dom";
 
 function UserList() {
@@ -62,7 +62,7 @@ function UserList() {
       </select>
       <UserItems data={data} status={status} filter={filter} keyword={keyword} type={type} refetch={refetch} />
      <div className={styles.userPaging}>
-      <PostPagination data={data} status={status} page={page} setPage={setPage}/>
+      <Paging data={data} status={status} page={page} setPage={setPage}/>
       </div>
     </>
   );
