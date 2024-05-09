@@ -11,6 +11,7 @@ import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
 import ReportModal from "./ReportModal";
 import UserDropdown from "./userDropdown";
+import sweetalert from "./sweetalert";
 
 function ViewContent() {
   const [likes, setLikes] = useState("checked");
@@ -63,13 +64,15 @@ function ViewContent() {
 
   const handleDelete = async () => {
     try {
-      alert("정말 삭제하시겠습니까?");
+      const result = await sweetalert.question('정말 삭제하시겠습니까?', '삭제 후엔 복구가 불가능합니다', '네', '아니오')
+      if(result.dismiss){
+        return;
+      }
       await postDelete(postId);
-      alert("삭제 완료");
+      sweetalert.success('삭제 완료', '', '확인')
       navigate("/post/list");
     } catch (error) {
-      console.error("삭제중 오류", error);
-      alert("삭제 실패");
+      sweetalert.error('에러', '삭제하지 못했습니다.', '확인')
     }
   };
 

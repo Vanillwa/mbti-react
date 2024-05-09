@@ -7,6 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import { useQuery } from "react-query";
+import sweetalert from "../component/sweetalert";
 
 const PostEdit = () => {
   const navigate = useNavigate();
@@ -120,6 +121,11 @@ const PostEdit = () => {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    const alertResult = await sweetalert.question('정말 수정하시겠습니까?' ,'' , '네', '아니오')
+    if (alertResult.dismiss){
+      return;
+    }
+
     const body = {
       title: e.target.title.value,
       content: value,
@@ -130,7 +136,7 @@ const PostEdit = () => {
     const result = await postEdit(body);
 
     if (result.message == "success") {
-      alert("수정완료");
+      sweetalert.success('수정 완료', '', '확인')
       navigate(`/post/view?postId=${postId}`);
     }else if(result.message == 'noAuth'){
       console.log('권한 없음')

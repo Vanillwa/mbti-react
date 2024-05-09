@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import ReactQuill from "react-quill";
+import sweetalert from "../component/sweetalert";
 
 const PostWrite = () => {
   const navigate = useNavigate();
@@ -101,15 +102,20 @@ const PostWrite = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const alertResult = await sweetalert.question('정말 작성하시겠습니까?' ,'' , '네', '아니오')
+    if(alertResult.dismiss){
+      return;
+    }
     const body = {
       title: e.target.title.value,
       content: value,
       category: mbti,
     };
     const result = await postPost(body);
-
+    
     if (result.message == "success") {
-      alert("작성완료");
+      sweetalert.success('작성 완료', '', '확인')
+
       navigate("/post/list");
     }
   };
