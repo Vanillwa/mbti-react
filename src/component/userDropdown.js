@@ -5,7 +5,7 @@ import { useAuthContext } from "../context/AuthContext";
 import {requestChat} from "../service/api/chatAPI"
 
 import styles from "../css/PostList.module.css";
-import { requestFriend } from "../service/api/friendAPI";
+import { requestFriend } from "../service/api/friendApi";
 
 const UserDropdown = ({ item }) => {
 const navigate =  useNavigate();

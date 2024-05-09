@@ -8,7 +8,7 @@ import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
 
 import {EditViewComment,deleteViewComment
-  ,getViewComment,postViewComment,} from '../service/api/commentAPI'
+  ,getViewComment,postViewComment,} from '../service/api/commentApi'
 
 import {reportComment} from "../service/api/reportAPI"
 

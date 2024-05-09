@@ -9,4 +9,6 @@
 
 post/list?mbti=mbti&sort=createdAt&order=desc?
 
-## 
+## 심동준
+프로필 눌럿을시 드랍다운 나오고 거기에 회원 수정 최신글 목록 로그아웃 
+ 
