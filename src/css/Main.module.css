@@ -8,154 +8,173 @@
 
 
 
-.logo{
+.logo {
 
   text-align: center;
-  margin-bottom:15px;
-}
-.logo img{
-  width: 35vw;
-
+  margin-bottom: 15px;
 }
 
+.logo img {
+  width: 300px;
+
+}
 
 
+.body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
 
 
-.mainCon{
-  margin-bottom:20px;
+.mainCon {
+  display: flex;
+  max-width:800px;
   background-color: white;
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-  border-radius: 10px;
+  gap:24px;
 }
-
-
+@media screen and (max-width:768px) {
+.slide{
+  display:none;
+}
+}
+.slide{
+  width:400px;
+  height: auto;
+}
 .swiper {
   width: 100%;
-  margin-left:-12px;
-  margin-right: 200px;
-  margin-bottom:-10px;
-}
-.swiper img {
-  width: 100%;
-  height:55vh;
+
 }
 
-.slideAlert{
-  color:#959191;
+.swiper img {
+  width: 100%;
+  height: 45vh;
+}
+
+.slideAlert {
+  color: #959191;
   font-size: 12px;
   text-align: center;
-  
+
 }
 
 .MbitExplain {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-  margin-bottom:24px;
+  margin-bottom: 24px;
 }
-.isLoggedInBox{
+
+.isLoggedInBox {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.nickname{
-  margin-top:20%;
- margin-bottom: 30px;
+
+.nickname {
+  margin-top: 20%;
+  margin-bottom: 30px;
   text-align: center;
-  font-size:19px;
- 
+  font-size: 19px;
+
 }
-.imageBox{
-  
+
+.imageBox {
+
   display: flex;
   align-items: center;
-  width:270px;
+  width: 270px;
   height: 270px;
-  border:1px solid black;
+  border: 1px solid black;
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
-.profileImage{
 
- object-fit: fill;
+.profileImage {
 
- width: 101%;
-  
- 
+  object-fit: fill;
+
+  width: 101%;
+
+
 }
-.goodDay{
+
+.goodDay {
   text-align: center;
-  font-size:18px;
-  
+  font-size: 18px;
+
 
 }
-.loginlogo{
-font-weight: bold;
+
+.loginform {
+  width: 100%;
+  padding:36px;
+  border:1px solid lightgray;
   text-align: center;
-  margin-bottom:40px;
 }
-.loginform{
+
+.loginbtn {
+  text-align: center;
+  
+}
+.loginbtn Button{
   width:100%;
-    padding-top:20%;
-    
 }
-.loginbtn{
+.findPwd{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.joinWrapper{
+  border:1px solid lightgray;
+  padding:24px;
+  margin-top:12px;
   text-align: center;
-  
 }
+
 .link {
-  text-decoration: none; 
-  color:grey;
-  padding:3px;
-  margin-right:10px;
-  
-}
-
-
-.link:hover{
-  color:black;
-}
-.linktag{
-display: flex;
-justify-content: flex-start;
+  text-decoration: none;
+  color:blue;
+  font-weight: 600;
+  padding: 3px;
+  margin-right: 10px;
 
 }
 
-.capsLocktag{
 
+.link:hover {
+  color: black;
+}
+
+.linktag {
+  display: flex;
+  justify-content: flex-start;
 
 }
 
-.capsLockOn{
 
-  background-color: rgb(250, 125, 125);
-  width: 100px;
-  padding: 5px 8px;
+
+.alert {
+  color: red;
   font-size: 12px;
-  font-weight: 800;
-  color: white;
-  border-radius: 0.5rem;
+  font-weight: 100;
 }
-.capsLock{
- 
-  background-color: rgb(21, 170, 21);
-  width: 100px;
-  padding: 5px 8px;
-  font-size: 12px;
-  font-weight: 800;
-  color: white;
-  border-radius: 0.5rem;
-}
-.alert{color:red;
-font-size:12px;
-font-weight: 100;}
 
-.noLoginBtn{
+.noLoginBtn {
   margin: 5px 0px;
 }
 
-
-
-
+.footer {
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+  color: rgb(159, 159, 159);
+  gap: 10px;
+  flex-flow: wrap;
+  margin:0px 12px;
+}
