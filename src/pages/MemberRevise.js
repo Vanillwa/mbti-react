@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button'
 import '../css/MemberRevise.css'
 import Swal from "sweetalert2"
 import sweetalert from "../component/sweetalert";
-import Footer from "../component/Footer"
+import Footer from '../component/Footer';
 
 // import { checkDuplicationNickname } from '../service/api';
 
@@ -385,7 +385,7 @@ function MemberRevise() {
           </form>
         </div>
       </div>
-
+<Footer></Footer>
     </div>
    
 

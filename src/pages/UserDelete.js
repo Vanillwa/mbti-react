@@ -8,6 +8,7 @@ import { deletePasswordCheck } from '../service/api';
 import { deleteUser } from '../service/api';
 import Swal from "sweetalert2"
 import sweetalert from "../component/sweetalert";
+import Footer from '../component/Footer';
 
 function UserDelete() {
      const navigate = useNavigate()
@@ -149,7 +150,7 @@ function UserDelete() {
             </div>
           </div>  
         </div>
-      
+      <Footer></Footer>
       </div>
    
     );
