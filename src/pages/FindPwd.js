@@ -7,6 +7,8 @@ import img from "../images/MBTI.png";
 import styles from "../css/FindPwd.module.css";
 import { checkCodeFindPwd, emailChangedFindPwd, requestCodeFindPwd } from "../service/api";
 import { useAuthContext } from "../context/AuthContext";
+import Swal from "sweetalert2";
+import sweetalert from "../component/sweetalert";
 
 function FindPwd() {
   const emailRegx = "([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])"
@@ -59,18 +61,21 @@ function FindPwd() {
   const handleRequestCode = async () => {
     const email = emailRef.current.value;
     if (email === "") {
-    alert("이메일을 입력해주세요.")
+    sweetalert.warning('이메일을 입력해주세요.')
       return;
     }
     const result = await requestCodeFindPwd(email);
     if (result.message === "success") {
-      alert("인증번호가 발송되었습니다.");
+      sweetalert.success('인증번호가 발송되었습니다.')
+      
       setIsInputDisabled(false);
       console.log(result.code);
     } else if (result.message === "noExist") {
-      alert("가입된 이메일이 아닙니다.");
+      sweetalert.error('가입된 이메일이 아닙니다.')
+ 
     } else {
-      alert("인증번호 발송이 실패했습니다.");
+      sweetalert.error('인증번호 발송이 실패했습니다.')
+    
     }
   };
 

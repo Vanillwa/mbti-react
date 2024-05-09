@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styles from "../css/UpdatePwd.module.css";
 import { useNavigate } from "react-router";
 import { requestUpdatePwd } from "../service/api";
+import sweetalert from "../component/sweetalert";
 
 function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -82,10 +83,11 @@ function ResetPassword() {
     console.log(result.message);
     console.log(result);
     if (result.message === "success") {
-      alert("비밀번호 변경 완료.");
+      sweetalert.success('비밀번호 변경완료')
+      
       navigate("/", { state: "updatePwd" });
     } else {
-      alert("에러 발생");
+     sweetalert.error('에러발생')
     }
   };
 

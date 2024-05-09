@@ -7,6 +7,7 @@ import { io } from "socket.io-client";
 import styles from "../css/ChatRoom.module.css"
 import { getChatRoom } from "../service/api";
 import { useAuthContext } from "../context/AuthContext";
+import sweetalert from "../component/sweetalert";
 
 function ChatRoom() {
   const url = process.env.REACT_APP_SOCKET_URL;
@@ -46,7 +47,7 @@ function ChatRoom() {
 
   useLayoutEffect(() => {
     if (!isLoggedIn) {
-      alert("로그인 후 사용하실 수 있는 기능입니다.");
+      sweetalert.warning('로그인 후 사용하실 수 있는 기능입니다.')
       navigate("/auth/login");
     }
   }, [isLoggedIn]);

@@ -11,6 +11,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Accordion from "react-bootstrap/Accordion";
 import ViewContent from "../component/ViewContent";
+import sweetalert from "../component/sweetalert";
 
 function ReportList() {
   const queryClient = new QueryClient();
@@ -49,7 +50,7 @@ function ReportList() {
       report.Post.User.userId,
       blockDate
     );
-    alert("정지 완료");
+    sweetalert.success('정지 완료')
   };
 
   const { data, status, refetch } = useQuery(

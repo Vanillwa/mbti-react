@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import styles from "../css/UserList.module.css";
+import sweetalert from "./sweetalert";
 function UserItems({data,status, filter, keyword, type , refetch}) {
   const blockRef = useRef();
   const [show, setShow] = useState(false);
@@ -23,7 +24,7 @@ function UserItems({data,status, filter, keyword, type , refetch}) {
     const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
     const blockDate = new Date(now.getTime() + addDay);
     const result = await suspendUser({ userId: user.userId, blockDate });
-    alert("정지 완료");
+    sweetalert.success('정지 완료')
   };
 
   const handleRelease = (userId) => {
