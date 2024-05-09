@@ -5,11 +5,11 @@ import {
   ClickPostLikes,
   getPostView,
   postDelete,
-} from "../service/api";
+} from "../service/api/api";
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
-import ReportModal from "./ReportModal";
+import ReportModal from "./PostReportModal";
 import UserDropdown from "./userDropdown";
 import sweetalert from "./sweetalert";
 

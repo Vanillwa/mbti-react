@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { useSearchParams } from "react-router-dom";
-import { PostReport, getPostView } from "../service/api";
+import { reportPost } from "../service/api/api";
 import styles from "../css/postView.module.css";
 
 import Form from "react-bootstrap/Form";
@@ -70,7 +70,7 @@ function ReportModal() {
       return;
     }
     console.log(body);
-    const result = await PostReport(body);
+    const result = await reportPost(body);
 
     if(result.message === "success"){
       alert("신고가 완료되었습니다.");

@@ -3,10 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
 import styles from '../css/Join.module.css';
-import { checkDuplicationEmail, emailChanged, fetchJoin, nickNameChanged } from '../service/api';
-import { checkDuplicationNickname } from '../service/api';
-import { checkEmailVerification } from '../service/api'
-import { requestEmailVerification } from '../service/api';
+import { checkDuplicationEmail, emailChanged, fetchJoin, nickNameChanged } from "../service/api/api";
+import { checkDuplicationNickname } from "../service/api/api";
+import { checkEmailVerification } from "../service/api/api"
+import { requestEmailVerification } from "../service/api/api";
 import Swal from "sweetalert2"
 //import backgroundImg from '../images/backgroundImg.png';
 
