@@ -11,7 +11,7 @@ import {
   deleteViewComment,
   getViewComment,
   postViewComment,
-} from '../service/api/commentApi'
+} from '../service/api/commentAPI'
 import {reportComment} from "../service/api/reportAPI"
 
 import Paging from "../component/Paging";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "../css/friend.module.css";
 import { QueryClient, useMutation, useQuery } from "react-query";
 
-import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRequestFriend, rejectFriend, unblockUser } from "../service/api/friendApi";
+import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRequestFriend, rejectFriend, unblockUser } from "../service/api/friendAPI";
 
 
 import { requestChat} from "../service/api/chatAPI"

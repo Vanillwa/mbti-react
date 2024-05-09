@@ -5,7 +5,7 @@ import {
   ClickPostLikes,
   getPostView,
   postDelete,
-} from "../service/api/postApi";
+} from "../service/api/postAPI";
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
