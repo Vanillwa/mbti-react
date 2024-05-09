@@ -18,11 +18,11 @@ import Footer from '../component/Footer';
 
 // 로그인 상태정보를 불러옴
 import { useAuthContext } from "../context/AuthContext";
-import { userCheckDuplicationNickname } from '../service/api';
-import { userUpdateNickname } from '../service/api';
-import { userUpdatePassword } from '../service/api';
-import { userUpdateMbti } from '../service/api';
-import { userDeleteImage } from '../service/api';
+import { userCheckDuplicationNickname } from "../service/api/api";
+import { userUpdateNickname } from "../service/api/api";
+import { userUpdatePassword } from "../service/api/api";
+import { userUpdateMbti } from "../service/api/api";
+import { userDeleteImage } from "../service/api/api";
 import axios from 'axios';
 
 

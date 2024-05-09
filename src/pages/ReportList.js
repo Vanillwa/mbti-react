@@ -5,7 +5,7 @@ import {
   getPostReportList,
   suspendUser,
   updatePostReport,
-} from "../service/api";
+} from "../service/api/api";
 import styles from "../css/ReportList.module.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";

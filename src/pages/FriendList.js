@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../css/friend.module.css";
 import { QueryClient, useMutation, useQuery } from "react-query";
-import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRequestFriend, rejectFriend, requestChat } from "../service/api";
+import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRequestFriend, rejectFriend, requestChat } from "../service/api/api";
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate} from "react-router-dom";
 

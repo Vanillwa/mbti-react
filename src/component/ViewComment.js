@@ -11,8 +11,11 @@ import {
   deleteViewComment,
   getViewComment,
   postViewComment,
-} from "../service/api";
+  reportComment,
+} from "../service/api/api";
 import Paging from "../component/Paging";
+import ReportModal from "./PostReportModal";
+import CommentReportModal from "./CommentReportModal";
 
 function ViewComment() {
   const queryClient = new QueryClient();
@@ -43,16 +46,16 @@ function ViewComment() {
   );
 
   //등록 뮤테이트
-  const postMutate = useMutation((body) => {
+  const postMutate = useMutation(body => {
     return postViewComment(body);
   });
   //수정뮤테이트
-  const EditMutate = useMutation((body) => {
+  const EditMutate = useMutation(body => {
     return EditViewComment(body);
   });
 
   //삭제 뮤테이트
-  const deleteMutate = useMutation((commentId) => {
+  const deleteMutate = useMutation(commentId => {
     return deleteViewComment(commentId);
   });
 
@@ -61,7 +64,7 @@ function ViewComment() {
     img = notImg;
   }
 
-  const handleCommentSubmit = (e) => {
+  const handleCommentSubmit = e => {
     e.preventDefault();
 
     const body = {
@@ -105,7 +108,7 @@ function ViewComment() {
   };
 
   // 삭제 핸들러
-  const handleCommentDelete = (commentId) => {
+  const handleCommentDelete = commentId => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
     deleteMutate.mutate(commentId, {
       onSuccess: async () => {
@@ -116,8 +119,12 @@ function ViewComment() {
       },
     });
   };
-  const handleOrderChange = (e) => {
-    
+  //댓글신고
+  const handleReportComment = async () => {
+    const result = await reportComment();
+  };
+
+  const handleOrderChange = e => {
     if (e.target.value == "desc") {
       setOrder("desc");
     } else if (e.target.value == "asc") {
@@ -151,7 +158,7 @@ function ViewComment() {
               className={styles.commentInput}
               name="content"
               value={inputContent}
-              onChange={(e) => setInputContent(e.target.value)}
+              onChange={e => setInputContent(e.target.value)}
               required
               placeholder="댓글"
             />
@@ -169,20 +176,18 @@ function ViewComment() {
           <option value="desc">최신순</option>
           <option value="asc">오래된순</option>
         </select>
-        {data.commentList.map(item =>{
-          
+        {data.commentList.map(item => {
           return (
             <div key={item.commentId} className={styles.commentBox}>
               <div className={styles.commentName}>{item.User.nickname}</div>
               {editingCommentId === item.commentId ? (
                 <form
                   className={styles.editCommentForm}
-                  onSubmit={(event) => handleEditSubmit(event, item.commentId)}
-                >
+                  onSubmit={event => handleEditSubmit(event, item.commentId)}>
                   <input
                     className={styles.editInput}
                     value={editingContent}
-                    onChange={(e) => setEditingContent(e.target.value)}
+                    onChange={e => setEditingContent(e.target.value)}
                   />
                   <button className={styles.editBtn}>완료</button>
                 </form>
@@ -192,6 +197,9 @@ function ViewComment() {
                   <div className={styles.commentDate}>
                     {new Date(item.createdAt).toLocaleDateString()}
                   </div>
+                  {userInfo.userId != item.userId ? (
+                    <CommentReportModal commentId={item.commentId} />
+                  ) : null}
                 </>
               )}
 
@@ -206,14 +214,12 @@ function ViewComment() {
                         type="button"
                         onClick={() => {
                           handleEditClick(item.commentId, item.content);
-                        }}
-                      >
+                        }}>
                         수정
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleCommentDelete(item.commentId)}
-                      >
+                        onClick={() => handleCommentDelete(item.commentId)}>
                         삭제
                       </button>
                     </>
@@ -226,12 +232,7 @@ function ViewComment() {
           );
         })}
         <div className="d-flex justify-content-center mt-3">
-          <Paging
-            data={data}
-            status={status}
-            page={page}
-            setPage={setPage}
-          />
+          <Paging data={data} status={status} page={page} setPage={setPage} />
         </div>
       </div>
     </div>

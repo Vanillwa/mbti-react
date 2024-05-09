@@ -4,8 +4,7 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import logo from '../images/areyout.png';
 import styles from '../css/UserDelete.module.css';
 import { useAuthContext } from "../context/AuthContext";
-import { deletePasswordCheck } from '../service/api';
-import { deleteUser } from '../service/api';
+import { deleteUser, deletePasswordCheck } from "../service/api/api";
 import Swal from "sweetalert2"
 import sweetalert from "../component/sweetalert";
 import Footer from '../component/Footer';
