@@ -49,16 +49,16 @@
   
   background-color: white;
   border: 1px solid black;
-  border-radius: 10px;
+  border-radius: 5px;
   }
   
 .buttonjun{
-  background-color: rgb(255, 51, 112);
+  background-color: rgb(250, 3, 81);
   color: white;
 }
 
 .buttonsim{
-  background-color: rgb(107, 186, 255);
+  background-color: #0d6efd;
   color: white;
 }
 
@@ -67,5 +67,15 @@
   justify-content: end;
 }
 
+.passwordBtn1{
+ 
+ width: 500px;
+}
+
+.passwordBtn2{
+ margin-top: 10px;
+  width: 416px;
+ }
+ 
 
 

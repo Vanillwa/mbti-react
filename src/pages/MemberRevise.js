@@ -22,7 +22,7 @@ import { userUpdatePassword } from '../service/api';
 import { userUpdateMbti } from '../service/api';
 import { userDeleteImage } from '../service/api';
 import axios from 'axios';
-import backgroundImg from '../images/backgroundImg.png';
+
 
 
 
@@ -57,7 +57,7 @@ function MemberRevise() {
   const [pwMessage, setPwmessage] = useState('')
   const [pwEditable, setPwEditable] = useState(false)
   const [passwordBtn, setPasswordBtn] = useState('수정')
-
+  // const [password,setPassword] = useState("")
   
  
 
@@ -226,9 +226,12 @@ function MemberRevise() {
           icon: 'success',
           confirmButtonText: '확인'
         })
+        passwordRef1.current.value = ''
+        passwordRef2.current.value = ''
         setPwEditable(false)
         setPwmessage("")
         setPasswordBtn("수정")
+       
        
        
         
@@ -255,12 +258,24 @@ function MemberRevise() {
   const handleMbtiChange = async () => {
     const result = await userUpdateMbti({ mbti: mbtiRef.current.value });
     if (result.message === 'success') {
-      alert("MBTI가 변경되었습니다.");
+
+
+      Swal.fire({
+          title: '성공!',
+          text: 'MBTI가 성공적으로 변경되었습니다!.',
+          icon: 'success',
+          confirmButtonText: '확인'
+        })
       // 크롬 브라우저 세선 스토러지에서 로그인정보를 지웠다가 로그인 다시 하면 새로운 정보값을 채워줌.
       logout()
       login(result.newUserInfo)
     } else {
-      alert("MBTI 변경에 실패했습니다.");
+      Swal.fire({
+        title: '실패',
+        text: 'MBTI 변경에 실패하셨습니다.',
+        icon: 'error',
+        confirmButtonText: '확인'
+      })
     }
   };
 
@@ -331,7 +346,7 @@ function MemberRevise() {
               <div>
                 <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
                 <div className="d-flex gap-2">
-                  <input type="password" className="form-control" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange}  />
+                  <input type="password" className="form-control passwordBtn1" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange}  />
                   <button
                     className='btn btn-sm btn-primary'
                     type='button'
@@ -340,7 +355,7 @@ function MemberRevise() {
                     {passwordBtn}
                   </button>
                 </div>
-                <input type="password" className={`form-control ${passwordBtn == '수정' ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} v/>
+                <input type="password" className={`form-control passwordBtn2  ${passwordBtn == '수정' ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} v/>
                 <p style={{ color: pwMessage === "비밀번호가 일치하지 않습니다" ? "red" : "green" }}>{pwMessage}</p>
               </div>
 
@@ -355,7 +370,7 @@ function MemberRevise() {
                     ref={mbtiRef}
                   >
                     <option value="">{userInfo.mbti}</option>
-                    <option value="">MBTI 재선택</option>
+                    <option value="">MBTI 없음</option>
                     <option value="INTJ">INTJ</option>
                     <option value="INTP">INTP</option>
                     <option value="ENTJ">ENTJ</option>

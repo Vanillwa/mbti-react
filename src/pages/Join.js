@@ -189,7 +189,7 @@ function Join() {
   };
 
   // 두번째 비밀번호 재입력
-  //오늘한거
+  
   const handlePasswordOnInput2 = (e) => {
     comparePassword()
   }
@@ -247,7 +247,12 @@ function Join() {
       })
      
     } else {
-      alert("회원가입에 실패하셨습니다.")
+      Swal.fire({
+        title: '실패',
+        text: '회원가입에 실패하셨습니다.',
+        icon: 'error',
+        confirmButtonText: '확인'
+      })
     }
 
 
