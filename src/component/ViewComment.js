@@ -6,12 +6,10 @@ import { Link, useSearchParams } from "react-router-dom";
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
-import {
-  EditViewComment,
-  deleteViewComment,
-  getViewComment,
-  postViewComment,
-} from '../service/api/commentAPI'
+
+import {EditViewComment,deleteViewComment
+  ,getViewComment,postViewComment,} from '../service/api/commentAPI'
+
 import {reportComment} from "../service/api/reportAPI"
 
 import Paging from "../component/Paging";
