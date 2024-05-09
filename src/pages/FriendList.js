@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../css/friend.module.css";
 import { QueryClient, useMutation, useQuery } from "react-query";
-import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRequestFriend, rejectFriend, requestChat } from "../service/api";
+import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRequestFriend, rejectFriend, requestChat, unblockUser } from "../service/api";
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate} from "react-router-dom";
 
@@ -45,11 +45,14 @@ const FriendList = () => {
   const refuseMutate = useMutation(friendId=>{
     return rejectFriend(friendId)
   })
-  const friendBlockMutate = useMutation(friendId=>{
-    return blockFriend(friendId)
+  const friendBlockMutate = useMutation(targetId=>{
+    return blockFriend(targetId)
   })
   const deleteMutate = useMutation(friendId=> {
     return deleteFriend(friendId)
+  })
+  const releaseMutate = useMutation((userId)=>{
+    return unblockUser(userId)
   })
   
 
@@ -86,11 +89,21 @@ const FriendList = () => {
       }
     })
   }
-  const handleFriendBlock = (friendId)=>{
-    friendBlockMutate.mutate(friendId,{
+  const handleFriendBlock = (targetId)=>{
+    friendBlockMutate.mutate(targetId,{
       onSuccess : async()=>{
-        await queryClient.invalidateQueries(['getRequestFriend'])
-        await refetch()
+        await queryClient.invalidateQueries(['getFriend'])
+        await listRefetch()
+        return
+      }
+    })
+  }
+  const handleReleaseUser = (userId)=>{
+    releaseMutate.mutate(userId,{
+      onSuccess : async()=>{
+        await queryClient.invalidateQueries(['getBlockUser', 'getFriend'])
+        await listRefetch()
+        await blockRefetch()
         return
       }
     })
@@ -118,9 +131,9 @@ const FriendList = () => {
   }
 
 
-  if (requestStatus === "loading" || friendStatus === "loading") {
+  if (requestStatus === "loading" || friendStatus === "loading" || blockStatus === "loading") {
     return <div>Loding...</div>;
-  } else if (requestStatus === "error" || friendStatus === "error") {
+  } else if (requestStatus === "error" || friendStatus === "error" || blockStatus === 'error') {
     return <div>Error...</div>;
   }
   if(!isLoggedIn){
@@ -137,29 +150,28 @@ const FriendList = () => {
       <option value='request'>request</option>
       <option value='block'>block</option>
     </select>
-    {btn == 'friend' ? <div className={styles.friendList}>
-    <div className={styles.friendListTitle}>친구 목록</div>
+    {btn == 'friend' ? <div className={styles.container}>
+    <div className={styles.title}>친구 목록</div>
     {friendData.length > 0 ? friendData.map((item)=>{
-      return(<div key={item.friendId} className={styles.friendListContent}>
+      return(<div key={item.friendId} className={styles.contentBox}>
         <Link to={`/user/${item.receiveUser.userId}`} className={styles.friendName}>
           {item.receiveUser.nickname}
         </Link>
         <div className={styles.btnBox}>
 
-
           <div onClick={()=>handleRequestChat(item.receiveUser.userId)} type='button' className={styles.button}>채팅하기</div>
-        <div type='button' className={styles.button} onClick={()=>handleFriendBlock(item.friendId)}>너 차단</div>
+        <div type='button' className={styles.button} onClick={()=>handleFriendBlock(item.receiveUser.userId)}>너 차단</div>
         <div type='button' className={styles.button} onClick={()=>handleFriendRefuse(item.friendId)}>너 삭제</div>
 
 
         </div>
 
         </div>)}) : <div className={styles.friendListContent}>친구 없음 ㅋㅋ..</div>}
-  </div>: btn == 'request' ? <div className={styles.friendRequest}>
-        <div className={styles.friendRequestTitle}>친구 요청 목록</div>
+  </div>: btn == 'request' ? <div className={styles.container}>
+        <div className={styles.title}>친구 요청 목록</div>
       {requestData.length > 0 ? requestData.map((item) => {
           return (
-            <div key={item.id} className={styles.requestBox}>
+            <div key={item.friendId} className={styles.contentBox}>
               <Link to={`/user/${item.requestUser.userId}`}>{item.requestUser.nickname}</Link>
               <div>{new Date (item.createdAt).toLocaleDateString()}</div>
               <div className={styles.btnBox}>
@@ -170,7 +182,18 @@ const FriendList = () => {
             </div>
           );
         }) : <div  className={styles.requestBox} >요청 없음</div>}
-      </div> : <div className={styles.friendBlock}></div>}
+      </div> : <div className={styles.container}>
+      <div className={styles.title}>차단 목록</div>
+      {blockData.length > 0 ? blockData.map((item)=>{
+        return(
+          <div key={item.friendId} className={styles.contentBox}>
+            <div className={styles.nickname}>{item.receiveUser.nickname}</div>
+            <button type="button" className={styles.button} onClick={()=>handleReleaseUser(item.targetId)}>차단 해제</button>
+          </div>
+        )
+      }) : <div  className={styles.BlockBox} >차단한 유저 없음</div>}
+      
+      </div>}
     </>
   );
 };

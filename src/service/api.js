@@ -229,7 +229,7 @@ export const requestFriend = async (targetId) => {
 };
 /**친구 조회 */
 export const getFriend = async ()=>{
-  const res = await axios.get(`friend/friendList`)
+  const res = await axios.get(`/friend/friendList`)
   return res.data
 }
 /**친구 요청 조회 */
@@ -260,8 +260,13 @@ export const rejectFriend = async (friendId)=>{
   return res.data
 }
 /** 친구 차단 */
-export const blockFriend = async (friendId)=>{
-  const res = await axios.put(`/friend/block?friendId=${friendId}`)
+export const blockFriend = async (targetId)=>{
+  const res = await axios.put(`/friend/block?targetId=${targetId}`)
+  return res.data
+}
+/** 친구 차단 해제 */
+export const unblockUser = async(userId)=>{
+  const res = await axios.put(`/friend/unBlock?userId=${userId}`)
   return res.data
 }
 /**친구 삭제 */
@@ -288,7 +293,7 @@ export const suspendUser = async(postId,userId,blockDate)=>{
 }
 //차단해제
 export const releaseUser = async(userId)=>{
-  const res =await axios.put(`/user/unblock?userId=${userId}`)
+  const res = await axios.put(`/user/unblock?userId=${userId}`)
   return res.data;
 }
 
