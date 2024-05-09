@@ -9,7 +9,7 @@ import styles from "../css/Main.module.css";
 
 import logo from "../images/areyout.png";
 
-import { fetchLogin } from "../service/api/api";
+import { fetchLogin } from "../service/api/loginAPI"
 import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";

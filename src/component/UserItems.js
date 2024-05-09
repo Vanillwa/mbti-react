@@ -1,5 +1,5 @@
 import { QueryClient, useMutation, useQuery } from "react-query";
-import { getUserList, releaseUser, suspendUser } from "../service/api/api";
+import { releaseUser, suspendUser } from "../service/api/reportAPI";
 import Accordion from "react-bootstrap/Accordion";
 import Modal from "react-bootstrap/Modal";
 import { useRef, useState } from "react";

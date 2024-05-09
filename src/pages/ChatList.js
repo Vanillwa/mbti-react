@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../css/Chat.module.css";
 import { useQuery } from "react-query";
-import { getChatList } from "../service/api/api";
+import { getChatList } from "../service/api/chatAPI";
 import { Link } from "react-router-dom";
 const ChatList = () => {
   const { data, status } = useQuery(["getChatList"], () => getChatList(), {
