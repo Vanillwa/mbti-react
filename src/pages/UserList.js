@@ -3,27 +3,45 @@ import { getUserList } from "../service/api";
 import { useRef, useState } from "react";
 import UserItems from "../component/UserItems";
 import styles from "../css/UserList.module.css"
+import PostPagination from "../component/PostPagination";
+import { useSearchParams } from "react-router-dom";
 
 function UserList() {
+  const [query, setQuery] = useSearchParams();
+  const [size,setSize] = useState(10);
+  const [page,setPage] = useState(1);
   const [filter, setFilter] = useState("");
   const [keyword, setKeyword] = useState("");
   const [type, setType] = useState("");
   const searchRef = useRef();
   const typeRef = useRef();
+
+  const { data, status,refetch } = useQuery(
+    ["getUserList", filter, keyword, type,page,size],
+    () => getUserList(filter, keyword, type,page,size),
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
   const handleFilterOnChange = e => {
     setFilter(e.target.value);
+    
   };
 
   const search = () => {
     setKeyword(searchRef.current.value);
     setType(typeRef.current.value);
-  };
-  const handleTypeOnChange = () => {
+   
   
+    
   };
 
+  
   return (
     <>
+  
       <div>
         <select className={styles.searchUserType} ref={typeRef} >
           <option value="email">이메일</option>
@@ -42,7 +60,10 @@ function UserList() {
         <option value="blocked">차단된 유저</option>
         <option value="ok">일반 유저</option>
       </select>
-      <UserItems filter={filter} keyword={keyword} type={type}/>
+      <UserItems data={data} status={status} filter={filter} keyword={keyword} type={type} refetch={refetch} />
+     <div className={styles.userPaging}>
+      <PostPagination data={data} status={status} page={page} setPage={setPage}/>
+      </div>
     </>
   );
 }

@@ -5,20 +5,13 @@ import Modal from "react-bootstrap/Modal";
 import { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import styles from "../css/UserList.module.css";
-function UserItems({ filter, keyword, type }) {
+function UserItems({data,status, filter, keyword, type , refetch}) {
   const blockRef = useRef();
   const [show, setShow] = useState(false);
 
   const [user, setUser] = useState();
   const queryClient = new QueryClient();
-  const { data, status, refetch } = useQuery(
-    ["getUserList", filter, keyword, type],
-    () => getUserList(filter, keyword, type),
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  
   const handleClose = () => setShow(false);
 
   const releaseMutate = useMutation((userId) => {
@@ -83,6 +76,14 @@ function UserItems({ filter, keyword, type }) {
     );
   }
 
+  if(data.result.length === 0){
+    return(
+      <>
+      <h1>검색결과가 없습니다.</h1>
+      </>
+    )
+  }
+
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -106,7 +107,7 @@ function UserItems({ filter, keyword, type }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      {data.map((item) => {
+      {data.result.map((item) => {
         return (
 
           <div className="container">
