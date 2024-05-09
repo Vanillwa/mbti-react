@@ -6,8 +6,9 @@ import styles from '../css/UserDelete.module.css';
 import { useAuthContext } from "../context/AuthContext";
 import { deletePasswordCheck } from '../service/api';
 import { deleteUser } from '../service/api';
-import backgroundImg from '../images/backgroundImg.png';
 import Swal from "sweetalert2"
+import sweetalert from "../component/sweetalert";
+
 function UserDelete() {
      const navigate = useNavigate()
 
@@ -64,11 +65,7 @@ function UserDelete() {
           try {
             const result = await deleteUser();
             if (result.message === "success") {
-              Swal.fire({
-                title: '탈퇴되셨습니다.',
-                icon: 'success',
-                confirmButtonText: '확인'
-              })
+              sweetalert.success('탈퇴 완료', '탈퇴되셨습니다.', '확인')
               logout();
               navigate("/");
             } else if (result.message === "fail") {
@@ -105,7 +102,7 @@ function UserDelete() {
                 <label htmlFor="email" className="form-label mt-3">계정을 삭제하려는 이유가 뭔가요?</label>
                 </div>
                 <div className='d-flex gap-2'>
-                <select className="form-control" id="user-mbti">
+                <select className={styles.input1} id="user-mbti">
                 <option value="">삭제사유</option>
                     <option value="">이 사이트가 재미가없습니다.</option>
                     <option value="">더 좋은 사이트를 찾았습니다.</option>
@@ -120,7 +117,7 @@ function UserDelete() {
               <div>
                 <label htmlFor="user-pw" className="form-label">비밀번호를 입력해주세요.</label>
                 <div className="d-flex gap-2">
-                  <input type="password" className="form-control" id="user-pw" placeholder="password" disabled={!pwEditable}  ref={passwordRef}/>
+                  <input type="password" className="form-control input1" id="user-pw" placeholder="password" disabled={!pwEditable}  ref={passwordRef}/>
                   <button type ='button'className='btn btn-sm btn-primary' onClick={handlePasswordBtnOnclick}>{passwordBtn}</button>
                 </div>
                 <p style={{ color: pwMessage === "비밀번호가 틀렸습니다." ? "red" : "green"}}>{pwMessage}</p>

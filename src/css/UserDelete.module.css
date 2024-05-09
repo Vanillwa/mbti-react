@@ -24,5 +24,14 @@
     padding-bottom: 10px;
     
   }
+
+
+  .input1{
+    width: 412px;
+    height: 50px;
+    border-radius: var(--bs-border-radius);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    color: var(--bs-body-color);
+  }
   
 

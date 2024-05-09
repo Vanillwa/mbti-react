@@ -216,7 +216,7 @@ function MemberRevise() {
 
       const result = await userUpdatePassword({ password: passwordRef1.current.value })
       if (result.message === 'success') {
-     
+        sweetalert.success('비밀번호 변경 완료', '', '확인')
         passwordRef1.current.value = ''
         passwordRef2.current.value = ''
         setPwEditable(false)
@@ -251,22 +251,12 @@ function MemberRevise() {
     if (result.message === 'success') {
 
 
-      Swal.fire({
-          title: '성공!',
-          text: 'MBTI가 성공적으로 변경되었습니다!.',
-          icon: 'success',
-          confirmButtonText: '확인'
-        })
+      sweetalert.success('MBTI 변경 완료', 'MBTI가 성공적으로 변경되었습니다.', '확인')
       // 크롬 브라우저 세선 스토러지에서 로그인정보를 지웠다가 로그인 다시 하면 새로운 정보값을 채워줌.
       logout()
       login(result.newUserInfo)
     } else {
-      Swal.fire({
-        title: '실패',
-        text: 'MBTI 변경에 실패하셨습니다.',
-        icon: 'error',
-        confirmButtonText: '확인'
-      })
+      sweetalert.success('MBTI 변경 실패', 'MBTI 변경에 실패하셨습니다.', '확인')
     }
   };
 

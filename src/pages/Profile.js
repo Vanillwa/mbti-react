@@ -5,8 +5,7 @@ import styles from '../css/PostList.module.css';
 import { Link, useParams } from 'react-router-dom';
 import noImg from '../images/noImg.png';
 import { useQuery } from "react-query";
-// import UserDropdown from "../component/userDropdown";
-// import PostPagination from "../component/PostPagination";
+
 
 function Profile() {
   // userId값을 받아옴
