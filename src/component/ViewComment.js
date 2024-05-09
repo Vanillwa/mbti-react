@@ -11,10 +11,10 @@ import {
   deleteViewComment,
   getViewComment,
   postViewComment,
-  reportComment,
-} from "../service/api/api";
+} from "../service/api/commentApi";
 import Paging from "../component/Paging";
 import CommentReportModal from "./CommentReportModal";
+import { reportComment } from "../service/api/api";
 
 function ViewComment() {
   const queryClient = new QueryClient();
