@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { requestChat } from "../service/api/api";
+
+import {requestChat} from "../service/api/chatAPI"
+
 import styles from "../css/PostList.module.css";
 import { requestFriend } from "../service/api/friendApi";
 

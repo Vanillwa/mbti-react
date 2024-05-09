@@ -4,7 +4,7 @@ import logo from "../images/areyout.png";
 import { Link } from "react-router-dom";
 import styles from "../css/UpdatePwd.module.css";
 import { useNavigate } from "react-router";
-import { requestUpdatePwd } from "../service/api/api";
+import { requestUpdatePwd } from "../service/api/loginAPI";
 import sweetalert from "../component/sweetalert";
 
 function ResetPassword() {

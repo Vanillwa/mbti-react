@@ -5,7 +5,7 @@ import { useLayoutEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { io } from "socket.io-client";
 import styles from "../css/ChatRoom.module.css"
-import { getChatRoom } from "../service/api/api";
+import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "../component/sweetalert";
 

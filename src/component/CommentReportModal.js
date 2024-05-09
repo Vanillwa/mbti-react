@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { useSearchParams } from "react-router-dom";
-import { reportComment } from "../service/api/api";
+import { reportComment } from "../service/api/reportAPI";
 import styles from "../css/postView.module.css";
 
 import Form from "react-bootstrap/Form";

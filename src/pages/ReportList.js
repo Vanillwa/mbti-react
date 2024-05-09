@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
+
 import {
   getPostReportList,
   suspendUser,
   updatePostReport,
-} from "../service/api/api";
+} from "../service/api/reportAPI"
 import styles from "../css/ReportList.module.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";

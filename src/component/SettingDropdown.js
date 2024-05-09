@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../css/SettingDropdown.module.css'
-import { fetchLogout } from "../service/api/api";
+import { fetchLogout } from "../service/api/loginAPI";
 import { AuthContext, useAuthContext } from '../context/AuthContext';
 const SettingDropdown = () => {
   const { memoUserInfo } = useAuthContext();
