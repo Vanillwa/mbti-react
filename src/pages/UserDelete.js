@@ -19,8 +19,8 @@ function UserDelete() {
 
 
 // 비밀번호
-    const [passwordBtn,setPasswordBtn] =useState("수정")
-    const [pwEditable, setPwEditable] = useState(false)
+    const [passwordBtn,setPasswordBtn] =useState("확인")
+    const [pwEditable, setPwEditable] = useState(true)
 
 
     const [pwMessage, setPwmessage] = useState('')
@@ -30,11 +30,7 @@ function UserDelete() {
     const handlePasswordBtnOnclick = async () => {
       const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_.-]{6,20}$/;
     
-      if (passwordBtn === '수정') {
-        setPwEditable(true);
-        setPasswordBtn('확인');
-        return;
-      }
+    
     
       if (passwordBtn === '확인') {
         const result = await deletePasswordCheck({password:passwordRef.current.value})
@@ -59,8 +55,8 @@ function UserDelete() {
         text: "이 작업이 끝나면 영구적으로 회원정보가 삭제됩니다.",
         icon: "error",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#6c757d",
+        cancelButtonColor: "#3085d6",
         confirmButtonText: "네 삭제 하겠습니다.",
         cancelButtonText: "아니요 다시 한번 생각해보겠습니다."
       }).then(async (result) => {
