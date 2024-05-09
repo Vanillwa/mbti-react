@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button'
 import '../css/MemberRevise.css'
 import Swal from "sweetalert2"
 import sweetalert from "../component/sweetalert";
+import Footer from "../component/Footer"
 
 // import { checkDuplicationNickname } from '../service/api';
 
@@ -299,7 +300,7 @@ function MemberRevise() {
               <div className="col-12">
                 <label htmlFor="email" className="form-label">이메일</label>
                 <div className='d-flex gap-2'>
-                  <input type="text" className="form-control form-control-email" name="email" id="email" placeholder={userInfo.email} disabled />
+                  <input type="text" className="form-control form-control-email emailinput" name="email" id="email" placeholder={userInfo.email} disabled />
                 </div>
               </div>
 

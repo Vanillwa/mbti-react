@@ -8,6 +8,7 @@ import { checkDuplicationNickname } from '../service/api';
 import { checkEmailVerification } from '../service/api'
 import { requestEmailVerification } from '../service/api';
 import Swal from "sweetalert2"
+import Footer from '../component/Footer';
 //import backgroundImg from '../images/backgroundImg.png';
 
 
@@ -262,7 +263,7 @@ function Join() {
 
 
   return (
-    <body>
+    
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className={styles.logo} />
@@ -376,9 +377,9 @@ function Join() {
           </form>
         </div>
       </div>
+    <Footer></Footer>
     </div>
-    </body>
-
+  
 
 
   );
