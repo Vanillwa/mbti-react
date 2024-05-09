@@ -10,6 +10,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import '../css/MemberRevise.css'
 import Swal from "sweetalert2"
+import sweetalert from "../component/sweetalert";
 
 // import { checkDuplicationNickname } from '../service/api';
 
@@ -171,12 +172,7 @@ function MemberRevise() {
       const result = await userUpdateNickname({ nickname: nicknameRef.current.value })
 
       if (result?.message === 'success') {
-        Swal.fire({
-          title: '성공!',
-          text: '닉네임이 성공적으로 변경되었습니다!.',
-          icon: 'success',
-          confirmButtonText: '확인'
-        })
+        sweetalert.success('닉네임 변경 완료', '', '확인')
         setNicknameEditable(false)
         setNicknameAlert("");
         setNicknameBtn("수정")
@@ -220,12 +216,7 @@ function MemberRevise() {
 
       const result = await userUpdatePassword({ password: passwordRef1.current.value })
       if (result.message === 'success') {
-        Swal.fire({
-          title: '성공!',
-          text: '비밀번호가 성공적으로 변경되었습니다!.',
-          icon: 'success',
-          confirmButtonText: '확인'
-        })
+     
         passwordRef1.current.value = ''
         passwordRef2.current.value = ''
         setPwEditable(false)
