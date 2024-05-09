@@ -5,7 +5,7 @@ import { getPostList } from "../service/api";
 import PostItems from "../component/PostItems";
 import styles from "../css/PostList.module.css";
 
-import PostPagination from "../component/PostPagination";
+import Paging from "../component/Paging";
 
 const PostList = () => {
   const [query, setQuery] = useSearchParams();
@@ -61,7 +61,7 @@ const PostList = () => {
       </div>
       <PostItems data={data} status={status} />
 
-      <PostPagination data={data} status={status} page={page} setPage={setPage}/>
+      <Paging data={data} status={status} page={page} setPage={setPage}/>
 
     </div>
   );

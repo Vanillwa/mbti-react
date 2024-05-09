@@ -12,7 +12,7 @@ import {
   getViewComment,
   postViewComment,
 } from "../service/api";
-import PostPagination from "../component/PostPagination";
+import Paging from "../component/Paging";
 
 function ViewComment() {
   const queryClient = new QueryClient();
@@ -226,7 +226,7 @@ function ViewComment() {
           );
         })}
         <div className="d-flex justify-content-center mt-3">
-          <PostPagination
+          <Paging
             data={data}
             status={status}
             page={page}
