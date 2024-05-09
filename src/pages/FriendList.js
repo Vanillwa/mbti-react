@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../css/friend.module.css";
 import { QueryClient, useMutation, useQuery } from "react-query";
-import { acceptFriend, blockFriend, deleteFriend, getFriend, getRequestFriend, rejectFriend, requestChat } from "../service/api";
+import { acceptFriend, blockFriend, deleteFriend, getBlockUser, getFriend, getRequestFriend, rejectFriend, requestChat } from "../service/api";
 import { useAuthContext } from "../context/AuthContext";
 import { Link, useNavigate} from "react-router-dom";
 
@@ -10,6 +10,9 @@ const FriendList = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const navigate = useNavigate()
+
+  const [btn, setBtn] = useState('friend')
+
 
   const { data : requestData,  status : requestStatus , refetch} = useQuery(
     ["getRequestFriend"],
@@ -27,6 +30,15 @@ const FriendList = () => {
       refetchOnWindowFocus: false,
     }
   )
+
+  const {data : blockData, status : blockStatus, refetch : blockRefetch} = useQuery(
+    ['getBlockUser'],()=>getBlockUser(),
+    {
+      retry:false,
+      refetchOnWindowFocus:false,
+    }
+  )
+
   const  acceptMutate = useMutation(friendId=>{
     return acceptFriend(friendId)
   })
@@ -101,6 +113,10 @@ const FriendList = () => {
     }
   }
 
+  const handleBtnChange = (e)=>{
+    setBtn(e.target.value)
+  }
+
 
   if (requestStatus === "loading" || friendStatus === "loading") {
     return <div>Loding...</div>;
@@ -112,32 +128,34 @@ const FriendList = () => {
   }
 
 
-  console.log(friendData)
+  console.log(blockData)
 
   return (
     <>
-      <div className={styles.friendList}>
-        <div className={styles.friendListTitle}>친구 목록</div>
-        {friendData.length > 0 ? friendData.map((item)=>{
-          return(<div key={item.friendId} className={styles.friendListContent}>
-            <Link to={`/user/${item.receiveUser.userId}`} className={styles.friendName}>
-              {item.receiveUser.nickname}
-            </Link>
-            <div className={styles.btnBox}>
+    <select onChange={handleBtnChange}>
+      <option value='friend'>friend</option>
+      <option value='request'>request</option>
+      <option value='block'>block</option>
+    </select>
+    {btn == 'friend' ? <div className={styles.friendList}>
+    <div className={styles.friendListTitle}>친구 목록</div>
+    {friendData.length > 0 ? friendData.map((item)=>{
+      return(<div key={item.friendId} className={styles.friendListContent}>
+        <Link to={`/user/${item.receiveUser.userId}`} className={styles.friendName}>
+          {item.receiveUser.nickname}
+        </Link>
+        <div className={styles.btnBox}>
 
 
-              <div onClick={()=>handleRequestChat(item.receiveUser.userId)} type='button' className={styles.button}>채팅하기</div>
-            <div type='button' className={styles.button} onClick={()=>handleFriendBlock(item.friendId)}>너 차단</div>
-            <div type='button' className={styles.button} onClick={()=>handleFriendRefuse(item.friendId)}>너 삭제</div>
+          <div onClick={()=>handleRequestChat(item.receiveUser.userId)} type='button' className={styles.button}>채팅하기</div>
+        <div type='button' className={styles.button} onClick={()=>handleFriendBlock(item.friendId)}>너 차단</div>
+        <div type='button' className={styles.button} onClick={()=>handleFriendRefuse(item.friendId)}>너 삭제</div>
 
 
-            </div>
+        </div>
 
-            </div>)
-          
-        }) : <div className={styles.friendListContent}>친구 없음 ㅋㅋ..</div>}
-      </div>
-      <div className={styles.friendRequest}>
+        </div>)}) : <div className={styles.friendListContent}>친구 없음 ㅋㅋ..</div>}
+  </div>: btn == 'request' ? <div className={styles.friendRequest}>
         <div className={styles.friendRequestTitle}>친구 요청 목록</div>
       {requestData.length > 0 ? requestData.map((item) => {
           return (
@@ -152,8 +170,7 @@ const FriendList = () => {
             </div>
           );
         }) : <div  className={styles.requestBox} >요청 없음</div>}
-      </div>
-      <div className={styles.friendBlock}></div>
+      </div> : <div className={styles.friendBlock}></div>}
     </>
   );
 };

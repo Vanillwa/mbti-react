@@ -110,9 +110,8 @@
 }
 
 .userImg{
-  border-radius: 25px;
+  border-radius: 50%;
   max-height: 6.5vh;
-  width: 4vw;
   height: auto;
   overflow: hidden;
   margin-right: 1vw;

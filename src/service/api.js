@@ -229,12 +229,17 @@ export const requestFriend = async (targetId) => {
 };
 /**친구 조회 */
 export const getFriend = async ()=>{
-  const res = await axios.get(`/friend`)
+  const res = await axios.get(`friend/friendList`)
   return res.data
 }
 /**친구 요청 조회 */
 export const getRequestFriend  =async()=>{
-  const res = await axios.get(`/friend/getRequest`)
+  const res = await axios.get(`/friend/requestList`)
+  return res.data
+}
+/**차단 유저 조회 */
+export const getBlockUser  =async()=>{
+  const res = await axios.get(`/friend/blockList`)
   return res.data
 }
 /**친구 요청 수락 */
