@@ -30,7 +30,9 @@ const Navbar = () => {
   const handleCloseModal = () => {
     dialogRef.current.close();
   };
-
+  const handleRequestLogin = ()=>{
+    navigate("/",{state:"login"})
+  }
   const [dropdown, setDropdown] = useState(false);
   const closeDropdown = () => {
     setDropdown(false);
@@ -92,7 +94,7 @@ const Navbar = () => {
               <dialog className={styles.dialog} ref={dialogRef}>
                 <h2>로그인이 필요한 컨텐츠입니다.</h2>
                 <p>로그인 하시겠습니까?</p>
-                <Link to={`/`}>로그인 하러가기</Link>
+                <button type="button" onClick={handleRequestLogin}>로그인 하러가기</button>
                 <br />
                 <div type="button" onClick={handleCloseModal}>
                   닫기
@@ -128,7 +130,7 @@ const Navbar = () => {
               <dialog className={styles.dialog} ref={dialogRef}>
                 <h2>로그인이 필요한 컨텐츠입니다.</h2>
                 <p>로그인 하시겠습니까?</p>
-                <Link to={`/`}>로그인 하러가기</Link>
+                <button type="button" onClick={handleRequestLogin}>로그인 하러가기</button>
                 <br />
                 <div type="button" onClick={handleCloseModal}>
                   닫기
