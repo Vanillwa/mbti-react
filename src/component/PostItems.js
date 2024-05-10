@@ -33,8 +33,8 @@ const PostItems = ({ data, status }) => {
         const imgSrc = showImg ? showImg[1] : null;
         return (
           <div className={styles.container} key={item.postId}>
-            <div className={styles.postWrap} >
-              <Link to={`/post/view?postId=${item.postId}`} className={styles.postContent}>
+            <Link to={`/post/view?postId=${item.postId}`} className={styles.postWrap} >
+              <div className={styles.postContent}>
                 <div className={styles.title}>{item.title}</div>
                 <UserDropdown item={item} />
                 <div  className={styles.readhitBox}>
@@ -42,11 +42,11 @@ const PostItems = ({ data, status }) => {
                 <div className={styles.likes}>❤  {item.like}</div>
                 <div className={styles.readhit}>👁 {item.readhit}</div>
                 </div>
-              </Link>
+              </div>
               <div className={styles.imgBox}>
-                  <div className={styles.thumbnail}><img className={styles.img} src={imgSrc}/></div>
-                </div>
-            </div>
+                <div className={styles.thumbnail}><img className={styles.img} src={imgSrc}/></div>
+              </div>
+            </Link>
           </div>
         );
       })}

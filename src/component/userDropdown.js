@@ -7,7 +7,7 @@ import {requestChat} from "../service/api/chatAPI"
 import styles from "../css/PostList.module.css";
 import { requestFriend } from "../service/api/friendAPI";
 
-const UserDropdown = ({ item , onClick}) => {
+const UserDropdown = ({ item}) => {
 const navigate =  useNavigate();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;

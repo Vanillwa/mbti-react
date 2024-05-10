@@ -21,6 +21,7 @@ h1{
   height: 15vh;
   padding: 12px;
   border: 1px solid lightgray;
+  cursor: default;
 }
 .postContent {
   display: flex;
@@ -41,9 +42,16 @@ h1{
   display: flex;
   gap: 12px;
 }
-.userInfoBtn{ 
 
+.imgBox{
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
+.imgBox img{
+  height: 15vh;
+}
+
 .dropdown{
   display: none;
 }
@@ -116,9 +124,6 @@ a{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-}
-.img{
   width: 100%;
 }
 .titleBox{
