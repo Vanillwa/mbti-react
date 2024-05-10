@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { io } from "socket.io-client";
 import styles from "../css/ChatRoom.module.css"
@@ -54,6 +54,16 @@ function ChatRoom() {
     }
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    const handleUnload = () => {
+      socket.emit('leave', data.roomInfo.roomId)
+    };
+    window.addEventListener('unload', handleUnload)
+    return () => {
+      window.removeEventListener('unload', handleUnload)
+    };
+  }, [])
+
   if (status === "loading") {
     return <div>loading...</div>;
   }
@@ -66,7 +76,7 @@ function ChatRoom() {
       <h4 className='pt-3 pb-3'>{data.roomInfo.title}</h4>
       <div className={styles.chatForm}>
         {chat.map((message) => {
-          if (userInfo.userId == message.userId) {
+          if (userInfo.userId === message.userId) {
             return (
               <div key={message.messageId} className={`${styles.message} ${styles.mine}`}>
                 <div className={styles.myMessageInner}>{message.message}</div>
