@@ -146,7 +146,6 @@ const handleRadioOnchange = (e)=>{
         <Modal.Body>
           <form className={styles.blockModalForm} onSubmit={handleSubmit}>
             <span className="me-2">닉네임: {user.nickname}</span>
-            {console.log(user)}
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
@@ -236,6 +235,7 @@ const handleRadioOnchange = (e)=>{
                   <Accordion.Body>
                     <div className={styles.postTitle}>{item.Comment.title}</div>
                     <div className={styles.postContent}>
+                      <span>댓글 내용</span>
                       <ContentComponent content={item.Comment.content} />
                     </div>
 
