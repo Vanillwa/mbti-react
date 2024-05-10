@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
-import { getPostList } from "../service/api/postApi";
+import { getPostList } from "../service/api/postAPI";
 import PostItems from "../component/PostItems";
 import styles from "../css/PostList.module.css";
 
