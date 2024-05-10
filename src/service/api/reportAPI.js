@@ -26,9 +26,14 @@ export const reportPost = async (body) =>{
     const res = await axios.get("/report/comment")
     return res.data;
   }
-  //신고처리
+  //게시글신고처리
   export const updatePostReport = async (reportId)=>{
     const res = await axios.put(`/report/post/${reportId}`)
+    return res.data;
+  }
+  //댓글신고 처리
+  export const updateCommentReport = async (reportId)=>{
+    const res = await axios.put(`/report/comment/${reportId}`)
     return res.data;
   }
   

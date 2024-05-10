@@ -8,6 +8,7 @@ import styles from "../css/ChatRoom.module.css"
 import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "../component/sweetalert";
+import { PiSirenFill } from "react-icons/pi";
 
 function ChatRoom() {
   const url = process.env.REACT_APP_SOCKET_URL;
@@ -86,9 +87,18 @@ function ChatRoom() {
             return (
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.messageInner}>
+                  <div className={styles.messageContent}>
                   {message.User.nickname} : {message.message}
+                  </div>
+                 
                 </div>
+                <div className={styles.messageBtnBox}>
+                  <button type="button" className={styles.reportBtn}>
+                    <PiSirenFill/>
+                  </button>
+                  </div>
               </div>
+              
             );
           }
         })}

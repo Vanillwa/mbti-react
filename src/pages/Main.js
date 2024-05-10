@@ -152,7 +152,6 @@ function Main() {
       <footer className={styles.footer}>
         <span>소개</span>
         <span>블로그</span>
-        <span>채용 정보</span>
         <span>도움말</span>
         <span>API</span>
         <span>개인정보처리방침</span>

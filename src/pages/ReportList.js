@@ -39,6 +39,7 @@ function ReportList() {
   const completeMutate = useMutation(reportId => {
     return updatePostReport(reportId);
   });
+  
 
 const handleRadioOnchange = (e)=>{
   setType(e.target.value)
@@ -248,7 +249,7 @@ const handleRadioOnchange = (e)=>{
                 </Accordion.Item>
                 </>
               )
-            }): null}
+            }): <p>채팅방 신고 </p>}
 
             
           </Accordion>
