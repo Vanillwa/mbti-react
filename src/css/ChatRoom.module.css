@@ -31,12 +31,15 @@
     display: flex;
     justify-content: end;
     text-align: end;
+   
   }
   .myMessageInner{
     padding: 5px 12px;
     background-color: #F9EB54;
     color: black;
     border-radius: 5px;
+    text-align: start;
+    word-break: break-all;
   }
   .messageInner {
     display: flex;
@@ -46,7 +49,7 @@
   .messageContent{
    display: flex;
    flex-direction: column;
-   max-width: 100px;
+    max-width: 150px;
 
    gap:4px;
   }
@@ -55,12 +58,12 @@
   }
   .messageMsg{
 
-    white-space: pre-line;
     background-color: white;
     padding: 5px 12px;
     color: black;
     border-radius: 5px;
-
+    text-align: start;
+    word-break: break-all;
   }
 .profileBox{
 width:50px;

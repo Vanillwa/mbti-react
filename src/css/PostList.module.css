@@ -131,3 +131,8 @@ a{
   display: flex;
   align-items: center;
 }
+
+.sortBox{
+  display: flex;
+  gap: 6px;
+}

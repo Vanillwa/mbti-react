@@ -90,7 +90,7 @@ const navigate =  useNavigate();
             </div>
           </li>
           <li>
-            <div type="button" onClick="">
+            <div type="button">
               차단하기
             </div>
           </li>
