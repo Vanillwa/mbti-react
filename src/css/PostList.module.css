@@ -68,6 +68,7 @@ h1{
   flex-direction: column;
   font-size: 1.5vh;
   text-align: start;
+  z-index: 10;
 }
 .dropdownOpen li{
   border-bottom: 1px solid #000;
