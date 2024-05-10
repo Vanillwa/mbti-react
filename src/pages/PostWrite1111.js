@@ -157,6 +157,7 @@ const PostWrite = () => {
               type="text"
               name="content"
               placeholder="내용 입력"
+             
               required
             />
           </div>

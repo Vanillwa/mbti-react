@@ -16,7 +16,7 @@
 .reportList {
     border: 1px solid black;
     border-radius: 5px;
-    width:50%;
+    width:70%;
 }
 
 .reportContent {
@@ -24,7 +24,7 @@
     justify-content: center;
     text-align: start;
     align-items: center;
-    font-size:16px;
+    font-size:18px;
 }
 
 
