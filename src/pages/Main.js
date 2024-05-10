@@ -39,7 +39,7 @@ function Main() {
     };
 
     const res = await fetchLogin(body);
-    let array = ["updatePwd", "join", "findPwd", null]
+    let array = ["updatePwd", "join", "findPwd", "logout",null]
 
     if (res.message === "success") {
       login(res.userInfo);
