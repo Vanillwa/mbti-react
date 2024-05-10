@@ -13,12 +13,12 @@
   }
   .chatForm::-webkit-scrollbar{
     background: white;
-  border-radius: 12px;
+    border-radius: 12px;
   width: 10px;
   }
   .chatForm::-webkit-scrollbar-thumb{
     background-color: white;
-  border-radius: 12px;
+    border-radius: 12px;
   }
   .message {
     display: flex;
@@ -26,12 +26,15 @@
     font-size: 18px;
     gap:8px;
   }
- 
+
   .mine {
     display: flex;
     justify-content: end;
-    text-align: end;
-   
+  }
+  .mineContent{
+    display: flex;
+    justify-content: end;
+    max-width: 150px;
   }
   .myMessageInner{
     padding: 5px 12px;

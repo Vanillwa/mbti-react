@@ -22,17 +22,20 @@ const Navbar = () => {
   
   const { isLoggedIn, userInfo } = memoUserInfo;
   const navigate = useNavigate();
-  const location = useLocation();
   const dialogRef = useRef();
+
   const handleopenModal = () => {
     dialogRef.current.showModal();
   };
+
   const handleCloseModal = () => {
     dialogRef.current.close();
   };
+
   const handleRequestLogin = ()=>{
     navigate("/",{state:"login"})
   }
+  
   const [dropdown, setDropdown] = useState(false);
   const closeDropdown = () => {
     setDropdown(false);

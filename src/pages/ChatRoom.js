@@ -79,10 +79,11 @@ function ChatRoom() {
         {chat.map(message => {
           if (userInfo.userId === message.userId) {
             return (
-              <div
-                key={message.messageId}
-                className={`${styles.message} ${styles.mine}`}>
+              <div key={message.messageId}
+              className={`${styles.message} ${styles.mine}`}>
+              <div className={styles.mineContent}>
                 <div className={styles.myMessageInner}>{message.message}</div>
+              </div>
               </div>
             );
           } else {
