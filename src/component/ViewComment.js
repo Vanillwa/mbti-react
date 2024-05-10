@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/postView.module.css";
 
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
@@ -17,7 +17,8 @@ import CommentReportModal from "./CommentReportModal";
 
 function ViewComment() {
   const queryClient = new QueryClient();
-
+  const navigate = useNavigate();
+  const location = useLocation();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
@@ -131,7 +132,10 @@ function ViewComment() {
       setOrder("asc");
     }
   };
-
+  //로그인버튼
+  const handleRequestLogin = ()=>{
+    navigate("/",{state:"login"})
+  }
   if (status === "loading") {
     return (
       <div className="container">
@@ -167,9 +171,9 @@ function ViewComment() {
         ) : (
           <div className={styles.commentForm}>
             로그인 후 댓글서비스 이용이 가능합니다.{" "}
-            <Link className="fw-bold" to="/">
+            <button type="button" onClick={handleRequestLogin} className={`fw-bold ${styles.goLogin}`} >
               로그인 하기
-            </Link>
+            </button>
           </div>
         )}
         <select onChange={handleOrderChange}>
