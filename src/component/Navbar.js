@@ -47,9 +47,9 @@ const Navbar = () => {
     <div className={styles.container}>
       {/* 상단 네브바 */}
       <nav className={`${styles.item} ${styles.nav}`}>
-        <Link to="/post/list" className={styles.navbarLogo}>
+        <div className={styles.navbarLogo}>
           <img src={RUT} className={styles.logo}></img>
-        </Link>
+        </div>
         <div className={styles.navbarSearch}>
           <input type="text" placeholder="검색" />
         </div>
@@ -73,7 +73,7 @@ const Navbar = () => {
       {/*왼쪽 사이드바*/}
       <div className={`${styles.item} ${styles.leftSidebar}`}>
         <div className={styles.menuItems}>
-          <Link className={styles.menu} to="/post/list">
+          <Link className={styles.menu} to="/">
             <img className={styles.svg} src={home} />
             <div className={styles.span}>홈</div>
           </Link>
