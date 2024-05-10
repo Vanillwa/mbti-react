@@ -39,18 +39,12 @@ function Main() {
     };
 
     const res = await fetchLogin(body);
-    console.log(res);
+    let array = ["updatePwd", "join", "findPwd", null]
 
-    if (
-      res.message === "success" &&
-      (location.state === "updatePwd" ||
-        location.state === "join" ||
-        location.state === "findPwd" ||
-        location.state === null)
-    ) {
+    if (res.message === "success") {
       login(res.userInfo);
-      navigate("/post/list");
-      return;
+      if (array.includes(location.state)) navigate("/post/list");
+      else navigate(-1);
     } else if (res.message === "blocked") {
       setEmailAlert(`${res.blockDate}까지 차단된 계정입니다`);
     } else if (res.message === "NoExist") {
@@ -60,10 +54,6 @@ function Main() {
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
-      return;
-    } else if (res.message === "success") {
-      login(res.userInfo);
-      navigate(-1);
       return;
     }
   };
@@ -120,30 +110,30 @@ function Main() {
                   </Form.Group>
                 </div>
                 <div>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Control
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    pattern=".{6,20}"
-                    title="6~20 글자 사이의 비밀번호를 입력해주세요"
-                    onKeyDown={e => checkCapsLock(e)}
-                    required
-                  />
-                  <p className={styles.alert}>{pwdAlert}</p>
-                  <div className={styles.loginbtn}>
-                    <Button variant="primary" type="submit">
-                      로그인
-                    </Button>
-                    <hr />
-                  </div>
-                  <div className={styles.findPwd}>
-                  <span>비밀번호를 잊으셨나요?</span>
-                  <Link to="/findpwd" className={styles.link}>
-                    찾기
-                  </Link>
-                  </div>
-                </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Control
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      pattern=".{6,20}"
+                      title="6~20 글자 사이의 비밀번호를 입력해주세요"
+                      onKeyDown={e => checkCapsLock(e)}
+                      required
+                    />
+                    <p className={styles.alert}>{pwdAlert}</p>
+                    <div className={styles.loginbtn}>
+                      <Button variant="primary" type="submit">
+                        로그인
+                      </Button>
+                      <hr />
+                    </div>
+                    <div className={styles.findPwd}>
+                      <span>비밀번호를 잊으셨나요?</span>
+                      <Link to="/findpwd" className={styles.link}>
+                        찾기
+                      </Link>
+                    </div>
+                  </Form.Group>
                 </div>
               </Form>
               <div className={styles.joinWrapper}>

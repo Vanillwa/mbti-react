@@ -32,9 +32,11 @@ function ChatRoom() {
     e.preventDefault();
     let message = e.target.message.value;
     if (message === "") return;
+    let targetId = (userInfo.userId === data.roomInfo.userId1) ? data.roomInfo.userId2 : data.roomInfo.userId1
     let body = {
       roomId: data.roomInfo.roomId,
       message,
+      targetId
     };
     socket.emit("send-message", body);
     e.target.message.value = "";
