@@ -14,11 +14,11 @@ import {reportComment} from "../service/api/reportAPI"
 
 import Paging from "../component/Paging";
 import CommentReportModal from "./CommentReportModal";
+import { Form } from "react-bootstrap";
 
 function ViewComment() {
   const queryClient = new QueryClient();
   const navigate = useNavigate();
-  const location = useLocation();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
@@ -125,13 +125,8 @@ function ViewComment() {
   };
 
   const handleOrderChange = e => {
-
-    if (e.target.value == "desc") {
-      setOrder("desc");
-    } else if (e.target.value == "asc") {
-      setOrder("asc");
-    }
-  };
+    setOrder(prevOrder => (prevOrder === 'desc' ? 'asc' : 'desc'))
+  }
   //로그인버튼
   const handleRequestLogin = ()=>{
     navigate("/",{state:"login"})
@@ -176,10 +171,16 @@ function ViewComment() {
             </button>
           </div>
         )}
-        <select onChange={handleOrderChange}>
-          <option value="desc">최신순</option>
-          <option value="asc">오래된순</option>
-        </select>
+        <Form className={styles.orderBox}  onChange={handleOrderChange}>
+          <Form.Check
+          type="switch"
+          id="custom-switch"
+          label={order === 'desc' ? '최신순' : '오래된순'}
+          value={order}
+          checked={order === 'desc'}
+          />
+        </Form>
+
         {data.commentList.map(item => {
           return (
             <div key={item.commentId} className={styles.commentBox}>

@@ -121,25 +121,20 @@
   width: 80%;
   margin-right: 10px;
 }
-.editBtn{
-  
-}
+
 .editCommentForm{
   display: flex;
   justify-content: end;
   width: 100%;
 }
 
-.unChecked{
-
-}
-
-.checked{
-
-}
 .readhit{
   color: black;
 }
 .like{
   color: rgb(255, 90, 118);
+}
+.orderBox{
+  display: flex;
+  justify-content: center;
 }
