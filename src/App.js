@@ -21,15 +21,8 @@ import ReportList from "./pages/ReportList";
 import UserList from "./pages/UserList";
 import ChatList from "./pages/ChatList";
 import ChatRoom from "./pages/ChatRoom";
-import { io } from "socket.io-client";
 
 function App() {
-  const url = process.env.REACT_APP_SOCKET_URL;
-  const socket = io(url, { withCredentials: true })
-  
-  socket.on("notification", () => {
-    console.log('notification')
-  });
   return (
     <div className="App">
       <Routes>

@@ -11,13 +11,17 @@ export const AuthProvider = ({ children }) => {
   const url = process.env.REACT_APP_SOCKET_URL;
   const socket = io(url, { withCredentials: true })
 
-  const login = (info) => {
+  const login = async (info) => {
     sessionStorage.setItem("userInfo", JSON.stringify(info));
     sessionStorage.setItem("isLoggedIn", true);
     setIsLoggedIn(true);
     setUserInfo(info);
-    socket.emit("ask-join", info.userId);
+    socket.emit("login", info.userId);
   };
+  
+  socket.on("notification", async (data) => {
+    console.log(data)
+  });
 
   const logout = () => {
     sessionStorage.removeItem("userInfo");
