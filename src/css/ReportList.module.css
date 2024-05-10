@@ -34,10 +34,12 @@
 
 .postTitle{
     font-family: 'KCC-Hanbit';
+    margin-bottom:30px;
 }
 .postContent{
     font-family: 'KCC-Hanbit';
-overflow: auto;
+    overflow: auto;
+    margin-bottom:30px;
 }
 
 .reportBtn{
