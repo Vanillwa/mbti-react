@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.setItem("isLoggedIn", true);
     setIsLoggedIn(true);
     setUserInfo(info);
-    socket.emit("ask-join", res.userInfo.userId);
+    socket.emit("ask-join", info.userId);
   };
 
   const logout = () => {
