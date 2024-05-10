@@ -9,31 +9,27 @@ import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "../component/sweetalert";
 import { PiSirenFill } from "react-icons/pi";
+import { socket } from "../service/socket/socket";
 
 function ChatRoom() {
-  const url = process.env.REACT_APP_SOCKET_URL;
+  console.log('rendered')
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
-  const socket = io(url, { withCredentials: true });
 
-  const { data, status } = useQuery(
-    ["getChatRoom", roomId],
-    () => getChatRoom(roomId),
-    {
-      retry: 0,
-      refetchOnWindowFocus: false,
-      onSuccess: data => {
-        console.log("로딩 완료", data);
-        socket.emit("ask-join", data.roomInfo.roomId);
-        setChat(data.messageList);
-      },
-    }
-  );
+  const { data, status } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
+    retry: 0,
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      console.log("로딩 완료", data);
+      socket.emit("join", roomId);
+      setChat(data.messageList);
+    },
+  });
 
-  const sendMessage = e => {
+  const sendMessage = (e) => {
     e.preventDefault();
     let message = e.target.message.value;
     if (message === "") return;
@@ -42,7 +38,7 @@ function ChatRoom() {
         ? data.roomInfo.userId2
         : data.roomInfo.userId1;
     let body = {
-      roomId: data.roomInfo.roomId,
+      roomId,
       message,
       targetId,
     };
@@ -50,19 +46,19 @@ function ChatRoom() {
     e.target.message.value = "";
   };
 
-  socket.on("send-message", data => {
-    console.log(data);
-    setChat(prev => [data, ...prev]);
-  });
+  useEffect(() => {
+    const handleReceiveMessage = (newData) => {
+      console.log("newData : ", newData);
+      setChat((prevChat) => [newData, ...prevChat]);
+    };
+    socket.on("send-message", handleReceiveMessage);
+    return () => {
+      socket.emit('leave')
+      socket.off("send-message", handleReceiveMessage);
+    };
+  }, []);
 
-  useLayoutEffect(() => {
-    if (!isLoggedIn) {
-      sweetalert.warning("로그인 후 사용하실 수 있는 기능입니다.");
-      navigate("/auth/login");
-    }
-  }, [isLoggedIn]);
-
-
+  
 
   if (status === "loading") {
     return <div>loading...</div>;
@@ -70,7 +66,6 @@ function ChatRoom() {
   if (status === "error") {
     return <div>error</div>;
   }
-
 
   return (
     <section className={styles.section}>
@@ -80,31 +75,31 @@ function ChatRoom() {
           if (userInfo.userId === message.userId) {
             return (
               <div key={message.messageId}
-              className={`${styles.message} ${styles.mine}`}>
-              <div className={styles.mineContent}>
-                <div className={styles.myMessageInner}>{message.message}</div>
-              </div>
+                className={`${styles.message} ${styles.mine}`}>
+                <div className={styles.mineContent}>
+                  <div className={styles.myMessageInner}>{message.message}</div>
+                </div>
               </div>
             );
           } else {
 
             return (
-            
+
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.profileBox}>
-                <img className={styles.userImg} src={message.User.profileImage} />
-              
+                  <img className={styles.userImg} src={message.User.profileImage} />
+
                 </div>
                 <div className={styles.messageInner}>
                   <div className={styles.messageContent}>
 
                     <div className={styles.messageNickname}>
-                    {message.User.nickname}
+                      {message.User.nickname}
                     </div>
                     <div className={styles.messageMsg}>
-                    {message.message}
+                      {message.message}
                     </div>
-                      
+
                   </div>
 
                 </div>
@@ -121,8 +116,8 @@ function ChatRoom() {
         })}
       </div>
       <form onSubmit={sendMessage} className={styles.inputForm}>
-        <input name="message" />
-        <Button variant="secondary btn-sm" type="submit">
+        <input name='message' />
+        <Button variant='secondary btn-sm' type='submit'>
           전송
         </Button>
       </form>
