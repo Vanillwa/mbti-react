@@ -14,8 +14,10 @@ import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
+import { socketLogin } from "../service/socket/socket";
 
 function Main() {
+  console.log("rendered")
   const navigate = useNavigate();
   const [capsLockFlag, setCapsLockFlag] = useState(false);
   const { login } = useAuthContext();
@@ -42,6 +44,7 @@ function Main() {
     let array = ["updatePwd", "join", "findPwd", null]
 
     if (res.message === "success") {
+      socketLogin()
       login(res.userInfo);
       if (array.includes(location.state)) navigate("/post/list");
       else navigate(-1);

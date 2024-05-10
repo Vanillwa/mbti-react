@@ -55,17 +55,6 @@ function ChatRoom() {
     }
   }, [isLoggedIn]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      e.preventDefault()
-      if (!window.confirm("정말 나가시겠습니가?")) return
-      socket.emit('leave', data.roomInfo.roomId)
-    };
-    window.addEventListener('beforeunload', (event)=>handleBeforeUnload(event))
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-    };
-  }, [])
 
   if (status === "loading") {
     return <div>loading...</div>;
@@ -73,6 +62,7 @@ function ChatRoom() {
   if (status === "error") {
     return <div>error</div>;
   }
+
 
   return (
     <section className={styles.section}>
@@ -90,17 +80,17 @@ function ChatRoom() {
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.messageInner}>
                   <div className={styles.messageContent}>
-                  {message.User.nickname} : {message.message}
+                    {message.User.nickname} : {message.message}
                   </div>
-                 
+
                 </div>
                 <div className={styles.messageBtnBox}>
                   <button type="button" className={styles.reportBtn}>
-                    <PiSirenFill/>
+                    <PiSirenFill />
                   </button>
-                  </div>
+                </div>
               </div>
-              
+
             );
           }
         })}

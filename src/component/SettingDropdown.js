@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from '../css/SettingDropdown.module.css'
 import { fetchLogout } from "../service/api/loginAPI";
 import { AuthContext, useAuthContext } from '../context/AuthContext';
+import { socketLogout } from '../service/socket/socket';
 const SettingDropdown = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn } = memoUserInfo;
@@ -16,6 +17,7 @@ const {logout} = useContext(AuthContext);
   }
 
   const clickLogout= async()=>{
+    socketLogout()
     const result =  await fetchLogout();
     console.log(result.message)
     if(result.message === 'success'){

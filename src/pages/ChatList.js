@@ -38,25 +38,23 @@ const ChatList = () => {
       <div className={styles.container}>
         <h2>채팅목록</h2>
         <div className={styles.chatBox}>
-        <div className={styles.chatItems}>
-          {data.map((item)=>{
-            const title = item.title
-            const regex = /(?:^|\s)([\w가-힣]+)(?=님)/g;
-            const matches = title.match(regex)
-            return(<div className={styles.itemBox}>
-              <div className="">상대방 : {matches[0]}</div>
-              <Link to={`/chat/list/${item.roomId}`} className={styles.btn}>채팅하기</Link>
+          <div className={styles.chatItems}>
+            {data.map((item) => {
+
+              return (<div className={styles.itemBox}>
+                <div className="">{item.title}</div>
+                <Link to={`/chat/list/${item.roomId}`} className={styles.btn}>채팅하기</Link>
 
               </div>
-            )
-            
-          })}
-        </div>
+              )
+
+            })}
+          </div>
         </div>
       </div>
 
     </>
-  
+
 
   );
 };
