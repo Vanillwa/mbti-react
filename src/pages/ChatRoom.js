@@ -9,27 +9,28 @@ import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "../component/sweetalert";
 import { PiSirenFill } from "react-icons/pi";
+import { socket } from "../service/socket/socket";
 
 function ChatRoom() {
+  console.log('rendered')
   const url = process.env.REACT_APP_SOCKET_URL;
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
-  const socket = io(url, { withCredentials: true });
 
   const { data, status } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
     retry: 0,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       console.log("로딩 완료", data);
-      socket.emit("ask-join", data.roomInfo.roomId);
+      socket.emit("join", data.roomInfo.roomId)
       setChat(data.messageList);
     },
   });
 
-  const sendMessage = (e) => {
+  const handleSendMessage = (e) => {
     e.preventDefault();
     let message = e.target.message.value;
     if (message === "") return;
@@ -43,18 +44,21 @@ function ChatRoom() {
     e.target.message.value = "";
   };
 
-  socket.on("send-message", (data) => {
-    console.log(data);
-    setChat((prev) => [data, ...prev]);
-  });
-
-  useLayoutEffect(() => {
-    if (!isLoggedIn) {
-      sweetalert.warning('로그인 후 사용하실 수 있는 기능입니다.')
-      navigate("/auth/login");
-    }
-  }, [isLoggedIn]);
-
+  // socket.on("send-message", (newData) => {
+  //   console.log("newData : ", newData) 
+  //   setChat((prev) => [newData, ...prev]);
+  // });
+  useEffect(() => {
+    const handleReceiveMessage = (newData) => {
+      console.log("newData : ", newData);
+      setChat((prevChat) => [newData, ...prevChat]);
+    };
+    socket.on("send-message", handleReceiveMessage);
+    return () => {
+      socket.emit('leave')
+      socket.off("send-message", handleReceiveMessage);
+    };
+  }, []);
 
   if (status === "loading") {
     return <div>loading...</div>;
@@ -62,7 +66,6 @@ function ChatRoom() {
   if (status === "error") {
     return <div>error</div>;
   }
-
 
   return (
     <section className={styles.section}>
@@ -95,7 +98,7 @@ function ChatRoom() {
           }
         })}
       </div>
-      <form onSubmit={sendMessage} className={styles.inputForm}>
+      <form onSubmit={handleSendMessage} className={styles.inputForm}>
         <input name='message' />
         <Button variant='secondary btn-sm' type='submit'>
           전송

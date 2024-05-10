@@ -3,36 +3,37 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from '../css/SettingDropdown.module.css'
 import { fetchLogout } from "../service/api/loginAPI";
 import { AuthContext, useAuthContext } from '../context/AuthContext';
-import { socketLogout } from '../service/socket/socket';
+import { socket } from '../service/socket/socket';
+
 const SettingDropdown = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn } = memoUserInfo;
   const navigate = useNavigate()
   const [dropdown, setDropdown] = useState(false);
   const toggleDropdown = () => setDropdown(!dropdown);
-const {logout} = useContext(AuthContext);
-  const closeDropdown = async()=>{
-    
+  const { logout } = useContext(AuthContext);
+  const closeDropdown = async () => {
+
     setDropdown(false)
   }
 
-  const clickLogout= async()=>{
-    socketLogout()
-    const result =  await fetchLogout();
+  const clickLogout = async () => {
+    socket.emit("logout");
+    const result = await fetchLogout();
     console.log(result.message)
-    if(result.message === 'success'){
+    if (result.message === 'success') {
       logout();
-      navigate("/",{state:"logout"})
-     
+      navigate("/", { state: "logout" })
+
     }
 
-  }  
+  }
 
   return (
-    <div  className={styles.menu}>
-      <div  type='button' onClick={toggleDropdown}><span>설정</span></div>
+    <div className={styles.menu}>
+      <div type='button' onClick={toggleDropdown}><span>설정</span></div>
       <div className={`dropdown-content ${dropdown ? "show" : ""}`}>
-        {isLoggedIn ? <div type="button" onClick={clickLogout}>로그아웃</div> : <div/> }
+        {isLoggedIn ? <div type="button" onClick={clickLogout}>로그아웃</div> : <div />}
         <div onClick={closeDropdown} type='button'>다크모드</div>
       </div>
     </div>
