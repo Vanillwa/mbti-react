@@ -92,7 +92,8 @@ function ChatRoom() {
             
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.profileBox}>
-                <img className={styles.userImg} src="" />
+                <img className={styles.userImg} src={message.User.profileImage} />
+              
                 </div>
                 <div className={styles.messageInner}>
                   <div className={styles.messageContent}>
