@@ -19,7 +19,6 @@ import FriendList from "./pages/FriendList";
 import ReportList from "./pages/ReportList";
 
 import UserList from "./pages/UserList";
-
 import ChatList from "./pages/ChatList";
 import ChatRoom from "./pages/ChatRoom";
 
@@ -44,9 +43,9 @@ function App() {
 
           <Route path="chat">
             <Route path="list">
-              <Route index element={<ChatList/>}/>
-              
-              <Route path=":roomId" element={<ChatRoom/>}/>
+              <Route index element={<ChatList />} />
+
+              <Route path=":roomId" element={<ChatRoom />} />
             </Route>
           </Route>
         </Route>

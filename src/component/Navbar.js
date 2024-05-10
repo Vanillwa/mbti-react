@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styles from "../css/Nav.module.css";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
@@ -19,8 +19,10 @@ import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
+  
   const { isLoggedIn, userInfo } = memoUserInfo;
   const navigate = useNavigate();
+  const location = useLocation();
   const dialogRef = useRef();
   const handleopenModal = () => {
     dialogRef.current.showModal();
@@ -28,7 +30,9 @@ const Navbar = () => {
   const handleCloseModal = () => {
     dialogRef.current.close();
   };
-
+  const handleRequestLogin = ()=>{
+    navigate("/",{state:"login"})
+  }
   const [dropdown, setDropdown] = useState(false);
   const closeDropdown = () => {
     setDropdown(false);
@@ -90,7 +94,7 @@ const Navbar = () => {
               <dialog className={styles.dialog} ref={dialogRef}>
                 <h2>로그인이 필요한 컨텐츠입니다.</h2>
                 <p>로그인 하시겠습니까?</p>
-                <Link to={`/`}>로그인 하러가기</Link>
+                <button type="button" onClick={handleRequestLogin}>로그인 하러가기</button>
                 <br />
                 <div type="button" onClick={handleCloseModal}>
                   닫기
@@ -126,7 +130,7 @@ const Navbar = () => {
               <dialog className={styles.dialog} ref={dialogRef}>
                 <h2>로그인이 필요한 컨텐츠입니다.</h2>
                 <p>로그인 하시겠습니까?</p>
-                <Link to={`/`}>로그인 하러가기</Link>
+                <button type="button" onClick={handleRequestLogin}>로그인 하러가기</button>
                 <br />
                 <div type="button" onClick={handleCloseModal}>
                   닫기

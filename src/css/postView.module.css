@@ -58,7 +58,10 @@
   border-radius: 12px;
 
 }
-
+.goLogin{
+  border:0px;
+  background-color: transparent;
+}
 .commentContainer{
   display: flex;
   flex-direction: column;

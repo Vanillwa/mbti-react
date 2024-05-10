@@ -10,7 +10,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 
 
-function ReportModal() {
+function ReportModal({data}) {
   const [show, setShow] = useState(false);
   const [reportType, setReportType] = useState(0);
 
@@ -84,9 +84,10 @@ function ReportModal() {
 
   return (
     <>{isLoggedIn ? <>
-    <div className={styles.ReportBtn} type="button" variant="info" onClick={handleShow}>
+    {userInfo.userId != data.User.userId ?  <div className={styles.ReportBtn} type="button" variant="info" onClick={handleShow}>
     신고하기
-  </div>
+  </div>: null}
+   
   <Modal show={show} onHide={handleClose}>
     <Modal.Header closeButton>
       <Modal.Title>신고하기</Modal.Title>

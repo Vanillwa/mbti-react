@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
+import { io } from "socket.io-client";
 
 export const AuthContext = createContext(null);
 
@@ -7,13 +8,20 @@ export const AuthProvider = ({ children }) => {
   const sessionIsLoggedIn = sessionStorage.getItem("isLoggedIn");
   const [isLoggedIn, setIsLoggedIn] = useState(sessionIsLoggedIn);
   const [userInfo, setUserInfo] = useState(sessionUserInfo);
+  const url = process.env.REACT_APP_SOCKET_URL;
+  const socket = io(url, { withCredentials: true })
 
-  const login = (info) => {
+  const login = async (info) => {
     sessionStorage.setItem("userInfo", JSON.stringify(info));
     sessionStorage.setItem("isLoggedIn", true);
     setIsLoggedIn(true);
     setUserInfo(info);
+    socket.emit("login");
   };
+  
+  socket.on("notification", () => {
+    console.log("메세지 전송 받음")
+  });
 
   const logout = () => {
     sessionStorage.removeItem("userInfo");
