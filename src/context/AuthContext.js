@@ -16,11 +16,11 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.setItem("isLoggedIn", true);
     setIsLoggedIn(true);
     setUserInfo(info);
-    socket.emit("login", info.userId);
+    socket.emit("login");
   };
   
-  socket.on("notification", async (data) => {
-    console.log(data)
+  socket.on("notification", () => {
+    console.log("메세지 전송 받음")
   });
 
   const logout = () => {

@@ -56,12 +56,14 @@ function ChatRoom() {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    const handleUnload = () => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault()
+      if (!window.confirm("정말 나가시겠습니가?")) return
       socket.emit('leave', data.roomInfo.roomId)
     };
-    window.addEventListener('unload', handleUnload)
+    window.addEventListener('beforeunload', (event)=>handleBeforeUnload(event))
     return () => {
-      window.removeEventListener('unload', handleUnload)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     };
   }, [])
 
@@ -71,7 +73,7 @@ function ChatRoom() {
   if (status === "error") {
     return <div>error</div>;
   }
-  console.log(data)
+
   return (
     <section className={styles.section}>
       <h4 className='pt-3 pb-3'>{data.roomInfo.title}</h4>
