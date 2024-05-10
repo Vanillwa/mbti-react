@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styles from "../css/Nav.module.css";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
@@ -19,8 +19,10 @@ import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
+  
   const { isLoggedIn, userInfo } = memoUserInfo;
   const navigate = useNavigate();
+  const location = useLocation();
   const dialogRef = useRef();
   const handleopenModal = () => {
     dialogRef.current.showModal();
