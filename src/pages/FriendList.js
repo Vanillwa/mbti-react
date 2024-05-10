@@ -159,7 +159,7 @@ const FriendList = () => {
   }
 
 
-  console.log(blockData)
+  console.log(requestData)
 
   return (
     <>

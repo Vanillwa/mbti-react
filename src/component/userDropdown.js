@@ -16,7 +16,8 @@ const navigate =  useNavigate();
 
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
-  const handleRequestChat = async(targetId)=>{
+  const handleRequestChat = async(e, targetId)=>{
+    e.preventDefault();
     const result = await requestChat(targetId);
     
     if(result.message ==="success"){
@@ -30,7 +31,8 @@ const navigate =  useNavigate();
     }
   }
 
-  const handleRequestFreind = async (userId) => {
+  const handleRequestFreind = async (e, userId) => {
+    e.preventDefault()
     const result = await requestFriend(userId);
 
     if (result.message == "success") {
@@ -84,7 +86,7 @@ const navigate =  useNavigate();
             <li>
             <div
               type="button"
-              onClick={() => handleRequestFreind(item.User.userId)}
+              onClick={(e) =>{ handleRequestFreind(e, item.User.userId)}}
             >
               친구요청
             </div>
@@ -95,7 +97,7 @@ const navigate =  useNavigate();
             </div>
           </li>
           <li>
-            <div type="button" onClick={()=>handleRequestChat(item.User.userId)}>
+            <div type="button" onClick={(e)=>{ handleRequestChat(e, item.User.userId)}}>
               채팅하기
             </div>
           </li>
