@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/postView.module.css";
 
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
@@ -14,10 +14,11 @@ import {reportComment} from "../service/api/reportAPI"
 
 import Paging from "../component/Paging";
 import CommentReportModal from "./CommentReportModal";
+import { Form } from "react-bootstrap";
 
 function ViewComment() {
   const queryClient = new QueryClient();
-
+  const navigate = useNavigate();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
@@ -124,14 +125,12 @@ function ViewComment() {
   };
 
   const handleOrderChange = e => {
-
-    if (e.target.value == "desc") {
-      setOrder("desc");
-    } else if (e.target.value == "asc") {
-      setOrder("asc");
-    }
-  };
-
+    setOrder(prevOrder => (prevOrder === 'desc' ? 'asc' : 'desc'))
+  }
+  //로그인버튼
+  const handleRequestLogin = ()=>{
+    navigate("/",{state:"login"})
+  }
   if (status === "loading") {
     return (
       <div className="container">
@@ -167,15 +166,21 @@ function ViewComment() {
         ) : (
           <div className={styles.commentForm}>
             로그인 후 댓글서비스 이용이 가능합니다.{" "}
-            <Link className="fw-bold" to="/">
+            <button type="button" onClick={handleRequestLogin} className={`fw-bold ${styles.goLogin}`} >
               로그인 하기
-            </Link>
+            </button>
           </div>
         )}
-        <select onChange={handleOrderChange}>
-          <option value="desc">최신순</option>
-          <option value="asc">오래된순</option>
-        </select>
+        <Form className={styles.orderBox}  onChange={handleOrderChange}>
+          <Form.Check
+          type="switch"
+          id="custom-switch"
+          label={order === 'desc' ? '최신순' : '오래된순'}
+          value={order}
+          checked={order === 'desc'}
+          />
+        </Form>
+
         {data.commentList.map(item => {
           return (
             <div key={item.commentId} className={styles.commentBox}>
@@ -197,7 +202,7 @@ function ViewComment() {
                   <div className={styles.commentDate}>
                     {new Date(item.createdAt).toLocaleDateString()}
                   </div>
-                  {userInfo.userId != item.userId ? (
+                  {userInfo?.userId != item.userId ? (
                     <CommentReportModal commentId={item.commentId} />
                   ) : null}
                 </>

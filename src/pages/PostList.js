@@ -6,6 +6,7 @@ import PostItems from "../component/PostItems";
 import styles from "../css/PostList.module.css";
 
 import Paging from "../component/Paging";
+import { Form } from "react-bootstrap";
 
 const PostList = () => {
   const [query, setQuery] = useSearchParams();
@@ -47,17 +48,16 @@ const PostList = () => {
 
   return (
     <div className={styles.postBox}>
-      <div className="d-flex">
-      <select  onChange={handleSortChange} >
+      <div className={styles.sortBox}>
+      <Form.Select aria-label="Default select example" onChange={handleSortChange}>
         <option value='createdAt' >날짜순</option>
         <option value="readhit">조회순</option>
         <option value="like">좋아요순</option>
-      </select>
-      <select onChange={handleOrderChange}>
+      </Form.Select>
+      <Form.Select aria-label="Default select example" onChange={handleOrderChange}>
         {sort == 'createdAt' ? <><option>최신순</option>
         <option>오래된순</option></> : <><option>많은순</option><option>적은순</option></>}
-        
-      </select>
+      </Form.Select>
       </div>
       <PostItems data={data} status={status} />
 
