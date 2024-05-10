@@ -8,7 +8,7 @@ import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
 
 import {EditViewComment,deleteViewComment
-  ,getViewComment,postViewComment,} from '../service/api/commentApi'
+  ,getViewComment,postViewComment,} from '../service/api/commentAPI'
 
 import {reportComment} from "../service/api/reportAPI"
 
@@ -197,7 +197,7 @@ function ViewComment() {
                   <div className={styles.commentDate}>
                     {new Date(item.createdAt).toLocaleDateString()}
                   </div>
-                  {userInfo.userId != item.userId ? (
+                  {userInfo?.userId != item.userId ? (
                     <CommentReportModal commentId={item.commentId} />
                   ) : null}
                 </>

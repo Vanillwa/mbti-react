@@ -7,7 +7,7 @@ import {requestChat} from "../service/api/chatAPI"
 import styles from "../css/PostList.module.css";
 import { requestFriend } from "../service/api/friendApi";
 
-const UserDropdown = ({ item }) => {
+const UserDropdown = ({ item , onClick}) => {
 const navigate =  useNavigate();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -48,7 +48,9 @@ const navigate =  useNavigate();
     }
     setOpenDropdownId(null)
   };
-  const handleDropdownClick = (id) => {
+  const handleDropdownClick = (e, id) => {
+    e.preventDefault()
+
     if (openDropdownId === id) {
       setOpenDropdownId(null); // 이미 열린 드롭다운을 닫습니다.
     } else {
@@ -69,7 +71,7 @@ const navigate =  useNavigate();
         </div>
         {userInfo?.userId == item.User.userId ? null : <>
           <div type="button"
-          onClick={() => handleDropdownClick(item.User.userId)}
+          onClick={(e) => handleDropdownClick(e, item.User.userId)}
           className={styles.userInfoBtn}
         >
           {openDropdownId ? "▲" : "▼"}

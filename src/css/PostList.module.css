@@ -5,31 +5,41 @@ h1{
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  gap: 12px;
+  width: 100%;
 }
-.postWrap {
+.container {
   display: flex;
-  flex-direction: column;
-  border: 1px solid #ddd;
-  margin: 20px;
-  padding: 10px;
-  width: 50vw;
-
+  justify-content: center;
+  width: 100%;
 }
 
-.postHeader {
+.postWrap{
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0 0 1vh 0 ;
-  border-bottom: 1px solid black;
-  position: relative;
+  width: 100%;
+  height: 15vh;
+  padding: 12px;
+  border: 1px solid lightgray;
+}
+.postContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 8px;
+}
+.title{
+
 }
 .userBox{
   display: flex;
   align-items: center;
-  width: 50%;
   position: relative;
+}
+.readhitBox{
+  display: flex;
+  gap: 12px;
 }
 .userInfoBtn{ 
 
@@ -41,17 +51,23 @@ h1{
   position: absolute;
   background-color:white;
   border: 1px solid black;
-  list-style: none;
+  border-bottom: 0;
+  list-style-type: none;
+  padding-left: 0;
   top: 100%;
+  left: 10%;
   display: flex;
   flex-direction: column;
-  width: 12vw;
   font-size: 1.5vh;
   text-align: start;
 }
+.dropdownOpen li{
+  border-bottom: 1px solid #000;
+  padding: 3px 10px;
+}
 
 .profileImg {
-  width: 40px;
+  width: 32px;
   height: auto; 
   border-radius: 25px;
   margin-right: 10px;
