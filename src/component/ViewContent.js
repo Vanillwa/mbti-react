@@ -125,7 +125,7 @@ function ViewContent() {
           <span>{data.category} 게시판</span>
           <div className={styles.readhit}>조회 : {data.readhit}</div>
           <div>
-          <ReportModal/>
+          <ReportModal data={data}/>
           {userInfo?.userId == data.User.userId && isLoggedIn ? (
             <div className="d-flex">
               <div className={styles.editBtn} type="button" onClick={goEdit}>
