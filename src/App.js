@@ -24,6 +24,9 @@ import ChatList from "./pages/ChatList";
 import ChatRoom from "./pages/ChatRoom";
 
 function App() {
+  socket.on("notification", () => {
+    console.log('notification')
+  });
   return (
     <div className="App">
       <Routes>
@@ -44,9 +47,9 @@ function App() {
 
           <Route path="chat">
             <Route path="list">
-              <Route index element={<ChatList/>}/>
-              
-              <Route path=":roomId" element={<ChatRoom/>}/>
+              <Route index element={<ChatList />} />
+
+              <Route path=":roomId" element={<ChatRoom />} />
             </Route>
           </Route>
         </Route>
