@@ -12,14 +12,13 @@ import { PiSirenFill } from "react-icons/pi";
 import { socket } from "../service/socket/socket";
 
 function ChatRoom() {
-  console.log('rendered')
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
 
-  const { data, status } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
+  const { data, status, refetch } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
     retry: 0,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
@@ -42,23 +41,27 @@ function ChatRoom() {
       message,
       targetId,
     };
-    socket.emit("send-message", body);
+    socket.emit("sendMessage", body);
     e.target.message.value = "";
   };
 
   useEffect(() => {
     const handleReceiveMessage = (newData) => {
-      console.log("newData : ", newData);
       setChat((prevChat) => [newData, ...prevChat]);
     };
-    socket.on("send-message", handleReceiveMessage);
+
+    const handleUserJoined = (newData) => {
+      if (newData.targetId === userInfo.userId) setChat(newData.messages);
+    }
+
+    socket.on("sendMessage", handleReceiveMessage);
+    socket.on("userJoined", handleUserJoined);
     return () => {
       socket.emit('leave', roomId)
-      socket.off("send-message", handleReceiveMessage);
+      socket.off("sendMessage", handleReceiveMessage);
+      socket.off("userJoined", handleUserJoined);
     };
   }, []);
-
-  
 
   if (status === "loading") {
     return <div>loading...</div>;
@@ -74,8 +77,10 @@ function ChatRoom() {
         {chat.map(message => {
           if (userInfo.userId === message.userId) {
             return (
-              <div key={message.messageId}
-                className={`${styles.message} ${styles.mine}`}>
+              <div key={message.messageId} className={`${styles.message} ${styles.mine}`}>
+                <div>
+                  {message.isRead === 1 ? "" : "안읽음"}
+                </div>
                 <div className={styles.mineContent}>
                   <div className={styles.myMessageInner}>{message.message}</div>
                 </div>
@@ -87,21 +92,23 @@ function ChatRoom() {
 
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.profileBox}>
-                  <img className={styles.userImg} src={message.User.profileImage} />
+                  <img className={styles.userImg} src={message.sendUser.profileImage} />
 
                 </div>
                 <div className={styles.messageInner}>
                   <div className={styles.messageContent}>
 
                     <div className={styles.messageNickname}>
-                      {message.User.nickname}
+                      {message.sendUser.nickname}
                     </div>
                     <div className={styles.messageMsg}>
                       {message.message}
                     </div>
 
                   </div>
+                  <div>
 
+                  </div>
                 </div>
                 <div className={styles.messageBtnBox}>
                   <button type="button" className={styles.reportBtn}>
