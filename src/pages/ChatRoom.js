@@ -47,14 +47,13 @@ function ChatRoom() {
   };
 
   const scrollToBottom = () => {
-    console.log(chatFormRef.current?.scrollHeight, chatFormRef.current?.offsetHeight)
-    console.log(chatFormRef.current?.scrollTop >= chatFormRef.current?.scrollHeight - chatFormRef.current?.clientHeight)
-    if (chatFormRef.current?.scrollHeight !== chatFormRef.current?.height) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    scrollToBottom()
+    
+      scrollToBottom(); // 맨 아래로 스크롤
+    
   }, [chat])
 
 
@@ -86,7 +85,7 @@ function ChatRoom() {
   return (
     <section className={styles.section}>
       <h4 className="pt-3 pb-3">{data.roomInfo.title}</h4>
-      <div className={styles.chatForm} ref={chatFormRef} style={{height : '500px'}}>
+      <div className={styles.chatForm} ref={chatFormRef} style={{ height: '500px' }}>
         {chat.map((message, i) => {
           let prevMessage
           let timeDiff
