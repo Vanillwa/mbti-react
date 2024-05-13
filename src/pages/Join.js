@@ -87,6 +87,7 @@ function Join() {
   const handleRequestVerificationCode = async () => {
     try {
       const response = await requestEmailVerification(email);
+      console.log(response)
       if (response.message === 'success') {
         console.log("인증번호 : ", response.code)
         setCertificationValidation('valid');
@@ -255,12 +256,7 @@ function Join() {
         confirmButtonText: '확인'
       })
     }
-
-
   }
-
-  
-
 
   return (
     
