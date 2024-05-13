@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import { io } from "socket.io-client";
 import styles from "../css/ChatRoom.module.css";
@@ -12,14 +12,14 @@ import { PiSirenFill } from "react-icons/pi";
 import { socket } from "../service/socket/socket";
 
 function ChatRoom() {
-  console.log('rendered')
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
-
-  const { data, status } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
+  const chatFormRef = useRef()
+  const bottomRef = useRef()
+  const { data, status, refetch } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
     retry: 0,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
@@ -42,23 +42,39 @@ function ChatRoom() {
       message,
       targetId,
     };
-    socket.emit("send-message", body);
+    socket.emit("sendMessage", body);
     e.target.message.value = "";
   };
 
+  const scrollToBottom = () => {
+    console.log(chatFormRef.current?.scrollHeight, chatFormRef.current?.offsetHeight)
+    console.log(chatFormRef.current?.scrollTop >= chatFormRef.current?.scrollHeight - chatFormRef.current?.clientHeight)
+    if (chatFormRef.current?.scrollHeight !== chatFormRef.current?.height) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+
+  };
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [chat])
+
+
   useEffect(() => {
     const handleReceiveMessage = (newData) => {
-      console.log("newData : ", newData);
-      setChat((prevChat) => [newData, ...prevChat]);
+      setChat((prevChat) => [...prevChat, newData]);
     };
-    socket.on("send-message", handleReceiveMessage);
+
+    const handleUserJoined = (newData) => {
+      if (newData.targetId === userInfo.userId) setChat(newData.messages);
+    }
+
+    socket.on("sendMessage", handleReceiveMessage);
+    socket.on("userJoined", handleUserJoined);
     return () => {
-      socket.emit('leave')
-      socket.off("send-message", handleReceiveMessage);
+      socket.emit('leave', roomId)
+      socket.off("sendMessage", handleReceiveMessage);
+      socket.off("userJoined", handleUserJoined);
     };
   }, []);
-
-  
 
   if (status === "loading") {
     return <div>loading...</div>;
@@ -70,38 +86,78 @@ function ChatRoom() {
   return (
     <section className={styles.section}>
       <h4 className="pt-3 pb-3">{data.roomInfo.title}</h4>
-      <div className={styles.chatForm}>
-        {chat.map(message => {
+      <div className={styles.chatForm} ref={chatFormRef} style={{height : '500px'}}>
+        {chat.map((message, i) => {
+          let prevMessage
+          let timeDiff
+          if (i > 1) {
+            prevMessage = chat[i - 1]
+            const date1 = new Date(message.createdAt)
+            const date2 = new Date(prevMessage.createdAt)
+            timeDiff = date1.getMinutes() - date2.getMinutes()
+          }
+
           if (userInfo.userId === message.userId) {
             return (
-              <div key={message.messageId}
-                className={`${styles.message} ${styles.mine}`}>
+              <div key={message.messageId} className={`${styles.message} ${styles.mine}`}>
+                <div>
+                  {message.isRead === 1 ? "" : "안읽음"}
+                </div>
                 <div className={styles.mineContent}>
                   <div className={styles.myMessageInner}>{message.message}</div>
                 </div>
               </div>
             );
-          } else {
+          } else if (i > 1 && message.userId === prevMessage.userId && timeDiff == 0) {
 
             return (
 
               <div key={message.messageId} className={`${styles.message}`}>
+
+                <div className={styles.messageInner}>
+                  <div className={styles.messageContent}>
+
+
+                    <div className={styles.messageMsg}>
+                      {message.message}
+                    </div>
+
+                  </div>
+                  <div>
+
+                  </div>
+                </div>
+                <div className={styles.messageBtnBox}>
+                  <button type="button" className={styles.reportBtn}>
+                    <PiSirenFill />
+                  </button>
+                </div>
+              </div>
+
+
+            );
+          } else {
+            return (
+
+              <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.profileBox}>
-                  <img className={styles.userImg} src={message.User.profileImage} />
+                  <img className={styles.userImg} src={message.sendUser.profileImage} />
 
                 </div>
                 <div className={styles.messageInner}>
                   <div className={styles.messageContent}>
 
                     <div className={styles.messageNickname}>
-                      {message.User.nickname}
+                      {message.sendUser.nickname}
                     </div>
                     <div className={styles.messageMsg}>
                       {message.message}
                     </div>
 
                   </div>
+                  <div>
 
+                  </div>
                 </div>
                 <div className={styles.messageBtnBox}>
                   <button type="button" className={styles.reportBtn}>
@@ -114,6 +170,7 @@ function ChatRoom() {
             );
           }
         })}
+        <div ref={bottomRef}></div>
       </div>
       <form onSubmit={sendMessage} className={styles.inputForm}>
         <input name='message' />
@@ -121,7 +178,7 @@ function ChatRoom() {
           전송
         </Button>
       </form>
-    </section>
+    </section >
   );
 }
 

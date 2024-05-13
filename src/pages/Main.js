@@ -14,7 +14,6 @@ import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
-import { socket } from "../service/socket/socket";
 
 function Main() {
   console.log("rendered")
@@ -41,10 +40,10 @@ function Main() {
     };
 
     const res = await fetchLogin(body);
-    let array = ["updatePwd", "join", "findPwd", "logout",null]
+    let array = ["updatePwd", "join", "findPwd", "logout", null]
 
     if (res.message === "success") {
-      socket.emit("login");
+
       login(res.userInfo);
       if (array.includes(location.state)) navigate("/post/list");
       else navigate(-1);

@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
+import { socket } from "../service/socket/socket";
 
 export const AuthContext = createContext(null);
 
@@ -7,6 +8,8 @@ export const AuthProvider = ({ children }) => {
   const sessionIsLoggedIn = sessionStorage.getItem("isLoggedIn");
   const [isLoggedIn, setIsLoggedIn] = useState(sessionIsLoggedIn);
   const [userInfo, setUserInfo] = useState(sessionUserInfo);
+
+  if (isLoggedIn) socket.emit('login')
 
   const login = async (info) => {
     sessionStorage.setItem("userInfo", JSON.stringify(info));

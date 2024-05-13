@@ -1,11 +1,7 @@
 import axios from "axios";
 
-
-
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
-
-
 
 export const checkDuplicationEmail = async (body) => {
     const res = await axios.post("/join/checkDuplicationEmail", body);

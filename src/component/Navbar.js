@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styles from "../css/Nav.module.css";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
@@ -17,12 +17,14 @@ import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
 import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
-import ProfileDropDown from "./ProfileDropDown";
+import ProfileDropDown from "../ProfileDropDown";
 import user from "../svg/person-vcard-fill.svg";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, userInfo } = memoUserInfo;
+ 
+
   const navigate = useNavigate();
   const dialogRef = useRef();
 

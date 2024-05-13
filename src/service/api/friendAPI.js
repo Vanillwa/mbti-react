@@ -50,4 +50,4 @@ export const unblockUser = async(userId)=>{
 export const deleteFriend = async(friendId)=>{
   const res = await axios.delete(`friend/delete?friendId=${friendId}`)
   return res.data
-}
+} 
