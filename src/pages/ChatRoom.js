@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import { io } from "socket.io-client";
 import styles from "../css/ChatRoom.module.css";
@@ -10,13 +10,17 @@ import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "../component/sweetalert";
 import { PiSirenFill } from "react-icons/pi";
 import { socket } from "../service/socket/socket";
+import ChatReportModal from "../component/ChatReportModal";
 
-function ChatRoom() {
+function ChatRoom({messages}) {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
+
+
+ 
 
   const { data, status, refetch } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
     retry: 0,
@@ -63,6 +67,7 @@ function ChatRoom() {
     };
   }, []);
 
+ 
   if (status === "loading") {
     return <div>loading...</div>;
   }
@@ -72,8 +77,15 @@ function ChatRoom() {
 
   return (
     <section className={styles.section}>
+      <div className={styles.titleBox}>
       <h4 className="pt-3 pb-3">{data.roomInfo.title}</h4>
-      <div className={styles.chatForm}>
+      <div>
+        
+       <ChatReportModal data={data}/>
+       </div>
+      </div>
+      <div className={styles.chatForm} >
+        
         {chat.map(message => {
           if (userInfo.userId === message.userId) {
             return (
@@ -103,6 +115,7 @@ function ChatRoom() {
                     </div>
                     <div className={styles.messageMsg}>
                       {message.message}
+                      
                     </div>
 
                   </div>
@@ -110,11 +123,7 @@ function ChatRoom() {
 
                   </div>
                 </div>
-                <div className={styles.messageBtnBox}>
-                  <button type="button" className={styles.reportBtn}>
-                    <PiSirenFill />
-                  </button>
-                </div>
+               
               </div>
 
 

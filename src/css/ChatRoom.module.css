@@ -2,7 +2,11 @@
     max-width: 500px;
     margin: 0 auto;
   }
-  
+  .titleBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .chatForm {
     height: 540px;
     overflow-y: auto;

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 
 import Form from "react-bootstrap/Form";
 import {
+  getChatReportList,
   getCommentReportList,
   getPostReportList,
 } from "../service/api/reportAPI";
@@ -35,6 +36,14 @@ function ReportList() {
     status: commentStatus,
     refetch: commentRefetch,
   } = useQuery(["getCommentReportList"], () => getCommentReportList(), {
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+  const {
+    data: chatData,
+    status: chatStauts,
+    refetch: chatRefetch,
+  } = useQuery(["getChatReportList"], () => getChatReportList(), {
     retry: false,
     refetchOnWindowFocus: false,
   });
@@ -81,6 +90,8 @@ function ReportList() {
             commentData={commentData}
             commentStatus={commentStatus}
             postRefetch={postRefetch}
+            chatData={chatData}
+            chatStauts={chatStauts}
           />
         </div>
       </div>
