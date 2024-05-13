@@ -53,7 +53,7 @@ function ChatRoom() {
     };
     socket.on("send-message", handleReceiveMessage);
     return () => {
-      socket.emit('leave')
+      socket.emit('leave', roomId)
       socket.off("send-message", handleReceiveMessage);
     };
   }, []);
