@@ -1,6 +1,5 @@
 import { QueryClient, useMutation, useQuery } from "react-query";
 
-
 import { releaseUser, suspendUser } from "../service/api/reportAPI";
 import { getUserList } from "../service/api/userAPI";
 import Accordion from "react-bootstrap/Accordion";
@@ -9,41 +8,55 @@ import { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import styles from "../css/UserList.module.css";
 import sweetalert from "./sweetalert";
-function UserItems({data,status, filter, keyword, type , refetch}) {
+import { useAuthContext } from "../context/AuthContext";
+function UserItems({ data, status, filter, keyword, type, refetch }) {
   const blockRef = useRef();
   const [show, setShow] = useState(false);
-
+  const { memoUserInfo } = useAuthContext();
+  const { userInfo } = memoUserInfo;
   const [user, setUser] = useState();
   const queryClient = new QueryClient();
-  
+
   const handleClose = () => setShow(false);
 
-  const releaseMutate = useMutation((userId) => {
+  const releaseMutate = useMutation(userId => {
     return releaseUser(userId);
   });
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const alertResult = await sweetalert.question('정말 정지시키겠습니까?','','네','아니오')
-    if(alertResult.dismiss) return;
-    
-     
+    const alertResult = await sweetalert.question(
+      "정말 정지시키겠습니까?",
+      "",
+      "네",
+      "아니오"
+    );
+    if (alertResult.dismiss) return;
+
     const now = new Date();
     const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
     const blockDate = new Date(now.getTime() + addDay);
-    const result = await suspendUser({postId:null,userId: user.userId,blockDate} );
-    if(result.message === "success"){
-      sweetalert.success('정지 완료')
-      setShow(false)
-      refetch()
-    }else if(result.message === "fail"){
-      sweetalert.warning('오류 발생')
+    const result = await suspendUser({
+      postId: null,
+      userId: user.userId,
+      blockDate,
+    });
+    if (result.message === "success") {
+      sweetalert.success("정지 완료");
+      setShow(false);
+      refetch();
+    } else if (result.message === "fail") {
+      sweetalert.warning("오류 발생");
     }
-    
   };
 
-  const handleRelease =async (userId) => {
-    const alertResult =await sweetalert.question('차단해제 하시겠습니까','','네','아니오')
-    if(alertResult.dismiss)return;
+  const handleRelease = async userId => {
+    const alertResult = await sweetalert.question(
+      "차단해제 하시겠습니까",
+      "",
+      "네",
+      "아니오"
+    );
+    if (alertResult.dismiss) return;
     releaseMutate.mutate(userId, {
       onSuccess: async () => {
         await queryClient.invalidateQueries([
@@ -59,12 +72,17 @@ function UserItems({data,status, filter, keyword, type , refetch}) {
     // const result =await releaseUser(userId)
   };
 
-  const handleShowModal = (user) => {
-    setUser(user);
-    setShow(true);
+  const handleShowModal = user => {
+    console.log(user);
+    if (user.userId != userInfo.userId) {
+      setUser(user);
+      setShow(true);
+    }  else if (user.role === "admin") {
+      sweetalert.warning("관리자는 차단할 수 없습니다");
+    }
   };
 
-  const handleBlock = (userId) => {
+  const handleBlock = userId => {
     releaseMutate.mutate(userId, {
       onSuccess: async () => {
         await queryClient.invalidateQueries([
@@ -93,12 +111,12 @@ function UserItems({data,status, filter, keyword, type , refetch}) {
     );
   }
 
-  if(data.result.length === 0){
-    return(
+  if (data.result.length === 0) {
+    return (
       <>
-      <h1>검색결과가 없습니다.</h1>
+        <h1>검색결과가 없습니다.</h1>
       </>
-    )
+    );
   }
 
   return (
@@ -107,15 +125,17 @@ function UserItems({data,status, filter, keyword, type , refetch}) {
         <Modal.Header closeButton>
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
-        <Modal.Body >
-          <form className= {styles.blockModalForm}  onSubmit={handleSubmit}>
+        <Modal.Body>
+          <form className={styles.blockModalForm} onSubmit={handleSubmit}>
             {user?.nickname}
             <select className="me-2" ref={blockRef}>
               <option value={1}>1일</option>
-              <option  value={3}>3일</option>
+              <option value={3}>3일</option>
               <option value={7}>7일</option>
             </select>
-            <button className={styles.blockModalBtn} type="submit">정지</button>
+            <button className={styles.blockModalBtn} type="submit">
+              정지
+            </button>
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -124,9 +144,8 @@ function UserItems({data,status, filter, keyword, type , refetch}) {
           </Button>
         </Modal.Footer>
       </Modal>
-      {data.result.map((item) => {
+      {data.result.map(item => {
         return (
-
           <div className="container">
             <div className={`row ${styles.userinfo}`} key={item.userId}>
               <span className="col-2">유저ID: {item.userId}</span>
@@ -138,22 +157,19 @@ function UserItems({data,status, filter, keyword, type , refetch}) {
                 <button
                   type="button"
                   className={`col-1 btn btn-primary btn-ghost ${styles.blockBtn}`}
-                  onClick={() => handleRelease(item.userId)}
-                >
+                  onClick={() => handleRelease(item.userId)}>
                   차단해제
                 </button>
-              ) : (
+              ) : item.userId != userInfo.userId ? (
                 <button
                   type="button"
                   className={`col-1 btn btn-danger btn-ghost ${styles.blockBtn}`}
-                  onClick={() => handleShowModal(item)}
-                >
+                  onClick={() => handleShowModal(item)}>
                   차단하기
                 </button>
-              )}
+              ) : null}
             </div>
           </div>
-
         );
       })}
     </>

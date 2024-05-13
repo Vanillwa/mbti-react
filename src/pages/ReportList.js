@@ -4,18 +4,14 @@ import { useQuery } from "react-query";
 import Form from "react-bootstrap/Form";
 import {
   getCommentReportList,
-  getPostReportList
-
+  getPostReportList,
 } from "../service/api/reportAPI";
 import styles from "../css/ReportList.module.css";
 
 import ReportItems from "../component/ReportItems";
 
 function ReportList() {
-
- 
   const [type, setType] = useState("post");
- 
 
   // const handleCommentReport = report=>{
   //   setReport(report);
