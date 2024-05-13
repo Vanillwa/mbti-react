@@ -41,3 +41,4 @@ export const getProfileList = async (userId)=>{
   const res =  await axios.get(`/user/${userId}`)
   return res.data;
 }
+ 
