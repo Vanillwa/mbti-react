@@ -1,0 +1,38 @@
+.dropdown {
+    position: relative;
+   
+  }
+  
+  .menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: -18px; 
+    left: -9px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    
+   
+  }
+
+.box1 {
+  border: 1px solid black;
+
+
+}
+.box2 {
+ border-left: 1px solid black;
+ border-bottom: 1px solid black;
+ border-right: 1px solid black;
+
+
+}
+
+.box3 {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+ 
+ }
+ 

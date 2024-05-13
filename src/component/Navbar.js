@@ -17,9 +17,11 @@ import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
 import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import ProfileDropDown from "./ProfileDropDown";
+import user from "../svg/person-vcard-fill.svg";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
-  
+  const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, userInfo } = memoUserInfo;
   const navigate = useNavigate();
   const dialogRef = useRef();
@@ -41,10 +43,14 @@ const Navbar = () => {
     setDropdown(false);
   };
   const compareLogin = () => {
-    isLoggedIn
-      ? navigate("/memberevise", { state: { state: "mypage" } })
-      : navigate("/", { state: { state: "login" } });
+    if (isLoggedIn) {
+      setShowDropdown(!showDropdown); 
+    } else {
+      navigate("/", { state: { state: "login" } }); 
+    }
   };
+ 
+
 
   return (
     <div className={styles.container}>
@@ -62,16 +68,18 @@ const Navbar = () => {
             type="button"
             onClick={compareLogin}>
             <span className={styles.userName}>
-              {isLoggedIn ? userInfo.nickname : "로그인 해주세요"}
+              {isLoggedIn ? `${userInfo.nickname} 님`  : "로그인 해주세요"}
             </span>
             {isLoggedIn ? (
               <img src={userInfo.profileImage} className={styles.userImg} />
             ) : (
-              <img src={notImg} alt="회원사진" className={styles.userImg} />
+              <img src={notImg} alt="회원사진" className={styles.userImg}  />
             )}
           </button>
+          {showDropdown && <ProfileDropDown/>}
         </div>
       </nav>
+
 
       {/*왼쪽 사이드바*/}
       <div className={`${styles.item} ${styles.leftSidebar}`}>
@@ -167,7 +175,7 @@ const Navbar = () => {
               </dialog>
             </div>
           )}
-          {isLoggedIn ? (
+          {/* {isLoggedIn ? (
             <Link
               className={styles.menu}
               to={isLoggedIn ? "/memberevise" : "/"}>
@@ -196,7 +204,7 @@ const Navbar = () => {
                 </div>
               </dialog>
             </div>
-          )}
+          )} */}
 
           {userInfo != null && userInfo.role === "admin" ? (
             <>
@@ -220,7 +228,7 @@ const Navbar = () => {
         </div>
 
         <div type="button" className={`${styles.menu} ${styles.setting}`}>
-          <SettingDropdown />
+        
         </div>
       </div>
 
