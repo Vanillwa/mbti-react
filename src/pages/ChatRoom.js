@@ -22,6 +22,10 @@ function ChatRoom({messages}) {
 
  
 
+
+  const chatFormRef = useRef()
+  const bottomRef = useRef()
+
   const { data, status, refetch } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
     retry: 0,
     refetchOnWindowFocus: false,
@@ -49,9 +53,21 @@ function ChatRoom({messages}) {
     e.target.message.value = "";
   };
 
+  const scrollToBottom = () => {
+    console.log(chatFormRef.current?.scrollHeight, chatFormRef.current?.offsetHeight)
+    console.log(chatFormRef.current?.scrollTop >= chatFormRef.current?.scrollHeight - chatFormRef.current?.clientHeight)
+    if (chatFormRef.current?.scrollHeight !== chatFormRef.current?.height) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+
+  };
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [chat])
+
+
   useEffect(() => {
     const handleReceiveMessage = (newData) => {
-      setChat((prevChat) => [newData, ...prevChat]);
+      setChat((prevChat) => [...prevChat, newData]);
     };
 
     const handleUserJoined = (newData) => {
@@ -79,14 +95,28 @@ function ChatRoom({messages}) {
     <section className={styles.section}>
       <div className={styles.titleBox}>
       <h4 className="pt-3 pb-3">{data.roomInfo.title}</h4>
+
       <div>
         
        <ChatReportModal data={data}/>
        </div>
       </div>
-      <div className={styles.chatForm} >
+     
         
-        {chat.map(message => {
+        
+
+      <div className={styles.chatForm} ref={chatFormRef} style={{height : '500px'}}>
+        {chat.map((message, i) => {
+          let prevMessage
+          let timeDiff
+          if (i > 1) {
+            prevMessage = chat[i - 1]
+            const date1 = new Date(message.createdAt)
+            const date2 = new Date(prevMessage.createdAt)
+            timeDiff = date1.getMinutes() - date2.getMinutes()
+          }
+
+
           if (userInfo.userId === message.userId) {
             return (
               <div key={message.messageId} className={`${styles.message} ${styles.mine}`}>
@@ -98,8 +128,35 @@ function ChatRoom({messages}) {
                 </div>
               </div>
             );
-          } else {
+          } else if (i > 1 && message.userId === prevMessage.userId && timeDiff == 0) {
 
+            return (
+
+              <div key={message.messageId} className={`${styles.message}`}>
+
+                <div className={styles.messageInner}>
+                  <div className={styles.messageContent}>
+
+
+                    <div className={styles.messageMsg}>
+                      {message.message}
+                    </div>
+
+                  </div>
+                  <div>
+
+                  </div>
+                </div>
+                <div className={styles.messageBtnBox}>
+                  <button type="button" className={styles.reportBtn}>
+                    <PiSirenFill />
+                  </button>
+                </div>
+              </div>
+
+
+            );
+          } else {
             return (
 
               <div key={message.messageId} className={`${styles.message}`}>
@@ -130,6 +187,7 @@ function ChatRoom({messages}) {
             );
           }
         })}
+        <div ref={bottomRef}></div>
       </div>
       <form onSubmit={sendMessage} className={styles.inputForm}>
         <input name='message' />
@@ -137,7 +195,7 @@ function ChatRoom({messages}) {
           전송
         </Button>
       </form>
-    </section>
+    </section >
   );
 }
 

@@ -11,7 +11,7 @@
     height: 540px;
     overflow-y: auto;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     padding: 18px;
     background-color: #A8C0D6;
   }
