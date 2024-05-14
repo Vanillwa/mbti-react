@@ -52,9 +52,9 @@ const Navbar = () => {
     <div className={styles.container}>
       {/* 상단 네브바 */}
       <nav className={`${styles.item} ${styles.nav}`}>
-        <div className={styles.navbarLogo}>
+        <Link to="/" className={styles.navbarLogo}>
           <img src={RUT} className={styles.logo}></img>
-        </div>
+        </Link>
         <div className={styles.navbarSearch}>
           <input type="text" placeholder="검색" />
         </div>
@@ -81,10 +81,19 @@ const Navbar = () => {
       {/*왼쪽 사이드바*/}
       <div className={`${styles.item} ${styles.leftSidebar}`}>
         <div className={styles.menuItems}>
-          <Link className={styles.menu} to="/">
-            <img className={styles.svg} src={home} />
-            <div className={styles.span}>홈</div>
+          
+          
+
+          <Link className={styles.menu} to="/post/list">
+            <img className={styles.svg} src={list} />
+            <div className={styles.span}>모두의공간</div>
           </Link>
+          <div className={`${styles.menu} ${styles.mbtiMenu}`}>
+            <EListDropdown />
+          </div>
+          <div className={`${styles.menu} ${styles.mbtiMenu}`}>
+            <IListDropdown />
+          </div>
           {isLoggedIn ? (
             <Link className={styles.menu} to="/post/write">
               <img className={styles.svg} src={write} />
@@ -102,16 +111,6 @@ const Navbar = () => {
             </div>
           )}
 
-          <Link className={styles.menu} to="/post/list">
-            <img className={styles.svg} src={list} />
-            <div className={styles.span}>모두의공간</div>
-          </Link>
-          <div className={`${styles.menu} ${styles.mbtiMenu}`}>
-            <EListDropdown />
-          </div>
-          <div className={`${styles.menu} ${styles.mbtiMenu}`}>
-            <IListDropdown />
-          </div>
           {isLoggedIn ? (
             <Link className={styles.menu} to="/friend">
               <img className={styles.svg} src={friend} />
