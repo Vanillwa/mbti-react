@@ -3,20 +3,22 @@ import {ToastContainer, toast } from 'react-toastify';
 import { socket } from '../service/socket/socket';
 
 import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom';
 const Alarm = () => {
 
-
+  const navigate = useNavigate()
   const notify = (data)=> {
+    
     toast(`${data.sendUser.nickname} : ${data.message}`,{
-      autoClose : 1500,
-      position:"bottom-right"
+      autoClose : 2000,
+      position:"bottom-right",
     })
   } 
-    socket.on('notification', notify)
+    // socket.on('notification', notify)
 
     return (
     <div>
-      <ToastContainer/>
+      <ToastContainer onClick={navigate(`/chat/list/`)}/>
     </div>
   );
 };

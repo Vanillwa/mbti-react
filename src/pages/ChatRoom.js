@@ -1,12 +1,11 @@
 import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import styles from "../css/ChatRoom.module.css";
 import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
-import { PiSirenFill } from "react-icons/pi";
 import { socket } from "../service/socket/socket";
 
 import downImg from '../svg/arrow-down-circle.svg'
@@ -14,8 +13,7 @@ import downImg from '../svg/arrow-down-circle.svg'
 import ChatReportModal from "../component/ChatReportModal";
 
 
-function ChatRoom({ messages }) {
-  const navigate = useNavigate();
+function ChatRoom() {
   const { roomId } = useParams();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -120,7 +118,7 @@ function ChatRoom({ messages }) {
     <div><ChatReportModal roomId={roomId}/></div>
     <div className={styles.formWrap}>
       <div className={styles.chatForm} ref={chatFormRef} style={{ height: "500px" }}>
-     
+      
         {chat.map((message, i) => {
           let prevMessage;
           let timeDiff;
@@ -169,7 +167,7 @@ function ChatRoom({ messages }) {
         <div ref={bottomRef}></div>
       </div>
       {isBottom ? null : (
-        <div type="button" onClick={scrollToBottom} className={styles.toBottomBtn}>
+        <div type="button" onClick={scrollToBottomSmooth} className={styles.toBottomBtn}>
           <img src={downImg} alt="scroll to bottom" />
         </div>
       )}
