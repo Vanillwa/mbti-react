@@ -31,7 +31,7 @@ h1{
   gap: 8px;
 }
 .title{
-  width: 500px;
+  width: 30vw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

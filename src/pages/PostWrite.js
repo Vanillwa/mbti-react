@@ -5,7 +5,8 @@ import { postPost } from "../service/api/postAPI";
 import { Link, useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
+import { ImageResize } from "quill-image-resize";
 import sweetalert from "../component/sweetalert";
 
 const PostWrite = () => {
