@@ -14,9 +14,10 @@ export const reportPost = async (body) =>{
     const res = await axios.post("/comment/report",body)
     return res.data;
   }
-  //채팅신고하기
-  export const reportChat = async(body)=>{
-
+  //채팅방신고하기
+  export const reportChatRoom = async(body)=>{
+    const res = await axios.post("/chatroom/report",body)
+    return res.data;
   }
   //게시글신고목록
   export const getPostReportList = async ()=>{
@@ -29,11 +30,12 @@ export const reportPost = async (body) =>{
     const res = await axios.get("/report/comment")
     return res.data;
   }
-  //채팅신고목록
-  export const getChatReportList = async()=>{
-    
+  //채팅방신고목록
+  export const getChatRoomReportList = async(roomId)=>{
+    const res = await axios.get(`/report/chatroom?roomId=${roomId}`)
+    return res.data;
   }
-
+ 
   //게시글신고처리
   export const updatePostReport = async (reportId)=>{
     const res = await axios.put(`/report/post/${reportId}`)
@@ -44,9 +46,10 @@ export const reportPost = async (body) =>{
     const res = await axios.put(`/report/comment/${reportId}`)
     return res.data;
   }
-  //채팅신고 처리
-  export const updateChatReport = async(reportId)=>{
-    
+  //채팅방신고 처리
+  export const updateChatRoomReport = async(reportId)=>{
+    const res= await axios.put(`/report/chatroom/${reportId}`)
+    return res.data;
   }
   //계정정지
 export const suspendUser = async(body)=>{

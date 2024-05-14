@@ -15,8 +15,8 @@ function ReportItems({
   type,
   setType,
   postRefetch,
-  chatData,
-  chatStatus
+  chatRoomData,
+  chatRoomStatus,
 }) {
   const queryClient = new QueryClient();
   const [show, setShow] = useState(false);
@@ -50,10 +50,11 @@ function ReportItems({
       postId: report.Post?.postId,
       userId: user.userId,
       commentId: report.Comment?.commentId,
-      chatId: report.Chat?.chatId,
+      chatRoomId: report.ChatRoom?.roomId,
       blockDate,
     });
     if (result.message === "success") {
+      console.log("report:",report)
       sweetalert.success("정지 완료");
       handleComplete(report.reportId);
       setShow(false);
@@ -71,10 +72,11 @@ function ReportItems({
   function ContentComponent({ content }) {
     return <div dangerouslySetInnerHTML={{ __html: content }}></div>;
   }
+
   if (
     postStatus === "loading" ||
     commentStatus === "loading" ||
-    chatStatus === "loading"
+    chatRoomStatus === "loading"
   ) {
     return (
       <div className="container">
@@ -84,7 +86,7 @@ function ReportItems({
   } else if (
     postStatus === "error" ||
     commentStatus === "error" ||
-    chatStatus === "error"
+    chatRoomStatus === "error"
   ) {
     return (
       <div className="container">
@@ -130,7 +132,7 @@ function ReportItems({
               <Accordion.Item eventKey={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
-                    <div className={`row   ${styles.reportContent}`}>
+                    <div className={`row  ${styles.reportContent}`}>
                       <span className={`col-3 ${styles.reportId}`}>
                         글번호:{item.Post.postId}
                       </span>
@@ -182,9 +184,7 @@ function ReportItems({
                     </div>
                   </Accordion.Header>
                   <Accordion.Body>
-                    <div className={styles.postTitle}>{item.Comment.title}</div>
-                    <div className={styles.postContent}>
-                      <span>댓글 내용</span>
+                    <div className={styles.commentContent}>
                       <ContentComponent content={item.Comment.content} />
                     </div>
 
@@ -199,8 +199,9 @@ function ReportItems({
               </>
             );
           })
-        ) : type === "chat" && chatData.length > 0 ? (
-          chatData.map(item => {
+        ) : type === "chat" && chatRoomData.length > 0 ? (
+          chatRoomData.map(item => {
+            {console.log(item.ChatRoom)}
             return (
               <>
                 <Accordion.Item eventKey={item.reportId}>
@@ -208,10 +209,10 @@ function ReportItems({
                     <div className="container">
                       <div className={`row   ${styles.reportContent}`}>
                         <span className={`col-3 ${styles.reportId}`}>
-                          글번호:{item.Chat.commentId}
+                          방번호:{item.ChatRoom.roomId}
                         </span>
                         <span className={`col-3  ${styles.reportId}`}>
-                          작성자:{item.Chat.User.nickname}
+                          피신고자:{item.ChatRoom.user2.nickname}
                         </span>
                         <span className={`col-3 ${styles.reportPerson}`}>
                           신고자:{item.User.nickname}
@@ -221,16 +222,17 @@ function ReportItems({
                     </div>
                   </Accordion.Header>
                   <Accordion.Body>
-                    <div className={styles.postTitle}>{item.Chat.title}</div>
                     <div className={styles.postContent}>
                       <span>채팅 내용</span>
-                      <ContentComponent content={item.Chat.content} />
+                      <ContentComponent content={item.ChatRoom.roomId} />
                     </div>
 
                     <button
                       className={styles.reportBtn}
                       type="button"
-                      onClick={() => handlePostReport(item.Chat.User, item)}>
+                      onClick={() =>
+                        handlePostReport(item.ChatRoom.user2, item)
+                      }>
                       처리
                     </button>
                   </Accordion.Body>

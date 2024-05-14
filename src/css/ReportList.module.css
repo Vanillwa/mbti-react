@@ -1,6 +1,9 @@
 
 
-
+.radioForm{
+    font-weight: 600;
+    font-size:18px;
+}
 .title {
     font-weight: bold;
     margin-bottom:7vh;
@@ -15,16 +18,20 @@
 
 .reportList {
     border: 1px solid black;
-    border-radius: 5px;
-    width:70%;
+    border-radius: 7px;
+    width:80%;
+   
+    
+   
 }
 
 .reportContent {
     display: flex;
-    justify-content: center;
-    text-align: start;
+    justify-content: space-between;
     align-items: center;
+    text-align: start;
     font-size:18px;
+    
 }
 
 
@@ -35,13 +42,24 @@
 .postTitle{
     font-family: 'KCC-Hanbit';
     margin-bottom:30px;
+    padding:7px;
+    border-bottom: 1px solid lightgray;
 }
 .postContent{
     font-family: 'KCC-Hanbit';
     overflow: auto;
     margin-bottom:30px;
+    border-bottom: 1px solid lightgray;
+    padding:5px;
 }
 
+.commentContent{
+    font-family: 'KCC-Hanbit';
+    overflow: auto;
+    margin-bottom:30px;
+    border-bottom: 1px solid lightgray;
+    padding:5px;
+}
 .reportBtn{
     font-family: 'KCC-Hanbit';
 width:5vw;

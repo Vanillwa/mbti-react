@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 
 import Form from "react-bootstrap/Form";
 import {
-  getChatReportList,
+  getChatRoomReportList,
   getCommentReportList,
   getPostReportList,
 } from "../service/api/reportAPI";
@@ -40,10 +40,10 @@ function ReportList() {
     refetchOnWindowFocus: false,
   });
   const {
-    data: chatData,
-    status: chatStauts,
-    refetch: chatRefetch,
-  } = useQuery(["getChatReportList"], () => getChatReportList(), {
+    data: chatRoomData,
+    status: chatRoomStauts,
+    refetch: chatRoomRefetch,
+  } = useQuery(["getChatRoomReportList"], () => getChatRoomReportList(), {
     retry: false,
     refetchOnWindowFocus: false,
   });
@@ -51,7 +51,7 @@ function ReportList() {
   return (
     <>
       <Form onChange={handleRadioOnChange}>
-        <div className="mb-3 radio">
+        <div className={`mb-3 radio ${styles.radioForm}`}>
           <Form.Check
             inline
             label="게시글 신고"
@@ -90,8 +90,8 @@ function ReportList() {
             commentData={commentData}
             commentStatus={commentStatus}
             postRefetch={postRefetch}
-            chatData={chatData}
-            chatStauts={chatStauts}
+            chatRoomData={chatRoomData}
+            chatRoomStauts={chatRoomStauts}
           />
         </div>
       </div>

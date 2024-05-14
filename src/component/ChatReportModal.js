@@ -7,9 +7,9 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
-import { reportChat } from "../service/api/reportAPI";
+import {  reportChatRoom } from "../service/api/reportAPI";
 
-function ChatReportModal({chatId}){
+function ChatReportModal({roomId}){
     const [show, setShow] = useState(false);
     const [reportType, setReportType] = useState(0);
   
@@ -57,7 +57,7 @@ function ChatReportModal({chatId}){
 
     const handleReport = async () => {
         let body = {
-          chatId,
+          roomId,
           type: reportType,
         };
         if (reportType == 0) {
@@ -65,7 +65,7 @@ function ChatReportModal({chatId}){
           return;
         }
         console.log(body);
-        const result = await reportChat(body);
+        const result = await reportChatRoom(body);
     
         if(result.message === "success"){
           alert("신고가 완료되었습니다.");
@@ -99,7 +99,7 @@ function ChatReportModal({chatId}){
 
         <Form.Group>
           <Form.Label>신고 채팅방번호</Form.Label>
-          <Form.Control value={chatId} disabled="true" />
+          <Form.Control value={roomId} disabled="true" />
         </Form.Group>
         <Form.Group
           className="mb-3"
