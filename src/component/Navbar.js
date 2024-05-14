@@ -64,7 +64,7 @@ const Navbar = () => {
             type="button"
             onClick={compareLogin}>
             <span className={styles.userName} >
-              <img src={user}></img>
+              <img src={User}></img>
               {isLoggedIn ? `${userInfo.nickname} 님`  : "로그인 해주세요"}
             </span>
             {isLoggedIn ? (

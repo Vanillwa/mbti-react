@@ -1,0 +1,25 @@
+.container{
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.postBox{
+  gap: 36px;
+}
+
+.postWrap{
+  width: 300px;
+  height: 400px;
+  border: 1px solid black;
+}
+.postHeader{
+  width: auto;
+  height: 200px;
+}
+.img{
+  width: auto;
+  height: 100%;
+}

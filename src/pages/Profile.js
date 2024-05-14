@@ -1,15 +1,14 @@
 import { getProfileList } from "../service/api/postAPI";
-import styles from '../css/profile.module.css';
-import { Link, useParams } from 'react-router-dom';
-import noImg from '../images/noImg.png';
+import styles from "../css/profile.module.css";
+import { Link, useParams } from "react-router-dom";
+import noImg from "../images/noImg.png";
 import { useQuery } from "react-query";
 
-
 function Profile() {
-  const { userId } = useParams()
+  const { userId } = useParams();
 
   const { data, status } = useQuery(
-    ['getProfileList', userId],
+    ["getProfileList", userId],
     () => getProfileList(userId),
     {
       retry: false,
@@ -39,10 +38,10 @@ function Profile() {
     );
   }
 
-  const { nickname } = data.userInfo
+  const { nickname } = data.userInfo;
 
   function removeHTMLTags(htmlString) {
-    return htmlString.replace(/<[^>]*>?/gm, '');
+    return htmlString.replace(/<[^>]*>?/gm, "");
   }
 
   return (
@@ -50,30 +49,40 @@ function Profile() {
       <div className={`container ${styles.container}`}>
         <h2>{nickname}님의 게시글</h2>
       </div>
-      {data.recentPost.map((userdata) => (
-        <div className={`row ${styles.postBox}`} key={userdata.writerId}>
-          <div className={`col-3 ${styles.postWrap}`}>
+      <div className={`row ${styles.postBox}`}>
+        {data.recentPost.map((userdata) => (
+          <div className={`col col-3 ${styles.postWrap}`} key={userdata.writerId}>
             <div className={styles.postHeader}>
-            <img className={styles.img} src={userdata.content.match(/<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/)?.[1] || noImg} />
+              <img
+                className={styles.img}
+                src={
+                  userdata.content.match(
+                    /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
+                  )?.[1] || noImg
+                }
+              />
             </div>
             <div className={styles.postBody}>
-              <Link to={`/post/view?postId=${userdata.postId}`} className={styles.content}>
+              <Link
+                to={`/post/view?postId=${userdata.postId}`}
+                className={styles.content}
+              >
                 <div className={styles.imgBox}>
-                  <div className={styles.thumbnail}>
-                  
+                  <div className={styles.thumbnail}></div>
+                  <div className={styles.dateReadhitBox}>
+                    <div className={styles.contnet}>
+                      {" "}
+                      {removeHTMLTags(userdata.content)}
+                    </div>
+                    <div className={styles.title}> {userdata.title}</div>
                   </div>
-                   <div className={styles.dateReadhitBox}>
-                <div className={styles.contnet}> {removeHTMLTags(userdata.content)}</div>
-                <div className={styles.title}> {userdata.title}</div>
-              </div>
                 </div>
-                <div className={styles.titleBox}>
-                </div>
+                <div className={styles.titleBox}></div>
               </Link>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </>
   );
 }
