@@ -3,11 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
-import { io } from "socket.io-client";
 import styles from "../css/ChatRoom.module.css";
 import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
-import sweetalert from "../component/sweetalert";
 import { PiSirenFill } from "react-icons/pi";
 import { socket } from "../service/socket/socket";
 
@@ -109,6 +107,7 @@ function ChatRoom() {
             );
           } else if (i > 1 && message.userId === prevMessage.userId && timeDiff == 0) {
 
+
             return (
 
               <div key={message.messageId} className={`${styles.message}`}>
@@ -141,6 +140,7 @@ function ChatRoom() {
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.profileBox}>
                   <img className={styles.userImg} src={message.sendUser.profileImage} />
+
 
                 </div>
                 <div className={styles.messageInner}>
