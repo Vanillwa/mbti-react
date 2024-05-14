@@ -6,7 +6,6 @@ import { Button } from "react-bootstrap";
 import styles from "../css/ChatRoom.module.css";
 import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
-import sweetalert from "../component/sweetalert";
 import { PiSirenFill } from "react-icons/pi";
 import { socket } from "../service/socket/socket";
 
@@ -123,6 +122,7 @@ function ChatRoom() {
               </div>
             );
           } else if (i > 1 && message.userId === prevMessage.userId && timeDiff == 0) {
+
 
             return (
 
