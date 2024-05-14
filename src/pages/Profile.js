@@ -1,19 +1,14 @@
-// import { useContext, useState, useEffect } from 'react';
-//  import { UserContext } from '../context/UserContext';
 import { getProfileList } from "../service/api/postAPI";
-import styles from '../css/PostList.module.css';
-import { Link, useParams } from 'react-router-dom';
-import noImg from '../images/noImg.png';
+import styles from "../css/profile.module.css";
+import { Link, useParams } from "react-router-dom";
+import noImg from "../images/noImg.png";
 import { useQuery } from "react-query";
 
-
 function Profile() {
-  // userId값을 받아옴
-const {userId} = useParams()
-
+  const { userId } = useParams();
 
   const { data, status } = useQuery(
-    ['getProfileList',userId],
+    ["getProfileList", userId],
     () => getProfileList(userId),
     {
       retry: false,
@@ -21,9 +16,6 @@ const {userId} = useParams()
     }
   );
 
-
-
-  
   if (status === "loading") {
     return (
       <div className="container">
@@ -46,45 +38,51 @@ const {userId} = useParams()
     );
   }
 
- 
-  const {nickname} = data.userInfo
+  const { nickname } = data.userInfo;
 
-  console.log(data)
+  function removeHTMLTags(htmlString) {
+    return htmlString.replace(/<[^>]*>?/gm, "");
+  }
+
   return (
-    <>  
-     <div className="container">
+    <>
+      <div className={`container ${styles.container}`}>
         <h2>{nickname}님의 게시글</h2>
-     
       </div>
-      {data.recentPost.map((userdata) => (
-        <div className={styles.postBox}>
-        <div className={styles.postWrap} key={userdata.writerId}>
-          <div className={styles.postHeader}>
-              
-              <div className={styles.dateReadhitBox}>         
-              <div className={styles.readhit}>작성자:{nickname}</div>
-              <div className={styles.likes}>❤ {userdata.like}</div>
-              <div className={styles.readhit}>Views: {userdata.readhit}</div>
-              <div className={styles.date}>Created: {new Date(userdata.createdAt).toLocaleDateString()}</div>
+      <div className={`row ${styles.postBox}`}>
+        {data.recentPost.map((userdata) => (
+          <div className={`col col-3 ${styles.postWrap}`} key={userdata.writerId}>
+            <div className={styles.postHeader}>
+              <img
+                className={styles.img}
+                src={
+                  userdata.content.match(
+                    /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
+                  )?.[1] || noImg
+                }
+              />
+            </div>
+            <div className={styles.postBody}>
+              <Link
+                to={`/post/view?postId=${userdata.postId}`}
+                className={styles.content}
+              >
+                <div className={styles.imgBox}>
+                  <div className={styles.thumbnail}></div>
+                  <div className={styles.dateReadhitBox}>
+                    <div className={styles.contnet}>
+                      {" "}
+                      {removeHTMLTags(userdata.content)}
+                    </div>
+                    <div className={styles.title}> {userdata.title}</div>
+                  </div>
+                </div>
+                <div className={styles.titleBox}></div>
+              </Link>
             </div>
           </div>
-          <div className={styles.postBody}>
-            <Link to={`/post/view?postId=${userdata.postId}`} className={styles.content}>
-              <div className={styles.imgBox}>
-                <div className={styles.thumbnail}>
-                  <img className={styles.img} src={userdata.content.match(/<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/)?.[1] || noImg} />
-                </div>
-              </div>
-              <div className={styles.titleBox}>
-                <div className={styles.title}>{userdata.title}</div>
-              </div>
-            </Link>
-          </div>
-        </div>
-        </div>
-      ))}
-      <div style={{ border: 'none' }} className="post d-flex align-items-center"></div>
-      
+        ))}
+      </div>
     </>
   );
 }

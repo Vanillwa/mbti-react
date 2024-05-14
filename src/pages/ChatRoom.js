@@ -3,14 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
-import { io } from "socket.io-client";
 import styles from "../css/ChatRoom.module.css";
 import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
-import sweetalert from "../component/sweetalert";
 import { PiSirenFill } from "react-icons/pi";
 import { socket } from "../service/socket/socket";
+
+import downImg from '../svg/arrow-down-circle.svg'
+
 import ChatReportModal from "../component/ChatReportModal";
+
 
 function ChatRoom({ messages }) {
   const navigate = useNavigate();
@@ -18,6 +20,9 @@ function ChatRoom({ messages }) {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
+
+  const [isBottom, setIsBottom] = useState(true)
+
 
   const chatFormRef = useRef();
   const bottomRef = useRef();
@@ -38,28 +43,50 @@ function ChatRoom({ messages }) {
 
   const sendMessage = e => {
     e.preventDefault();
+    setIsBottom(true)
     let message = e.target.message.value;
     if (message === "") return;
-    let targetId =
-      userInfo.userId === data.roomInfo.userId1
-        ? data.roomInfo.userId2
-        : data.roomInfo.userId1;
-    let body = {
-      roomId,
-      message,
-      targetId,
-    };
+    let targetId = (userInfo.userId === data.roomInfo.userId1) ? data.roomInfo.userId2 : data.roomInfo.userId1;
+    let body = { roomId, message, targetId };
     socket.emit("sendMessage", body);
     e.target.message.value = "";
   };
 
   const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: "instant" });
+  };
+  const scrollToBottomSmooth = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
     scrollToBottom(); // 맨 아래로 스크롤
-  }, [chat]);
+
+
+    const handleScroll = () => {
+      const scrollTop = chatFormRef.current?.scrollTop;
+      const scrollHeight = chatFormRef.current?.scrollHeight;
+      const clientHeight = chatFormRef.current?.clientHeight;
+      if (scrollHeight - scrollTop == clientHeight) setIsBottom(true)
+      else setIsBottom(false)
+    }
+    const chatForm = chatFormRef.current
+    if (chatForm) chatForm.addEventListener('scroll', handleScroll)
+
+    return () => {
+      if (chatForm) chatForm.removeEventListener('scroll', handleScroll)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (isBottom) scrollToBottom()
+    else {
+      
+    }
+  }, [chat])
+
+
+
 
   useEffect(() => {
     const handleReceiveMessage = newData => {
@@ -89,18 +116,11 @@ function ChatRoom({ messages }) {
   return (
     
     <section className={styles.section}>
-      <div className={styles.titleBox}>
-        <h4 className="pt-3 pb-3">{data.roomInfo.title}</h4>
-
-        <div>
-          <ChatReportModal roomId={roomId} />
-        </div>
-      </div>
-
-      <div
-        className={styles.chatForm}
-        ref={chatFormRef}
-        style={{ height: "500px" }}>
+    <h4 className="pt-3 pb-3">{data.roomInfo.title}</h4>
+    <div><ChatReportModal roomId={roomId}/></div>
+    <div className={styles.formWrap}>
+      <div className={styles.chatForm} ref={chatFormRef} style={{ height: "500px" }}>
+     
         {chat.map((message, i) => {
           let prevMessage;
           let timeDiff;
@@ -113,20 +133,14 @@ function ChatRoom({ messages }) {
 
           if (userInfo.userId === message.userId) {
             return (
-              <div
-                key={message.messageId}
-                className={`${styles.message} ${styles.mine}`}>
+              <div key={message.messageId} className={`${styles.message} ${styles.mine}`}>
                 <div>{message.isRead === 1 ? "" : "안읽음"}</div>
                 <div className={styles.mineContent}>
                   <div className={styles.myMessageInner}>{message.message}</div>
                 </div>
               </div>
             );
-          } else if (
-            i > 1 &&
-            message.userId === prevMessage.userId &&
-            timeDiff == 0
-          ) {
+          } else if (i > 1 && message.userId === prevMessage.userId && timeDiff === 0) {
             return (
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.messageInner}>
@@ -134,26 +148,19 @@ function ChatRoom({ messages }) {
                     <div className={styles.messageMsg}>{message.message}</div>
                   </div>
                 </div>
-             
               </div>
             );
           } else {
             return (
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.profileBox}>
-                  <img
-                    className={styles.userImg}
-                    src={message.sendUser.profileImage}
-                  />
+                  <img className={styles.userImg} src={message.sendUser.profileImage} alt="profile" />
                 </div>
                 <div className={styles.messageInner}>
                   <div className={styles.messageContent}>
-                    <div className={styles.messageNickname}>
-                      {message.sendUser.nickname}
-                    </div>
+                    <div className={styles.messageNickname}>{message.sendUser.nickname}</div>
                     <div className={styles.messageMsg}>{message.message}</div>
                   </div>
-                  <div></div>
                 </div>
               </div>
             );
@@ -161,14 +168,21 @@ function ChatRoom({ messages }) {
         })}
         <div ref={bottomRef}></div>
       </div>
-      <form onSubmit={sendMessage} className={styles.inputForm}>
-        <input name="message" />
-        <Button variant="secondary btn-sm" type="submit">
-          전송
-        </Button>
-      </form>
-    </section>
+      {isBottom ? null : (
+        <div type="button" onClick={scrollToBottom} className={styles.toBottomBtn}>
+          <img src={downImg} alt="scroll to bottom" />
+        </div>
+      )}
+    </div>
+    <form onSubmit={sendMessage} className={styles.inputForm}>
+      <input name="message" />
+      <Button variant="secondary btn-sm" type="submit">
+        전송
+      </Button>
+    </form>
+  </section>
   );
 }
+
 
 export default ChatRoom;

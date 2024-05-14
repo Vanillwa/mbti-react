@@ -9,6 +9,7 @@ import { Link, useNavigate} from "react-router-dom";
 
 import { requestChat } from "../service/api/chatAPI";
 import sweetalert from "../component/sweetalert";
+import { Form } from "react-bootstrap";
 
 
 const FriendList = () => {
@@ -163,11 +164,35 @@ const FriendList = () => {
 
   return (
     <>
-    <select onChange={handleBtnChange}>
-      <option value='friend'>friend</option>
-      <option value='request'>request</option>
-      <option value='block'>block</option>
-    </select>
+    <Form className={styles.radioBox} onChange={handleBtnChange}>
+        <div key={`inline-radio`} className="mb-3">
+          <Form.Check
+            value='friend'
+            inline
+            type="radio"
+            label="친구 목록"
+            name="group1"
+            id={`inline-1`}
+            defaultChecked
+          />
+          <Form.Check
+            inline
+            value='request'
+            type="radio"
+            label="요청 목록"
+            name="group1"
+            id={`inline-2`}
+          />
+          <Form.Check
+            inline
+            value='block'
+            type="radio"
+            name="group1"
+            label="차단 목록"
+            id={`inline-3`}
+          />
+        </div>
+    </Form>
     {btn == 'friend' ? <div className={styles.container}>
     <div className={styles.title}>친구 목록</div>
     {friendData.length > 0 ? friendData.map((item)=>{
