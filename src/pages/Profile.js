@@ -3,6 +3,9 @@ import styles from "../css/profile.module.css";
 import { Link, useParams } from "react-router-dom";
 import noImg from "../images/noImg.png";
 import { useQuery } from "react-query";
+import chat from "../svg/chat.svg";
+import readhit from "../svg/readhit.svg";
+import like from "../svg/like.svg";
 
 function Profile() {
   const { userId } = useParams();
@@ -44,6 +47,7 @@ function Profile() {
     return htmlString.replace(/<[^>]*>?/gm, "");
   }
 
+  console.log(data)
   return (
     <>
       <div className={`container ${styles.container}`}>
@@ -65,17 +69,37 @@ function Profile() {
             <div className={styles.postBody}>
               <Link
                 to={`/post/view?postId=${userdata.postId}`}
-                className={styles.content}
+
               >
                 <div className={styles.imgBox}>
                   <div className={styles.thumbnail}></div>
                   <div className={styles.dateReadhitBox}>
-                    <div className={styles.contnet}>
-                      {" "}
+                    <div className={styles.title}> {userdata.title}</div>
+                    <div className={styles.content} >
+                    {'\u00A0\u00A0'}
                       {removeHTMLTags(userdata.content)}
                     </div>
-                    <div className={styles.title}> {userdata.title}</div>
+
+                    <div className={styles.bottom}>
+                    <div>
+                    {new Date(userdata.createdAt).toLocaleDateString()}
+                    </div>
+                    <div className={styles.icone}>
+                   <div>
+                    <img src={like}/>
+                    {userdata.like}
+                    </div>
+                    <div>
+                    <img src={readhit}/>
+                    {userdata.readhit}
+                    </div>
+                    </div>
+                    
+
+                    </div>
+                    
                   </div>
+                
                 </div>
                 <div className={styles.titleBox}></div>
               </Link>
