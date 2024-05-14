@@ -7,14 +7,23 @@ import Button from "react-bootstrap/Button";
 import { suspendUser, updatePostReport } from "../service/api/reportAPI";
 import sweetalert from "./sweetalert";
 import { QueryClient, useMutation } from "react-query";
-function ReportItems({ postData, postStatus, commentData, commentStatus,type,setType ,postRefetch}) {
+function ReportItems({
+  postData,
+  postStatus,
+  commentData,
+  commentStatus,
+  type,
+  setType,
+  postRefetch,
+  chatRoomData,
+  chatRoomStatus,
+}) {
   const queryClient = new QueryClient();
   const [show, setShow] = useState(false);
   const [user, setUser] = useState({ nickname: "" });
   const blockRef = useRef();
   const [report, setReport] = useState();
   const handleClose = () => setShow(false);
-
 
   const completeMutate = useMutation(reportId => {
     return updatePostReport(reportId);
@@ -41,9 +50,11 @@ function ReportItems({ postData, postStatus, commentData, commentStatus,type,set
       postId: report.Post?.postId,
       userId: user.userId,
       commentId: report.Comment?.commentId,
+      chatRoomId: report.ChatRoom?.roomId,
       blockDate,
     });
     if (result.message === "success") {
+      console.log("report:",report)
       sweetalert.success("정지 완료");
       handleComplete(report.reportId);
       setShow(false);
@@ -61,13 +72,22 @@ function ReportItems({ postData, postStatus, commentData, commentStatus,type,set
   function ContentComponent({ content }) {
     return <div dangerouslySetInnerHTML={{ __html: content }}></div>;
   }
-  if (postStatus === "loading" || commentStatus === "loading") {
+
+  if (
+    postStatus === "loading" ||
+    commentStatus === "loading" ||
+    chatRoomStatus === "loading"
+  ) {
     return (
       <div className="container">
         <h1>Loading...</h1>
       </div>
     );
-  } else if (postStatus === "error" || commentStatus === "error") {
+  } else if (
+    postStatus === "error" ||
+    commentStatus === "error" ||
+    chatRoomStatus === "error"
+  ) {
     return (
       <div className="container">
         <h1>error!</h1>
@@ -77,7 +97,7 @@ function ReportItems({ postData, postStatus, commentData, commentStatus,type,set
 
   return (
     <>
-    <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
@@ -106,14 +126,13 @@ function ReportItems({ postData, postStatus, commentData, commentStatus,type,set
         </Modal.Footer>
       </Modal>
       <Accordion>
-     
-        {type === "post" && postData.length >0  ? (
+        {type === "post" && postData.length > 0 ? (
           postData.map(item => {
             return (
               <Accordion.Item eventKey={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
-                    <div className={`row   ${styles.reportContent}`}>
+                    <div className={`row  ${styles.reportContent}`}>
                       <span className={`col-3 ${styles.reportId}`}>
                         글번호:{item.Post.postId}
                       </span>
@@ -143,13 +162,10 @@ function ReportItems({ postData, postStatus, commentData, commentStatus,type,set
               </Accordion.Item>
             );
           })
-        ) : type === "comment" && commentData.length > 0 ?  (
-          
+        ) : type === "comment" && commentData.length > 0 ? (
           commentData.map(item => {
-            
             return (
               <>
-              
                 <Accordion.Item eventKey={item.reportId}>
                   <Accordion.Header>
                     <div className="container">
@@ -168,9 +184,7 @@ function ReportItems({ postData, postStatus, commentData, commentStatus,type,set
                     </div>
                   </Accordion.Header>
                   <Accordion.Body>
-                    <div className={styles.postTitle}>{item.Comment.title}</div>
-                    <div className={styles.postContent}>
-                      <span>댓글 내용</span>
+                    <div className={styles.commentContent}>
                       <ContentComponent content={item.Comment.content} />
                     </div>
 
@@ -185,9 +199,47 @@ function ReportItems({ postData, postStatus, commentData, commentStatus,type,set
               </>
             );
           })
-        ) : 
-         type === "chat" ? (
-          <p>채팅방 신고 </p>
+        ) : type === "chat" && chatRoomData.length > 0 ? (
+          chatRoomData.map(item => {
+            {console.log(item.ChatRoom)}
+            return (
+              <>
+                <Accordion.Item eventKey={item.reportId}>
+                  <Accordion.Header>
+                    <div className="container">
+                      <div className={`row   ${styles.reportContent}`}>
+                        <span className={`col-3 ${styles.reportId}`}>
+                          방번호:{item.ChatRoom.roomId}
+                        </span>
+                        <span className={`col-3  ${styles.reportId}`}>
+                          피신고자:{item.ChatRoom.user2.nickname}
+                        </span>
+                        <span className={`col-3 ${styles.reportPerson}`}>
+                          신고자:{item.User.nickname}
+                        </span>
+                        <span className={`col-3`}>신고유형:{item.type}</span>
+                      </div>
+                    </div>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <div className={styles.postContent}>
+                      <span>채팅 내용</span>
+                      <ContentComponent content={item.ChatRoom.roomId} />
+                    </div>
+
+                    <button
+                      className={styles.reportBtn}
+                      type="button"
+                      onClick={() =>
+                        handlePostReport(item.ChatRoom.user2, item)
+                      }>
+                      처리
+                    </button>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </>
+            );
+          })
         ) : (
           <div>작성된 신고가 없습니다.</div>
         )}
