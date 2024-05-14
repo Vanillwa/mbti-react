@@ -31,7 +31,10 @@ h1{
   gap: 8px;
 }
 .title{
-
+  width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .userBox{
   display: flex;
