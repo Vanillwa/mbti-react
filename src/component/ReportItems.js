@@ -4,33 +4,56 @@ import styles from "../css/ReportList.module.css";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { suspendUser, updatePostReport } from "../service/api/reportAPI";
+import {
+  suspendUser,
+  updateChatRoomReport,
+  updateCommentReport,
+  updatePostReport,
+} from "../service/api/reportAPI";
 import sweetalert from "./sweetalert";
 import { QueryClient, useMutation } from "react-query";
 function ReportItems({
   postData,
   postStatus,
+  postRefetch,
   commentData,
   commentStatus,
-  type,
-  setType,
-  postRefetch,
+  commentRefetch,
   chatRoomData,
   chatRoomStatus,
+  chatRefetch,
+  type,
+  setType
 }) {
   const queryClient = new QueryClient();
   const [show, setShow] = useState(false);
+  const [show1,setShow1] = useState(false);
+  const [show2,setShow2] = useState(false);
   const [user, setUser] = useState({ nickname: "" });
   const blockRef = useRef();
   const [report, setReport] = useState();
   const handleClose = () => setShow(false);
+  const handleClose1 = ()=>setShow1(false);
+  const handleClose2 = ()=>setShow2(false);
 
-  const completeMutate = useMutation(reportId => {
+
+
+  const completePostMutate = useMutation(reportId => {
     return updatePostReport(reportId);
   });
 
-  const handleComplete = async reportId => {
-    completeMutate.mutate(reportId, {
+  const completeCommentMutate = useMutation(reportId => {
+    return updateCommentReport(reportId);
+  });
+
+  const completeChatRoomMutate = useMutation(reportId => {
+    return updateChatRoomReport(reportId);
+  });
+
+
+
+  const handlePostComplete = async reportId => {
+    completePostMutate.mutate(reportId, {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["getPostReportList"]);
         await postRefetch();
@@ -40,7 +63,53 @@ function ReportItems({
     setShow(false);
   };
 
-  const handleSubmit = async e => {
+  const handleCommentComplete = async reportId => {
+    completeCommentMutate.mutate(reportId, {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["getCommentReportList"]);
+        await commentRefetch();
+        return;
+      },
+    });
+    setShow(false);
+  };
+
+  const handleChatRoomComplete = async reportId => {
+    completeChatRoomMutate.mutate(reportId, {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["getChatRoomReportList"]);
+        await chatRefetch();
+        return;
+      },
+    });
+    setShow(false);
+  };
+
+
+  //게시글 신고처리
+  const handlePostSubmit = async e => {
+    console.log(report);
+    e.preventDefault();
+    const now = new Date();
+    const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
+    const blockDate = new Date(now.getTime() + addDay);
+    const result = await suspendUser({
+      postId: report.Post?.postId,
+      userId: user.userId,
+      blockDate,
+    });
+    if (result.message === "success") {
+      console.log("report:", report);
+      sweetalert.success("정지 완료");
+      completePostMutate(report.reportId);
+      setShow(false);
+    } else if (result.message === "fail") {
+      sweetalert.warning("정지 실패");
+    }
+  };
+
+  //댓글 신고처리
+  const handleCommentSubmit = async e => {
     console.log(report);
     e.preventDefault();
     const now = new Date();
@@ -50,14 +119,35 @@ function ReportItems({
       postId: report.Post?.postId,
       userId: user.userId,
       commentId: report.Comment?.commentId,
+      blockDate,
+    });
+    if (result.message === "success") {
+      console.log("report:", report);
+      sweetalert.success("정지 완료");
+      completeCommentMutate(report.reportId);
+      setShow1(false);
+    } else if (result.message === "fail") {
+      sweetalert.warning("정지 실패");
+    }
+  };
+  //채팅 신고처리
+  const handleChatRoomSubmit = async e => {
+    console.log(report);
+    e.preventDefault();
+    const now = new Date();
+    const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
+    const blockDate = new Date(now.getTime() + addDay);
+    const result = await suspendUser({
+      postId: report.Post?.postId,
+      userId: user.userId,
       chatRoomId: report.ChatRoom?.roomId,
       blockDate,
     });
     if (result.message === "success") {
-      console.log("report:",report)
+      console.log("report:", report);
       sweetalert.success("정지 완료");
-      handleComplete(report.reportId);
-      setShow(false);
+      completeChatRoomMutate(report.reportId);
+      setShow2(false);
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
     }
@@ -67,6 +157,16 @@ function ReportItems({
     setUser(userData);
     setReport(reportData);
     setShow(true);
+  };
+  const handleCommentReport = (userData, reportData) => {
+    setUser(userData);
+    setReport(reportData);
+    setShow1(true);
+  };
+  const handleChatReport = (userData, reportData) => {
+    setUser(userData);
+    setReport(reportData);
+    setShow2(true);
   };
 
   function ContentComponent({ content }) {
@@ -102,7 +202,7 @@ function ReportItems({
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className={styles.blockModalForm} onSubmit={handleSubmit}>
+          <form className={styles.blockModalForm} onSubmit={handlePostSubmit}>
             <span className="me-2">닉네임: {user.nickname}</span>
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
@@ -117,7 +217,7 @@ function ReportItems({
         <Modal.Footer>
           <Button
             variant="secondary"
-            onClick={() => handleComplete(report.reportId)}>
+            onClick={() => handlePostComplete(report.reportId)}>
             처리완료
           </Button>
           <Button variant="primary" onClick={handleClose}>
@@ -125,6 +225,67 @@ function ReportItems({
           </Button>
         </Modal.Footer>
       </Modal>
+{/* 댓글신고모달 */}
+<Modal show={show1} onHide={handleClose1}>
+        <Modal.Header closeButton>
+          <Modal.Title>유저 관리</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className={styles.blockModalForm} onSubmit={handleCommentSubmit}>
+            <span className="me-2">닉네임: {user.nickname}</span>
+            <select className="me-3" ref={blockRef}>
+              <option value={1}>1일</option>
+              <option value={3}>3일</option>
+              <option value={7}>7일</option>
+            </select>
+            <button className={styles.blockModalBtn} type="submit">
+              정지
+            </button>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => handleCommentComplete(report.reportId)}>
+            처리완료
+          </Button>
+          <Button variant="primary" onClick={handleClose2}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+{/* 채팅신고모달 */}
+      <Modal show={show2} onHide={handleClose2}>
+        <Modal.Header closeButton>
+          <Modal.Title>유저 관리</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className={styles.blockModalForm} onSubmit={handleChatRoomSubmit}>
+            <span className="me-2">닉네임: {user.nickname}</span>
+            <select className="me-3" ref={blockRef}>
+              <option value={1}>1일</option>
+              <option value={3}>3일</option>
+              <option value={7}>7일</option>
+            </select>
+            <button className={styles.blockModalBtn} type="submit">
+              정지
+            </button>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => handleChatRoomComplete(report.reportId)}>
+            처리완료
+          </Button>
+          <Button variant="primary" onClick={handleClose2}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Accordion>
         {type === "post" && postData.length > 0 ? (
           postData.map(item => {
@@ -191,7 +352,7 @@ function ReportItems({
                     <button
                       className={styles.reportBtn}
                       type="button"
-                      onClick={() => handlePostReport(item.Comment.User, item)}>
+                      onClick={() => handleCommentReport(item.Comment.User, item)}>
                       처리
                     </button>
                   </Accordion.Body>
@@ -201,7 +362,9 @@ function ReportItems({
           })
         ) : type === "chat" && chatRoomData.length > 0 ? (
           chatRoomData.map(item => {
-            {console.log(item.ChatRoom)}
+            {
+              console.log(item.ChatRoom);
+            }
             return (
               <>
                 <Accordion.Item eventKey={item.reportId}>
@@ -230,9 +393,11 @@ function ReportItems({
                     <button
                       className={styles.reportBtn}
                       type="button"
-                      onClick={() =>
-                        handlePostReport(item.ChatRoom.user2, item)
-                      }>
+                      onClick={() => {
+                        item.ChatRoom.user1.userId === item.User.userId
+                          ? handleChatReport(item.ChatRoom.user2, item)
+                          : handleChatReport(item.ChatRoom.user1, item);
+                      }}>
                       처리
                     </button>
                   </Accordion.Body>

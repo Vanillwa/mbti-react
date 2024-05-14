@@ -42,7 +42,7 @@ function ReportList() {
   const {
     data: chatRoomData,
     status: chatRoomStauts,
-    refetch: chatRoomRefetch,
+    refetch: chatRefetch,
   } = useQuery(["getChatRoomReportList"], () => getChatRoomReportList(), {
     retry: false,
     refetchOnWindowFocus: false,
@@ -85,13 +85,17 @@ function ReportList() {
           <ReportItems
             postData={postData}
             postStatus={postStatus}
+            postRefetch={postRefetch}
             type={type}
             setType={setType}
+            
             commentData={commentData}
             commentStatus={commentStatus}
-            postRefetch={postRefetch}
+            commentRefetch={commentRefetch}
+            
             chatRoomData={chatRoomData}
             chatRoomStauts={chatRoomStauts}
+            chatRefetch={chatRefetch}
           />
         </div>
       </div>
