@@ -1,104 +1,21 @@
-.section {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  .chatForm {
-    height: 540px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    padding: 18px;
-    background-color: #A8C0D6;
-  }
-  .chatForm::-webkit-scrollbar{
-    background: white;
-    border-radius: 12px;
-  width: 10px;
-  }
-  .chatForm::-webkit-scrollbar-thumb{
-    background-color: white;
-    border-radius: 12px;
-  }
-  .message {
-    display: flex;
-    padding: 3px 0;
-    font-size: 18px;
-    gap:8px;
-  }
+.section { max-width: 500px; margin: 0 auto; } 
 
-  .mine {
-    display: flex;
-    justify-content: end;
-  }
-  .mineContent{
-    display: flex;
-    justify-content: end;
-    max-width: 150px;
-  }
-  .myMessageInner{
-    padding: 5px 12px;
-    background-color: #F9EB54;
-    color: black;
-    border-radius: 5px;
-    text-align: start;
-    word-break: break-all;
-  }
-  .messageInner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .messageContent{
-   display: flex;
-   flex-direction: column;
-    max-width: 150px;
+.chatForm {position:relative; height: 540px; overflow-y: scroll; display: flex; flex-direction: column; padding: 18px; background-color: #A8C0D6; } 
+.chatForm::-webkit-scrollbar { background: white; border-radius: 12px; width: 10px; } 
+.chatForm::-webkit-scrollbar-thumb { background-color: white; border-radius: 12px; } 
+.message { display: flex; padding: 3px 0; font-size: 18px; gap:8px; } 
+.mine { display: flex; justify-content: end; } 
+.mineContent { display: flex; justify-content: end; max-width: 150px; } 
+.myMessageInner { padding: 5px 12px; background-color: #F9EB54; color: black; border-radius: 5px; text-align: start; word-break: break-all; } 
+.messageInner { display: flex; justify-content: center; align-items: center; } 
+.messageContent { display: flex; flex-direction: column; max-width: 150px; gap:4px; } 
+.messageNickname { font-size:16px; } 
+.messageMsg { background-color: white; padding: 5px 12px; color: black; border-radius: 5px; text-align: start; word-break: break-all; } 
+.profileBox { width:50px; height:50px; overflow: hidden; border-radius: 50%; display: flex; align-items: center; } 
+.userImg { width:100%; height: auto; } 
+.inputForm { display: flex; justify-content: center; gap: 5px; padding: 12px 0 0; } 
+ 
+.inputForm > input { width: 100%; font-size: 18px; padding: 0 7px; } 
+.reportBtn { border: none; background-color: transparent; color: #93979b; font-size: 12px; } 
 
-   gap:4px;
-  }
-  .messageNickname{
-    font-size:16px;
-  }
-  .messageMsg{
-
-    background-color: white;
-    padding: 5px 12px;
-    color: black;
-    border-radius: 5px;
-    text-align: start;
-    word-break: break-all;
-  }
-.profileBox{
-width:50px;
-height:50px;
-overflow: hidden;
-border-radius: 50%;
-display: flex;
-align-items: center;
-
-}
-.userImg{
-width:100%;
-height: auto;
-  
-    
-  }
-  .inputForm {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    padding: 12px 0 0;
-  }
-  
-  .inputForm > input {
-    width: 100%;
-    font-size: 18px;
-    padding: 0 7px;
-  }
-.reportBtn{
-  border: none;
-  background-color: transparent;
-  color: #93979b;
-  font-size: 12px;
-  
-}
+.toBottomBtn{position:absolute; top: 0; left: 0; z-index: 999;}

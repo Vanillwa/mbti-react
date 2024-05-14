@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
-import { io } from "socket.io-client";
 import styles from "../css/ChatRoom.module.css";
 import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
@@ -17,6 +16,7 @@ function ChatRoom() {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
+  const [isBottom, setIsBottom] = useState(true)
   const chatFormRef = useRef()
   const bottomRef = useRef()
   const { data, status, refetch } = useQuery(["getChatRoom", roomId], () => getChatRoom(roomId), {
@@ -31,31 +31,46 @@ function ChatRoom() {
 
   const sendMessage = (e) => {
     e.preventDefault();
+    setIsBottom(true)
     let message = e.target.message.value;
     if (message === "") return;
-    let targetId =
-      userInfo.userId === data.roomInfo.userId1
-        ? data.roomInfo.userId2
-        : data.roomInfo.userId1;
-    let body = {
-      roomId,
-      message,
-      targetId,
-    };
+    let targetId = (userInfo.userId === data.roomInfo.userId1) ? data.roomInfo.userId2 : data.roomInfo.userId1;
+    let body = { roomId, message, targetId };
     socket.emit("sendMessage", body);
     e.target.message.value = "";
   };
 
   const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: "instant" });
+  };
+  const scrollToBottomSmooth = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    
-      scrollToBottom(); // 맨 아래로 스크롤
-    
-  }, [chat])
+    scrollToBottom(); // 맨 아래로 스크롤
 
+    const handleScroll = () => {
+      const scrollTop = chatFormRef.current?.scrollTop;
+      const scrollHeight = chatFormRef.current?.scrollHeight;
+      const clientHeight = chatFormRef.current?.clientHeight;
+      if (scrollHeight - scrollTop == clientHeight) setIsBottom(true)
+      else setIsBottom(false)
+    }
+    const chatForm = chatFormRef.current
+    if (chatForm) chatForm.addEventListener('scroll', handleScroll)
+
+    return () => {
+      if (chatForm) chatForm.removeEventListener('scroll', handleScroll)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (isBottom) scrollToBottomSmooth()
+    else {
+      
+    }
+  }, [chat])
 
   useEffect(() => {
     const handleReceiveMessage = (newData) => {
@@ -115,15 +130,9 @@ function ChatRoom() {
 
                 <div className={styles.messageInner}>
                   <div className={styles.messageContent}>
-
-
                     <div className={styles.messageMsg}>
                       {message.message}
                     </div>
-
-                  </div>
-                  <div>
-
                   </div>
                 </div>
                 <div className={styles.messageBtnBox}>
@@ -132,30 +141,21 @@ function ChatRoom() {
                   </button>
                 </div>
               </div>
-
-
             );
           } else {
             return (
-
               <div key={message.messageId} className={`${styles.message}`}>
                 <div className={styles.profileBox}>
                   <img className={styles.userImg} src={message.sendUser.profileImage} />
-
                 </div>
                 <div className={styles.messageInner}>
                   <div className={styles.messageContent}>
-
                     <div className={styles.messageNickname}>
                       {message.sendUser.nickname}
                     </div>
                     <div className={styles.messageMsg}>
                       {message.message}
                     </div>
-
-                  </div>
-                  <div>
-
                   </div>
                 </div>
                 <div className={styles.messageBtnBox}>
@@ -164,11 +164,10 @@ function ChatRoom() {
                   </button>
                 </div>
               </div>
-
-
             );
           }
         })}
+        <div className={styles.toBottomBtn}>밑으로 가기</div>
         <div ref={bottomRef}></div>
       </div>
       <form onSubmit={sendMessage} className={styles.inputForm}>
