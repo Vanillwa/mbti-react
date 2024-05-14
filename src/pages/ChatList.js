@@ -3,12 +3,15 @@ import styles from "../css/Chat.module.css";
 import { useQuery } from "react-query";
 import { getChatList } from "../service/api/chatAPI";
 import { Link } from "react-router-dom";
+import {useAuthContext } from "../context/AuthContext";
 const ChatList = () => {
   const { data, status } = useQuery(["getChatList"], () => getChatList(), {
     retry: false,
     refetchOnWindowFocus: false,
   });
 
+  const { memoUserInfo } = useAuthContext();
+  const { isLoggedIn, userInfo } = memoUserInfo;
 
 
   if (status === "loading") {
@@ -41,10 +44,11 @@ const ChatList = () => {
         <div className={styles.chatBox}>
           <div className={styles.chatItems}>
             {data.map((item) => {
+              
               console.log(item)
               return (
               <Link to={`/chat/list/${item.roomId}`} className={styles.itemBox} key={item.roomId}>
-                <div className="">{item.title}</div>
+                <div className="">{userInfo.userId == item.user1.userId ? item.user2.nickname : item.user1?.nickname}</div>
                 <div className=""></div>
               </Link>
               )

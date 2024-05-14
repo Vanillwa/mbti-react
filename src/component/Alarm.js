@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { Slide, ToastContainer, Zoom, toast } from "react-toastify";
 import { socket } from "../service/socket/socket";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +15,7 @@ const Alarm = () => {
 
     const toastId = toast(`${data.sendUser.nickname} : ${data.message}`, {
       autoClose: 2000,
+      transition : Zoom,
       position: "bottom-right",
       onClick: () => {
         navigate(`/chat/list/${data.roomId}`);
@@ -29,9 +30,7 @@ const Alarm = () => {
 
   useEffect(() => {
     socket.on("notification", notify);
-    return () => {
-      socket.off("notification", notify);
-    };
+    return () => socket.off("notification", notify);
   }, [userToastIds]);
 
   return (
