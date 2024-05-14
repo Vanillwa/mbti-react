@@ -17,7 +17,7 @@ import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
 import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
-import ProfileDropDown from "../ProfileDropDown";
+import ProfileDropDown from "../component/ProfileDropDown";
 import user from "../svg/person-vcard-fill.svg";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
