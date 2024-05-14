@@ -1,7 +1,7 @@
 .section { max-width: 500px; margin: 0 auto; } 
-
-.chatForm {position:relative; height: 540px; overflow-y: scroll; display: flex; flex-direction: column; padding: 18px; background-color: #A8C0D6; } 
-.chatForm::-webkit-scrollbar { background: white; border-radius: 12px; width: 10px; } 
+.formWrap{position: relative;}
+.chatForm { height: 540px; overflow-y: scroll; display: flex; flex-direction: column; padding: 18px; background-color: #A8C0D6; } 
+.chatForm::-webkit-scrollbar {display: none; background: white; border-radius: 12px; width: 10px; } 
 .chatForm::-webkit-scrollbar-thumb { background-color: white; border-radius: 12px; } 
 .message { display: flex; padding: 3px 0; font-size: 18px; gap:8px; } 
 .mine { display: flex; justify-content: end; } 
@@ -14,8 +14,8 @@
 .profileBox { width:50px; height:50px; overflow: hidden; border-radius: 50%; display: flex; align-items: center; } 
 .userImg { width:100%; height: auto; } 
 .inputForm { display: flex; justify-content: center; gap: 5px; padding: 12px 0 0; } 
- 
+
 .inputForm > input { width: 100%; font-size: 18px; padding: 0 7px; } 
 .reportBtn { border: none; background-color: transparent; color: #93979b; font-size: 12px; } 
 
-.toBottomBtn{position:absolute; top: 0; left: 0; z-index: 999;}
+.toBottomBtn{position: absolute; bottom: 0; padding: 48px 0 18px; width: 100%; background: linear-gradient(360deg, rgba(35, 37, 66, 0.3) 0%, transparent 100%);}

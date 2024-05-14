@@ -17,6 +17,7 @@ import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import ProfileDropDown from "../component/ProfileDropDown";
 import sweetalert from "./sweetalert";
+import Alarm from "./Alarm";
 
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
@@ -24,7 +25,6 @@ const Navbar = () => {
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const navigate = useNavigate();
-  const dialogRef = useRef();
 
   const handleopenModal = async() => {
     const result = await sweetalert.question('로그인이 필요한 컨텐츠입니다.', '로그인 하시겠습니까?','로그인 하러가기','닫기')
@@ -174,6 +174,9 @@ const Navbar = () => {
       {/* 컨텐츠 영역 */}
       <div className={`${styles.item} ${styles.content}`}>
         <Outlet />
+      </div>
+      <div className={styles.rightSidebar}>
+        <Alarm/>
       </div>
     </div>
   );

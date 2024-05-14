@@ -8,6 +8,7 @@ import { getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
 import { PiSirenFill } from "react-icons/pi";
 import { socket } from "../service/socket/socket";
+import downImg from '../svg/arrow-down-circle.svg'
 
 function ChatRoom() {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ function ChatRoom() {
   }, [data])
 
   useEffect(() => {
-    if (isBottom) scrollToBottomSmooth()
+    if (isBottom) scrollToBottom()
     else {
       
     }
@@ -99,6 +100,7 @@ function ChatRoom() {
   return (
     <section className={styles.section}>
       <h4 className="pt-3 pb-3">{data.roomInfo.title}</h4>
+      <div className={styles.formWrap}>
       <div className={styles.chatForm} ref={chatFormRef} style={{ height: '500px' }}>
         {chat.map((message, i) => {
           let prevMessage
@@ -167,8 +169,11 @@ function ChatRoom() {
             );
           }
         })}
-        <div className={styles.toBottomBtn}>밑으로 가기</div>
+        
+        
         <div ref={bottomRef}></div>
+      </div>
+        {isBottom ? null : <div type="button" onClick={scrollToBottomSmooth} className={styles.toBottomBtn}><img src={downImg}/></div>}
       </div>
       <form onSubmit={sendMessage} className={styles.inputForm}>
         <input name='message' />
@@ -176,6 +181,7 @@ function ChatRoom() {
           전송
         </Button>
       </form>
+
     </section >
   );
 }
