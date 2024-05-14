@@ -17,7 +17,7 @@ import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
 import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
-import ProfileDropDown from "../ProfileDropDown";
+import ProfileDropDown from "./ProfileDropDown";
 import user from "../svg/person-vcard-fill.svg";
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
@@ -69,7 +69,8 @@ const Navbar = () => {
             className={styles.profileBtn}
             type="button"
             onClick={compareLogin}>
-            <span className={styles.userName}>
+            <span className={styles.userName} >
+              <img src={user}></img>
               {isLoggedIn ? `${userInfo.nickname} 님`  : "로그인 해주세요"}
             </span>
             {isLoggedIn ? (
@@ -177,36 +178,7 @@ const Navbar = () => {
               </dialog>
             </div>
           )}
-          {/* {isLoggedIn ? (
-            <Link
-              className={styles.menu}
-              to={isLoggedIn ? "/memberevise" : "/"}>
-              <img className={styles.svg} src={profile} />
-              <div className={styles.span}> 마이페이지</div>
-            </Link>
-          ) : (
-            <div>
-              <div
-                type="button"
-                className={styles.menu}
-                onClick={handleopenModal}>
-                <img className={styles.svg} src={profile} />
-                <div className={styles.span}>마이페이지</div>
-              </div>
-              <dialog className={styles.dialog} ref={dialogRef}>
-                <h2 className="pt-2 pb-2">로그인이 필요한 컨텐츠입니다.</h2>
-                <p>로그인 하시겠습니까?</p>
-                <div className="d-flex justify-content-end">
-                  <Link className={styles.goLogin} to={`/`}>
-                    로그인 하러가기
-                  </Link>
-                  <div type="button" onClick={handleCloseModal}>
-                    닫기
-                  </div>
-                </div>
-              </dialog>
-            </div>
-          )} */}
+        
 
           {userInfo != null && userInfo.role === "admin" ? (
             <>
@@ -229,9 +201,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <div type="button" className={`${styles.menu} ${styles.setting}`}>
-        
-        </div>
+    
       </div>
 
       {/* 컨텐츠 영역 */}

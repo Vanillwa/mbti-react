@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 
+
 // 커스텀 훅: 외부 클릭을 감지
 function TouchDetected(ref, callback) {
   useEffect(() => {
+    
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
         callback();
