@@ -4,7 +4,6 @@ import { Link, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
-import SettingDropdown from "./SettingDropdown";
 
 import User from "../svg/people-fill.svg"
 import RUT from "../images/areyout.png";
@@ -13,46 +12,39 @@ import notImg from "../svg/person-circle.svg";
 import home from "../svg/house.svg";
 import list from "../svg/card-list.svg";
 import friend from "../svg/people-fill.svg";
-import profile from "../svg/person-square.svg";
 import chatting from "../svg/chat-dots.svg";
 import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import ProfileDropDown from "../component/ProfileDropDown";
-import user from "../svg/person-vcard-fill.svg";
+import sweetalert from "./sweetalert";
+
 const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, userInfo } = memoUserInfo;
- 
 
   const navigate = useNavigate();
   const dialogRef = useRef();
 
-  const handleopenModal = () => {
-    dialogRef.current.showModal();
-  };
-
-  const handleCloseModal = () => {
-    dialogRef.current.close();
+  const handleopenModal = async() => {
+    const result = await sweetalert.question('로그인이 필요한 컨텐츠입니다.', '로그인 하시겠습니까?','로그인 하러가기','닫기')
+    if(result.dismiss) return;
+    else{
+      navigate('/')
+    }
   };
 
   const handleRequestLogin = ()=>{
     navigate("/",{state:"login"})
   }
   
-  const [dropdown, setDropdown] = useState(false);
-  const closeDropdown = () => {
-    setDropdown(false);
-  };
   const compareLogin = () => {
     if (isLoggedIn) {
-      setShowDropdown(!showDropdown); 
+      setShowDropdown(!showDropdown);
     } else {
       navigate("/", { state: { state: "login" } }); 
     }
   };
- 
-
 
   return (
     <div className={styles.container}>
@@ -104,15 +96,6 @@ const Navbar = () => {
                 <img className={styles.svg} src={write} />
                 <div className={styles.span}>글쓰기</div>
               </div>
-              <dialog className={styles.dialog} ref={dialogRef}>
-                <h2>로그인이 필요한 컨텐츠입니다.</h2>
-                <p>로그인 하시겠습니까?</p>
-                <button type="button" onClick={handleRequestLogin}>로그인 하러가기</button>
-                <br />
-                <div type="button" onClick={handleCloseModal}>
-                  닫기
-                </div>
-              </dialog>
             </div>
           )}
 
@@ -140,15 +123,7 @@ const Navbar = () => {
                 <img className={styles.svg} src={friend} />
                 <div className={styles.span}>친구</div>
               </div>
-              <dialog className={styles.dialog} ref={dialogRef}>
-                <h2>로그인이 필요한 컨텐츠입니다.</h2>
-                <p>로그인 하시겠습니까?</p>
-                <button type="button" onClick={handleRequestLogin}>로그인 하러가기</button>
-                <br />
-                <div type="button" onClick={handleCloseModal}>
-                  닫기
-                </div>
-              </dialog>
+              
             </div>
           )}
           {isLoggedIn ? (
@@ -166,47 +141,9 @@ const Navbar = () => {
                 <img className={styles.svg} src={chatting} />
                 <div className={styles.span} >채팅</div>
               </div>
-              <dialog className={styles.dialog} ref={dialogRef}>
-                <h2>로그인이 필요한 컨텐츠입니다.</h2>
-                <p>로그인 하시겠습니까?</p>
-                <Link to={`/`}>로그인 하러가기</Link>
-                <br />
-                <div type="button" onClick={handleCloseModal}>
-                  닫기
-                </div>
-              </dialog>
             </div>
           )}
-          {/* {isLoggedIn ? (
-            <Link
-              className={styles.menu}
-              to={isLoggedIn ? "/memberevise" : "/"}>
-              <img className={styles.svg} src={profile} />
-              <div className={styles.span}> 마이페이지</div>
-            </Link>
-          ) : (
-            <div>
-              <div
-                type="button"
-                className={styles.menu}
-                onClick={handleopenModal}>
-                <img className={styles.svg} src={profile} />
-                <div className={styles.span}>마이페이지</div>
-              </div>
-              <dialog className={styles.dialog} ref={dialogRef}>
-                <h2 className="pt-2 pb-2">로그인이 필요한 컨텐츠입니다.</h2>
-                <p>로그인 하시겠습니까?</p>
-                <div className="d-flex justify-content-end">
-                  <Link className={styles.goLogin} to={`/`}>
-                    로그인 하러가기
-                  </Link>
-                  <div type="button" onClick={handleCloseModal}>
-                    닫기
-                  </div>
-                </div>
-              </dialog>
-            </div>
-          )} */}
+
 
           {userInfo != null && userInfo.role === "admin" ? (
             <>
