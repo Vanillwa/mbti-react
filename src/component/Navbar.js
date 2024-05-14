@@ -175,8 +175,6 @@ const Navbar = () => {
       {/* 컨텐츠 영역 */}
       <div className={`${styles.item} ${styles.content}`}>
         <Outlet />
-      </div>
-      <div className={styles.rightSidebar}>
         <Alarm/>
       </div>
     </div>
