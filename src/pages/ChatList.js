@@ -10,6 +10,7 @@ const ChatList = () => {
   });
 
 
+
   if (status === "loading") {
     return (
       <div className="container">
@@ -31,7 +32,7 @@ const ChatList = () => {
       </div>
     );
   }
-
+  console.log(data)
   return (
     <>
 
@@ -40,11 +41,12 @@ const ChatList = () => {
         <div className={styles.chatBox}>
           <div className={styles.chatItems}>
             {data.map((item) => {
+              console.log(item)
               return (
-              <div className={styles.itemBox} key={item.roomId}>
+              <Link to={`/chat/list/${item.roomId}`} className={styles.itemBox} key={item.roomId}>
                 <div className="">{item.title}</div>
-                <Link to={`/chat/list/${item.roomId}`} className={styles.btn}>채팅하기</Link>
-              </div>
+                <div className=""></div>
+              </Link>
               )
             })}
           </div>

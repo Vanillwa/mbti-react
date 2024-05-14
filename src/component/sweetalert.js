@@ -31,8 +31,8 @@ const sweetalert = {
     error(title, text, buttonText){
       return confirm('error', title, text, buttonText)
     },
-    warning(title, text, buttonText){
-      return confirm('warning', title, text, buttonText)
+    warning(title, text, confirmButtonText, cancelButtonText){
+      return confirm('warning', title, text, confirmButtonText, cancelButtonText)
     },
     question(title, text, confirmButtonText, cancelButtonText){
       return swalButton.fire({
