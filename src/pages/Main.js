@@ -48,7 +48,7 @@ function Main() {
       if (array.includes(location.state)) navigate("/post/list");
       else navigate(-1);
     } else if (res.message === "blocked") {
-      setEmailAlert(`${res.blockDate}까지 차단된 계정입니다`);
+      setEmailAlert(`${new Date(res.blockDate).toLocaleString()} 까지 차단된 계정입니다`);
     } else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
       setPwdAlert("");
