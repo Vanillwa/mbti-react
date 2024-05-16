@@ -155,10 +155,10 @@ function Join() {
   // 오늘한거 
   const comparePassword = () => {
     if (passwordRef1.current.value === passwordRef2.current.value) {
-      setPasswordAlert2("일치합니다")
+      setPasswordAlert2("비밀번호가 일치합니다.")
       setPasswordSame(true)
     } else {
-      setPasswordAlert2("일치하지 않습니다")
+      setPasswordAlert2("비밀번호가 일치하지 않습니다.")
       setPasswordSame(false)
     }
     console.log(passwordSame)
@@ -177,7 +177,7 @@ function Join() {
     }
     if (passwordRegex.test(e.target.value)) {
 
-      setPasswordAlert("형식이 올바릅니다.");
+      setPasswordAlert("올바른 형식의 비밀번호 입니다.");
       setPasswordValidation("valid");
       comparePassword()
     }
@@ -191,7 +191,7 @@ function Join() {
   };
 
   // 두번째 비밀번호 재입력
-  
+
   const handlePasswordOnInput2 = (e) => {
     comparePassword()
   }
@@ -220,7 +220,7 @@ function Join() {
       return
     }
 
-      //오늘한거
+    //오늘한거
     if (!passwordSame) {
       alert("비밀번호가 일치하지 않습니다.")
       passwordRef2.current.focus()
@@ -242,12 +242,12 @@ function Join() {
         text: '회원가입에 성공하셨습니다.',
         icon: 'success',
         confirmButtonText: '확인'
-      }).then(()=>{
-        if(result.message === "success"){
+      }).then(() => {
+        if (result.message === "success") {
           navigate("/")
-        }  
+        }
       })
-     
+
     } else {
       Swal.fire({
         title: '실패',
@@ -259,7 +259,7 @@ function Join() {
   }
 
   return (
-    
+
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className={styles.logo} />
@@ -325,9 +325,8 @@ function Join() {
                 <div className={`text-${passwordValidation === 'valid' ? 'success' : 'danger'}`}>{passwordAlert}</div>
 
 
-                <input type="password" className={`form-control ${passwordValidation === 'valid' ? '' : 'hidden'}`} name="repassword" id="user-pw" placeholder="password" ref=
-                  {passwordRef2} onInput={handlePasswordOnInput2} />
-                <div className={`text-${passwordSame === 'false' ? 'danger' : 'success'}`}>{passwordAlert2}</div>
+                <input type="password" className={`form-control ${passwordValidation === 'valid' ? '' : 'hidden'}`} name="repassword" id="user-pw" placeholder="password" ref={passwordRef2} onInput={handlePasswordOnInput2} />
+                <div className={`text-${passwordSame === true ? 'success' : 'danger'}`}>{passwordAlert2}</div>
               </div>
 
               <div className="d-flex gap-2">
@@ -373,9 +372,9 @@ function Join() {
           </form>
         </div>
       </div>
-    <Footer></Footer>
+      <Footer></Footer>
     </div>
-  
+
 
 
   );
