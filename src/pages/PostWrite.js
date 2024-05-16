@@ -6,8 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import ReactQuill, { Quill } from "react-quill";
-import { ImageResize } from "quill-image-resize";
 import sweetalert from "../component/sweetalert";
+import ImageResize from "quill-image-resize-module-react";
+
+Quill.register("modules/imageResize", ImageResize);
 
 const PostWrite = () => {
   const navigate = useNavigate();
@@ -20,65 +22,111 @@ const PostWrite = () => {
   const [value, setValue] = useState("");
   const quillRef = useRef();
 
-
   const imageHandler = () => {
-    console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
-  
+    console.log("에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!");
+
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
-    const input = document.createElement('input');
+    const input = document.createElement("input");
     // 속성 써주기
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
     input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
 
-    input.addEventListener('change', async () => {
-      console.log('온체인지');
+    input.addEventListener("change", async () => {
+      console.log("온체인지");
       const file = input.files[0];
+      const resizedImage = await resizeImage(file);
+
       // multer에 맞는 형식으로 데이터 만들어준다.
       const formData = new FormData();
-      formData.append('img', file); // formData는 키-밸류 구조
+      formData.append("img", resizedImage); // formData는 키-밸류 구조
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
-        const result = await axios.post('https://192.168.5.17:10000/api/post/img', formData);
-        console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
+        const result = await axios.post(
+          "https://192.168.5.17:10000/api/post/img",
+          formData
+        );
+        console.log("성공 시, 백엔드가 보내주는 데이터", result.data.url);
         const IMG_URL = result.data.url;
 
         const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
 
         const range = editor.getSelection();
         // 가져온 위치에 이미지를 삽입한다
-        editor.insertEmbed(range.index, 'image', IMG_URL);
+        editor.insertEmbed(range.index, "image", IMG_URL);
       } catch (error) {
-        console.log('실패했어요ㅠ');
+        console.log("실패했어요ㅠ");
       }
     });
   };
+  // 이미지 리사이징 함수
+  async function resizeImage(file) {
+    const maxWidth = 250; // 최대 너비
+    const maxHeight = 250; // 최대 높이
+    const reader = new FileReader();
+    const image = new Image();
+
+    return new Promise((resolve, reject) => {
+      reader.onload = (e) => (image.src = e.target.result);
+      image.onload = () => {
+        let width = image.width;
+        let height = image.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0, width, height);
+
+        canvas.toBlob((blob) => resolve(blob), file.type);
+      };
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  }
 
   const modules = useMemo(() => {
     return {
       toolbar: {
         container: [
-          ['image'],
+          ["image"],
           [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          ["bold", "italic", "underline", "strike", "blockquote"],
         ],
         handlers: {
-          // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
           image: imageHandler,
         },
       },
+      imageResize: {
+        parchment: Quill.import("parchment"),
+        modules: ["Resize", "DisplaySize", "Toolbar"],
+      },
     };
   }, []);
+
   const formats = [
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'image',
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "image",
   ];
-  
+
   const handleEMbtiChange = (e) => {
     setSelectEMbti(e.target.value);
     setSelectIMbti("I게시판");
@@ -101,8 +149,13 @@ const PostWrite = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const alertResult = await sweetalert.question('정말 작성하시겠습니까?' ,'' , '네', '아니오')
-    if(alertResult.dismiss){
+    const alertResult = await sweetalert.question(
+      "정말 작성하시겠습니까?",
+      "",
+      "네",
+      "아니오"
+    );
+    if (alertResult.dismiss) {
       return;
     }
     const body = {
@@ -111,9 +164,9 @@ const PostWrite = () => {
       category: mbti,
     };
     const result = await postPost(body);
-    
+
     if (result.message == "success") {
-      sweetalert.success('작성 완료', '3초 후에 자동으로 닫힙니다.', '확인',)
+      sweetalert.success("작성 완료", "3초 후에 자동으로 닫힙니다.", "확인");
 
       navigate("/post/list");
     }
@@ -141,41 +194,41 @@ const PostWrite = () => {
           <div className={styles.selectBox}>
             <div className={styles.selectTitle}>게시판 선택하기</div>
             <div>
-            <select
-              onChange={handleEMbtiChange}
-              value={selectEMbti}
-              onClick={handleMbtiClick}
-              className={styles.mbtiSelectE}
-              id="E"
-            >
-              <option>E게시판</option>
-              <option value="ESTJ">ESTJ</option>
-              <option value="ESTP">ESTP</option>
-              <option value="ESFJ">ESFJ</option>
-              <option value="ESFP">ESFP</option>
-              <option value="ENTJ">ENTJ</option>
-              <option value="ENTP">ENTP</option>
-              <option value="ENFJ">ENFJ</option>
-              <option value="ENFP">ENFP</option>
-            </select>
-            <select
-              onChange={handleIMbtiChange}
-              value={selectIMbti}
-              onClick={handleMbtiClick}
-              className={styles.mbtiSelectI}
-              id="I"
-            >
-              <option>I게시판</option>
-              <option value="ISTJ">ISTJ</option>
-              <option value="ISTP">ISTP</option>
-              <option value="ISFJ">ISFJ</option>
-              <option value="ISFP">ISFP</option>
-              <option value="INTJ">INTJ</option>
-              <option value="INTP">INTP</option>
-              <option value="INFJ">INFJ</option>
-              <option value="INFP">INFP</option>
-            </select>
-          </div>
+              <select
+                onChange={handleEMbtiChange}
+                value={selectEMbti}
+                onClick={handleMbtiClick}
+                className={styles.mbtiSelectE}
+                id="E"
+              >
+                <option>E게시판</option>
+                <option value="ESTJ">ESTJ</option>
+                <option value="ESTP">ESTP</option>
+                <option value="ESFJ">ESFJ</option>
+                <option value="ESFP">ESFP</option>
+                <option value="ENTJ">ENTJ</option>
+                <option value="ENTP">ENTP</option>
+                <option value="ENFJ">ENFJ</option>
+                <option value="ENFP">ENFP</option>
+              </select>
+              <select
+                onChange={handleIMbtiChange}
+                value={selectIMbti}
+                onClick={handleMbtiClick}
+                className={styles.mbtiSelectI}
+                id="I"
+              >
+                <option>I게시판</option>
+                <option value="ISTJ">ISTJ</option>
+                <option value="ISTP">ISTP</option>
+                <option value="ISFJ">ISFJ</option>
+                <option value="ISFP">ISFP</option>
+                <option value="INTJ">INTJ</option>
+                <option value="INTP">INTP</option>
+                <option value="INFJ">INFJ</option>
+                <option value="INFP">INFP</option>
+              </select>
+            </div>
           </div>
           <div className={styles.titleBox}>
             <input
@@ -187,16 +240,16 @@ const PostWrite = () => {
             />
           </div>
           <div className={styles.contentBox}>
-          <ReactQuill
-            ref={quillRef}
-            theme="snow"
-            placeholder="내용입력해줘"
-            value={value}
-            onChange={setValue}
-            modules={modules}
-            formats={formats}
-            className={styles.editorBox}
-          />
+            <ReactQuill
+              ref={quillRef}
+              theme="snow"
+              placeholder="내용입력해줘"
+              value={value}
+              onChange={setValue}
+              modules={modules}
+              formats={formats}
+              className={styles.editorBox}
+            />
           </div>
 
           <button type="submit" className={styles.submitBtn}>

@@ -5,9 +5,13 @@ import { getPostView, postEdit} from "../service/api/postAPI";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import { useQuery } from "react-query";
 import sweetalert from "../component/sweetalert";
+
+import ImageResize from "quill-image-resize-module-react";
+
+Quill.register("modules/imageResize", ImageResize);
 
 const PostEdit = () => {
   const navigate = useNavigate();
@@ -54,9 +58,11 @@ const PostEdit = () => {
     input.addEventListener('change', async () => {
       console.log('온체인지');
       const file = input.files[0];
+      const resizedImage = await resizeImage(file);
+
 
       const formData = new FormData();
-      formData.append('img', file);
+      formData.append('img', resizedImage);
       try {
         const result = await axios.post('https://192.168.5.17:10000/api/post/img', formData);
         console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
@@ -71,6 +77,43 @@ const PostEdit = () => {
       }
     });
   };
+  async function resizeImage(file) {
+    const maxWidth = 250; // 최대 너비
+    const maxHeight = 250; // 최대 높이
+    const reader = new FileReader();
+    const image = new Image();
+
+    return new Promise((resolve, reject) => {
+      reader.onload = (e) => (image.src = e.target.result);
+      image.onload = () => {
+        let width = image.width;
+        let height = image.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0, width, height);
+
+        canvas.toBlob((blob) => resolve(blob), file.type);
+      };
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  }
 
   const modules = useMemo(() => {
     return {
@@ -83,6 +126,10 @@ const PostEdit = () => {
         handlers: {
           image: imageHandler,
         },
+      },
+      imageResize: {
+        parchment: Quill.import("parchment"),
+        modules: ["Resize", "DisplaySize", "Toolbar"],
       },
     };
   }, []);
