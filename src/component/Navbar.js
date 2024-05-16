@@ -9,7 +9,6 @@ import User from "../svg/people-fill.svg"
 import RUT from "../images/areyout.png";
 import write from "../svg/pencil-square.svg";
 import notImg from "../svg/person-circle.svg";
-import home from "../svg/house.svg";
 import list from "../svg/card-list.svg";
 import friend from "../svg/people-fill.svg";
 import chatting from "../svg/chat-dots.svg";
