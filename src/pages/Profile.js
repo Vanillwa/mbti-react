@@ -85,7 +85,7 @@ function Profile() {
                     {new Date(userdata.createdAt).toLocaleDateString()}
                     </div>
                     <div className={styles.icone}>
-                   <div>
+                    <div>
                     <img src={like}/>
                     {userdata.like}
                     </div>
