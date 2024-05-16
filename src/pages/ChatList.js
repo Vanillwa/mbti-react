@@ -35,6 +35,9 @@ const ChatList = () => {
       </div>
     );
   }
+  if(!isLoggedIn){
+    return <><h2> 로그인 후 이용해주세요</h2><Link to='/' style={{color : 'blue'}}>로그인 하러가기</Link></>
+  }
   console.log(data)
   return (
     <>
