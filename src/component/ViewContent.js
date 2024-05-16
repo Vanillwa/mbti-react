@@ -20,26 +20,6 @@ function ViewContent() {
   const [likes, setLikes] = useState("checked");
   const navigate = useNavigate();
 
-  /**좌우스크롤 먼저 실행되게 하는 함수*/
-  const contentRef = useRef(null);
-
-  useEffect(() => {
-    const handleWheel = (e) => {
-      if (e.deltaY != 0) {
-        e.preventDefault();
-        contentRef.current.scrollLeft += e.deltaY + e.deltaX;
-      }
-    };
-    let contentElement = contentRef.current;
-    if (contentElement) {
-      contentElement.addEventListener("wheel", handleWheel, { passive: false });
-    }
-    return () => {
-      if (contentElement) {
-        contentElement.removeEventListener("wheel", handleWheel);
-      }
-    };
-  });
 
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -168,7 +148,7 @@ function ViewContent() {
           <div className={styles.date}>{dateDisplay}</div>
         </div>
         <div className={styles.main}>
-          <div className={styles.content} ref={contentRef}>
+          <div className={styles.content}>
             <ContentComponent content={data.content} />
           </div>
           <div className={styles.likesBox}>
