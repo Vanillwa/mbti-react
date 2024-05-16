@@ -2,7 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "../css/postView.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import {clickPostLikes,getPostView,postDelete,} from "../service/api/postAPI";
+import {
+  clickPostLikes,
+  getPostView,
+  postDelete,
+} from "../service/api/postAPI";
 
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
@@ -11,17 +15,16 @@ import ReportModal from "./PostReportModal";
 import UserDropdown from "./userDropdown";
 import sweetalert from "./sweetalert";
 
-import like from '../svg/like.svg'
+import like from "../svg/like.svg";
 function ViewContent() {
   const [likes, setLikes] = useState("checked");
   const navigate = useNavigate();
-
 
   /**좌우스크롤 먼저 실행되게 하는 함수*/
   const contentRef = useRef(null);
 
   useEffect(() => {
-    const handleWheel = e => {
+    const handleWheel = (e) => {
       if (e.deltaY != 0) {
         e.preventDefault();
         contentRef.current.scrollLeft += e.deltaY + e.deltaX;
@@ -63,15 +66,20 @@ function ViewContent() {
 
   const handleDelete = async () => {
     try {
-      const result = await sweetalert.question('정말 삭제하시겠습니까?', '삭제 후엔 복구가 불가능합니다', '네', '아니오')
-      if(result.dismiss){
+      const result = await sweetalert.question(
+        "정말 삭제하시겠습니까?",
+        "삭제 후엔 복구가 불가능합니다",
+        "네",
+        "아니오"
+      );
+      if (result.dismiss) {
         return;
       }
       await postDelete(postId);
-      sweetalert.success('삭제 완료', '', '확인')
+      sweetalert.success("삭제 완료", "", "확인");
       navigate("/post/list");
     } catch (error) {
-      sweetalert.error('에러', '삭제하지 못했습니다.', '확인')
+      sweetalert.error("에러", "삭제하지 못했습니다.", "확인");
     }
   };
 
@@ -79,13 +87,12 @@ function ViewContent() {
     const result = await clickPostLikes(data.postId);
     if (result.message == "success") {
       console.log("좋아요 눌렀음.");
-      refetch()
+      refetch();
     } else if (result.message == "duplicated") {
-      console.log('추천함')
-      sweetalert.warning('이미 추천한 게시물입니다.', '', '확인')
+      console.log("추천함");
+      sweetalert.warning("이미 추천한 게시물입니다.", "", "확인");
     }
     console.log(result.message);
-    
   };
 
   function ContentComponent({ content }) {
@@ -108,44 +115,46 @@ function ViewContent() {
 
   const createdAt = new Date(data.createdAt);
   const now = new Date();
-  const differenceInHours = Math.floor((now - createdAt) / 1000 / 60 / 60);
+  const differenceInSeconds = Math.floor((now - createdAt) / 1000);
+  const differenceInMinutes = Math.floor(differenceInSeconds / 60);
+  const differenceInHours = Math.floor(differenceInMinutes / 60);
   const differenceInDays = Math.floor(differenceInHours / 24);
 
   let dateDisplay;
-  if (differenceInHours < 24) {
+  if (differenceInMinutes < 60) {
+    dateDisplay = `${differenceInMinutes}분 전`;
+  } else if (differenceInHours < 24) {
     dateDisplay = `${differenceInHours}시간 전`;
   } else if (differenceInDays <= 7) {
     dateDisplay = `${differenceInDays}일 전`;
   } else {
     dateDisplay = createdAt.toLocaleDateString("ko-KR");
   }
-  console.log(data)
+  console.log(data);
   return (
     <>
       <div className={styles.container}>
         <div className={styles.mbti}>
           <span>{data.category} 게시판</span>
-          <div className={styles.readhit}>조회 : {data.readhit}</div>
           <div>
-          <ReportModal data={data}/>
-          {userInfo?.userId == data.User.userId && isLoggedIn ? (
-            <div className="d-flex">
-              <div className={styles.editBtn} type="button" onClick={goEdit}>
-                수정
+            <ReportModal data={data} />
+            {userInfo?.userId == data.User.userId && isLoggedIn ? (
+              <div className="d-flex">
+                <div className={styles.editBtn} type="button" onClick={goEdit}>
+                  수정
+                </div>
+                <div
+                  onClick={handleDelete}
+                  className={styles.delBtn}
+                  type="button"
+                >
+                  삭제
+                </div>
               </div>
-              <div
-                onClick={handleDelete}
-                className={styles.delBtn}
-                type="button">
-                삭제
-              </div>
-            </div>
-            
-          ) : null}
+            ) : null}
           </div>
         </div>
 
-        
         <div className={styles.editBox}></div>
         <div className={styles.header}>
           <div className={styles.nickname}>
@@ -154,7 +163,6 @@ function ViewContent() {
               src={data.User.profileImage ? data.User.profileImg : notImg}
             />
             {data.User.nickname}
-          
           </div>
           <div className={styles.title}>{data.title}</div>
           <div className={styles.date}>{dateDisplay}</div>
@@ -164,11 +172,13 @@ function ViewContent() {
             <ContentComponent content={data.content} />
           </div>
           <div className={styles.likesBox}>
+            <div className={styles.readhit}>조회 : {data.readhit}</div>
             <div
               type="button"
               className={styles[likes]}
-              onClick={handleLikeClick}>
-              <img src={like}/> : {data.like}
+              onClick={handleLikeClick}
+            >
+              <img src={like} /> : {data.like}
             </div>
           </div>
         </div>

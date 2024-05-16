@@ -126,8 +126,10 @@
 .readhit{
   color: black;
 }
-.likes{
-
+.likesBox{
+  display: flex;
+  justify-content: center;
+  gap: 84px;
 }
 
 .orderBox{
