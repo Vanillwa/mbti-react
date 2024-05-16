@@ -55,7 +55,6 @@
 .content::-webkit-scrollbar-thumb{
   background-color: rgb(126, 195, 255);
   border-radius: 12px;
-
 }
 .goLogin{
   border:0px;
@@ -65,7 +64,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-
 }
 .commentBox{
   display: flex;
@@ -74,7 +72,6 @@
 .unLabel{
   display: none;
 }
-
 .commentForm{
   display: flex;
   justify-content: center;
@@ -93,7 +90,6 @@
   margin-right: 5px;
   border-radius: 50%;
 }
-
 .commentInput{
   width: 30vw;
   height: 3vh;
@@ -130,9 +126,10 @@
 .readhit{
   color: black;
 }
-.like{
-  color: rgb(255, 90, 118);
+.likes{
+
 }
+
 .orderBox{
   display: flex;
   justify-content: center;

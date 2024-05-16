@@ -43,11 +43,11 @@ const PostList = () => {
     }else{
       setOrder('asc')
     }
-    console.log(order)
   }
-
+  console.log(data)
   return (
     <div className={styles.postBox}>
+      {mbti == null ? <h2>전체게시판</h2> : <h2>{mbti}게시판</h2>}
       <div className={styles.sortBox}>
       <Form.Select aria-label="Default select example" onChange={handleSortChange}>
         <option value='createdAt' >날짜순</option>
@@ -60,8 +60,8 @@ const PostList = () => {
       </Form.Select>
       </div>
       <PostItems data={data} status={status} />
-
-      <Paging data={data} status={status} page={page} setPage={setPage}/>
+      {data?.list?.length == 0 ? null : <Paging data={data} status={status} page={page} setPage={setPage}/>}
+      
 
     </div>
   );

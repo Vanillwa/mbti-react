@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "../css/postView.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import {ClickPostLikes,getPostView,postDelete,} from "../service/api/postAPI";
+import {clickPostLikes,getPostView,postDelete,} from "../service/api/postAPI";
 
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
@@ -11,6 +11,7 @@ import ReportModal from "./PostReportModal";
 import UserDropdown from "./userDropdown";
 import sweetalert from "./sweetalert";
 
+import like from '../svg/like.svg'
 function ViewContent() {
   const [likes, setLikes] = useState("checked");
   const navigate = useNavigate();
@@ -75,12 +76,13 @@ function ViewContent() {
   };
 
   const handleLikeClick = async () => {
-    const result = await ClickPostLikes(data.postId);
+    const result = await clickPostLikes(data.postId);
     if (result.message == "success") {
       console.log("좋아요 눌렀음.");
       refetch()
     } else if (result.message == "duplicated") {
-
+      console.log('추천함')
+      sweetalert.warning('이미 추천한 게시물입니다.', '', '확인')
     }
     console.log(result.message);
     
@@ -166,7 +168,7 @@ function ViewContent() {
               type="button"
               className={styles[likes]}
               onClick={handleLikeClick}>
-              좋아요 : {data.like}
+              <img src={like}/> : {data.like}
             </div>
           </div>
         </div>

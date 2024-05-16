@@ -1,7 +1,7 @@
 .container{
   display: flex ;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
 }
 .title{
   
@@ -9,5 +9,22 @@
 .contentBox{
   display: flex;
   justify-content: space-between;
-  
+  align-items: center;
+  border-radius: 24px;
+  padding: 12px 24px;
+  background-color: rgb(230, 243, 255);
+}
+
+.btnBox{
+  display: flex;
+  gap: 12px;
+}
+.button{
+  border-radius: 12px;
+  background-color: rgb(145, 227, 255);
+  padding: 2px 4px;
+  font-weight: 600;
+}
+.blockBtn, .delBtn{
+  background-color: rgb(255, 93, 93);
 }

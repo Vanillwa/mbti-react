@@ -5,14 +5,19 @@
 .chatBox {
     display: flex;
     justify-content: center;
-    
+    height: 60px;
   }
 
   .chatItems{
     width: 60%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+  }
+  .userImg{
+    height: 100%;
+    width: auto;
+    border-radius: 50%;
   }
 
   .itemBox{
@@ -20,7 +25,13 @@
     justify-content: space-between;
     align-items: center;
     border: 1px solid black;
-    padding: 1vw;
+    padding: 24px 12px;
+    height: 100%;
+  }
+  .userBox{
+    height: 54px;
+    display: flex;
+    align-items: center;
   }
   .btn{
     border: 1px solid black;

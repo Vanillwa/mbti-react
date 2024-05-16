@@ -202,9 +202,9 @@ const FriendList = () => {
         </Link>
         <div className={styles.btnBox}>
 
-          <div onClick={()=>handleRequestChat(item.receiveUser.userId)} type='button' className={styles.button}>채팅하기</div>
-        <div type='button' className={styles.button} onClick={()=>handleFriendBlock(item.receiveUser.userId)}>너 차단</div>
-        <div type='button' className={styles.button} onClick={()=>handleFriendRefuse(item.friendId)}>너 삭제</div>
+          <div onClick={()=>handleRequestChat(item.receiveUser.userId)} type='button' className={`${styles.button} ${styles.chatBtn}`}>채팅하기</div>
+        <div type='button' className={`${styles.button} ${styles.blockBtn}`} onClick={()=>handleFriendBlock(item.receiveUser.userId)}>너 차단</div>
+        <div type='button' className={`${styles.button} ${styles.delBtn}`} onClick={()=>handleFriendRefuse(item.friendId)}>너 삭제</div>
 
 
         </div>

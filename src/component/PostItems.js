@@ -2,6 +2,8 @@ import React from "react";
 import styles from "../css/PostList.module.css";
 import { Link } from "react-router-dom";
 import UserDropdown from "./userDropdown";
+import like from '../svg/like.svg'
+import eye from '../svg/eye.svg'
 const PostItems = ({ data, status }) => {
 
 
@@ -39,8 +41,8 @@ const PostItems = ({ data, status }) => {
                 <UserDropdown item={item} />
                 <div  className={styles.readhitBox}>
                 <div className={styles.date}>{new Date(item.createdAt).toLocaleDateString()}</div>
-                <div className={styles.likes}>❤  {item.like}</div>
-                <div className={styles.readhit}>👁 {item.readhit}</div>
+                <div className={styles.likes}><img src={like}/> {item.like}</div>
+                <div className={styles.readhit}><img src={eye}/> {item.readhit}</div>
                 </div>
               </div>
               <div className={styles.imgBox}>

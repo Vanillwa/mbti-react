@@ -48,7 +48,7 @@ const ChatList = () => {
               console.log(item)
               return (
               <Link to={`/chat/list/${item.roomId}`} className={styles.itemBox} key={item.roomId}>
-                <div className="">{userInfo.userId == item.user1.userId ? item.user2.nickname : item.user1?.nickname}</div>
+                {userInfo.userId == item.user1.userId ? <div className={styles.userBox}><img className={styles.userImg} src={item.user2.profileImage}/>{item.user2.nickname}  </div> : <div className={styles.userBox}><img className={styles.userImg} src={item.user1.profileImage}/>{item.user1.nickname}  </div>}
                 <div className=""></div>
               </Link>
               )

@@ -20,7 +20,7 @@ const confirm = (
     title,
     text,
     confirmButtonText,
-    timer : 3000
+    timer : 2000
   })
 }
 

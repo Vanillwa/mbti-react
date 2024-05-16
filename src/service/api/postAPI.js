@@ -30,7 +30,7 @@ export const getPostView = async (postId) => {
 };
 
 /**좋아요 누름*/
-export const ClickPostLikes = async (postId) => {
+export const clickPostLikes = async (postId) => {
   const res = await axios.get(`/addLike/${postId}`);
   return res.data;
 };
