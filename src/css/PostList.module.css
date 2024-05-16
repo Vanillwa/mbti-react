@@ -39,7 +39,7 @@ h1{
   align-items: center;
 }
 .title{
-  width: 30vw;
+  width: 35vw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -63,6 +63,25 @@ h1{
 .imgBox img{
   height: 95%;
   width: auto;
+
+}
+.profileBox{
+  height: 100%;
+  display: flex;
+  gap: 12px;
+
+}
+.nicknameBox{
+  display: flex;
+  flex-direction: column;
+  margin-right: 36px;
+}
+.nickname{
+  font-weight: bold;
+}
+.mbti{
+  font-weight: 550;
+  color: rgb(29, 182, 233);
 }
 
 .dropdown{
@@ -89,9 +108,9 @@ h1{
 }
 
 .profileImg {
-  width: 32px;
+  width: 48px;
   height: auto; 
-  border-radius: 25px;
+  border-radius: 50%;
   margin-right: 10px;
 }
 

@@ -7,7 +7,7 @@ import {requestChat} from "../service/api/chatAPI"
 import styles from "../css/PostList.module.css";
 import { requestFriend } from "../service/api/friendAPI";
 
-const UserDropdown = ({ item}) => {
+const UserDropdown = ({item}) => {
 const navigate =  useNavigate();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -63,13 +63,16 @@ const navigate =  useNavigate();
   return (
     <>
       <div className={`${styles.userBox}`}>
-        <div>
+        <div className={styles.profileBox}>
           <img
             src={item.User.profileImage}
             alt="profile"
             className={styles.profileImg}
           />
-          <span className={styles.nickname}>{item.User.nickname}</span>
+          <div className={styles.nicknameBox}>
+          <div className={styles.nickname}>{item.User.nickname}</div>
+          <div className={styles.mbti}>{item.User.mbti}</div>
+          </div>
         </div>
         {userInfo?.userId == item.User.userId ? null : <>
           <div type="button"

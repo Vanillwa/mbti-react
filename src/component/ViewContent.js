@@ -115,7 +115,7 @@ function ViewContent() {
     <>
       <div className={styles.container}>
         <div className={styles.mbti}>
-          <span>{data.category} 게시판</span>
+          <span>{data.category ? data.category + ' ' + '게시판' : '전체게시판'}</span>
           <div>
             <ReportModal data={data} />
             {userInfo?.userId == data.User.userId && isLoggedIn ? (
@@ -140,7 +140,7 @@ function ViewContent() {
           <div className={styles.nickname}>
             <img
               className={styles.userImg}
-              src={data.User.profileImage ? data.User.profileImg : notImg}
+              src={data.User.profileImage}
             />
             {data.User.nickname}
           </div>
