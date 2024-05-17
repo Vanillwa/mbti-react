@@ -137,6 +137,7 @@ function Join() {
     const nicknameRegex = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,16}$/;
     if (!nicknameRegex.test(nicknameRef.current.value)) {
       setNicknameAlert("닉네임은 한글, 영문 대소문자, 숫자로 2~16자 이내여야 합니다.");
+      setNicknameValidation('invalid');
       return
     }
     const data = await checkDuplicationNickname({ nickname })
