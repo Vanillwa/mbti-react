@@ -4,6 +4,7 @@ import styles from "../css/ReportList.module.css";
 import chatRoomStyles from "../css/ChatRoom.module.css";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { socket } from "../service/socket/socket";
 import {
   suspendUser,
   updateChatRoomReport,
@@ -97,6 +98,7 @@ function ReportItems({
     if (result.message === "success") {
       console.log("report:", report);
       sweetalert.success("정지 완료");
+      socket.emit("blockUser",report.Post.User.userId);
       completePostMutate.mutate(report.reportId, {
         onSuccess: async () => {
           await queryClient.invalidateQueries(["getPostReportList"]);
@@ -104,6 +106,7 @@ function ReportItems({
           return;
         },
       });
+
       setShow(false);
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
@@ -124,6 +127,7 @@ function ReportItems({
 
     if (result.message === "success") {
       sweetalert.success("정지 완료");
+      socket.emit("blockUser",report.Comment.User.userId);
       completeCommentMutate.mutate(report.reportId, {
         onSuccess: async () => {
           await queryClient.invalidateQueries(["getCommentReportList"]);
@@ -145,11 +149,12 @@ function ReportItems({
     const blockDate = new Date(now.getTime() + addDay);
     const result = await suspendUser({
       userId: user.userId,
-      chatRoomId: report.ChatRoom?.roomId,
+      roomId: report.roomId,
       blockDate,
     });
     if (result.message === "success") {
       console.log("report:", report);
+      socket.emit("blockUser",report.targetUser.userId);
       sweetalert.success("정지 완료");
       completeChatRoomMutate.mutate(report.reportId, {
         onSuccess: async () => {
@@ -157,8 +162,10 @@ function ReportItems({
           await chatRefetch();
           return;
         },
+
       });
       setShow2(false);
+      
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
     }
@@ -175,8 +182,7 @@ function ReportItems({
     setShow1(true);
   };
   const handleChatReport = (userData, reportData) => {
-    console.log("handlereport:",reportData)
-    console.log("user:",userData)
+
     setUser(userData);
     setReport(reportData);
     setShow2(true);
@@ -279,7 +285,7 @@ function ReportItems({
           <form
             className={styles.blockModalForm}
             onSubmit={handleChatRoomSubmit}>
-            <span className="me-2">닉네임:{} </span>
+            <span className="me-2">닉네임:{user.nickname} </span>
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
@@ -305,8 +311,9 @@ function ReportItems({
       <Accordion>
         {type === "post" && postData.length > 0 ? (
           postData.map(item => {
+            console.log(item)
             return (
-              <Accordion.Item eventKey={item.reportId}>
+              <Accordion.Item eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
                     <div className={`row  ${styles.reportContent}`}>
@@ -344,7 +351,7 @@ function ReportItems({
             console.log("commentItem:", item);
             return (
               <>
-                <Accordion.Item eventKey={item.reportId}>
+                <Accordion.Item eventKey={item.reportId} key={item.reportId}>
                   <Accordion.Header>
                     <div className="container">
                       <div className={`row   ${styles.reportContent}`}>
@@ -381,10 +388,10 @@ function ReportItems({
           })
         ) : type === "chat" && chatRoomData.length > 0 ? (
           chatRoomData.map(item => {
-            console.log("item:", item);
+            console.log(item)
             return (
-              <>
-                <Accordion.Item eventKey={item.reportId}>
+              
+                <Accordion.Item eventKey={item.reportId} key={item.reportId}>
                   <Accordion.Header>
                     <div className="container">
                       <div className={`row  ${chatRoomStyles.reportContent}`}>
@@ -454,12 +461,12 @@ function ReportItems({
                     <button
                       className={styles.reportBtn}
                       type="button"
-                      onClick={() => handleChatReport(item.reportUser, item)}>
+                      onClick={() => handleChatReport(item.targetUser, item)}>
                       처리
                     </button>
                   </Accordion.Body>
                 </Accordion.Item>
-              </>
+              
             );
           })
         ) : (

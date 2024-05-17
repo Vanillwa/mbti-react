@@ -60,7 +60,7 @@ function ReportList() {
             value="post"
             name="group1"
             type="radio"
-            checked={type === "post"}
+            defaultChecked
           />
           <Form.Check
             inline
@@ -68,7 +68,7 @@ function ReportList() {
             value="comment"
             name="group1"
             type="radio"
-            checked={type === "comment"}
+            
           />
           <Form.Check
             inline
@@ -76,7 +76,7 @@ function ReportList() {
             value="chat"
             name="group1"
             type="radio"
-            checked={type === "chat"}
+           
           />
         </div>
       </Form>
