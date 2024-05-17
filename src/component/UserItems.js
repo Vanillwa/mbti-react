@@ -83,7 +83,7 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
       sweetalert.warning("관리자는 차단할 수 없습니다");
     }
   };
-
+  
   const handleBlock = userId => {
     releaseMutate.mutate(userId, {
       onSuccess: async () => {
@@ -148,8 +148,8 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
       </Modal>
       {data.result.map(item => {
         return (
-          <div className="container">
-            <div className={`row ${styles.userinfo}`} key={item.userId}>
+          <div className="container" key={item.userId}>
+            <div className={`row ${styles.userinfo}`}>
               <span className="col-2">유저ID: {item.userId}</span>
               <span className="col-4">이메일: {item.email}</span>
               <span className="col-3"> 닉네임: {item.nickname}</span>

@@ -24,6 +24,7 @@ import ChatRoom from "./pages/ChatRoom";
 import { socket } from "./service/socket/socket";
 import { fetchLogout } from "./service/api/loginAPI";
 import { AuthContext, useAuthContext } from "./context/AuthContext";
+import sweetalert from "./component/sweetalert";
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
       if (result.message === 'success') {
         logout();
         navigate("/", { state: "logout" })
+        sweetalert.warning('차단된 계정입니다.','','닫기')
       }
   })
 
