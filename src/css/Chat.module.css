@@ -22,7 +22,6 @@
 
   .itemBox{
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border: 1px solid black;
     padding: 24px 12px;
@@ -30,12 +29,12 @@
   }
   .userBox{
     height: 54px;
+    width: 150px;
     display: flex;
     align-items: center;
   }
-  .btn{
-    border: 1px solid black;
-    padding: 3px;
-    border-radius: 12px;
-    
+
+  .messageBox{
+    display: flex;
+    justify-content: start;
   }

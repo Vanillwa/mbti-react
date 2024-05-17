@@ -97,7 +97,13 @@ function ReportItems({
     if (result.message === "success") {
       console.log("report:", report);
       sweetalert.success("정지 완료");
-      completePostMutate(report.reportId);
+      completePostMutate.mutate(report.reportId, {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries(["getPostReportList"]);
+          await postRefetch();
+          return;
+        },
+      });
       setShow(false);
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
@@ -118,8 +124,13 @@ function ReportItems({
 
     if (result.message === "success") {
       sweetalert.success("정지 완료");
-      
-      completeCommentMutate(report.reportId);
+      completeCommentMutate.mutate(report.reportId, {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries(["getCommentReportList"]);
+          await commentRefetch();
+          return;
+        },
+      });
       setShow1(false);
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
@@ -140,7 +151,13 @@ function ReportItems({
     if (result.message === "success") {
       console.log("report:", report);
       sweetalert.success("정지 완료");
-      completeChatRoomMutate(report.reportId);
+      completeChatRoomMutate.mutate(report.reportId, {
+        onSuccess: async () => {
+          await queryClient.invalidateQueries(["getChatRoomReportList"]);
+          await chatRefetch();
+          return;
+        },
+      });
       setShow2(false);
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
