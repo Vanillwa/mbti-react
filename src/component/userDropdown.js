@@ -63,7 +63,7 @@ const navigate =  useNavigate();
 
   return (
     <>
-      <div className={`${styles.userBox}`}>
+      <div className={`${styles.userBox} col-8`}>
         <div className={styles.profileBox}>
           <img
             src={item.User.profileImage}

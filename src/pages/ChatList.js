@@ -35,7 +35,7 @@ const ChatList = () => {
       </div>
     );
   }
-  if(!isLoggedIn){
+  if(!isLoggedIn || userInfo.userId == null){
     return <><h2> 로그인 후 이용해주세요</h2><Link to='/' style={{color : 'blue'}}>로그인 하러가기</Link></>
   }
   console.log(data)
@@ -48,7 +48,6 @@ const ChatList = () => {
           <div className={styles.chatItems}>
             {data.map((item) => {
               
-              console.log(item)
               return (
               <Link to={`/chat/list/${item.roomId}`} className={styles.itemBox} key={item.roomId}>
                 {userInfo.userId == item.user1.userId ? <div className={styles.userBox}><img className={styles.userImg} src={item.user2.profileImage}/>{item.user2.nickname}  </div> : <div className={styles.userBox}><img className={styles.userImg} src={item.user1.profileImage}/>{item.user1.nickname}  </div>}
