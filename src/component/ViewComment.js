@@ -182,8 +182,9 @@ function ViewComment() {
         </Form>
 
         {data.commentList.map(item => {
-          return (
-            <div key={item.commentId} className={styles.commentBox}>
+            return (
+          item.status == "ok" ?
+          <div key={item.commentId} className={styles.commentBox}>
               <div className={styles.commentName}>{item.User.nickname}</div>
               {editingCommentId === item.commentId ? (
                 <form
@@ -233,7 +234,11 @@ function ViewComment() {
               ) : (
                 <div></div>
               )}
-            </div>
+            </div> : (item.status == "deleted" ) ? <div>삭제된 댓글입니다.</div> :
+            <div>차단된 댓글입니다.</div>
+        
+        
+            
           );
         })}
         <div className="d-flex justify-content-center mt-3">

@@ -46,8 +46,8 @@ function ReportItems({
     return updateCommentReport(reportId);
   });
 
-  const completeChatRoomMutate = useMutation(reportId => {
-    return updateChatRoomReport(reportId);
+  const completeChatRoomMutate = useMutation((reportId,targetId,roomId) => {
+    return updateChatRoomReport(reportId,targetId,roomId);
   });
 
   const handlePostComplete = async reportId => {
@@ -72,8 +72,8 @@ function ReportItems({
     setShow(false);
   };
 
-  const handleChatRoomComplete = async reportId => {
-    completeChatRoomMutate.mutate(reportId, {
+  const handleChatRoomComplete = async (reportId,targetId,roomId) => {
+    completeChatRoomMutate.mutate((reportId,targetId,roomId), {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["getChatRoomReportList"]);
         await chatRefetch();
@@ -154,9 +154,10 @@ function ReportItems({
     });
     if (result.message === "success") {
       console.log("report:", report);
+      console.log("target",report.targetUser.userId)
       socket.emit("blockUser",report.targetUser.userId);
       sweetalert.success("정지 완료");
-      completeChatRoomMutate.mutate(report.reportId, {
+      completeChatRoomMutate.mutate(report.reportId,report.targetUser.userId,report.roomId, {
         onSuccess: async () => {
           await queryClient.invalidateQueries(["getChatRoomReportList"]);
           await chatRefetch();
@@ -299,7 +300,7 @@ function ReportItems({
         <Modal.Footer>
           <Button
             variant="secondary"
-            onClick={() => handleChatRoomComplete(report.reportId)}>
+            onClick={() => handleChatRoomComplete(report.reportId,report.targetUser.userId,report.roomId)}>
             처리완료
           </Button>
           <Button variant="primary" onClick={handleClose2}>
