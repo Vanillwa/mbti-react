@@ -78,11 +78,11 @@ ul {
      
 }
 .blockModalBtn{
-    font-family: 'KCC-Hanbit';
-width:2vw;
-height:2vh;
+font-family: 'KCC-Hanbit';
+width:auto;
 border:0px;
 border-radius: 3px;
+padding:3px 7px;
 background-color: cornflowerblue;
 color:white;
 }

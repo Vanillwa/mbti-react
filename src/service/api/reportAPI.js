@@ -51,8 +51,10 @@ export const reportPost = async (body) =>{
     return res.data;
   }
   //채팅방신고 처리
-  export const updateChatRoomReport = async(reportId)=>{
-    const res= await axios.put(`/report/chatroom/${reportId}`)
+  export const updateChatRoomReport = async(reportId,targetId,roomId)=>{
+    console.log(targetId,roomId)
+    const res= await axios.put(`/report/chatroom/${reportId}`,{targetId,roomId})
+    
     return res.data;
   }
   //계정정지

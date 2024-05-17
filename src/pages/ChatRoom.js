@@ -173,7 +173,7 @@ function ChatRoom() {
       )}
     </div>
     <form onSubmit={sendMessage} className={styles.inputForm}>
-      <input name="message" />
+      <input name="message" autoComplete="off" />
       <Button variant="secondary btn-sm" type="submit">
         전송
       </Button>

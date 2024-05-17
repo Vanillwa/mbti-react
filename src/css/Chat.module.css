@@ -2,6 +2,7 @@
 }
 
 .chatBox {
+
   display: flex;
   justify-content: center;
   height: 60px;
@@ -27,6 +28,8 @@
   width: 50px;
   height: auto;
 }
+
+
 
 .itemBox {
   display: flex;

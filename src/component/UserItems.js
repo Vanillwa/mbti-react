@@ -1,8 +1,6 @@
 import { QueryClient, useMutation, useQuery } from "react-query";
-
 import { releaseUser, suspendUser } from "../service/api/reportAPI";
-import { getUserList } from "../service/api/userAPI";
-import Accordion from "react-bootstrap/Accordion";
+
 import Modal from "react-bootstrap/Modal";
 import { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
@@ -150,6 +148,7 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
         return (
           <div className="container" key={item.userId}>
             <div className={`row ${styles.userinfo}`}>
+
               <span className="col-2">유저ID: {item.userId}</span>
               <span className="col-4">이메일: {item.email}</span>
               <span className="col-3"> 닉네임: {item.nickname}</span>
