@@ -109,6 +109,7 @@ function ReportItems({
         },
       });
       setShow(false)
+
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
     }
@@ -137,7 +138,9 @@ function ReportItems({
           return;
         },
       });
-     setShow1(false)
+
+      setShow1(false);
+
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
     }
@@ -165,7 +168,9 @@ function ReportItems({
           return;
         },
       });
-     setShow2(false)
+
+      setShow2(false);
+
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
     }
