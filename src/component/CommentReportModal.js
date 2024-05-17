@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
+import sweetalert from "./sweetalert";
 
 
 function CommentReportModal({commentId}) {
@@ -65,16 +66,16 @@ function CommentReportModal({commentId}) {
       type: reportType,
     };
     if (reportType == 0) {
-      alert("신고 유형을 선택해주세요.");
+      sweetalert.warning("신고 유형을 선택해주세요.",'','확인');
       return;
     }
     console.log(body);
     const result = await reportComment(body);
 
     if(result.message === "success"){
-      alert("신고가 완료되었습니다.");
+      sweetalert.success("신고가 완료되었습니다.",'','확인');
     }else if(result.message === "duplicated"){
-      alert("이미 신고한 글입니다.")
+      sweetalert.warning("이미 신고한 글입니다.",'','확인')
     }
     setShow(false);
   };

@@ -54,6 +54,8 @@ h1{
   display: flex;
   gap: 12px;
 }
+.date{width: 72px;}
+.likes{width: 48px;}
 
 .imgBox{
   height: 10vh;
@@ -63,7 +65,6 @@ h1{
 .imgBox img{
   height: 95%;
   width: auto;
-
 }
 .profileBox{
   height: 100%;

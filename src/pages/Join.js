@@ -9,6 +9,7 @@ import { checkEmailVerification } from "../service/api/joinAPI"
 import { requestEmailVerification } from "../service/api/joinAPI";
 import Swal from "sweetalert2"
 import Footer from '../component/Footer';
+import sweetalert from '../component/sweetalert';
 //import backgroundImg from '../images/backgroundImg.png';
 
 
@@ -94,7 +95,7 @@ function Join() {
         setCertificationAlert("인증 번호가 발송되었습니다.")
         setCertificationInputDisabled(false) // false값으로 바꿈 이건 인풋상자
       } else {
-        alert('인증번호 발송에 실패했습니다. 나중에 다시 시도해주세요.');
+        sweetalert.error('인증번호 발송에 실패했습니다. 나중에 다시 시도해주세요.','','확인');
       }
     } catch (error) {
       console.error('인증번호 요청 중 오류 발생:', error);

@@ -6,6 +6,7 @@ import {requestChat} from "../service/api/chatAPI"
 
 import styles from "../css/PostList.module.css";
 import { requestFriend } from "../service/api/friendAPI";
+import sweetalert from "./sweetalert";
 
 const UserDropdown = ({item}) => {
 const navigate =  useNavigate();
@@ -23,9 +24,9 @@ const navigate =  useNavigate();
     if(result.message ==="success"){
       navigate(`/chat/list/${result.roomId}`)
     }else if(result.message ==="noAuth"){
-      alert("로그인이 필요한 서비스입니다.")
+      sweetalert.warning("로그인이 필요한 서비스입니다.")
     }else if(result.message ==="notFriend"){
-      alert("친구가 아닙니다.")
+      sweetalert.warning("친구가 아닙니다.")
     }else if(result.message ==="duplicated"){
       navigate(`/chat/list/${result.roomId}`)
     }
@@ -37,16 +38,16 @@ const navigate =  useNavigate();
 
     if (result.message == "success") {
       setFriend("친구 요청 완료");
-      alert("친구 요청 완료");
+      sweetalert.success("친구 요청 완료",'','확인');
     } else if (result.message == "duplicated") {
       setFriend("이미 친구임.");
-      alert("이미 친구임.");
+      sweetalert.warning("이미 친구임.",'','확인');
     } else if (result.message == "blocked") {
       setFriend("차단한 친구임.");
-      alert("차단한 친구임.");
+      sweetalert.warning("차단한 친구임.",'','확인');
     } else if (result.message == "pending") {
       setFriend("이미 요청한 친구임.");
-      alert("이미 요청한 친구임.");
+      sweetalert.warning("이미 요청한 친구임.",'','확인');
     }
     setOpenDropdownId(null)
   };
