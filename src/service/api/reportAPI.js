@@ -35,7 +35,11 @@ export const reportPost = async (body) =>{
     const res = await axios.get(`/report/chatroom?roomId=${roomId}`)
     return res.data;
   }
- 
+ //채팅방신고 메세지 조회
+ export const getChatRoomReportMessageList = async(roomId)=>{
+  const res = await axios.get(`/report/chatroom/message?roomId=${roomId}`)
+  return res.data;
+ }
   //게시글신고처리
   export const updatePostReport = async (reportId)=>{
     const res = await axios.put(`/report/post/${reportId}`)

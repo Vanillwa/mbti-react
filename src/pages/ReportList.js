@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 import Form from "react-bootstrap/Form";
@@ -13,7 +13,7 @@ import ReportItems from "../component/ReportItems";
 
 function ReportList() {
   const [type, setType] = useState("post");
-
+  const [chatRoomMessageInfo, setChatRoomMessageInfo] = useState(null);
   // const handleCommentReport = report=>{
   //   setReport(report);
   //   setShow(true)
@@ -47,6 +47,8 @@ function ReportList() {
     retry: false,
     refetchOnWindowFocus: false,
   });
+
+  
 
   return (
     <>
@@ -88,14 +90,15 @@ function ReportList() {
             postRefetch={postRefetch}
             type={type}
             setType={setType}
-            
             commentData={commentData}
             commentStatus={commentStatus}
             commentRefetch={commentRefetch}
-            
             chatRoomData={chatRoomData}
             chatRoomStauts={chatRoomStauts}
             chatRefetch={chatRefetch}
+        
+ 
+           
           />
         </div>
       </div>
