@@ -39,7 +39,6 @@ h1{
   align-items: center;
 }
 .title{
-  width: 35vw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -49,6 +48,7 @@ h1{
   display: flex;
   align-items: center;
   position: relative;
+  width: 20vw;
 }
 .readhitBox{
   display: flex;
@@ -69,12 +69,12 @@ h1{
   height: 100%;
   display: flex;
   gap: 12px;
-
+  white-space: nowrap;
 }
 .nicknameBox{
   display: flex;
   flex-direction: column;
-  margin-right: 36px;
+  margin-right: 12px;
 }
 .nickname{
   font-weight: bold;
@@ -86,6 +86,7 @@ h1{
 
 .dropdown{
   display: none;
+  
 }
 .dropdownOpen{
   position: absolute;

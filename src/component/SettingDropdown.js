@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext,} from 'react';
+import { Link, useNavigate,  } from 'react-router-dom';
 import styles from '../css/SettingDropdown.module.css'
 import { fetchLogout } from "../service/api/loginAPI";
 import { AuthContext, useAuthContext } from '../context/AuthContext';
@@ -9,13 +9,9 @@ const SettingDropdown = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn } = memoUserInfo;
   const navigate = useNavigate()
-  const [dropdown, setDropdown] = useState(false);
-  const toggleDropdown = () => setDropdown(!dropdown);
   const { logout } = useContext(AuthContext);
-  const closeDropdown = async () => {
+  
 
-    setDropdown(false)
-  }
 
   const clickLogout = async () => {
     socket.emit("logout");
