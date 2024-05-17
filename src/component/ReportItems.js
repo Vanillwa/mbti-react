@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import styles from "../css/ReportList.module.css";
-
+import chatRoomStyles from "../css/ChatRoom.module.css";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import {
@@ -22,21 +22,20 @@ function ReportItems({
   chatRoomData,
   chatRoomStatus,
   chatRefetch,
+
   type,
-  setType
+  setType,
 }) {
   const queryClient = new QueryClient();
   const [show, setShow] = useState(false);
-  const [show1,setShow1] = useState(false);
-  const [show2,setShow2] = useState(false);
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
   const [user, setUser] = useState({ nickname: "" });
   const blockRef = useRef();
   const [report, setReport] = useState();
   const handleClose = () => setShow(false);
-  const handleClose1 = ()=>setShow1(false);
-  const handleClose2 = ()=>setShow2(false);
-
-
+  const handleClose1 = () => setShow1(false);
+  const handleClose2 = () => setShow2(false);
 
   const completePostMutate = useMutation(reportId => {
     return updatePostReport(reportId);
@@ -49,8 +48,6 @@ function ReportItems({
   const completeChatRoomMutate = useMutation(reportId => {
     return updateChatRoomReport(reportId);
   });
-
-
 
   const handlePostComplete = async reportId => {
     completePostMutate.mutate(reportId, {
@@ -85,7 +82,6 @@ function ReportItems({
     setShow(false);
   };
 
-
   //게시글 신고처리
   const handlePostSubmit = async e => {
     console.log(report);
@@ -110,20 +106,19 @@ function ReportItems({
 
   //댓글 신고처리
   const handleCommentSubmit = async e => {
-    console.log(report);
     e.preventDefault();
     const now = new Date();
     const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
     const blockDate = new Date(now.getTime() + addDay);
     const result = await suspendUser({
-      postId: report.Post?.postId,
       userId: user.userId,
       commentId: report.Comment?.commentId,
       blockDate,
     });
+
     if (result.message === "success") {
-      console.log("report:", report);
       sweetalert.success("정지 완료");
+      
       completeCommentMutate(report.reportId);
       setShow1(false);
     } else if (result.message === "fail") {
@@ -132,13 +127,12 @@ function ReportItems({
   };
   //채팅 신고처리
   const handleChatRoomSubmit = async e => {
-    console.log(report);
+    console.log("report:", report);
     e.preventDefault();
     const now = new Date();
     const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
     const blockDate = new Date(now.getTime() + addDay);
     const result = await suspendUser({
-      postId: report.Post?.postId,
       userId: user.userId,
       chatRoomId: report.ChatRoom?.roomId,
       blockDate,
@@ -164,6 +158,7 @@ function ReportItems({
     setShow1(true);
   };
   const handleChatReport = (userData, reportData) => {
+    console.log("user", userData);
     setUser(userData);
     setReport(reportData);
     setShow2(true);
@@ -225,14 +220,16 @@ function ReportItems({
           </Button>
         </Modal.Footer>
       </Modal>
-{/* 댓글신고모달 */}
-<Modal show={show1} onHide={handleClose1}>
+      {/* 댓글신고모달 */}
+      <Modal show={show1} onHide={handleClose1}>
         <Modal.Header closeButton>
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className={styles.blockModalForm} onSubmit={handleCommentSubmit}>
-            <span className="me-2">닉네임: {user.nickname}</span>
+          <form
+            className={styles.blockModalForm}
+            onSubmit={handleCommentSubmit}>
+            <span className="me-2"></span>
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
@@ -249,20 +246,21 @@ function ReportItems({
             onClick={() => handleCommentComplete(report.reportId)}>
             처리완료
           </Button>
-          <Button variant="primary" onClick={handleClose2}>
+          <Button variant="primary" onClick={handleClose1}>
             Close
           </Button>
         </Modal.Footer>
       </Modal>
 
-
-{/* 채팅신고모달 */}
+      {/* 채팅신고모달 */}
       <Modal show={show2} onHide={handleClose2}>
         <Modal.Header closeButton>
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className={styles.blockModalForm} onSubmit={handleChatRoomSubmit}>
+          <form
+            className={styles.blockModalForm}
+            onSubmit={handleChatRoomSubmit}>
             <span className="me-2">닉네임: {user.nickname}</span>
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
@@ -295,22 +293,22 @@ function ReportItems({
                   <div className="container">
                     <div className={`row  ${styles.reportContent}`}>
                       <span className={`col-3 ${styles.reportId}`}>
-                        글번호:{item.Post.postId}
+                        글번호:{item.Post?.postId}
                       </span>
                       <span className={`col-3  ${styles.reportId}`}>
-                        작성자:{item.Post.User.nickname}
+                        작성자:{item.Post?.User.nickname}
                       </span>
                       <span className={`col-3 ${styles.reportPerson}`}>
-                        신고자:{item.User.nickname}
+                        신고자:{item.User?.nickname}
                       </span>
                       <span className={`col-3`}>신고유형:{item.type}</span>
                     </div>
                   </div>
                 </Accordion.Header>
                 <Accordion.Body>
-                  <div className={styles.postTitle}>{item.Post.title}</div>
+                  <div className={styles.postTitle}>{item.Post?.title}</div>
                   <div className={styles.postContent}>
-                    <ContentComponent content={item.Post.content} />
+                    <ContentComponent content={item.Post?.content} />
                   </div>
 
                   <button
@@ -325,6 +323,7 @@ function ReportItems({
           })
         ) : type === "comment" && commentData.length > 0 ? (
           commentData.map(item => {
+            console.log("commentItem:", item);
             return (
               <>
                 <Accordion.Item eventKey={item.reportId}>
@@ -352,7 +351,9 @@ function ReportItems({
                     <button
                       className={styles.reportBtn}
                       type="button"
-                      onClick={() => handleCommentReport(item.Comment.User, item)}>
+                      onClick={() =>
+                        handleCommentReport(item.Comment.User, item)
+                      }>
                       처리
                     </button>
                   </Accordion.Body>
@@ -362,42 +363,80 @@ function ReportItems({
           })
         ) : type === "chat" && chatRoomData.length > 0 ? (
           chatRoomData.map(item => {
-            {
-              console.log(item.ChatRoom);
-            }
+            console.log("item:", item);
             return (
               <>
                 <Accordion.Item eventKey={item.reportId}>
                   <Accordion.Header>
                     <div className="container">
-                      <div className={`row   ${styles.reportContent}`}>
-                        <span className={`col-3 ${styles.reportId}`}>
-                          방번호:{item.ChatRoom.roomId}
+                      <div className={`row  ${chatRoomStyles.reportContent}`}>
+                        <span className={`col-3 ${chatRoomStyles.reportId}`}>
+                          방번호:{item.roomId}
                         </span>
-                        <span className={`col-3  ${styles.reportId}`}>
-                          피신고자:{item.ChatRoom.user2.nickname}
+                        <span className={`col-3  ${chatRoomStyles.reportId}`}>
+                          신고자:{item.reportUser.nickname}
                         </span>
-                        <span className={`col-3 ${styles.reportPerson}`}>
-                          신고자:{item.User.nickname}
+                        <span
+                          className={`col-3 ${chatRoomStyles.reportPerson}`}>
+                          피신고자:{item.targetUser.nickname}
                         </span>
                         <span className={`col-3`}>신고유형:{item.type}</span>
                       </div>
                     </div>
                   </Accordion.Header>
                   <Accordion.Body>
-                    <div className={styles.postContent}>
-                      <span>채팅 내용</span>
-                      <ContentComponent content={item.ChatRoom.roomId} />
+                    <div
+                      className={chatRoomStyles.chatForm}
+                      style={{ height: "500px" }}>
+                      {item.chat.map((message, i) => {
+                        if (item.reportUser.userId === message.userId) {
+                          return (
+                            <div
+                              key={message.messageId}
+                              className={`${chatRoomStyles.message} ${chatRoomStyles.mine}`}>
+                              <div className={chatRoomStyles.mineContent}>
+                                <div className={chatRoomStyles.myMessageInner}>
+                                  {message.message}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        } else {
+                          return (
+                            <div
+                              key={message.messageId}
+                              className={`${chatRoomStyles.message}`}>
+                              <div className={chatRoomStyles.profileBox}>
+                                <img
+                                  className={chatRoomStyles.userImg}
+                                  src={message.profileImage}
+                                  alt="profile"
+                                />
+                              </div>
+                              <div className={chatRoomStyles.messageInner}>
+                                <div className={chatRoomStyles.messageContent}>
+                                  <div
+                                    className={chatRoomStyles.messageNickname}>
+                                    {message.nickname}
+                                  </div>
+                                  <div className={chatRoomStyles.messageMsg}>
+                                    {message.message}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
                     </div>
+                    {/* <div className={styles.postContent}>
+                    <ContentComponent content={item.Post.content} />
+                  </div> */}
 
                     <button
                       className={styles.reportBtn}
                       type="button"
-                      onClick={() => {
-                        item.ChatRoom.user1.userId === item.User.userId
-                          ? handleChatReport(item.ChatRoom.user2, item)
-                          : handleChatReport(item.ChatRoom.user1, item);
-                      }}>
+                      onClick={() => handleChatReport(item.chat, item)}>
                       처리
                     </button>
                   </Accordion.Body>
