@@ -175,7 +175,8 @@ function ReportItems({
     setShow1(true);
   };
   const handleChatReport = (userData, reportData) => {
-    console.log("user", userData);
+    console.log("handlereport:",reportData)
+    console.log("user:",userData)
     setUser(userData);
     setReport(reportData);
     setShow2(true);
@@ -215,7 +216,7 @@ function ReportItems({
         </Modal.Header>
         <Modal.Body>
           <form className={styles.blockModalForm} onSubmit={handlePostSubmit}>
-            <span className="me-2">닉네임: {user.nickname}</span>
+            <span className="me-2">닉네임: </span>
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
@@ -278,7 +279,7 @@ function ReportItems({
           <form
             className={styles.blockModalForm}
             onSubmit={handleChatRoomSubmit}>
-            <span className="me-2">닉네임: {user.nickname}</span>
+            <span className="me-2">닉네임:{} </span>
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
@@ -453,7 +454,7 @@ function ReportItems({
                     <button
                       className={styles.reportBtn}
                       type="button"
-                      onClick={() => handleChatReport(item.chat, item)}>
+                      onClick={() => handleChatReport(item.reportUser, item)}>
                       처리
                     </button>
                   </Accordion.Body>

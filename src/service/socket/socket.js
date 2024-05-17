@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 import { useAuthContext } from "../../context/AuthContext";
+import { fetchLogout } from "../api/loginAPI";
 
 const url = process.env.REACT_APP_SOCKET_URL;
 export const socket = io(url, { withCredentials: true })
@@ -7,3 +8,4 @@ export const socket = io(url, { withCredentials: true })
 socket.on("notification", () => {
 	console.log("메세지 전송 받음")
 });
+

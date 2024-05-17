@@ -1,6 +1,6 @@
 // App.js 파일 내용
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Main from "./pages/Main";
 import Join from "./pages/Join"; // './pages/Join' 경로에 있는 Join 컴포넌트를 import
 import MemberRevise from "./pages/MemberRevise"; // './pages/Join' 경로에 있는 Join 컴포넌트를 import
@@ -21,8 +21,27 @@ import ReportList from "./pages/ReportList";
 import UserList from "./pages/UserList";
 import ChatList from "./pages/ChatList";
 import ChatRoom from "./pages/ChatRoom";
+import { socket } from "./service/socket/socket";
+import { fetchLogout } from "./service/api/loginAPI";
+import { AuthContext, useAuthContext } from "./context/AuthContext";
 
 function App() {
+
+  const { memoUserInfo } = useAuthContext();
+  const { isLoggedIn } = memoUserInfo;
+  const navigate = useNavigate()
+  const { logout } = useContext(AuthContext);
+
+  socket.on("uBlocked", async()=>{
+    socket.emit("logout");
+      const result = await fetchLogout();
+      console.log(result.message)
+      if (result.message === 'success') {
+        logout();
+        navigate("/", { state: "logout" })
+      }
+  })
+
   return (
     <div className="App">
       <Routes>
