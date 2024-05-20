@@ -69,6 +69,17 @@
   align-items: center;
   font-size: 15px;
 }
+.showChat{
+  display:flex ;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  background-color: salmon;
+  border-radius: 50%;
+}
 .setting{
   margin-bottom: 50%;
 }

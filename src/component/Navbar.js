@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../css/Nav.module.css";
 import { Link, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
@@ -18,12 +18,14 @@ import { useNavigate } from "react-router-dom";
 import ProfileDropDown from "../component/ProfileDropDown";
 import sweetalert from "./sweetalert";
 import Alarm from "./Alarm";
+import { socket } from "../service/socket/socket";
 
 
-const Navbar = () => {
+const Navbar = ({chatData}) => {
   const { memoUserInfo } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, userInfo } = memoUserInfo;
+  const [showChat, setShowChat] = useState(false)
 
   const navigate = useNavigate();
 
@@ -46,7 +48,16 @@ const Navbar = () => {
       navigate("/", { state: { state: "login" } }); 
     }
   };
+  console.log(chatData)
 
+  useEffect(() => {
+    if(isLoggedIn){
+      const allMessagesRead = chatData.every(item => item.unreadCount === 0);
+      setShowChat(!allMessagesRead);
+    }
+
+  }, [chatData]);
+  
   return (
     <div className={styles.container}>
       {/* 상단 네브바 */}
@@ -132,6 +143,8 @@ const Navbar = () => {
             <Link className={styles.menu} to="/chat/list">
               <img className={styles.svg} src={chatting}/>
               <div className={styles.span}>채팅</div>
+              {showChat == true ? <div className={styles.showChat}>❕</div> : null}
+              
             </Link>
           ) : (
             <div>

@@ -18,10 +18,6 @@ const ChatList = () => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
-  socket.on("notification", async () => {
-    await refetch();
-  });
-
   if (status === "loading") {
     return (
       <div className="container">

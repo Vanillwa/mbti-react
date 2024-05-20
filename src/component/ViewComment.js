@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/postView.module.css";
 
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
 
-import {EditViewComment,deleteViewComment
-  ,getViewComment,postViewComment,} from '../service/api/commentAPI'
-
-import {reportComment} from "../service/api/reportAPI"
+import {
+  EditViewComment,
+  deleteViewComment,
+  getViewComment,
+  postViewComment,
+} from "../service/api/commentAPI";
 
 import Paging from "../component/Paging";
 import CommentReportModal from "./CommentReportModal";
@@ -45,16 +52,16 @@ function ViewComment() {
   );
 
   //등록 뮤테이트
-  const postMutate = useMutation(body => {
+  const postMutate = useMutation((body) => {
     return postViewComment(body);
   });
   //수정뮤테이트
-  const EditMutate = useMutation(body => {
+  const EditMutate = useMutation((body) => {
     return EditViewComment(body);
   });
 
   //삭제 뮤테이트
-  const deleteMutate = useMutation(commentId => {
+  const deleteMutate = useMutation((commentId) => {
     return deleteViewComment(commentId);
   });
 
@@ -63,7 +70,7 @@ function ViewComment() {
     img = notImg;
   }
 
-  const handleCommentSubmit = e => {
+  const handleCommentSubmit = (e) => {
     e.preventDefault();
 
     const body = {
@@ -107,7 +114,7 @@ function ViewComment() {
   };
 
   // 삭제 핸들러
-  const handleCommentDelete = commentId => {
+  const handleCommentDelete = (commentId) => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
     deleteMutate.mutate(commentId, {
       onSuccess: async () => {
@@ -119,18 +126,13 @@ function ViewComment() {
     });
   };
 
-  //댓글신고
-  const handleReportComment = async () => {
-    const result = await reportComment();
+  const handleOrderChange = (e) => {
+    setOrder((prevOrder) => (prevOrder === "desc" ? "asc" : "desc"));
   };
-
-  const handleOrderChange = e => {
-    setOrder(prevOrder => (prevOrder === 'desc' ? 'asc' : 'desc'))
-  }
   //로그인버튼
-  const handleRequestLogin = ()=>{
-    navigate("/",{state:"login"})
-  }
+  const handleRequestLogin = () => {
+    navigate("/", { state: "login" });
+  };
   if (status === "loading") {
     return (
       <div className="container">
@@ -144,6 +146,7 @@ function ViewComment() {
       </div>
     );
   }
+
   console.log(data);
 
   return (
@@ -157,7 +160,7 @@ function ViewComment() {
               className={styles.commentInput}
               name="content"
               value={inputContent}
-              onChange={e => setInputContent(e.target.value)}
+              onChange={(e) => setInputContent(e.target.value)}
               required
               placeholder="댓글"
             />
@@ -166,34 +169,38 @@ function ViewComment() {
         ) : (
           <div className={styles.commentForm}>
             로그인 후 댓글서비스 이용이 가능합니다.{" "}
-            <button type="button" onClick={handleRequestLogin} className={`fw-bold ${styles.goLogin}`} >
+            <button
+              type="button"
+              onClick={handleRequestLogin}
+              className={`fw-bold ${styles.goLogin}`}
+            >
               로그인 하기
             </button>
           </div>
         )}
-        <Form className={styles.orderBox}  onChange={handleOrderChange}>
-          <Form.Check
-          type="switch"
-          id="custom-switch"
-          label={order === 'desc' ? '최신순' : '오래된순'}
-          value={order}
-          checked={order === 'desc'}
-          />
-        </Form>
-
-        {data.commentList.map(item => {
-            return (
-          item.status == "ok" ?
-          <div key={item.commentId} className={styles.commentBox}>
+        {data.commentList?.length == 0 ? null : (
+          <Form className={styles.orderBox} onChange={handleOrderChange}>
+            <Form.Group controlId="orderSelect">
+              <Form.Control as="select" value={order}>
+                <option value="desc">최신순</option>
+                <option value="asc">오래된순</option>
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        )}
+        {data.commentList.map((item) => {
+          return item.status == "ok" ? (
+            <div key={item.commentId} className={styles.commentBox}>
               <div className={styles.commentName}>{item.User.nickname}</div>
               {editingCommentId === item.commentId ? (
                 <form
                   className={styles.editCommentForm}
-                  onSubmit={event => handleEditSubmit(event, item.commentId)}>
+                  onSubmit={(event) => handleEditSubmit(event, item.commentId)}
+                >
                   <input
                     className={styles.editInput}
                     value={editingContent}
-                    onChange={e => setEditingContent(e.target.value)}
+                    onChange={(e) => setEditingContent(e.target.value)}
                   />
                   <button className={styles.editBtn}>완료</button>
                 </form>
@@ -220,12 +227,14 @@ function ViewComment() {
                         type="button"
                         onClick={() => {
                           handleEditClick(item.commentId, item.content);
-                        }}>
+                        }}
+                      >
                         수정
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleCommentDelete(item.commentId)}>
+                        onClick={() => handleCommentDelete(item.commentId)}
+                      >
                         삭제
                       </button>
                     </>
@@ -234,15 +243,17 @@ function ViewComment() {
               ) : (
                 <div></div>
               )}
-            </div> : (item.status == "deleted" ) ? <div>삭제된 댓글입니다.</div> :
+            </div>
+          ) : item.status == "deleted" ? (
+            <div>삭제된 댓글입니다.</div>
+          ) : (
             <div>차단된 댓글입니다.</div>
-        
-        
-            
           );
         })}
         <div className="d-flex justify-content-center mt-3">
-          <Paging data={data} status={status} page={page} setPage={setPage} />
+          {data.commentList?.length == 0 ? null : (
+            <Paging data={data} status={status} page={page} setPage={setPage} />
+          )}
         </div>
       </div>
     </div>
