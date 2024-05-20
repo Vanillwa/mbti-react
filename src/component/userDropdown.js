@@ -66,31 +66,31 @@ const navigate =  useNavigate();
       <div className={`${styles.userBox} col-8`}>
         <div className={styles.profileBox}>
           <img
-            src={item.User.profileImage}
+            src={item.profileImage}
             alt="profile"
             className={styles.profileImg}
           />
           <div className={styles.nicknameBox}>
-          <div className={styles.nickname}>{item.User.nickname}</div>
-          <div className={styles.mbti}>{item.User.mbti}</div>
+          <div className={styles.nickname}>{item.nickname}</div>
+          <div className={styles.mbti}>{item.mbti}</div>
           </div>
         </div>
-        {userInfo?.userId == item.User.userId ? null : <>
+        {userInfo?.userId == item.userId ? null : <>
           <div type="button"
-          onClick={(e) => handleDropdownClick(e, item.User.userId)}
+          onClick={(e) => handleDropdownClick(e, item.userId)}
           className={styles.userInfoBtn}
         >
           {openDropdownId ? "▲" : "▼"}
         </div>
         <ul className={!openDropdownId ? styles.dropdown : styles.dropdownOpen}>
           <li>
-            <Link to={`/user/${item.User.userId}`}>프로필 보기</Link>
+            <Link to={`/user/${item.userId}`}>프로필 보기</Link>
           </li>
           {isLoggedIn ? <>
             <li>
             <div
               type="button"
-              onClick={(e) =>{ handleRequestFreind(e, item.User.userId)}}
+              onClick={(e) =>{ handleRequestFreind(e, item.userId)}}
             >
               친구요청
             </div>
@@ -101,7 +101,7 @@ const navigate =  useNavigate();
             </div>
           </li>
           <li>
-            <div type="button" onClick={(e)=>{ handleRequestChat(e, item.User.userId)}}>
+            <div type="button" onClick={(e)=>{ handleRequestChat(e, item.userId)}}>
               채팅하기
             </div>
           </li>

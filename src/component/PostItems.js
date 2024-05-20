@@ -61,7 +61,7 @@ const PostItems = ({ data, status }) => {
             >
               <div className={`${styles.postContent} col-8`}>
                 <div className={styles.header}>
-                  <UserDropdown item={item}/>
+                  <UserDropdown item={item.User}/>
                   <div className={`${styles.title} col-4`}>{item.title}</div>
                 </div>
                 <div className={`${styles.readhitBox}`}>
