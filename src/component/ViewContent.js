@@ -110,7 +110,6 @@ function ViewContent() {
   } else {
     dateDisplay = createdAt.toLocaleDateString("ko-KR");
   }
-  console.log(data);
   return (
     <>
       <div className={styles.container}>
