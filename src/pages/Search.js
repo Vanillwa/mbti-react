@@ -8,18 +8,23 @@ import { Navigation, Pagination } from "swiper";
 import UserDropdown from "../component/userDropdown";
 import like from "../svg/like.svg";
 import eye from "../svg/eye.svg";
-function Search() {
+import Paging from "../component/Paging";
+import { useEffect, useState } from "react";
+function Search( ) {
   const location = useLocation();
   const keyword = location.state.keyword;
 
+  const [page, setPage] = useState(1);
+  const [size,setSize] = useState(5);
   const { data, status } = useQuery(
-    ["getSearchResult", keyword],
-    () => getSearchResult(keyword),
+    ["getSearchResult", keyword,page,size],
+    () => getSearchResult(keyword,page,size),
     {
       retry: false,
       refetchOnWindowFocus: false,
     }
   );
+
 
   if (status === "loading") {
     return (
@@ -83,9 +88,9 @@ function Search() {
         </div>
       )}
       {data.postList.length == 0 ? null : (
-        <div className={styles.postWrap}>
+        <div className={searchStyles.postWrap}>
           {data.postList.map(item => {
-          
+         
             const createdAt = new Date(item.createdAt);
             const now = new Date();
             const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -116,7 +121,7 @@ function Search() {
             >
               <div className={`${styles.postContent} col-8`}>
                 <div className={styles.header}>
-                  <UserDropdown item={item}/>
+                  <UserDropdown item={item.User}/>
                   <div className={`${styles.title} col-4`}>{item.title}</div>
                 </div>
                 <div className={`${styles.readhitBox}`}>
@@ -140,6 +145,7 @@ function Search() {
           </div>
             )
           })}
+          <Paging data={data} status={status} page={page} setPage={setPage}  />
         </div>
       )}
     </div>

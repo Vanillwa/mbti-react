@@ -51,7 +51,7 @@ const Navbar = ({chatData}) => {
 
   const handleSearch =(e)=>{
     e.preventDefault()
-    let keyword = e.target.keyword.value
+    let keyword = e.target.keyword.value.trim();
     // if(keyword == "")return;
     navigate("/search",{state:{keyword}})
   }
