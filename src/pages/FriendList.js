@@ -194,6 +194,7 @@ const FriendList = () => {
         </div>
     </Form>
     {btn == 'friend' ? <div className={styles.container}>
+      <input></input>
     <div className={styles.title}>친구 목록</div>
     {friendData.length > 0 ? friendData.map((item)=>{
       return(<div key={item.friendId} className={styles.contentBox}>

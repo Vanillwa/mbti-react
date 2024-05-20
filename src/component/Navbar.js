@@ -63,7 +63,6 @@ const Navbar = ({chatData}) => {
       const allMessagesRead = chatData.every(item => item.unreadCount === 0);
       setShowChat(!allMessagesRead);
     }
-
   }, [chatData]);
   
   return (

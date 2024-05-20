@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
 import { getPostList } from "../service/api/postAPI";
@@ -11,7 +11,10 @@ import { Form } from "react-bootstrap";
 const PostList = () => {
   const [query, setQuery] = useSearchParams();
   const mbti = query.get("mbti");
-  const [page, setPage] = useState(1);
+
+  const readPage = parseInt(query.get('page') || '1', 10)
+
+  const [page, setPage] = useState(readPage);
   const [size, setSize] = useState(5);
   const [sort, setSort] = useState("createdAt");
   const [order, setOrder] = useState("desc");
@@ -24,6 +27,9 @@ const PostList = () => {
       refetchOnWindowFocus: false,
     }
   );
+  useEffect(()=>{
+    setQuery({page, mbti})
+  }, [page, mbti])
 
   const handleSortChange = (e) => {
     e.preventDefault()
@@ -44,10 +50,9 @@ const PostList = () => {
       setOrder('asc')
     }
   }
-  console.log(data)
   return (
     <div className={styles.postBox}>
-      {mbti == null ? <h2>전체게시판</h2> : <h2>{mbti}게시판</h2>}
+      {mbti == 'null' ? <h2>전체게시판</h2> : <h2>{mbti}게시판</h2>}
       <div className={styles.sortBox}>
       <Form.Select aria-label="Default select example" onChange={handleSortChange}>
         <option value='createdAt' >날짜순</option>
