@@ -66,7 +66,6 @@ const PostList = () => {
       </div>
       <PostItems data={data} status={status} />
       {data?.list?.length == 0 ? null : <Paging data={data} status={status} page={page} setPage={setPage}/>}
-      
     </div>
   );
 };

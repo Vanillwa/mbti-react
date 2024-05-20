@@ -60,8 +60,9 @@ const navigate =  useNavigate();
       setOpenDropdownId(id); // 새로운 드롭다운을 엽니다.
     }
   };
-
+  console.log(item)
   return (
+    
     <>
       <div className={`${styles.userBox} col-8`}>
         <div className={styles.profileBox}>

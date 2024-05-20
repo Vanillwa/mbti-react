@@ -27,7 +27,7 @@ const PostItems = ({ data, status }) => {
       </div>
     );
   }
-
+  console.log(data)
   return (
     <>
       {data.list.map((item) => {

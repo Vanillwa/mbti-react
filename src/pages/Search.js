@@ -47,8 +47,7 @@ function Search() {
               modules={[Navigation]}
               navigation={true}
               breakpoints={{
-          
-               
+                
                 1600: {
                   slidesPerView: 6, // 4 slides per view on screens >= 768px
                 },
