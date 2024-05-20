@@ -146,12 +146,12 @@ function ResetPassword() {
                     type="button"
                     disabled={!isSame}
                     onClick={UpdatePwd}
-                    class="col-3 btn btn-sm btn-primary">
+                    className="col-3 btn btn-sm btn-primary">
                     재설정하기
                   </button>
                   <button
                     onClick={cancelBtn}
-                    class={`col-3 btn btn-sm btn-primary ${styles.cancelbtn}`}>
+                    className={`col-3 btn btn-sm btn-primary ${styles.cancelbtn}`}>
                     취소
                   </button>
                 </div>

@@ -165,12 +165,12 @@ function FindPwd() {
                   <button
                     onClick={isInputPwd}
                     disabled={isButtonDisabled}
-                    class={`col-3 btn btn-sm btn-primary ${styles.findbtn}`}>
+                    className={`col-3 btn btn-sm btn-primary ${styles.findbtn}`}>
                     재설정하기
                   </button>
                   <button
                     onClick={goMain}
-                    class={`col-3 btn btn-sm btn-primary ${styles.mainbtn}`}>
+                    className={`col-3 btn btn-sm btn-primary ${styles.mainbtn}`}>
                     메인으로
                   </button>
                 </div>
