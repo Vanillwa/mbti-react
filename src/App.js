@@ -25,6 +25,7 @@ import { socket } from "./service/socket/socket";
 import { fetchLogout } from "./service/api/loginAPI";
 import { AuthContext, useAuthContext } from "./context/AuthContext";
 import sweetalert from "./component/sweetalert";
+import Search from "./pages/Search";
 
 function App() {
 
@@ -69,6 +70,7 @@ function App() {
               <Route path=":roomId" element={<ChatRoom />} />
             </Route>
           </Route>
+          <Route path="search" element={<Search/>}></Route>
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />

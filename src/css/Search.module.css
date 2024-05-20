@@ -1,0 +1,29 @@
+*{box-sizing: border-box;}
+.userWrap{
+    
+    
+}
+.userInner{
+   
+    display: flex;
+    height:260px;
+    flex-wrap: nowrap;
+   overflow-x: scroll;
+   
+    border:1px solid black;
+}
+.userItem{
+    flex: 0 0 auto;
+   float: left;
+    border:1px solid black;
+    width:200px;
+    height:100%;
+}
+
+.imgWrap{
+    width:100%;
+    height: auto;
+}
+.imgWrap img{
+    width:100%;
+}

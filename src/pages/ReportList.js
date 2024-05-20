@@ -10,16 +10,19 @@ import {
 import styles from "../css/ReportList.module.css";
 
 import ReportItems from "../component/ReportItems";
+import Paging from "../component/Paging";
 
 function ReportList() {
   const [type, setType] = useState("post");
   const [chatRoomMessageInfo, setChatRoomMessageInfo] = useState(null);
+  const [page, setPage] = useState(1);
   // const handleCommentReport = report=>{
   //   setReport(report);
   //   setShow(true)
   // }
 
   const handleRadioOnChange = e => {
+    setPage(1);
     setType(e.target.value);
   };
 
@@ -27,7 +30,7 @@ function ReportList() {
     data: postData,
     status: postStatus,
     refetch: postRefetch,
-  } = useQuery(["getPostReportList"], () => getPostReportList(), {
+  } = useQuery(["getPostReportList", page], () => getPostReportList(page), {
     retry: false,
     refetchOnWindowFocus: false,
   });
@@ -35,7 +38,7 @@ function ReportList() {
     data: commentData,
     status: commentStatus,
     refetch: commentRefetch,
-  } = useQuery(["getCommentReportList"], () => getCommentReportList(), {
+  } = useQuery(["getCommentReportList",page], () => getCommentReportList(page), {
     retry: false,
     refetchOnWindowFocus: false,
   });
@@ -43,12 +46,10 @@ function ReportList() {
     data: chatRoomData,
     status: chatRoomStauts,
     refetch: chatRefetch,
-  } = useQuery(["getChatRoomReportList"], () => getChatRoomReportList(), {
+  } = useQuery(["getChatRoomReportList",page], () => getChatRoomReportList(page), {
     retry: false,
     refetchOnWindowFocus: false,
   });
-
-  
 
   return (
     <>
@@ -68,7 +69,6 @@ function ReportList() {
             value="comment"
             name="group1"
             type="radio"
-            
           />
           <Form.Check
             inline
@@ -76,7 +76,6 @@ function ReportList() {
             value="chat"
             name="group1"
             type="radio"
-           
           />
         </div>
       </Form>
@@ -96,11 +95,37 @@ function ReportList() {
             chatRoomData={chatRoomData}
             chatRoomStauts={chatRoomStauts}
             chatRefetch={chatRefetch}
-        
- 
-           
           />
+          
         </div>
+        {type === "post" ? (
+            <div className={styles.reportPaging}>
+            <Paging
+              data={postData}
+              status={postStatus}
+              page={page}
+              setPage={setPage}
+            />
+            </div>
+          ) : type === "comment" ? (
+            <div className={styles.reportPaging}>
+            <Paging
+              data={commentData}
+              status={commentStatus}
+              page={page}
+              setPage={setPage}
+            />
+            </div>
+          ) : type === "chat" ? (
+            <div className={styles.reportPaging}>
+            <Paging
+              data={chatRoomData}
+              status={chatRoomStauts}
+              page={page}
+              setPage={setPage}
+            />
+            </div>
+          ) : null}
       </div>
     </>
   );

@@ -20,19 +20,19 @@ export const reportPost = async (body) =>{
     return res.data;
   }
   //게시글신고목록
-  export const getPostReportList = async ()=>{
-    const res = await axios.get("/report/post")
+  export const getPostReportList = async (page)=>{
+    const res = await axios.get(`/report/post?page=${page}`)
     return res.data;
   
   }
   //댓글신고목록
-  export const getCommentReportList = async()=>{
-    const res = await axios.get("/report/comment")
+  export const getCommentReportList = async(page)=>{
+    const res = await axios.get(`/report/comment?page=${page}`)
     return res.data;
   }
   //채팅방신고목록
-  export const getChatRoomReportList = async(roomId)=>{
-    const res = await axios.get(`/report/chatroom?roomId=${roomId}`)
+  export const getChatRoomReportList = async(page)=>{
+    const res = await axios.get(`/report/chatroom?page=${page}`)
     return res.data;
   }
  //채팅방신고 메세지 조회

@@ -9,9 +9,9 @@
     margin-bottom:7vh;
 }
 .reportBox {
-   margin:10px; 
+   
    display: flex;
-
+   flex-direction: column;
    justify-content: center;
 
 }
@@ -84,3 +84,7 @@ color:white;
     
 }
 
+.reportPaging{
+    display: flex;
+    justify-content: center;
+}

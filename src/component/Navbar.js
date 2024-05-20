@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styles from "../css/Nav.module.css";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
@@ -24,7 +24,7 @@ const Navbar = () => {
   const { memoUserInfo } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, userInfo } = memoUserInfo;
-
+  
   const navigate = useNavigate();
 
   const handleopenModal = async() => {
@@ -46,7 +46,12 @@ const Navbar = () => {
       navigate("/", { state: { state: "login" } }); 
     }
   };
-
+  const handleSearch =(e)=>{
+    e.preventDefault()
+    let keyword = e.target.keyword.value
+    // if(keyword == "")return;
+    navigate("/search",{state:{keyword}})
+  }
   return (
     <div className={styles.container}>
       {/* 상단 네브바 */}
@@ -55,7 +60,9 @@ const Navbar = () => {
           <img src={RUT} className={styles.logo}></img>
         </Link>
         <div className={styles.navbarSearch}>
-          <input type="text" placeholder="검색" />
+          <form onSubmit={handleSearch}>
+          <input type="text" placeholder="검색" name="keyword"  />
+          </form>
         </div>
         <div className={styles.navbarUser}>
           <button

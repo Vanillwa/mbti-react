@@ -13,7 +13,9 @@ import sweetalert from "./sweetalert";
 function ChatReportModal({roomId}){
     const [show, setShow] = useState(false);
     const [reportType, setReportType] = useState(0);
-  
+   const [modalRoomId,setModalRoomId] = useState(true);
+   const [modalUserNickName,setModalUserNickName] = useState(true);
+
     const { memoUserInfo } = useAuthContext();
     const { isLoggedIn, userInfo } = memoUserInfo;
   
@@ -94,13 +96,13 @@ function ChatReportModal({roomId}){
           <Form.Control
             value={userInfo?.nickname}
             autoFocus
-            disabled="true"
+            disabled={modalUserNickName}
           />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>신고 채팅방번호</Form.Label>
-          <Form.Control value={roomId} disabled="true" />
+          <Form.Control value={roomId} disabled={modalRoomId} />
         </Form.Group>
         <Form.Group
           className="mb-3"

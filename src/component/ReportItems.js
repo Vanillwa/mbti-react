@@ -310,8 +310,8 @@ function ReportItems({
       </Modal>
 
       <Accordion>
-        {type === "post" && postData.length > 0 ? (
-          postData.map(item => {
+        {type === "post" && postData.list.length > 0 ? (
+          postData.list.map(item => {
             console.log(item)
             return (
               <Accordion.Item eventKey={item.reportId} key={item.reportId}>
@@ -347,8 +347,8 @@ function ReportItems({
               </Accordion.Item>
             );
           })
-        ) : type === "comment" && commentData.length > 0 ? (
-          commentData.map(item => {
+        ) : type === "comment" && commentData.list.length > 0 ? (
+          commentData.list.map(item => {
             console.log("commentItem:", item);
             return (
             
@@ -387,8 +387,8 @@ function ReportItems({
              
             );
           })
-        ) : type === "chat" && chatRoomData.length > 0 ? (
-          chatRoomData.map(item => {
+        ) : type === "chat" && chatRoomData.list.length > 0 ? (
+          chatRoomData.list.map(item => {
             console.log(item)
             return (
               
