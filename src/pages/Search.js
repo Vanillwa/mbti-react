@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 function Search( ) {
   const location = useLocation();
   const keyword = location.state.keyword;
-
   const [page, setPage] = useState(1);
   const [size,setSize] = useState(5);
   const { data, status } = useQuery(
@@ -24,7 +23,9 @@ function Search( ) {
       refetchOnWindowFocus: false,
     }
   );
-
+    useEffect(()=>{
+      setPage(1)
+    },[keyword])
 
   if (status === "loading") {
     return (
