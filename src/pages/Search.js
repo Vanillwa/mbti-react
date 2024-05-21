@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import searchStyles from "../css/Search.module.css";
 import styles from "../css/PostList.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
+import { Navigation } from "swiper";
 import UserDropdown from "../component/userDropdown";
 import like from "../svg/like.svg";
 import eye from "../svg/eye.svg";
@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 function Search( ) {
   const location = useLocation();
   const keyword = location.state.keyword;
-
   const [page, setPage] = useState(1);
   const [size,setSize] = useState(5);
   const { data, status } = useQuery(
@@ -24,6 +23,10 @@ function Search( ) {
       refetchOnWindowFocus: false,
     }
   );
+  
+  useEffect(()=>{
+    setPage(1)
+  }, [keyword])
 
 
   if (status === "loading") {
@@ -89,7 +92,6 @@ function Search( ) {
       {data.postList.length == 0 ? null : (
         <div className={searchStyles.postWrap}>
           {data.postList.map(item => {
-         
             const createdAt = new Date(item.createdAt);
             const now = new Date();
             const differenceInSeconds = Math.floor((now - createdAt) / 1000);

@@ -51,13 +51,12 @@ const Navbar = ({chatData}) => {
 
   const handleSearch =(e)=>{
     e.preventDefault()
-    let keyword = e.target.keyword.value.trim();
+    let keyword = e.target.keyword.value;
     // if(keyword == "")return;
     navigate("/search",{state:{keyword}})
   }
 
   console.log(chatData)
-
   useEffect(() => {
     if(isLoggedIn){
       const allMessagesRead = chatData.every(item => item.unreadCount === 0);
