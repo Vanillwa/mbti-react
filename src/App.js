@@ -26,6 +26,7 @@ import { fetchLogout } from "./service/api/loginAPI";
 import { AuthContext, useAuthContext } from "./context/AuthContext";
 import sweetalert from "./component/sweetalert";
 import Search from "./pages/Search";
+import { Chat } from "react-bootstrap-icons";
 
 function App() {
 

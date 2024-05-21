@@ -132,7 +132,7 @@ function ChatRoom() {
           if (userInfo.userId === message.userId) {
             return (
               <div key={message.messageId} className={`${styles.message} ${styles.mine}`}>
-                <div>{message.isRead === 1 ? "" : "안읽음"}</div>
+                <div className={styles.isRead}>{message.isRead === 1 ? "" : "안읽음"}</div>
                 <div className={styles.mineContent}>
                   <div className={styles.myMessageInner}>{message.message}</div>
                 </div>
