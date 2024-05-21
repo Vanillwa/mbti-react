@@ -14,13 +14,13 @@
   
 }
 .contentBox{
+  width: 600px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 24px;
   padding: 12px 24px;
   background-color: rgb(230, 243, 255);
-  gap: 96px;
 }
 
 .btnBox{

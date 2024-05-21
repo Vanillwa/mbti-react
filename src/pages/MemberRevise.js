@@ -50,8 +50,10 @@ function MemberRevise() {
       const reader = new FileReader();
       reader.onload = () => {
         setCroppedImage(reader.result);
+        setPrevImage(croppedImage)
       };
       reader.readAsDataURL(file);
+      event.target.value = null;
     }
   };
 
@@ -79,7 +81,7 @@ function MemberRevise() {
   };
 
   const cancel = () => {
-    setCroppedImage(null);
+    setCroppedImage(prevImage);
    
   };
 
@@ -213,10 +215,10 @@ function MemberRevise() {
             </div>
 
             {croppedImage && (
-  <div className='cropperbox'>
-    <div className="cropper-wrapper">
+  <div >
+    <div className="cropper-wrapper cropperBox ">
       <Cropper
-        style={{ height: 400, width: '100%' }}
+        style={{ height: 400, width: '100%', }}
         aspectRatio={1}
         src={croppedImage}
         viewMode={1}
@@ -232,9 +234,10 @@ function MemberRevise() {
         }}
       />
     </div>
-
+        <div className='cropperboxbtn'>
     <button type="submit" className='btn btn-primary mt-3 uploadbtn1'>업로드</button>
     <button type="button" className='btn btn-secondary mt-3 ml-2 uploadbtn2' onClick={cancel}> 뒤로가기</button> 
+  </div>
   </div>
 )}
              

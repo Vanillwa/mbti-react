@@ -8,6 +8,8 @@ const Alarm = () => {
   const navigate = useNavigate();
 
   const [userToastIds, setUserToastIds] = useState({});
+  const [requestIds, setRequestIds] = useState({})
+
   const notify = (data) => {
     if (userToastIds[data.sendUser.nickname]) {
       toast.dismiss(userToastIds[data.sendUser.nickname]);
@@ -28,10 +30,31 @@ const Alarm = () => {
     })
   };
 
+  const reqNotify = () =>{
+    const toastRequestId = toast(`친구 요청이 있습니다.`, {
+      autoClose: 2000,
+      transition : Zoom,
+      position: "bottom-right",
+      onClick: () => {
+        navigate(`/friend`);
+        toast.dismiss(toastRequestId)
+      },
+    });
+    console.log('요청옴')
+    setRequestIds({
+      ...requestIds,
+    })
+  }
+
   useEffect(() => {
     socket.on("notification", notify);
     return () => socket.off("notification", notify);
   }, [userToastIds]);
+
+  useEffect(()=>{
+    socket.on('friendRequest', reqNotify);
+    return()=> socket.off('friendRequest', reqNotify)
+  }, [requestIds])
 
   return (
     <div>
