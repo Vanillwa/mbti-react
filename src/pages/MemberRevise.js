@@ -1,451 +1,332 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import 'cropperjs/dist/cropper.css';
+import { Cropper } from 'react-cropper';
 import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
-// import img from "../images/MBTI.png";
-// 프로필 수정삭제 구현하기 위해 만듬
-import Modal from 'react-bootstrap/Modal';
-// 프로필 수정아이콘 클릭시 선팝업창 뜨게 만들려고 씀
-import Button from 'react-bootstrap/Button'
-import '../css/MemberRevise.css'
-import Swal from "sweetalert2"
+import '../css/MemberRevise.css';
 import sweetalert from "../component/sweetalert";
 import Footer from '../component/Footer';
-
-
-// 크롭 추가
-import ReactCrop from 'react-image-crop';
-// import { checkDuplicationNickname } from '../service/api';
-
-
-// 로그인 상태정보를 불러옴
 import { useAuthContext } from "../context/AuthContext";
-import { userCheckDuplicationNickname } from "../service/api/memberReviseAPI";
-import { userUpdateNickname } from "../service/api/memberReviseAPI";
-import { userUpdatePassword } from "../service/api/memberReviseAPI";
-import { userUpdateMbti } from "../service/api/memberReviseAPI";
-import { userDeleteImage } from "../service/api/memberReviseAPI";
+import { userCheckDuplicationNickname, userUpdateNickname, userUpdatePassword, userUpdateMbti, userDeleteImage } from "../service/api/memberReviseAPI";
 import axios from 'axios';
 
-
-
-
-
-
 function MemberRevise() {
-  // 유저데이타 받아옴
   const { memoUserInfo, login, logout } = useAuthContext();
-  const { userInfo, isLoggedIn } = memoUserInfo;
+  const { userInfo } = memoUserInfo;
 
+  const navigate = useNavigate();
 
+  const [imgUrl, setImgUrl] = useState(userInfo.profileImage);
+  const [cropper, setCropper] = useState();
+  const [croppedImage, setCroppedImage] = useState(null);
+  const imageRef = useRef();
+  
+  // 같은 사진 누를시 안나오는거 해결하기 위한
+  const [prevImage,setPrevImage] =useState();
 
-
-  const navigate = useNavigate()
-
-
-
-
-  // 닉네임 
+  const [nicknameAlert, setNicknameAlert] = useState('');
+  const [nicknameValidation, setNicknameValidation] = useState();
+  const [nicknameEditable, setNicknameEditable] = useState(false);
+  const [nicknameBtn, setNicknameBtn] = useState('수정');
 
   const nicknameRef = useRef();
-  const [nicknameAlert, setNicknameAlert] = useState('')
-  const [nicknameValidation, setNicknameValidation] = useState()
-  const [nicknameEditable, setNicknameEditable] = useState(false);
-  const [nicknameBtn, setNicknameBtn] = useState('수정')
 
-
-  // 패스워드
   const passwordRef1 = useRef();
   const passwordRef2 = useRef();
-  const [pwMessage, setPwmessage] = useState('')
-  const [pwEditable, setPwEditable] = useState(false)
-  const [passwordBtn, setPasswordBtn] = useState('수정')
-  // const [password,setPassword] = useState("")
-  
+  const [pwMessage, setPwmessage] = useState('');
+  const [pwEditable, setPwEditable] = useState(false);
+  const [passwordBtn, setPasswordBtn] = useState('수정');
 
-
-  // mbti
-  const mbtiRef = useRef()
-  const [mbti, setMbti] = useState(userInfo.mbti)
-
-
-
-
-
-  // 이미지 
-  
-  const [imgUrl, setImgUrl] = useState(userInfo.profileImage);
-  const [crop, setCrop] = useState({ aspect: 1 });
-  const [completedCrop, setCompletedCrop] = useState(null);
-  const [imageRef, setImageRef] = useState(null);
-  const fileInputRef = useRef();
+  const mbtiRef = useRef();
 
   const handleButtonOnClick = () => {
-    fileInputRef.current.click();
+    imageRef.current.click();
   };
 
-  const onImageLoaded = (image) => {
-    setImageRef(image);
-  };
-
-  const onCropComplete = (crop) => {
-    setCompletedCrop(crop);
-  };
-
-  const onCropChange = (crop) => {
-    setCrop(crop);
-  };
-
-  const getCroppedImg = async (image, crop) => {
-    const canvas = document.createElement("canvas");
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-    const ctx = canvas.getContext("2d");
-
-    ctx.drawImage(
-      image,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height
-    );
-
-    return new Promise((resolve) => {
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          console.error('Canvas is empty');
-          return;
-        }
-        blob.name = "newFile.jpeg";
-        resolve(blob);
-      }, "image/jpeg");
-    });
-  };
-
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImgUrl(imageUrl);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCroppedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleImageUpload = async () => {
-    if (!completedCrop || !imageRef) {
-      return;
+  const handleCrop = async (e) => {
+    e.preventDefault();  // Prevent form submission
+
+    if (cropper) {
+      cropper.getCroppedCanvas().toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('img', blob);
+        try {
+          const result = await axios.put('https://192.168.5.17:10000/api/updateUserInfo/updateProfileImage', formData);
+          setImgUrl(result.data.url);
+          sweetalert.success('사진 변경 완료', '', '확인');
+          logout();
+          login(result.data.newUserInfo);
+          imageRef.current.value = null;
+          setCroppedImage(null); // 크롭 창을 닫기 위해 크롭 이미지를 초기화
+        } catch (error) {
+          console.log('Image upload failed', error);
+          sweetalert.error('이미지 업로드 실패', '이미지 업로드 중 문제가 발생했습니다. 다시 시도해 주세요.', '확인');
+        }
+      }, 'image/jpeg');
     }
+  };
 
-    const croppedImage = await getCroppedImg(imageRef, completedCrop);
-
-    const formData = new FormData();
-    formData.append('img', croppedImage);
-
-    try {
-      const result = await axios.put('https://192.168.5.17:10000/api/updateUserInfo/updateProfileImage', formData);
-      console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
-
-      setImgUrl(result.data.url);
-      logout();
-      login(result.data.newUserInfo);
-
-      fileInputRef.current.value = null;
-    } catch (error) {
-      console.log('실패했어요ㅠ');
-    }
+  const cancel = () => {
+    setCroppedImage(null);
+   
   };
 
   const imageDeleteHandler = async () => {
-    const result = await userDeleteImage();
-    setImgUrl(result.url);
-    console.log(result.url);
-    logout();
-    login(result.newUserInfo);
+    try {
+      const result = await userDeleteImage();
+      setImgUrl(result.url);
+      logout();
+      login(result.newUserInfo);
+    } catch (error) {
+      console.log('Image delete failed', error);
+      sweetalert.error('이미지 삭제 실패', '이미지 삭제 중 문제가 발생했습니다. 다시 시도해 주세요.', '확인');
+    }
   };
 
-
-
-
-
-  // 닉네임 중복 
   const handleCheckDuplicationNickname = async () => {
     let nickname = nicknameRef.current.value;
     const nicknameRegex = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,16}$/;
 
-    // 정규식을 사용하여 닉네임 유효성 검사
     if (!nicknameRegex.test(nickname)) {
       setNicknameAlert("닉네임은 영문자, 숫자, 한글을 포함하여 2글자 이상 16글자 이하로 입력해주세요.");
       setNicknameValidation("invalid");
       return;
     }
 
-    // 닉네임 중복 검사
     const data = await userCheckDuplicationNickname({ nickname });
     return data;
-
   };
 
   const handleNicknameBtnOnclick = async () => {
-
-    if (nicknameBtn == '수정') {
-      setNicknameEditable(true)
-      setNicknameBtn('체크')
-
-      return
+    if (nicknameBtn === '수정') {
+      setNicknameEditable(true);
+      setNicknameBtn('체크');
+      return;
     }
-    if (nicknameBtn == '체크') {
-      const result = await handleCheckDuplicationNickname()
-      console.log(result)
+
+    if (nicknameBtn === '체크') {
+      const result = await handleCheckDuplicationNickname();
       if (result?.message === "success") {
         setNicknameAlert("사용 가능한 닉네임 입니다.");
         setNicknameValidation('valid');
-        setNicknameBtn('변경')
+        setNicknameBtn('변경');
       } else if (result?.message === "duplicated") {
         setNicknameAlert("이미 사용중.");
         setNicknameValidation('invalid');
       }
     }
 
-
-
-
-
-
-    if (nicknameBtn == '변경') {
-
-      const result = await userUpdateNickname({ nickname: nicknameRef.current.value })
-
+    if (nicknameBtn === '변경') {
+      const result = await userUpdateNickname({ nickname: nicknameRef.current.value });
       if (result?.message === 'success') {
-        sweetalert.success('닉네임 변경 완료', '', '확인')
-        setNicknameEditable(false)
+        sweetalert.success('닉네임 변경 완료', '', '확인');
+        setNicknameEditable(false);
         setNicknameAlert("");
-        setNicknameBtn("수정")
-        logout()
-        login(result.newUserInfo)
+        setNicknameBtn("수정");
+        logout();
+        login(result.newUserInfo);
       } else {
         console.log('nickname change failed:', result.message);
       }
     }
-  }
-
-
-
-
-
-
-  const handlePasswordBtnOnclick = async () => {
-
-    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_.-]{6,20}$/;
-    if (passwordBtn == '수정') {
-      setPwEditable(true)
-      setPasswordBtn('확인')
-      return
-    }
-    if (passwordBtn == '확인') {
-
-      if (!passwordRegex.test(passwordRef1.current.value)) {
-        setPwmessage("비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요.");
-        return
-      } else if (passwordRef2.current.value != passwordRef1.current.value) {
-        setPwmessage("비밀번호가 일치하지 않습니다")
-        return
-      }
-      setPwmessage("비밀번호가 일치합니다.")
-
-      setPasswordBtn('변경')
-    }
-
-
-    if (passwordBtn == '변경') {
-
-      const result = await userUpdatePassword({ password: passwordRef1.current.value })
-      if (result.message === 'success') {
-        sweetalert.success('비밀번호 변경 완료', '', '확인')
-        passwordRef1.current.value = ''
-        passwordRef2.current.value = ''
-        setPwEditable(false)
-        setPwmessage("")
-        setPasswordBtn("수정")
-       
-       
-       
-        
-        return
-      }
-    }
-
-
-  }
-
-  const handlePasswordChange = (e) => {
-    setPasswordBtn('확인');
-    setPwmessage("")
-    return
   };
 
+  const handlePasswordBtnOnclick = async () => {
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_.-]{6,20}$/;
 
+    if (passwordBtn === '수정') {
+      setPwEditable(true);
+      setPasswordBtn('확인');
+      return;
+    }
 
+    if (passwordBtn === '확인') {
+      if (!passwordRegex.test(passwordRef1.current.value)) {
+        setPwmessage("비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요.");
+        return;
+      } else if (passwordRef2.current.value !== passwordRef1.current.value) {
+        setPwmessage("비밀번호가 일치하지 않습니다");
+        return;
+      }
+      setPwmessage("비밀번호가 일치합니다.");
+      setPasswordBtn('변경');
+    }
 
+    if (passwordBtn === '변경') {
+      const result = await userUpdatePassword({ password: passwordRef1.current.value });
+      if (result.message === 'success') {
+        sweetalert.success('비밀번호 변경 완료', '', '확인');
+        passwordRef1.current.value = '';
+        passwordRef2.current.value = '';
+        setPwEditable(false);
+        setPwmessage("");
+        setPasswordBtn("수정");
+      }
+    }
+  };
 
+  const handlePasswordChange = () => {
+    setPasswordBtn('확인');
+    setPwmessage("");
+  };
 
-
-  // mbti변경
   const handleMbtiChange = async () => {
     const result = await userUpdateMbti({ mbti: mbtiRef.current.value });
     if (result.message === 'success') {
-
-
-      sweetalert.success('MBTI 변경 완료', 'MBTI가 성공적으로 변경되었습니다.', '확인')
-      // 크롬 브라우저 세선 스토러지에서 로그인정보를 지웠다가 로그인 다시 하면 새로운 정보값을 채워줌.
-      logout()
-      login(result.newUserInfo)
+      sweetalert.success('MBTI 변경 완료', 'MBTI가 성공적으로 변경되었습니다.', '확인');
+      logout();
+      login(result.newUserInfo);
     } else {
-      sweetalert.success('MBTI 변경 실패', 'MBTI 변경에 실패하셨습니다.', '확인')
+      sweetalert.success('MBTI 변경 실패', 'MBTI 변경에 실패하셨습니다.', '확인');
     }
   };
 
 
-  console.log(passwordBtn)
-  console.log(passwordRef1)
-  console.log(mbtiRef)
-
-
- 
-
-
-
-
   return (
-   
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className="logo" />
       </Link>
       <div className="card">
         <div className="card-body">
-          <form >
-          <div className="text-center mb-5">
-        <img src={imgUrl} alt="회원사진" className="user-image" />
-        <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>프로필 편집</h2>
-      </div>
-      <div className='buttonWrap'>
-        <input type="file" hidden="hidden" onChange={handleFileChange} ref={fileInputRef} />
-        <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}><strong>파일 선택</strong></button>
-        <button type="button" onClick={handleImageUpload} className='buttonsim'><strong>업로드</strong></button>
-        <button type="button" onClick={imageDeleteHandler} className='buttonjun'><strong>삭제</strong></button>
-      </div>
-      {imgUrl && (
-        <ReactCrop
-          src={imgUrl}
-          crop={crop}
-          onImageLoaded={onImageLoaded}
-          onComplete={onCropComplete}
-          onChange={onCropChange}
-        />
-      )}
+          <form onSubmit={handleCrop}>
+            <div className="text-center mb-5">
+              <img src={imgUrl} alt="회원사진" className="user-image" />
+              <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>프로필 편집</h2>
+            </div>
+            <div className='buttonWrap'>
+              <input type="file" hidden="hidden" onChange={handleImageChange} ref={imageRef} />
+              <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}><strong>파일 선택</strong></button>
+              <button type='button' onClick={imageDeleteHandler} className='buttonjun'><strong>삭제</strong></button>
+            </div>
 
-            <div className="row g-3">
-              <div className="col-12">
-                <label htmlFor="email" className="form-label">이메일</label>
-                <div className='d-flex gap-2'>
-                  <input type="text" className="form-control form-control-email emailinput" name="email" id="email" placeholder={userInfo.email} disabled />
-                </div>
-              </div>
+            {croppedImage && (
+  <div className='cropperbox'>
+    <div className="cropper-wrapper">
+      <Cropper
+        style={{ height: 400, width: '100%' }}
+        aspectRatio={1}
+        src={croppedImage}
+        viewMode={1}
+        guides={true}
+        minCropBoxHeight={10}
+        minCropBoxWidth={10}
+        background={false}
+        responsive={true}
+        autoCropArea={1}
+        checkOrientation={false}
+        onInitialized={(instance) => {
+          setCropper(instance);
+        }}
+      />
+    </div>
 
-              <div>
-                <label htmlFor="user-pw" className="form-label">닉네임 변경</label>
-                <div className='d-flex gap-2 '>
-                  <input type="text" className="form-control" defaultValue={userInfo.nickname} disabled={!nicknameEditable} ref={nicknameRef} />
-                  <button
-                    type='button'
-                    className='btn btn-sm btn-primary'
-                    onClick={handleNicknameBtnOnclick}
-                  >
-                    {nicknameBtn}
-                  </button>
-
-                </div>
-                {nicknameAlert && (
-                  <div style={{ color: nicknameValidation === 'valid' ? 'green' : 'red' }}>
-                    {nicknameAlert}
-                  </div>
-                )}
-              </div>
-
-
-              <div>
-                <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
-                <div className="d-flex gap-2">
-                  <input type="password" className="form-control passwordBtn1" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange}  />
-                  <button
-                    className='btn btn-sm btn-primary'
-                    type='button'
-                    onClick={handlePasswordBtnOnclick}
-                  >
-                    {passwordBtn}
-                  </button>
-                </div>
-                <input type="password" className={`form-control passwordBtn2  ${passwordBtn == '수정' ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} v/>
-                <p style={{ color: pwMessage === "비밀번호가 일치하지 않습니다" ? "red" : "green" }}>{pwMessage}</p>
-              </div>
-
-              <div>
-                <label htmlFor="user-pw" className="form-label">MBTI</label>
-                <div className="d-flex gap-2">
-                  <select
-                    className="form-control"
-                    name="mbti"
-                    id="user-mbti"
-                    onChange={handleMbtiChange}
-                    ref={mbtiRef}
-                  >
-                    <option value="">{userInfo.mbti}</option>
-                    <option value="">MBTI 없음</option>
-                    <option value="INTJ">INTJ</option>
-                    <option value="INTP">INTP</option>
-                    <option value="ENTJ">ENTJ</option>
-                    <option value="ENTP">ENTP</option>
-                    <option value="INFJ">INFJ</option>
-                    <option value="INFP">INFP</option>
-                    <option value="ENFJ">ENFJ</option>
-                    <option value="ENFP">ENFP</option>
-                    <option value="ISTJ">ISTJ</option>
-                    <option value="ISFJ">ISFJ</option>
-                    <option value="ESTJ">ESTJ</option>
-                    <option value="ESFJ">ESFJ</option>
-                    <option value="ISTP">ISTP</option>
-                    <option value="ISFP">ISFP</option>
-                    <option value="ESTP">ESTP</option>
-                    <option value="ESFP">ESFP</option>
-                  </select>
-                </div>
-                <div className='buttondong d-flex gap-2' style={{ paddingTop: '10px' }}>
-
-                  <button
-                    type="button"
-                    className='btn btn-sm btn-primary'
-                    onClick={() => navigate('/post/list')}
-                  >게시판으로 이동</button>
-                  <button type='button' className='btn btn-sm btn-primary' onClick={() => navigate('/userdelete')}>회원탈퇴</button>
-                </div>
+    <button type="submit" className='btn btn-primary mt-3 uploadbtn1'>업로드</button>
+    <button type="button" className='btn btn-secondary mt-3 ml-2 uploadbtn2' onClick={cancel}> 뒤로가기</button> 
+  </div>
+)}
+             
+          </form>
+          <div className="row g-3">
+            <div className="col-12">
+              <label htmlFor="email" className="form-label">이메일</label>
+              <div className='d-flex gap-2'>
+                <input type="text" className="form-control form-control-control-email emailinput" name="email" id="email" placeholder={userInfo.email} disabled />
               </div>
             </div>
-          </form>
+
+            <div>
+              <label htmlFor="user-nickname" className="form-label">닉네임 변경</label>
+              <div className='d-flex gap-2 '>
+                <input type="text" className="form-control" defaultValue={userInfo.nickname} disabled={!nicknameEditable} ref={nicknameRef} id="user-nickname" />
+                <button
+                  type='button'
+                  className='btn btn-sm btn-primary'
+                  onClick={handleNicknameBtnOnclick}
+                >
+                  {nicknameBtn}
+                </button>
+              </div>
+              {nicknameAlert && (
+                <div style={{ color: nicknameValidation === 'valid' ? 'green' : 'red' }}>
+                  {nicknameAlert}
+                </div>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
+              <div className="d-flex gap-2">
+                <input type="password" className="form-control passwordBtn1" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
+                <button
+                  className='btn btn-sm btn-primary'
+                  type='button'
+                  onClick={handlePasswordBtnOnclick}
+                >
+                  {passwordBtn}
+                </button>
+              </div>
+              <input type="password" className={`form-control passwordBtn2 ${passwordBtn === '수정' ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} />
+              <p style={{ color: pwMessage === "비밀번호가 일치하지 않습니다" ? "red" : "green" }}>{pwMessage}</p>
+            </div>
+
+            <div>
+              <label htmlFor="user-mbti" className="form-label">MBTI</label>
+              <div className="d-flex gap-2">
+                <select
+                  className="form-control"
+                  name="mbti"
+                  id="user-mbti"
+                  onChange={handleMbtiChange}
+                  ref={mbtiRef}
+                >
+                  <option value="">{userInfo.mbti}</option>
+                  <option value="">MBTI 없음</option>
+                  <option value="INTJ">INTJ</option>
+                  <option value="INTP">INTP</option>
+                  <option value="ENTJ">ENTJ</option>
+                  <option value="ENTP">ENTP</option>
+                  <option value="INFJ">INFJ</option>
+                  <option value="INFP">INFP</option>
+                  <option value="ENFJ">ENFJ</option>
+                  <option value="ENFP">ENFP</option>
+                  <option value="ISTJ">ISTJ</option>
+                  <option value="ISFJ">ISFJ</option>
+                  <option value="ESTJ">ESTJ</option>
+                  <option value="ESFJ">ESFJ</option>
+                  <option value="ISTP">ISTP</option>
+                  <option value="ISFP">ISFP</option>
+                  <option value="ESTP">ESTP</option>
+                  <option value="ESFP">ESFP</option>
+                </select>
+              </div>
+              <div className='buttondong d-flex gap-2' style={{ paddingTop: '10px' }}>
+                <button
+                  type="button"
+                  className='btn btn-sm btn-primary'
+                  onClick={() => navigate('/post/list')}
+                >게시판으로 이동</button>
+                <button type='button' className='btn btn-sm btn-primary' onClick={() => navigate('/userdelete')}>회원탈퇴</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-<Footer></Footer>
+      <Footer />
     </div>
-   
-
   );
 }
 
-
-
-export default MemberRevise
+export default MemberRevise;
