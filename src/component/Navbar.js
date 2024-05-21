@@ -20,7 +20,7 @@ import sweetalert from "./sweetalert";
 import Alarm from "./Alarm";
 
 
-const Navbar = ({chatData}) => {
+const Navbar = ({chatData, chatStatus}) => {
   const { memoUserInfo } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -57,51 +57,45 @@ const Navbar = ({chatData}) => {
 
     navigate("/search",{state:{keyword}})
   }
+  useEffect(() => {
+    if(chatData != null){
+      if(isLoggedIn){
+        const allMessagesRead = chatData.every(item => item.unreadCount === 0);
+        setShowChat(!allMessagesRead);
+      }
+    }
+
+
+  }, [chatData]);
+
+  if(chatStatus === 'loading'){
+    return(
+      <h1>로딩</h1>
+    )
+  }
+  if(chatStatus === 'error'){
+    return(
+      <h1>에러</h1>
+    )
+  }
 
   console.log(chatData)
-  useEffect(() => {
-    if(isLoggedIn){
-      const allMessagesRead = chatData.every(item => item.unreadCount === 0);
-      setShowChat(!allMessagesRead);
-    }
-  }, [chatData]);
+  
   
   return (
     <div className={styles.container}>
-      {/* 상단 네브바 */}
-      <nav className={`${styles.item} ${styles.nav}`}>
-        <Link to="/" className={styles.navbarLogo}>
-          <img src={RUT} className={styles.logo}></img>
-        </Link>
-        <div className={styles.navbarSearch}>
-          <form onSubmit={handleSearch}>
-          <input type="text" placeholder="검색" name="keyword"  />
-          </form>
-        </div>
-        <div className={styles.navbarUser}>
-          <button
-            className={styles.profileBtn}
-            type="button"
-            onClick={compareLogin}>
-            <span className={styles.userName} >
-              <img src={User}></img>
-              {isLoggedIn ? `${userInfo.nickname} 님`  : "로그인 해주세요"}
-            </span>
-            {isLoggedIn ? (
-              <img src={userInfo.profileImage} className={styles.userImg} />
-            ) : (
-              <img src={notImg} alt="회원사진" className={styles.userImg}  />
-            )}
-          </button>
-          {showDropdown && <ProfileDropDown/>}
-        </div>
-      </nav>
-
 
       {/*왼쪽 사이드바*/}
       <div className={`${styles.item} ${styles.leftSidebar}`}>
         <div className={styles.menuItems}>
-          
+        <Link to="/" className={styles.menu}>
+          <img src={RUT} className={styles.logo}></img>
+        </Link>
+        {/* <div className={styles.navbarSearch}>
+          <form onSubmit={handleSearch}>
+          <input type="text" placeholder="검색" name="keyword"  />
+          </form>
+        </div> */}
           
 
           <Link className={styles.menu} to="/post/list">
@@ -188,6 +182,21 @@ const Navbar = ({chatData}) => {
           ) : (
             ""
           )}
+          <div className={styles.menu}>
+          <button
+            className={styles.profileBtn}
+            type="button"
+            onClick={compareLogin}>
+            <div className={styles.span}>프로필</div>
+            {isLoggedIn ? (
+              <img src={userInfo.profileImage} className={`${styles.userImg} ${styles.svg}`} />
+            ) : (
+              <img src={notImg} alt="회원사진" className={styles.userImg}  />
+            )}
+            
+          </button>
+          {showDropdown && <ProfileDropDown/>}
+        </div>
         </div>
 
     
