@@ -1,28 +1,36 @@
-
-
-.radioForm{
-    font-weight: 600;
-    font-size:18px;
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
+
+.radioForm {
+    font-weight: 600;
+    font-size: 18px;
+}
+
 .title {
     font-weight: bold;
-    margin-bottom:7vh;
+    margin-bottom: 7vh;
 }
+
 .reportBox {
-   
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
 }
 
 .reportList {
     border: 1px solid black;
     border-radius: 7px;
-    width:80%;
-   
-    
-   
+    width: 800px;
+
+
+
+
 }
 
 .reportContent {
@@ -30,8 +38,8 @@
     justify-content: space-between;
     align-items: center;
     text-align: start;
-    font-size:18px;
-    
+    font-size: 18px;
+    width: 80%;
 }
 
 
@@ -39,52 +47,55 @@
 
 
 
-.postTitle{
+.postTitle {
     font-family: 'KCC-Hanbit';
-    margin-bottom:30px;
-    padding:7px;
+    margin-bottom: 30px;
+    padding: 7px;
     border-bottom: 1px solid lightgray;
 }
-.postContent{
+
+.postContent {
     font-family: 'KCC-Hanbit';
     overflow: auto;
-    margin-bottom:30px;
+    margin-bottom: 30px;
     border-bottom: 1px solid lightgray;
-    padding:5px;
+    padding: 5px;
 }
 
-.commentContent{
+.commentContent {
     font-family: 'KCC-Hanbit';
     overflow: auto;
-    margin-bottom:30px;
+    margin-bottom: 30px;
     border-bottom: 1px solid lightgray;
-    padding:5px;
+    padding: 5px;
 }
-.reportBtn{
+
+.reportBtn {
     font-family: 'KCC-Hanbit';
-width:5vw;
-border:0px;
-border-radius: 3px;
-background-color: cornflowerblue;
-color:white;
+    width: 5vw;
+    border: 0px;
+    border-radius: 3px;
+    background-color: cornflowerblue;
+    color: white;
 }
 
 /* 모달 */
-.blockModalBtn{
+.blockModalBtn {
     font-family: 'KCC-Hanbit';
-width:3vw;
-border:0px;
-border-radius: 3px;
-background-color: cornflowerblue;
-color:white;
-}
-.blockModalForm{
-    display: flex;
-    justify-content: center;
-    
+    width: 3vw;
+    border: 0px;
+    border-radius: 3px;
+    background-color: cornflowerblue;
+    color: white;
 }
 
-.reportPaging{
+.blockModalForm {
+    display: flex;
+    justify-content: center;
+
+}
+
+.reportPaging {
     display: flex;
     justify-content: center;
 }

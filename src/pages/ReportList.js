@@ -50,9 +50,9 @@ function ReportList() {
     retry: false,
     refetchOnWindowFocus: false,
   });
-
+console.log(postData)
   return (
-    <>
+    <div className={styles.container}>
       <Form onChange={handleRadioOnChange}>
         <div className={`mb-3 radio ${styles.radioForm}`}>
           <Form.Check
@@ -100,34 +100,35 @@ function ReportList() {
         </div>
         {type === "post" ? (
             <div className={styles.reportPaging}>
-            <Paging
+            {postData?.list.length == 0 ? null : <Paging
               data={postData}
               status={postStatus}
               page={page}
               setPage={setPage}
-            />
+            />}
             </div>
           ) : type === "comment" ? (
             <div className={styles.reportPaging}>
-            <Paging
+             {commentData?.list.length == 0 ? null : <Paging
               data={commentData}
               status={commentStatus}
               page={page}
               setPage={setPage}
-            />
+            />}
             </div>
           ) : type === "chat" ? (
             <div className={styles.reportPaging}>
-            <Paging
+              {chatRoomData?.list.length == 0 ? null : <Paging
               data={chatRoomData}
               status={chatRoomStauts}
               page={page}
               setPage={setPage}
-            />
+            />} 
+            
             </div>
           ) : null}
       </div>
-    </>
+    </div>
   );
 }
 
