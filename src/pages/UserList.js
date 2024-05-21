@@ -37,7 +37,7 @@ function UserList() {
   
     
   };
-
+console.log(data)
   
   return (
     <>
@@ -62,6 +62,7 @@ function UserList() {
       </select>
       <UserItems data={data} status={status} filter={filter} keyword={keyword} type={type} refetch={refetch} />
      <div className={styles.userPaging}>
+      
       <Paging data={data} status={status} page={page} setPage={setPage}/>
       </div>
     </>

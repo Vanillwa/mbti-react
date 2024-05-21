@@ -9,18 +9,18 @@ export const requestFriend = async (targetId) => {
   return res.data;
 };
 /**친구 조회 */
-export const getFriend = async ()=>{
-  const res = await axios.get(`/friend/friendList`)
+export const getFriend = async (keyword, page, size)=>{
+  const res = await axios.get(`/friend/friendList?keyword=${keyword}&page=${page}&size=${size}`)
   return res.data
 }
 /**친구 요청 조회 */
-export const getRequestFriend  =async()=>{
-  const res = await axios.get(`/friend/requestList`)
+export const getRequestFriend  =async(page, size)=>{
+  const res = await axios.get(`/friend/requestList?page=${page}&size=${size}`)
   return res.data
 }
 /**차단 유저 조회 */
-export const getBlockUser  =async()=>{
-  const res = await axios.get(`/friend/blockList`)
+export const getBlockUser  =async(page, size)=>{
+  const res = await axios.get(`/friend/blockList?page=${page}&size=${size}`)
   return res.data
 }
 /**친구 요청 수락 */
@@ -28,8 +28,6 @@ export const acceptFriend = async (friendId)=>{
   const res = await axios.get(`/friend/accept?friendId=${friendId}`)
   return res.data
 }
-
-
 
 /**친구 요청 거절 */
 export const rejectFriend = async (friendId)=>{

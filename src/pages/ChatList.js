@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../css/Chat.module.css";
 import { useQuery } from "react-query";
 import { getChatList } from "../service/api/chatAPI";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { socket } from "../service/socket/socket";
+import Paging from "../component/Paging";
 const ChatList = () => {
+  const [page, setPage] = useState(1)
+  const [size, serSize] = useState(5)
+
   const { data, status, refetch } = useQuery(
-    ["getChatList"],
-    () => getChatList(),
+    ["getChatList", page, size],
+    () => getChatList(page,size),
     {
       retry: false,
       refetchOnWindowFocus: false,
@@ -54,9 +58,9 @@ const ChatList = () => {
     <>
       <div className={styles.container}>
         <h2>채팅목록</h2>
-        <div className={styles.chatBox}>
+        <div className={`${styles.chatBox}`}>
           <div className={styles.chatItems}>
-            {data.map((item) => {
+            {data.result.map((item) => {
               return (
                 <Link
                   to={`/chat/list/${item.roomId}`}
@@ -113,9 +117,13 @@ const ChatList = () => {
               );
 
             })}
+            {data.result.length > 0 ? <Paging data={data}refetch={refetch} page={page} setPage={setPage} /> : null}
           </div>
+          
         </div>
+        
       </div>
+      
     </>
   );
 };

@@ -12,7 +12,9 @@
     align-items: center;
 }
 .imgWrap {
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -21,14 +23,15 @@
     overflow: hidden;
 }
 .imgWrap img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
+    width: 100%;
+    height: auto;
 }
 .postWrap{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap:12px;
+}
+.nickname{
+    display: flex;
 }
