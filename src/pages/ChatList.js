@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styles from "../css/Chat.module.css";
+import styles from "../css/ChatList.module.css";
 import { useQuery } from "react-query";
 import { getChatList } from "../service/api/chatAPI";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import Paging from "../component/Paging";
-const ChatList = () => {
+const ChatList = ({setRoomId}) => {
   const [page, setPage] = useState(1)
   const [size, serSize] = useState(5)
 
@@ -20,6 +20,10 @@ const ChatList = () => {
 
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
+
+const handleSetRoomId = (roomId)=>{
+  setRoomId(roomId)
+}
 
   if (status === "loading") {
     return (
@@ -59,10 +63,10 @@ const ChatList = () => {
         <h2>채팅목록</h2>
         <div className={`${styles.chatBox}`}>
           <div className={styles.chatItems}>
-            {data.result.map((item) => {
+            {data.map((item) => {
               return (
-                <Link
-                  to={`/chat/list/${item.roomId}`}
+                <div
+                  onClick={()=>{handleSetRoomId(item.roomId)}}
                   className={styles.itemBox}
                   key={item.roomId}
                 >
@@ -112,11 +116,11 @@ const ChatList = () => {
                       </div>
                     </div>
                   </div>
-                </Link>
+                </div>
               );
 
             })}
-            {data.result.length > 0 ? <Paging data={data}refetch={refetch} page={page} setPage={setPage} /> : null}
+       
           </div>
           
         </div>

@@ -13,8 +13,8 @@ import downImg from '../svg/arrow-down-circle.svg'
 import ChatReportModal from "../component/ChatReportModal";
 
 
-function ChatRoom() {
-  const { roomId } = useParams();
+function ChatRoom({roomId}) {
+  
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
@@ -29,6 +29,7 @@ function ChatRoom() {
     ["getChatRoom", roomId],
     () => getChatRoom(roomId),
     {
+      enabled:!!roomId,
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: data => {
