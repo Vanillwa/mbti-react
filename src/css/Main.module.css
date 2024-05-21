@@ -13,12 +13,12 @@
   text-align: center;
   margin-bottom: 15px;
 
+
+}
 .logo img {
   width: 300px;
 
 }
-}
-
 
 .body {
   height: 100vh;
@@ -36,6 +36,7 @@
   background-color: white;
   gap:24px;
 }
+
 @media screen and (max-width:768px) {
 .slide{
   display:none;
