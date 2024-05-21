@@ -1,7 +1,7 @@
 
-.section { max-width: 600px; margin: 0 auto;  background-color: whitesmoke; } 
-.formWrap{position: relative; }
-.chatForm { height: 540px; overflow-y: scroll; display: flex; flex-direction: column; padding: 18px; } 
+.section {display: flex; flex-flow: column; justify-content: space-between; height:100%; background-color: white; } 
+.formWrap{position: relative;  }
+.chatForm {  overflow-y: scroll; display: flex; flex-direction: column; padding: 18px; } 
 .chatForm::-webkit-scrollbar {display: none; background: white; border-radius: 12px; width: 10px; } 
 .chatForm::-webkit-scrollbar-thumb { background-color: white; border-radius: 12px; } 
 .message { display: flex; padding: 3px 0; font-size: 18px; gap:8px; } 

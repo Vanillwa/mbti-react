@@ -5,13 +5,14 @@ import { getChatList } from "../service/api/chatAPI";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import Paging from "../component/Paging";
-const ChatList = ({setRoomId}) => {
-  const [page, setPage] = useState(1)
-  const [size, serSize] = useState(5)
+import ChatReportModal from "../component/ChatReportModal";
+const ChatList = ({ setRoomId, roomId }) => {
+  const [page, setPage] = useState(1);
+  const [size, serSize] = useState(5);
 
   const { data, status, refetch } = useQuery(
     ["getChatList", page, size],
-    () => getChatList(page,size),
+    () => getChatList(page, size),
     {
       retry: false,
       refetchOnWindowFocus: false,
@@ -21,9 +22,9 @@ const ChatList = ({setRoomId}) => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
-const handleSetRoomId = (roomId)=>{
-  setRoomId(roomId)
-}
+  const handleSetRoomId = roomId => {
+    setRoomId(roomId);
+  };
 
   if (status === "loading") {
     return (
@@ -63,13 +64,14 @@ const handleSetRoomId = (roomId)=>{
         <h2>채팅목록</h2>
         <div className={`${styles.chatBox}`}>
           <div className={styles.chatItems}>
-            {data.map((item) => {
+            {data.map(item => {
               return (
                 <div
-                  onClick={()=>{handleSetRoomId(item.roomId)}}
+                  onClick={() => {
+                    handleSetRoomId(item.roomId);
+                  }}
                   className={styles.itemBox}
-                  key={item.roomId}
-                >
+                  key={item.roomId}>
                   {userInfo.userId == item.user1.userId ? (
                     <>
                       <div className={styles.userBox}>
@@ -80,10 +82,16 @@ const handleSetRoomId = (roomId)=>{
                           />
                         </div>
                         <div className={styles.contentBox}>
-                          <div className={styles.nickname}>{item.user2.nickname}</div>
+                          <div className={styles.nickname}>
+                            {item.user2.nickname}
+                          </div>
+
                           <div className={styles.messageBox}>
                             <span>{item.recentMessage}</span>
                           </div>
+                        </div>
+                        <div>
+                          <ChatReportModal roomId={roomId} />
                         </div>
                       </div>
                     </>
@@ -97,7 +105,9 @@ const handleSetRoomId = (roomId)=>{
                           />
                         </div>
                         <div className={styles.contentBox}>
-                          <div className={styles.nickname}>{item.user1.nickname}</div>
+                          <div className={styles.nickname}>
+                            {item.user1.nickname}
+                          </div>
                           <div className={styles.messageBox}>
                             <span>{item.recentMessage}</span>
                           </div>
@@ -109,8 +119,7 @@ const handleSetRoomId = (roomId)=>{
                     <div
                       className={
                         item.unreadCount > 0 ? styles.unreadNum : styles.readNum
-                      }
-                    >
+                      }>
                       <div>
                         {item.unreadCount > 0 ? item.unreadCount : null}
                       </div>
@@ -118,15 +127,10 @@ const handleSetRoomId = (roomId)=>{
                   </div>
                 </div>
               );
-
             })}
-       
           </div>
-          
         </div>
-        
       </div>
-      
     </>
   );
 };
