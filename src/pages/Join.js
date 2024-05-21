@@ -261,8 +261,8 @@ function Join() {
   }
 
   return (
-
-    <div className="container mt-5">
+ 
+    <div className="container mt-5 c1">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className={styles.logo} />
       </Link>
@@ -376,6 +376,7 @@ function Join() {
       </div>
       <Footer></Footer>
     </div>
+   
 
 
 
