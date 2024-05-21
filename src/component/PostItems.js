@@ -4,30 +4,11 @@ import { Link } from "react-router-dom";
 import UserDropdown from "./userDropdown";
 import like from "../svg/like.svg";
 import eye from "../svg/eye.svg";
+
+
 const PostItems = ({ data, status }) => {
+
   
-  
-  if (status === "loading") {
-    return (
-      <div className="container">
-        <h1>Loading...</h1>
-      </div>
-    );
-  } else if (status === "error") {
-    return (
-      <div className="container">
-        <h1>error!</h1>
-      </div>
-    );
-  }
-  if (data.list.length == 0) {
-    return (
-      <div>
-        <h1>작성된 글이 없습니다.</h1>
-      </div>
-    );
-  }
-  console.log(data)
   return (
     <>
       {data.list.map((item) => {
@@ -37,7 +18,7 @@ const PostItems = ({ data, status }) => {
         const differenceInMinutes = Math.floor(differenceInSeconds / 60);
         const differenceInHours = Math.floor(differenceInMinutes / 60);
         const differenceInDays = Math.floor(differenceInHours / 24);
-      
+
         let dateDisplay;
         if (differenceInMinutes < 60) {
           dateDisplay = `${differenceInMinutes}분 전`;
@@ -48,39 +29,39 @@ const PostItems = ({ data, status }) => {
         } else {
           dateDisplay = createdAt.toLocaleDateString("ko-KR");
         }
-      
+
         const showImg = item.content.match(
           /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
         );
         const imgSrc = showImg ? showImg[1] : null;
+        
         return (
-          <div className={`${styles.container} container`} key={item.postId}>
-            <Link
-              to={`/post/view?postId=${item.postId}`}
-              className={`${styles.postWrap} row-cols-2`}
-            >
-              <div className={`${styles.postContent} col-8`}>
+          <div className={styles.container} key={item.postId}>
+            <Link to={`/post/view?postId=${item.postId}`} className={styles.postWrap}>
+              <div className={styles.postContent}>
                 <div className={styles.header}>
-                  <UserDropdown item={item.User}/>
-                  <div className={`${styles.title} col-4`}>{item.title}</div>
+                  <UserDropdown item={item.User} />
                 </div>
-                <div className={`${styles.readhitBox}`}>
-                  <div className={styles.date}>
-                    {dateDisplay}
-                  </div>
+                <div className={styles.title}>{item.title}</div>
+                <div className={styles.readhitBox}>
+                  <div className={styles.date}>{dateDisplay}</div>
                   <div className={styles.likes}>
-                    <img src={like} /> {item.like}
+                    <img src={like} alt="likes" /> {item.like}
                   </div>
                   <div className={styles.readhit}>
-                    <img src={eye} /> {item.readhit}
+                    <img src={eye} alt="views" /> {item.readhit}
                   </div>
                 </div>
               </div>
-              <div className={`${styles.imgBox} col-4`}>
-                <div className={styles.thumbnail}>
-                  <img className={styles.img} src={imgSrc} />
+              
+              {imgSrc && (
+                <div className={styles.imgBox}>
+                  <div className={styles.thumbnail}>
+                    <img className={styles.img} src={imgSrc} alt="thumbnail" />
+                  </div>
                 </div>
-              </div>
+              )}
+              
             </Link>
           </div>
         );

@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 import { getChatList } from "../service/api/chatAPI";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { socket } from "../service/socket/socket";
 import Paging from "../component/Paging";
 const ChatList = () => {
   const [page, setPage] = useState(1)
