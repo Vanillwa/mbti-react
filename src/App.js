@@ -34,15 +34,24 @@ function App() {
   const navigate = useNavigate()
   const { logout } = useContext(AuthContext);
 
-  socket.on("uBlocked", async()=>{
+  socket.on("uBlocked", async () => {
     socket.emit("logout");
-      const result = await fetchLogout();
-      console.log(result.message)
-      if (result.message === 'success') {
-        logout();
-        navigate("/", { state: "logout" })
-        sweetalert.warning('차단된 계정입니다.','','닫기')
-      }
+    const result = await fetchLogout();
+    if (result.message === 'success') {
+      logout();
+      navigate("/", { state: "logout" })
+      sweetalert.warning('차단된 계정입니다.', '', '닫기')
+    }
+  })
+
+  socket.on("duplicatedLogin", async () => {
+    socket.emit("logout");
+    const result = await fetchLogout();
+    if (result.message === 'success') {
+      logout();
+      navigate("/", { state: "logout" })
+      sweetalert.warning('로그인 중복이 감지되었습니다.', '', '닫기')
+    }
   })
 
   return (
@@ -70,7 +79,7 @@ function App() {
               <Route path=":roomId" element={<ChatRoom />} />
             </Route>
           </Route>
-          <Route path="search" element={<Search/>}></Route>
+          <Route path="search" element={<Search />}></Route>
         </Route>
         <Route path="/" element={<Main />} />
         <Route path="/join" element={<Join />} />

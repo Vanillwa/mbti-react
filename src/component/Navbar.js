@@ -53,7 +53,7 @@ const Navbar = ({chatData}) => {
     e.preventDefault()
     let keyword = e.target.keyword.value;
 
-    if(keyword == "")return;
+    //if(keyword == "")return;
 
     navigate("/search",{state:{keyword}})
   }

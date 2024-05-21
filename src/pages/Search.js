@@ -25,6 +25,7 @@ function Search() {
   const keyword = location.state.keyword;
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
+
   const { data, status } = useQuery(
     ["getSearchResult", keyword, page, size],
     () => getSearchResult(keyword, page, size),
@@ -95,6 +96,7 @@ function Search() {
         <div className={searchStyles.userWrap}>
           <div className={searchStyles.userInner}>
             <Swiper
+              className={searchStyles.swiper}
               slidesPerView={6} //한번에 보여질 갯수
               modules={[Navigation]}
               navigation={true}
@@ -114,12 +116,12 @@ function Search() {
                 320: {
                   slidesPerView: 2, // 1 slide per view on screens >= 320px
                 },
-              }}
-            >
-              {data.userList.map((item) => {
+              }}>
+              {data.userList.map(item => {
                 console.log("item:", item);
                 return (
                   <SwiperSlide>
+                   <p>{item.nickname}의 검색결과</p>
                     <div className={searchStyles.userItem}>
                       <div className={searchStyles.imgWrap}>
                         <Link to={`/user/${item.userId}`}>
@@ -128,39 +130,44 @@ function Search() {
                           />
                         </Link>
                       </div>
+
                       <div className={searchStyles.nickname}>
-                        <div>{item.nickname}</div>
-                        <DropdownButton
-                          variant="Secondary"
-                          id="dropdown-basic-button"
-                        >
-                          <Dropdown.Item href="#/action-1">
-                            <Link to={`/user/${item.userId}`}>프로필 보기</Link>
-                          </Dropdown.Item>
-                          {isLoggedIn ? (
-                            <>
-                              <Dropdown.Item
-                                onClick={(e) => {
-                                  handleRequestFreind(e, item.userId);
-                                }}
-                              >
-                                친구요청
-                              </Dropdown.Item>
-                              <Dropdown.Item href="#/action-3">
-                                차단하기
-                              </Dropdown.Item>
-                              <Dropdown.Item
-                                onClick={(e) => {
-                                  handleRequestChat(e, item.userId);
-                                }}
-                              >
-                                채팅하기
-                              </Dropdown.Item>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                        </DropdownButton>
+                        <div>
+                          <Dropdown className={searchStyles.dropdown}>
+                            <Dropdown.Toggle variant="" id="dropdown-basic">
+                              {item.nickname}
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                              
+                                <Dropdown.Item onClick={()=>{navigate(`/user/${item.userId}`)}}>프로필 보기</Dropdown.Item>
+                              
+                              {isLoggedIn ? (
+                                <>
+                                  <Dropdown.Item
+                                    key="requestFriend"
+                                    onClick={e => {
+                                      handleRequestFreind(e, item.userId);
+                                    }}>
+                                    친구요청
+                                  </Dropdown.Item>
+                                  <Dropdown.Item key="block">
+                                    차단하기
+                                  </Dropdown.Item>
+                                  <Dropdown.Item
+                                    key="requestChat"
+                                    onClick={e => {
+                                      handleRequestChat(e, item.userId);
+                                    }}>
+                                    채팅하기
+                                  </Dropdown.Item>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </div>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -172,7 +179,11 @@ function Search() {
       )}
       {data.postList.length == 0 ? null : (
         <div className={searchStyles.postWrap}>
-          {data.postList.map((item) => {
+          {data.postList.map(item => {
+
+         
+
+
             const createdAt = new Date(item.createdAt);
             const now = new Date();
             const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -196,39 +207,37 @@ function Search() {
             );
             const imgSrc = showImg ? showImg[1] : null;
             return (
-              <div
-                className={`${styles.container} container`}
-                key={item.postId}
-              >
-                <Link
-                  to={`/post/view?postId=${item.postId}`}
-                  className={`${styles.postWrap} row-cols-2`}
-                >
-                  <div className={`${styles.postContent} col-8`}>
-                    <div className={styles.header}>
-                      <UserDropdown item={item.User} />
-                      <div className={`${styles.title} col-4`}>
-                        {item.title}
-                      </div>
-                    </div>
-                    <div className={`${styles.readhitBox}`}>
-                      <div className={styles.date}>{dateDisplay}</div>
-                      <div className={styles.likes}>
-                        <img src={like} /> {item.like}
-                      </div>
-                      <div className={styles.readhit}>
-                        <img src={eye} /> {item.readhit}
-                      </div>
-                    </div>
+
+              <div className={`${styles.container} container`} key={item.postId}>
+            <Link
+              to={`/post/view?postId=${item.postId}`}
+              className={`${styles.postWrap} row-cols-2`}
+            >
+              <div className={`${styles.postContent} col-8`}>
+                <div className={styles.header}>
+                  <UserDropdown item={item.User}/>
+                  <div className={`${styles.title} col-4`}>{item.title}</div>
+                </div>
+                <div className={`${styles.readhitBox}`}>
+                  <div className={styles.date}>
+                    {dateDisplay}
                   </div>
-                  <div className={`${styles.imgBox} col-4`}>
-                    <div className={styles.thumbnail}>
-                      <img className={styles.img} src={imgSrc} />
-                    </div>
+                  <div className={styles.likes}>
+                    <img src={like} /> {item.like}
                   </div>
-                </Link>
+                  <div className={styles.readhit}>
+                    <img src={eye} /> {item.readhit}
+                  </div>
+                </div>
               </div>
-            );
+              <div className={`${styles.imgBox} col-4`}>
+                <div className={styles.thumbnail}>
+                  <img className={styles.img} src={imgSrc} />
+                </div>
+              </div>
+            </Link>
+          </div>
+            )
           })}
           <Paging data={data} status={status} page={page} setPage={setPage} />
         </div>
