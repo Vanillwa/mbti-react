@@ -120,6 +120,7 @@ function Search() {
                 console.log("item:", item);
                 return (
                   <SwiperSlide>
+                   <p>{item.nickname}의 검색결과</p>
                     <div className={searchStyles.userItem}>
                       <div className={searchStyles.imgWrap}>
                         <Link to={`/user/${item.userId}`}>
@@ -172,7 +173,8 @@ function Search() {
       )}
       {data.postList.length == 0 ? null : (
         <div className={searchStyles.postWrap}>
-          {data.postList.map((item) => {
+          {data.postList.map(item => {
+         
             const createdAt = new Date(item.createdAt);
             const now = new Date();
             const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -196,39 +198,36 @@ function Search() {
             );
             const imgSrc = showImg ? showImg[1] : null;
             return (
-              <div
-                className={`${styles.container} container`}
-                key={item.postId}
-              >
-                <Link
-                  to={`/post/view?postId=${item.postId}`}
-                  className={`${styles.postWrap} row-cols-2`}
-                >
-                  <div className={`${styles.postContent} col-8`}>
-                    <div className={styles.header}>
-                      <UserDropdown item={item.User} />
-                      <div className={`${styles.title} col-4`}>
-                        {item.title}
-                      </div>
-                    </div>
-                    <div className={`${styles.readhitBox}`}>
-                      <div className={styles.date}>{dateDisplay}</div>
-                      <div className={styles.likes}>
-                        <img src={like} /> {item.like}
-                      </div>
-                      <div className={styles.readhit}>
-                        <img src={eye} /> {item.readhit}
-                      </div>
-                    </div>
+              <div className={`${styles.container} container`} key={item.postId}>
+            <Link
+              to={`/post/view?postId=${item.postId}`}
+              className={`${styles.postWrap} row-cols-2`}
+            >
+              <div className={`${styles.postContent} col-8`}>
+                <div className={styles.header}>
+                  <UserDropdown item={item.User}/>
+                  <div className={`${styles.title} col-4`}>{item.title}</div>
+                </div>
+                <div className={`${styles.readhitBox}`}>
+                  <div className={styles.date}>
+                    {dateDisplay}
                   </div>
-                  <div className={`${styles.imgBox} col-4`}>
-                    <div className={styles.thumbnail}>
-                      <img className={styles.img} src={imgSrc} />
-                    </div>
+                  <div className={styles.likes}>
+                    <img src={like} /> {item.like}
                   </div>
-                </Link>
+                  <div className={styles.readhit}>
+                    <img src={eye} /> {item.readhit}
+                  </div>
+                </div>
               </div>
-            );
+              <div className={`${styles.imgBox} col-4`}>
+                <div className={styles.thumbnail}>
+                  <img className={styles.img} src={imgSrc} />
+                </div>
+              </div>
+            </Link>
+          </div>
+            )
           })}
           <Paging data={data} status={status} page={page} setPage={setPage} />
         </div>
