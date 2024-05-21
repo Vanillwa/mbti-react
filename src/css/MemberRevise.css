@@ -72,6 +72,17 @@
 height: 50px;
 }
 
+.cropperBox{
+  margin-top: 15px;
+
+}
+
+.cropperboxbtn{
+  display: flex;
+  justify-content: end;
+
+}
+
 
 
 .uploadbtn1{margin-right: 5px;}
