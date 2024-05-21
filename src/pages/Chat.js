@@ -14,8 +14,18 @@ function Chat() {
 
   return (
     <section className={styles.section}>
-      <ChatList setRoomId={setRoomId} />
-      {roomId === null ? <div>채팅을 시작하세요</div> : <ChatRoom roomId={roomId} />}
+      <div className={styles.listCon}>
+      <ChatList setRoomId={setRoomId} roomId={roomId} />
+      </div>
+     <div className={styles.roomCon}>
+      {roomId === null ? (
+        <div >채팅을 시작하세요</div>
+      ) : (
+        <ChatRoom roomId={roomId} />
+      )}
+      </div>
+      
+   
     </section>
   );
 }
