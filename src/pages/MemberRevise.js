@@ -13,6 +13,9 @@ import Swal from "sweetalert2"
 import sweetalert from "../component/sweetalert";
 import Footer from '../component/Footer';
 
+
+// 크롭 추가
+import ReactCrop from 'react-image-crop';
 // import { checkDuplicationNickname } from '../service/api';
 
 
@@ -43,7 +46,6 @@ function MemberRevise() {
 
 
 
-  const [imgUrl, setImgUrl] = useState(userInfo.profileImage)
   // 닉네임 
 
   const nicknameRef = useRef();
@@ -61,10 +63,6 @@ function MemberRevise() {
   const [passwordBtn, setPasswordBtn] = useState('수정')
   // const [password,setPassword] = useState("")
   
- 
-
-
-
 
 
   // mbti
@@ -72,53 +70,104 @@ function MemberRevise() {
   const [mbti, setMbti] = useState(userInfo.mbti)
 
 
+
+
+
   // 이미지 
-  const imageRef = useRef();
+  
+  const [imgUrl, setImgUrl] = useState(userInfo.profileImage);
+  const [crop, setCrop] = useState({ aspect: 1 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+  const [imageRef, setImageRef] = useState(null);
+  const fileInputRef = useRef();
 
-
-
-  // 인풋타입 file대체 하기 위해 
   const handleButtonOnClick = () => {
-    imageRef.current.click()
-  }
+    fileInputRef.current.click();
+  };
 
+  const onImageLoaded = (image) => {
+    setImageRef(image);
+  };
 
+  const onCropComplete = (crop) => {
+    setCompletedCrop(crop);
+  };
 
+  const onCropChange = (crop) => {
+    setCrop(crop);
+  };
 
-  // 이미지 수정
-  const imageHandler = async () => {
-    console.log('온체인지');
-    const file = imageRef.current.files[0];
-    // multer에 맞는 형식으로 데이터 만들어준다.
+  const getCroppedImg = async (image, crop) => {
+    const canvas = document.createElement("canvas");
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          console.error('Canvas is empty');
+          return;
+        }
+        blob.name = "newFile.jpeg";
+        resolve(blob);
+      }, "image/jpeg");
+    });
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImgUrl(imageUrl);
+    }
+  };
+
+  const handleImageUpload = async () => {
+    if (!completedCrop || !imageRef) {
+      return;
+    }
+
+    const croppedImage = await getCroppedImg(imageRef, completedCrop);
+
     const formData = new FormData();
-    formData.append('img', file); // formData는 키-밸류 구조
-    // 백엔드 multer라우터에 이미지를 보낸다.
+    formData.append('img', croppedImage);
+
     try {
       const result = await axios.put('https://192.168.5.17:10000/api/updateUserInfo/updateProfileImage', formData);
       console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
 
-      setImgUrl(result.data.url)
-      logout()
-      login(result.data.newUserInfo)
+      setImgUrl(result.data.url);
+      logout();
+      login(result.data.newUserInfo);
 
-
-      imageRef.current.value = null
+      fileInputRef.current.value = null;
     } catch (error) {
       console.log('실패했어요ㅠ');
     }
-
   };
 
-  // 이미지 삭제 
   const imageDeleteHandler = async () => {
-    const result = await userDeleteImage()
-    setImgUrl(result.url)
-    console.log(result.url)
-    logout()
-    login(result.newUserInfo)
-
-  }
-
+    const result = await userDeleteImage();
+    setImgUrl(result.url);
+    console.log(result.url);
+    logout();
+    login(result.newUserInfo);
+  };
 
 
 
@@ -281,20 +330,25 @@ function MemberRevise() {
       <div className="card">
         <div className="card-body">
           <form >
-            <div className="text-center mb-5">
-              <img src={imgUrl} alt="회원사진" className="user-image" />
-
-
-              <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>프로필 편집</h2>
-            </div>
-            <div className='buttonWrap'>
-
-            <input type="file" hidden="hidden" onChange={imageHandler} ref={imageRef} />
-              <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}><strong>파일 선택</strong></button>
-
-
-              <button type='button' onClick={imageDeleteHandler} className='buttonjun'><strong>삭제</strong></button>
-            </div>
+          <div className="text-center mb-5">
+        <img src={imgUrl} alt="회원사진" className="user-image" />
+        <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>프로필 편집</h2>
+      </div>
+      <div className='buttonWrap'>
+        <input type="file" hidden="hidden" onChange={handleFileChange} ref={fileInputRef} />
+        <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}><strong>파일 선택</strong></button>
+        <button type="button" onClick={handleImageUpload} className='buttonsim'><strong>업로드</strong></button>
+        <button type="button" onClick={imageDeleteHandler} className='buttonjun'><strong>삭제</strong></button>
+      </div>
+      {imgUrl && (
+        <ReactCrop
+          src={imgUrl}
+          crop={crop}
+          onImageLoaded={onImageLoaded}
+          onComplete={onCropComplete}
+          onChange={onCropChange}
+        />
+      )}
 
             <div className="row g-3">
               <div className="col-12">

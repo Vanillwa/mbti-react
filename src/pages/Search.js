@@ -74,6 +74,7 @@ function Search( ) {
                 console.log("userItem:",item)
                 return (
                   <SwiperSlide>
+                   <p>{item.nickname}의 검색결과</p>
                     <div className={searchStyles.userItem}>
                       <div className={searchStyles.imgWrap}>
                         <img src={item.profileImage ? item.profileImage : null} />
@@ -91,6 +92,7 @@ function Search( ) {
         <div className={searchStyles.postWrap}>
           {data.postList.map(item => {
          
+
             const createdAt = new Date(item.createdAt);
             const now = new Date();
             const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -116,11 +118,15 @@ function Search( ) {
             return (
               <div className={`${styles.container} container`} key={item.postId}>
             <Link
+            
               to={`/post/view?postId=${item.postId}`}
               className={`${styles.postWrap} row-cols-2`}
+              
             >
               <div className={`${styles.postContent} col-8`}>
+                
                 <div className={styles.header}>
+                
                   <UserDropdown item={item.User}/>
                   <div className={`${styles.title} col-4`}>{item.title}</div>
                 </div>
@@ -128,6 +134,7 @@ function Search( ) {
                   <div className={styles.date}>
                     {dateDisplay}
                   </div>
+                  
                   <div className={styles.likes}>
                     <img src={like} /> {item.like}
                   </div>
