@@ -35,10 +35,15 @@
 
 @media(max-width : 1024px){
   .container{
-    grid-template-columns: 50px 1fr;
+    grid-template-columns: 60px 1fr;
   }
   .rutMenu{display: none;}
   .homeMenu{display: block; margin-top: 16px;}
+  .menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .menuItems{
   display: flex;
@@ -114,9 +119,9 @@
 
 .svg{
   width: auto;
-  height: 2.5vh;
-  margin-left: 1vw;
+  height: 25px;
 }
+
 .profileBtn{
   border: 0; 
   background-color: rgba(0, 0, 0, 0);
