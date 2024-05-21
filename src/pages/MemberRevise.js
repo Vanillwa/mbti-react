@@ -50,8 +50,10 @@ function MemberRevise() {
       const reader = new FileReader();
       reader.onload = () => {
         setCroppedImage(reader.result);
+        setPrevImage(croppedImage)
       };
       reader.readAsDataURL(file);
+      event.target.value = null;
     }
   };
 
@@ -79,7 +81,7 @@ function MemberRevise() {
   };
 
   const cancel = () => {
-    setCroppedImage(null);
+    setCroppedImage(prevImage);
    
   };
 
@@ -216,7 +218,7 @@ function MemberRevise() {
   <div className='cropperbox'>
     <div className="cropper-wrapper">
       <Cropper
-        style={{ height: 400, width: '100%' }}
+        style={{ height: 400, width: '100%', }}
         aspectRatio={1}
         src={croppedImage}
         viewMode={1}
