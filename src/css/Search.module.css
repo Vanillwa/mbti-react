@@ -32,3 +32,6 @@
     align-items: center;
     gap:12px;
 }
+.nickname{
+    display: flex;
+}

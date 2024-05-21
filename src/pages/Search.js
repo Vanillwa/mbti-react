@@ -1,31 +1,77 @@
 import { useQuery } from "react-query";
 import { getSearchResult } from "../service/api/searchAPI";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import searchStyles from "../css/Search.module.css";
 import styles from "../css/PostList.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import UserDropdown from "../component/userDropdown";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import like from "../svg/like.svg";
 import eye from "../svg/eye.svg";
 import Paging from "../component/Paging";
 import { useEffect, useState } from "react";
-function Search( ) {
+import { useAuthContext } from "../context/AuthContext";
+import sweetalert from "../component/sweetalert";
+import { requestFriend } from "../service/api/friendAPI";
+import { requestChat } from "../service/api/chatAPI";
+function Search() {
+  const navigate =  useNavigate();
   const location = useLocation();
+  const [friend, setFriend] = useState("");
+  const { memoUserInfo } = useAuthContext();
+  const { isLoggedIn, userInfo } = memoUserInfo;
   const keyword = location.state.keyword;
   const [page, setPage] = useState(1);
-  const [size,setSize] = useState(5);
+  const [size, setSize] = useState(5);
   const { data, status } = useQuery(
-    ["getSearchResult", keyword,page,size],
-    () => getSearchResult(keyword,page,size),
+    ["getSearchResult", keyword, page, size],
+    () => getSearchResult(keyword, page, size),
     {
       retry: false,
       refetchOnWindowFocus: false,
     }
   );
-    useEffect(()=>{
-      setPage(1)
-    },[keyword])
+  useEffect(() => {
+    setPage(1);
+  }, [keyword]);
+
+  const handleRequestChat = async(e, targetId)=>{
+    e.preventDefault();
+    const result = await requestChat(targetId);
+    
+    if(result.message ==="success"){
+      navigate(`/chat/list/${result.roomId}`)
+    }else if(result.message ==="noAuth"){
+      sweetalert.warning("로그인이 필요한 서비스입니다.")
+    }else if(result.message ==="notFriend"){
+      sweetalert.warning("친구가 아닙니다.")
+    }else if(result.message ==="duplicated"){
+      navigate(`/chat/list/${result.roomId}`)
+    }
+  }
+
+
+  const handleRequestFreind = async (e, userId) => {
+    e.preventDefault()
+    const result = await requestFriend(userId);
+
+    if (result.message == "success") {
+      setFriend("친구 요청 완료");
+      sweetalert.success("친구 요청 완료",'','확인');
+    } else if (result.message == "duplicated") {
+      setFriend("이미 친구임.");
+      sweetalert.warning("이미 친구임.",'','확인');
+    } else if (result.message == "blocked") {
+      setFriend("차단한 친구임.");
+      sweetalert.warning("차단한 친구임.",'','확인');
+    } else if (result.message == "pending") {
+      setFriend("이미 요청한 친구임.");
+      sweetalert.warning("이미 요청한 친구임.",'','확인');
+    }
+    
+  };
 
   if (status === "loading") {
     return (
@@ -41,6 +87,7 @@ function Search( ) {
     );
   }
   console.log(data);
+
   return (
     <div>
       {data.userList.length == 0 && data.postList.length == 0 ? (
@@ -53,32 +100,59 @@ function Search( ) {
               modules={[Navigation]}
               navigation={true}
               breakpoints={{
-                
                 1600: {
                   slidesPerView: 6, // 4 slides per view on screens >= 768px
                 },
                 1400: {
                   slidesPerView: 5, // 2 slides per view on screens >= 480px
                 },
-                1100:{
-                  slidesPerView: 4
+                1100: {
+                  slidesPerView: 4,
                 },
-                960:{
-                  slidesPerView:3
+                960: {
+                  slidesPerView: 3,
                 },
                 320: {
                   slidesPerView: 2, // 1 slide per view on screens >= 320px
                 },
               }}>
               {data.userList.map(item => {
-                console.log("userItem:",item)
+                console.log("item:", item);
                 return (
                   <SwiperSlide>
                     <div className={searchStyles.userItem}>
                       <div className={searchStyles.imgWrap}>
-                        <img src={item.profileImage ? item.profileImage : null} />
+                        <Link to={`/user/${item.userId}`}>
+                          <img
+                            src={item.profileImage ? item.profileImage : null}
+                          />
+                        </Link>
                       </div>
-                      <div className={searchStyles.nickname}>{item.nickname}</div>
+                      <div className={searchStyles.nickname}>
+                        <div>{item.nickname}</div>
+                        <DropdownButton
+                        variant="Secondary"
+                          id="dropdown-basic-button"
+                        >
+                          <Dropdown.Item href="#/action-1">
+                          <Link to={`/user/${item.userId}`}>
+                            프로필 보기
+                            </Link>
+                          </Dropdown.Item>
+                        {isLoggedIn  ?  
+                        <>
+                        <Dropdown.Item onClick={(e) =>{ handleRequestFreind(e, item.userId)}}>
+                        친구요청
+                       </Dropdown.Item>
+                       <Dropdown.Item href="#/action-3">
+                         차단하기
+                       </Dropdown.Item>
+                       <Dropdown.Item onClick={(e)=>{ handleRequestChat(e, item.userId)}}>
+                         채팅하기
+                       </Dropdown.Item></> : <></> }
+                          
+                        </DropdownButton>
+                      </div>
                     </div>
                   </SwiperSlide>
                 );
@@ -90,14 +164,13 @@ function Search( ) {
       {data.postList.length == 0 ? null : (
         <div className={searchStyles.postWrap}>
           {data.postList.map(item => {
-         
             const createdAt = new Date(item.createdAt);
             const now = new Date();
             const differenceInSeconds = Math.floor((now - createdAt) / 1000);
             const differenceInMinutes = Math.floor(differenceInSeconds / 60);
             const differenceInHours = Math.floor(differenceInMinutes / 60);
             const differenceInDays = Math.floor(differenceInHours / 24);
-          
+
             let dateDisplay;
             if (differenceInMinutes < 60) {
               dateDisplay = `${differenceInMinutes}분 전`;
@@ -108,44 +181,45 @@ function Search( ) {
             } else {
               dateDisplay = createdAt.toLocaleDateString("ko-KR");
             }
-          
+
             const showImg = item.content.match(
               /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
             );
             const imgSrc = showImg ? showImg[1] : null;
             return (
-              <div className={`${styles.container} container`} key={item.postId}>
-            <Link
-              to={`/post/view?postId=${item.postId}`}
-              className={`${styles.postWrap} row-cols-2`}
-            >
-              <div className={`${styles.postContent} col-8`}>
-                <div className={styles.header}>
-                  <UserDropdown item={item.User}/>
-                  <div className={`${styles.title} col-4`}>{item.title}</div>
-                </div>
-                <div className={`${styles.readhitBox}`}>
-                  <div className={styles.date}>
-                    {dateDisplay}
+              <div
+                className={`${styles.container} container`}
+                key={item.postId}>
+                <Link
+                  to={`/post/view?postId=${item.postId}`}
+                  className={`${styles.postWrap} row-cols-2`}>
+                  <div className={`${styles.postContent} col-8`}>
+                    <div className={styles.header}>
+                      <UserDropdown item={item.User} />
+                      <div className={`${styles.title} col-4`}>
+                        {item.title}
+                      </div>
+                    </div>
+                    <div className={`${styles.readhitBox}`}>
+                      <div className={styles.date}>{dateDisplay}</div>
+                      <div className={styles.likes}>
+                        <img src={like} /> {item.like}
+                      </div>
+                      <div className={styles.readhit}>
+                        <img src={eye} /> {item.readhit}
+                      </div>
+                    </div>
                   </div>
-                  <div className={styles.likes}>
-                    <img src={like} /> {item.like}
+                  <div className={`${styles.imgBox} col-4`}>
+                    <div className={styles.thumbnail}>
+                      <img className={styles.img} src={imgSrc} />
+                    </div>
                   </div>
-                  <div className={styles.readhit}>
-                    <img src={eye} /> {item.readhit}
-                  </div>
-                </div>
+                </Link>
               </div>
-              <div className={`${styles.imgBox} col-4`}>
-                <div className={styles.thumbnail}>
-                  <img className={styles.img} src={imgSrc} />
-                </div>
-              </div>
-            </Link>
-          </div>
-            )
+            );
           })}
-          <Paging data={data} status={status} page={page} setPage={setPage}  />
+          <Paging data={data} status={status} page={page} setPage={setPage} />
         </div>
       )}
     </div>
