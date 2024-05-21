@@ -26,33 +26,33 @@ import { fetchLogout } from "./service/api/loginAPI";
 import { AuthContext, useAuthContext } from "./context/AuthContext";
 import sweetalert from "./component/sweetalert";
 import Search from "./pages/Search";
+import Chat from "./pages/Chat";
 
 function App() {
-
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn } = memoUserInfo;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
 
   socket.on("uBlocked", async () => {
     socket.emit("logout");
     const result = await fetchLogout();
-    if (result.message === 'success') {
+    if (result.message === "success") {
       logout();
-      navigate("/", { state: "logout" })
-      sweetalert.warning('차단된 계정입니다.', '', '닫기')
+      navigate("/", { state: "logout" });
+      sweetalert.warning("차단된 계정입니다.", "", "닫기");
     }
-  })
+  });
 
   socket.on("duplicatedLogin", async () => {
     socket.emit("logout");
     const result = await fetchLogout();
-    if (result.message === 'success') {
+    if (result.message === "success") {
       logout();
-      navigate("/", { state: "logout" })
-      sweetalert.warning('로그인 중복이 감지되었습니다.', '', '닫기')
+      navigate("/", { state: "logout" });
+      sweetalert.warning("로그인 중복이 감지되었습니다.", "", "닫기");
     }
-  })
+  });
 
   return (
     <div className="App">
@@ -73,11 +73,7 @@ function App() {
           <Route path="friend" element={<FriendList />} />
 
           <Route path="chat">
-            <Route path="list">
-              <Route index element={<ChatList />} />
-
-              <Route path=":roomId" element={<ChatRoom />} />
-            </Route>
+            <Route index element={<Chat />} />
           </Route>
           <Route path="search" element={<Search />}></Route>
         </Route>
