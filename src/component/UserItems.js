@@ -167,7 +167,7 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
                   onClick={() => handleShowModal(item)}>
                   차단하기
                 </button>
-              ) : <button  className={`col-1 btn btn  ${styles.blockBtn}`} onClick={()=>{sweetalert.warning("자기 자신은 차단할 수 없습니다.")}}>나야 나</button>}
+              ) : <button  className={`col-1 btn btn  ${styles.blockBtn}`} onClick={()=>{sweetalert.warning("자기 자신은 차단할 수 없습니다.")}}>나야나😊</button>}
             </div>
           );
         })}

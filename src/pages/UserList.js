@@ -30,6 +30,7 @@ function UserList() {
   };
 
   const search = () => {
+    if(searchRef.current.value === "")return;
     setKeyword(searchRef.current.value);
     setType(typeRef.current.value);
   };

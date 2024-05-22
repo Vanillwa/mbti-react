@@ -7,13 +7,17 @@
 }
 
 .radioForm {
+    
     font-weight: 600;
     font-size: 18px;
 }
-
+.radioType{
+    cursor: pointer;
+}
 .radioLabel {
     margin-left: -5px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .title {

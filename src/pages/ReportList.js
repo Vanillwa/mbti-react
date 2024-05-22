@@ -58,7 +58,7 @@ function ReportList() {
       refetchOnWindowFocus: false,
     }
   );
-  
+
   return (
     <div className={styles.container}>
       <Form onChange={handleRadioOnChange}>
@@ -71,7 +71,9 @@ function ReportList() {
             id="post"
             defaultChecked
           />
-          <label className={styles.radioLabel} for="post">게시글 신고</label>
+          <label className={styles.radioLabel} htmlFor="post">
+            게시글 신고
+          </label>
           <Form.Check
             inline
             value="comment"
@@ -79,7 +81,9 @@ function ReportList() {
             id="comment"
             type="radio"
           />
-          <label className={styles.radioLabel} for="comment">댓글 신고</label>
+          <label className={styles.radioLabel} htmlFor="comment">
+            댓글 신고
+          </label>
           <Form.Check
             inline
             value="chat"
@@ -87,7 +91,9 @@ function ReportList() {
             id="chat"
             type="radio"
           />
-          <label className={styles.radioLabel} for="chat">채팅 신고</label>
+          <label className={styles.radioLabel} htmlFor="chat">
+            채팅 신고
+          </label>
         </div>
       </Form>
 

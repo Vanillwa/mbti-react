@@ -85,7 +85,6 @@ function ReportItems({
 
   //게시글 신고처리
   const handlePostSubmit = async e => {
-    console.log(report);
     e.preventDefault();
     const now = new Date();
     const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
@@ -96,7 +95,6 @@ function ReportItems({
       blockDate,
     });
     if (result.message === "success") {
-      console.log("report:", report);
       sweetalert.success("정지 완료");
       socket.emit("blockUser", report.Post.User.userId);
       completePostMutate.mutate(report.reportId, {
@@ -142,7 +140,6 @@ function ReportItems({
   };
   //채팅 신고처리
   const handleChatRoomSubmit = async e => {
-    console.log("report:", report);
     e.preventDefault();
     const now = new Date();
     const addDay = blockRef.current.value * 24 * 60 * 60 * 1000;
@@ -153,8 +150,6 @@ function ReportItems({
       blockDate,
     });
     if (result.message === "success") {
-      console.log("report:", report);
-      console.log("target", report.targetUser.userId);
       socket.emit("blockUser", report.targetUser.userId);
       sweetalert.success("정지 완료");
       completeChatRoomMutate.mutate(
@@ -219,13 +214,14 @@ function ReportItems({
 
   return (
     <>
+      {/* 게시글 신고모달 */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className={styles.blockModalForm} onSubmit={handlePostSubmit}>
-            <span className="me-2">닉네임: </span>
+            <span className="me-2"> </span>
             <select className="me-3" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
@@ -320,7 +316,6 @@ function ReportItems({
       <Accordion>
         {type === "post" && postData.list.length > 0 ? (
           postData.list.map(item => {
-            
             return (
               <Accordion.Item eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
@@ -357,7 +352,6 @@ function ReportItems({
           })
         ) : type === "comment" && commentData.list.length > 0 ? (
           commentData.list.map(item => {
-       
             return (
               <Accordion.Item eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
@@ -395,7 +389,7 @@ function ReportItems({
           })
         ) : type === "chat" && chatRoomData.list.length > 0 ? (
           chatRoomData.list.map(item => {
-         console.log(chatRoomData.list)
+            console.log(chatRoomData.list);
             return (
               <Accordion.Item eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
