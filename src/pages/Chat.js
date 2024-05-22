@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../css/Chat.module.css";
 import { useQuery } from "react-query";
 import { getChatList, getChatRoom } from "../service/api/chatAPI";
@@ -15,6 +15,7 @@ function Chat() {
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [roomId, setRoomId] = useState(null);
 
+  socket.emit("joinList")
 
   const { data: listData, status: listStatus, refetch: listRefetch } = useQuery(
     ["getChatList"],
@@ -25,6 +26,15 @@ function Chat() {
     }
   );
 
+
+  useEffect(() => {
+    socket.on("notification", ()=>listRefetch())
+    return () => {
+      socket.emit("leaveList")
+      socket.off("notification", ()=>listRefetch())
+    }
+  }, [])
+
   return (
     <section className={styles.section}>
       <div className={styles.listCon}>
@@ -34,7 +44,7 @@ function Chat() {
         {roomId === null ? (
           <div >채팅을 시작하세요</div>
         ) : (
-          <ChatRoom roomId={roomId} listRefetch={listRefetch}/>
+          <ChatRoom roomId={roomId} listRefetch={listRefetch} />
         )}
       </div>
 

@@ -17,7 +17,7 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
   const handleSetRoomId = (roomId) => {
     console.log("roomId", roomId)
     setRoomId((preRoomId => {
-      if (preRoomId != null) socket.emit("leave", preRoomId)
+      if (preRoomId != null) socket.emit("leaveRoom", preRoomId)
       return roomId
     }));
   };
