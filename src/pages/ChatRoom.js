@@ -1,4 +1,4 @@
-import {  useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 import { useEffect, useRef, useState } from "react";
@@ -12,29 +12,28 @@ import downImg from "../svg/arrow-down-circle.svg";
 
 import ChatReportModal from "../component/ChatReportModal";
 
-function ChatRoom({listRefetch, roomId }) {
+function ChatRoom({ roomId, listRefetch }) {
 
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-  const [chat, setChat] = useState([]);
-
   const [isBottom, setIsBottom] = useState(true);
+  const [chat, setChat] = useState([]);
 
   const chatFormRef = useRef();
   const bottomRef = useRef();
-
-  const { data, status, refetch } = useQuery(
+  const { data: roomData, status: roomStatus, refetch: roomRefetch } = useQuery(
     ["getChatRoom", roomId],
-    () => getChatRoom(roomId),
+    () => getChatRoom(roomId)
+    ,
     {
       enabled: !!roomId,
       retry: 0,
       refetchOnWindowFocus: false,
-      onSuccess: data => {
-        listRefetch()
+      onSuccess: async (data) => {
         console.log("로딩 완료", data);
         socket.emit("join", roomId);
         setChat(data.messageList);
+        await listRefetch()
       },
     }
   );
@@ -45,9 +44,9 @@ function ChatRoom({listRefetch, roomId }) {
     let message = e.target.message.value;
     if (message === "") return;
     let targetId =
-      userInfo.userId === data.roomInfo.userId1
-        ? data.roomInfo.userId2
-        : data.roomInfo.userId1;
+      userInfo.userId === roomData.roomInfo.userId1
+        ? roomData.roomInfo.userId2
+        : roomData.roomInfo.userId1;
     let body = { roomId, message, targetId };
     socket.emit("sendMessage", body);
     listRefetch();
@@ -77,12 +76,10 @@ function ChatRoom({listRefetch, roomId }) {
     return () => {
       if (chatForm) chatForm.removeEventListener("scroll", handleScroll);
     };
-  }, [data]);
+  }, [roomData]);
 
   useEffect(() => {
     if (isBottom) scrollToBottom();
-    else {
-    }
   }, [chat]);
 
   useEffect(() => {
@@ -91,7 +88,7 @@ function ChatRoom({listRefetch, roomId }) {
     };
 
     const handleUserJoined = newData => {
-      if (newData.targetId === userInfo.userId) setChat(newData.messages);
+      setChat(newData);
     };
 
     socket.on("sendMessage", handleReceiveMessage);
@@ -103,17 +100,16 @@ function ChatRoom({listRefetch, roomId }) {
     };
   }, []);
 
-  if (status === "loading") {
+  if (roomStatus === "loading") {
     return <div>loading...</div>;
   }
-  if (status === "error") {
+  if (roomStatus === "error") {
     return <div>error</div>;
   }
-  console.log("data:", data);
   return (
     <section className={styles.section}>
-    
-      
+
+
       <div className={styles.formWrap}>
         <div
           className={styles.chatForm}

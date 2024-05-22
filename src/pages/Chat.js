@@ -13,10 +13,10 @@ import { Navigation } from "swiper";
 function Chat() {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-  const location = useLocation();
-  const number = location.state?.roomId || null;
-  const [roomId, setRoomId] = useState(number);
-  const { data, status, refetch } = useQuery(
+  const [roomId, setRoomId] = useState(null);
+
+
+  const { data: listData, status: listStatus, refetch: listRefetch } = useQuery(
     ["getChatList"],
     () => getChatList(),
     {
@@ -28,17 +28,17 @@ function Chat() {
   return (
     <section className={styles.section}>
       <div className={styles.listCon}>
-      <ChatList data={data} status={status} refetch={refetch}  setRoomId={setRoomId} roomId={roomId} />
+        <ChatList listData={listData} listStatus={listStatus} listRefetch={listRefetch} setRoomId={setRoomId} roomId={roomId} />
       </div>
-     <div className={styles.roomCon}>
-      {roomId === null ? (
-        <div >채팅을 시작하세요</div>
-      ) : (
-        <ChatRoom listRefetch={refetch} roomId={roomId} />
-      )}
+      <div className={styles.roomCon}>
+        {roomId === null ? (
+          <div >채팅을 시작하세요</div>
+        ) : (
+          <ChatRoom roomId={roomId} listRefetch={listRefetch}/>
+        )}
       </div>
-      
-   
+
+
     </section>
   );
 }

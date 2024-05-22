@@ -10,28 +10,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import { socket } from "../service/socket/socket";
 
-const ChatList = ({data,status,refetch, setRoomId, roomId }) => {
-
-
-
-
+const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
-  const handleSetRoomId = roomId => {
-    setRoomId((preRoomId=>{
-      socket.emit("leave", preRoomId)
+  const handleSetRoomId = (roomId) => {
+    console.log("roomId", roomId)
+    setRoomId((preRoomId => {
+      if (preRoomId != null) socket.emit("leave", preRoomId)
       return roomId
     }));
   };
 
-  if (status === "loading") {
+  if (listStatus === "loading") {
     return (
       <div className="container">
         <h1>Loading...</h1>
       </div>
     );
-  } else if (status === "error") {
+  } else if (listStatus === "error") {
     return (
       <div className="container">
         <h1>error!</h1>
@@ -39,7 +36,7 @@ const ChatList = ({data,status,refetch, setRoomId, roomId }) => {
     );
   }
 
-  if (data.length == 0) {
+  if (listData.length == 0) {
     return (
       <div>
         <h1>생성된 채팅방이 없습니다.</h1>
@@ -61,7 +58,7 @@ const ChatList = ({data,status,refetch, setRoomId, roomId }) => {
     <>
       <div className={`${styles.chatBox}`}>
         <div className={styles.chatItems}>
-          {data.map(item => {
+          {listData.map(item => {
             return (
               <div
                 onClick={() => {
@@ -141,9 +138,9 @@ const ChatList = ({data,status,refetch, setRoomId, roomId }) => {
             0: {
               slidesPerView: 3, // 1 slide per view on screens >= 320px
             },
-            
+
           }}>
-          {data.map(item => {
+          {listData.map(item => {
             return (
               <SwiperSlide>
                 <div
