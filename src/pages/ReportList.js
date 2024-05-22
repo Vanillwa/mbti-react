@@ -38,45 +38,56 @@ function ReportList() {
     data: commentData,
     status: commentStatus,
     refetch: commentRefetch,
-  } = useQuery(["getCommentReportList",page], () => getCommentReportList(page), {
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
+  } = useQuery(
+    ["getCommentReportList", page],
+    () => getCommentReportList(page),
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+    }
+  );
   const {
     data: chatRoomData,
     status: chatRoomStauts,
     refetch: chatRefetch,
-  } = useQuery(["getChatRoomReportList",page], () => getChatRoomReportList(page), {
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
-console.log(postData)
+  } = useQuery(
+    ["getChatRoomReportList", page],
+    () => getChatRoomReportList(page),
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  
   return (
     <div className={styles.container}>
       <Form onChange={handleRadioOnChange}>
         <div className={`mb-3 radio ${styles.radioForm}`}>
           <Form.Check
             inline
-            label="게시글 신고"
             value="post"
             name="group1"
             type="radio"
+            id="post"
             defaultChecked
           />
+          <label className={styles.radioLabel} for="post">게시글 신고</label>
           <Form.Check
             inline
-            label="댓글 신고"
             value="comment"
             name="group1"
+            id="comment"
             type="radio"
           />
+          <label className={styles.radioLabel} for="comment">댓글 신고</label>
           <Form.Check
             inline
-            label="채팅 신고"
             value="chat"
             name="group1"
+            id="chat"
             type="radio"
           />
+          <label className={styles.radioLabel} for="chat">채팅 신고</label>
         </div>
       </Form>
 
@@ -96,37 +107,41 @@ console.log(postData)
             chatRoomStauts={chatRoomStauts}
             chatRefetch={chatRefetch}
           />
-          
         </div>
         {type === "post" ? (
-            <div className={styles.reportPaging}>
-            {postData?.list.length == 0 ? null : <Paging
-              data={postData}
-              status={postStatus}
-              page={page}
-              setPage={setPage}
-            />}
-            </div>
-          ) : type === "comment" ? (
-            <div className={styles.reportPaging}>
-             {commentData?.list.length == 0 ? null : <Paging
-              data={commentData}
-              status={commentStatus}
-              page={page}
-              setPage={setPage}
-            />}
-            </div>
-          ) : type === "chat" ? (
-            <div className={styles.reportPaging}>
-              {chatRoomData?.list.length == 0 ? null : <Paging
-              data={chatRoomData}
-              status={chatRoomStauts}
-              page={page}
-              setPage={setPage}
-            />} 
-            
-            </div>
-          ) : null}
+          <div className={styles.reportPaging}>
+            {postData?.list.length == 0 ? null : (
+              <Paging
+                data={postData}
+                status={postStatus}
+                page={page}
+                setPage={setPage}
+              />
+            )}
+          </div>
+        ) : type === "comment" ? (
+          <div className={styles.reportPaging}>
+            {commentData?.list.length == 0 ? null : (
+              <Paging
+                data={commentData}
+                status={commentStatus}
+                page={page}
+                setPage={setPage}
+              />
+            )}
+          </div>
+        ) : type === "chat" ? (
+          <div className={styles.reportPaging}>
+            {chatRoomData?.list.length == 0 ? null : (
+              <Paging
+                data={chatRoomData}
+                status={chatRoomStauts}
+                page={page}
+                setPage={setPage}
+              />
+            )}
+          </div>
+        ) : null}
       </div>
     </div>
   );

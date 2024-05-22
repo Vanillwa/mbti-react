@@ -11,6 +11,11 @@
     font-size: 18px;
 }
 
+.radioLabel {
+    margin-left: -5px;
+    margin-right: 10px;
+}
+
 .title {
     font-weight: bold;
     margin-bottom: 7vh;

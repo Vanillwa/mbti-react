@@ -46,8 +46,8 @@ function ReportItems({
     return updateCommentReport(reportId);
   });
 
-  const completeChatRoomMutate = useMutation((reportId,targetId,roomId) => {
-    return updateChatRoomReport(reportId,targetId,roomId);
+  const completeChatRoomMutate = useMutation((reportId, targetId, roomId) => {
+    return updateChatRoomReport(reportId, targetId, roomId);
   });
 
   const handlePostComplete = async reportId => {
@@ -72,8 +72,8 @@ function ReportItems({
     setShow(false);
   };
 
-  const handleChatRoomComplete = async (reportId,targetId,roomId) => {
-    completeChatRoomMutate.mutate((reportId,targetId,roomId), {
+  const handleChatRoomComplete = async (reportId, targetId, roomId) => {
+    completeChatRoomMutate.mutate((reportId, targetId, roomId), {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["getChatRoomReportList"]);
         await chatRefetch();
@@ -98,7 +98,7 @@ function ReportItems({
     if (result.message === "success") {
       console.log("report:", report);
       sweetalert.success("정지 완료");
-      socket.emit("blockUser",report.Post.User.userId);
+      socket.emit("blockUser", report.Post.User.userId);
       completePostMutate.mutate(report.reportId, {
         onSuccess: async () => {
           await queryClient.invalidateQueries(["getPostReportList"]);
@@ -127,7 +127,7 @@ function ReportItems({
 
     if (result.message === "success") {
       sweetalert.success("정지 완료");
-      socket.emit("blockUser",report.Comment.User.userId);
+      socket.emit("blockUser", report.Comment.User.userId);
       completeCommentMutate.mutate(report.reportId, {
         onSuccess: async () => {
           await queryClient.invalidateQueries(["getCommentReportList"]);
@@ -154,19 +154,22 @@ function ReportItems({
     });
     if (result.message === "success") {
       console.log("report:", report);
-      console.log("target",report.targetUser.userId)
-      socket.emit("blockUser",report.targetUser.userId);
+      console.log("target", report.targetUser.userId);
+      socket.emit("blockUser", report.targetUser.userId);
       sweetalert.success("정지 완료");
-      completeChatRoomMutate.mutate(report.reportId,report.targetUser.userId,report.roomId, {
-        onSuccess: async () => {
-          await queryClient.invalidateQueries(["getChatRoomReportList"]);
-          await chatRefetch();
-          return;
-        },
-
-      });
+      completeChatRoomMutate.mutate(
+        report.reportId,
+        report.targetUser.userId,
+        report.roomId,
+        {
+          onSuccess: async () => {
+            await queryClient.invalidateQueries(["getChatRoomReportList"]);
+            await chatRefetch();
+            return;
+          },
+        }
+      );
       setShow2(false);
-      
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
     }
@@ -183,7 +186,6 @@ function ReportItems({
     setShow1(true);
   };
   const handleChatReport = (userData, reportData) => {
-
     setUser(userData);
     setReport(reportData);
     setShow2(true);
@@ -300,7 +302,13 @@ function ReportItems({
         <Modal.Footer>
           <Button
             variant="secondary"
-            onClick={() => handleChatRoomComplete(report.reportId,report.targetUser.userId,report.roomId)}>
+            onClick={() =>
+              handleChatRoomComplete(
+                report.reportId,
+                report.targetUser.userId,
+                report.roomId
+              )
+            }>
             처리완료
           </Button>
           <Button variant="primary" onClick={handleClose2}>
@@ -312,7 +320,7 @@ function ReportItems({
       <Accordion>
         {type === "post" && postData.list.length > 0 ? (
           postData.list.map(item => {
-            console.log(item)
+            
             return (
               <Accordion.Item eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
@@ -349,125 +357,119 @@ function ReportItems({
           })
         ) : type === "comment" && commentData.list.length > 0 ? (
           commentData.list.map(item => {
-            console.log("commentItem:", item);
+       
             return (
-            
-                <Accordion.Item eventKey={item.reportId} key={item.reportId}>
-                  <Accordion.Header>
-                    <div className="container">
-                      <div className={`row   ${styles.reportContent}`}>
-                        <span className={`col-3 ${styles.reportId}`}>
-                          글번호:{item.Comment.commentId}
-                        </span>
-                        <span className={`col-3  ${styles.reportId}`}>
-                          작성자:{item.Comment.User.nickname}
-                        </span>
-                        <span className={`col-3 ${styles.reportPerson}`}>
-                          신고자:{item.User.nickname}
-                        </span>
-                        <span className={`col-3`}>신고유형:{item.type}</span>
-                      </div>
+              <Accordion.Item eventKey={item.reportId} key={item.reportId}>
+                <Accordion.Header>
+                  <div className="container">
+                    <div className={`row   ${styles.reportContent}`}>
+                      <span className={`col-3 ${styles.reportId}`}>
+                        글번호:{item.Comment.commentId}
+                      </span>
+                      <span className={`col-3  ${styles.reportId}`}>
+                        작성자:{item.Comment.User.nickname}
+                      </span>
+                      <span className={`col-3 ${styles.reportPerson}`}>
+                        신고자:{item.User.nickname}
+                      </span>
+                      <span className={`col-3`}>신고유형:{item.type}</span>
                     </div>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <div className={styles.commentContent}>
-                      <ContentComponent content={item.Comment.content} />
-                    </div>
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <div className={styles.commentContent}>
+                    <ContentComponent content={item.Comment.content} />
+                  </div>
 
-                    <button
-                      className={styles.reportBtn}
-                      type="button"
-                      onClick={() =>
-                        handleCommentReport(item.Comment.User, item)
-                      }>
-                      처리
-                    </button>
-                  </Accordion.Body>
-                </Accordion.Item>
-             
+                  <button
+                    className={styles.reportBtn}
+                    type="button"
+                    onClick={() =>
+                      handleCommentReport(item.Comment.User, item)
+                    }>
+                    처리
+                  </button>
+                </Accordion.Body>
+              </Accordion.Item>
             );
           })
         ) : type === "chat" && chatRoomData.list.length > 0 ? (
           chatRoomData.list.map(item => {
-            console.log(item)
+         console.log(chatRoomData.list)
             return (
-              
-                <Accordion.Item eventKey={item.reportId} key={item.reportId}>
-                  <Accordion.Header>
-                    <div className="container">
-                      <div className={`row  ${chatRoomStyles.reportContent}`}>
-                        <span className={`col-3 ${chatRoomStyles.reportId}`}>
-                          방번호:{item.roomId}
-                        </span>
-                        <span className={`col-3  ${chatRoomStyles.reportId}`}>
-                          신고자:{item.reportUser.nickname}
-                        </span>
-                        <span
-                          className={`col-3 ${chatRoomStyles.reportPerson}`}>
-                          피신고자:{item.targetUser.nickname}
-                        </span>
-                        <span className={`col-3`}>신고유형:{item.type}</span>
-                      </div>
+              <Accordion.Item eventKey={item.reportId} key={item.reportId}>
+                <Accordion.Header>
+                  <div className="container">
+                    <div className={`row  ${chatRoomStyles.reportContent}`}>
+                      <span className={`col-3 ${chatRoomStyles.reportId}`}>
+                        방번호:{item.roomId}
+                      </span>
+                      <span className={`col-3  ${chatRoomStyles.reportId}`}>
+                        신고자:{item.reportUser.nickname}
+                      </span>
+                      <span className={`col-3 ${chatRoomStyles.reportPerson}`}>
+                        피신고자:{item.targetUser.nickname}
+                      </span>
+                      <span className={`col-3`}>신고유형:{item.type}</span>
                     </div>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <div
-                      className={chatRoomStyles.chatForm}
-                      style={{ height: "500px" }}>
-                      {item.chat.map((message, i) => {
-                        if (item.reportUser.userId === message.userId) {
-                          return (
-                            <div
-                              key={message.messageId}
-                              className={`${chatRoomStyles.message} ${chatRoomStyles.mine}`}>
-                              <div className={chatRoomStyles.mineContent}>
-                                <div className={chatRoomStyles.myMessageInner}>
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <div
+                    className={chatRoomStyles.chatForm}
+                    style={{ height: "500px" }}>
+                    {item.chat.map((message, i) => {
+                      if (item.reportUser.userId === message.userId) {
+                        return (
+                          <div
+                            key={message.messageId}
+                            className={`${chatRoomStyles.message} ${chatRoomStyles.mine}`}>
+                            <div className={chatRoomStyles.mineContent}>
+                              <div className={chatRoomStyles.myMessageInner}>
+                                {message.message}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div
+                            key={message.messageId}
+                            className={`${chatRoomStyles.message}`}>
+                            <div className={chatRoomStyles.profileBox}>
+                              <img
+                                className={chatRoomStyles.userImg}
+                                src={message.profileImage}
+                                alt="profile"
+                              />
+                            </div>
+                            <div className={chatRoomStyles.messageInner}>
+                              <div className={chatRoomStyles.messageContent}>
+                                <div className={chatRoomStyles.messageNickname}>
+                                  {message.nickname}
+                                </div>
+                                <div className={chatRoomStyles.messageMsg}>
                                   {message.message}
                                 </div>
                               </div>
                             </div>
-                          );
-                        } else {
-                          return (
-                            <div
-                              key={message.messageId}
-                              className={`${chatRoomStyles.message}`}>
-                              <div className={chatRoomStyles.profileBox}>
-                                <img
-                                  className={chatRoomStyles.userImg}
-                                  src={message.profileImage}
-                                  alt="profile"
-                                />
-                              </div>
-                              <div className={chatRoomStyles.messageInner}>
-                                <div className={chatRoomStyles.messageContent}>
-                                  <div
-                                    className={chatRoomStyles.messageNickname}>
-                                    {message.nickname}
-                                  </div>
-                                  <div className={chatRoomStyles.messageMsg}>
-                                    {message.message}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        }
-                      })}
-                    </div>
-                    {/* <div className={styles.postContent}>
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+                  {/* <div className={styles.postContent}>
                     <ContentComponent content={item.Post.content} />
                   </div> */}
 
-                    <button
-                      className={styles.reportBtn}
-                      type="button"
-                      onClick={() => handleChatReport(item.targetUser, item)}>
-                      처리
-                    </button>
-                  </Accordion.Body>
-                </Accordion.Item>
-              
+                  <button
+                    className={styles.reportBtn}
+                    type="button"
+                    onClick={() => handleChatReport(item.targetUser, item)}>
+                    처리
+                  </button>
+                </Accordion.Body>
+              </Accordion.Item>
             );
           })
         ) : (

@@ -167,7 +167,11 @@
 }
 
 .noLoginBtn {
-  margin: 5px 0px;
+
+  
+}
+.logoutBtn{
+  margin-left:10px;
 }
 
 .footer {

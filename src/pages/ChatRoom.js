@@ -114,7 +114,7 @@ function ChatRoom({ roomId, listRefetch }) {
         <div
           className={styles.chatForm}
           ref={chatFormRef}
-          style={{ height: "500px" }}>
+         >
           {chat.map((message, i) => {
             let prevMessage;
             let timeDiff;

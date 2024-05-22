@@ -18,18 +18,31 @@ ul {
     font-style: normal;
 }
 
+
+.container {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
 .userinfo {
     display: flex;
     justify-content: start;
-   text-align: start;
+    text-align: start;
     align-items: center;
-    border: 1px solid black;
-    padding: 5px;
+    
+  
+    border-bottom: 1px solid black;
+    padding: 12px;
     font-family: 'KCC-Hanbit';
-    margin-bottom: 5px;
 }
 
-.blockBtn:hover {}
+.userinfo:last-of-type {
+    border-bottom: 0;
+}
+
+.blockBtn{
+    
+}
 
 .searchBtn {
     font-family: 'KCC-Hanbit';
@@ -72,21 +85,23 @@ ul {
     outline: 2px solid #F8E4FF;
 
 }
-.blockModalForm{
-    display: flex;
-    justify-content: center;
-     
+
+.blockModalForm {
+display: flex;
+justify-content: center;
 }
-.blockModalBtn{
-font-family: 'KCC-Hanbit';
-width:auto;
-border:0px;
-border-radius: 3px;
-padding:3px 7px;
-background-color: cornflowerblue;
-color:white;
+
+.blockModalBtn {
+    font-family: 'KCC-Hanbit';
+    
+    border: 0px;
+    border-radius: 3px;
+    padding: 3px 7px;
+    background-color: cornflowerblue;
+    color: white;
 }
-.userPaging{
+
+.userPaging {
     display: flex;
     justify-content: center;
 }

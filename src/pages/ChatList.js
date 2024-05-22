@@ -167,10 +167,11 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
                             <span>{item.recentMessage}</span>
                           </div>
                         </div>
-                        <div className={styles.chatReportModal}>
+                        
+                      </div>
+                      <div className={styles.chatReportModal}>
                           <ChatReportModal roomId={roomId} />
                         </div>
-                      </div>
                     </>
                   ) : (
                     <>

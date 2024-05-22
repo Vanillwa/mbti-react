@@ -4,18 +4,18 @@
     justify-content: space-between
    
 }
-
-.roomCon{
-    
-   height:100vh;
-   width:100%;
-
-}
 .listCon{
-    width:100%;
+    width:30%;
     height:100vh;
    border-right:1px solid black;
 }
+.roomCon{
+    
+   height:100vh;
+   width:70%;
+
+}
+
 
 @media screen and (max-width:768px) {
     .section{
@@ -23,11 +23,12 @@
     height:100vh;
     }
     .listCon{
-        
+        width:100%;
         height:20%;
         border-bottom: 1px solid lightgray;
     }
     .roomCon{
+        width:100%;
         height:80%;
     }
    
