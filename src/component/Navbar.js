@@ -150,7 +150,7 @@ const Navbar = ({ chatData, chatStatus }) => {
           )}
           {isLoggedIn ? (
             // 채팅창 이동
-            <Link className={styles.menu} to="/chat/list">
+            <Link className={styles.menu} to="/chat">
               <img className={styles.svg} src={chatting} />
               <div className={styles.span}>채팅</div>
               {showChat == true ? (
