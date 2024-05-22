@@ -1,35 +1,10 @@
 
-.section{
-    display: flex;
-    justify-content: space-between
-   
-}
-
-.roomCon{
-    
-   height:100vh;
-   width:100%;
-
-}
-.listCon{
-    width:100%;
-    height:100vh;
-   border-right:1px solid black;
-}
-
-@media screen and (max-width:768px) {
-    .section{
-    flex-direction: column;
-    height:100vh;
-    }
-    .listCon{
-        
-        height:20%;
-        border-bottom: 1px solid lightgray;
-    }
-    .roomCon{
-        height:80%;
-    }
-   
-   
-}
+.section { display: flex; } 
+.listCon { width: 450px; height:100vh; border-right:1px solid lightgray; overflow: auto; } 
+.roomCon { width:calc(100% - 450px); height:100vh;  right: 0; overflow: auto; background-color: whitesmoke;} 
+.roomCon::-webkit-scrollbar { display: none;} 
+@media screen and (max-width:768px){
+ .section { position: static; flex-direction: column; height:100vh; } 
+ .listCon { position: static; width: 100%; height:20%; border-bottom: 1px solid lightgray; } 
+ .roomCon { position: static; width: 100%; height:80%; } 
+ }

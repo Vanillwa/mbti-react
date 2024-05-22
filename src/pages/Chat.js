@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "../css/Chat.module.css";
 import { useQuery } from "react-query";
 import { getChatList, getChatRoom } from "../service/api/chatAPI";
-import { Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { socket } from "../service/socket/socket";
 import ChatRoom from "./ChatRoom";
 import ChatList from "./ChatList";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
 function Chat() {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -28,10 +25,10 @@ function Chat() {
 
 
   useEffect(() => {
-    socket.on("notification", ()=>listRefetch())
+    socket.on("noti", ()=>listRefetch())
     return () => {
       socket.emit("leaveList")
-      socket.off("notification", ()=>listRefetch())
+      socket.off("noti", ()=>listRefetch())
     }
   }, [])
 

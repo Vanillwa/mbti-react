@@ -108,13 +108,8 @@ function ChatRoom({ roomId, listRefetch }) {
   }
   return (
     <section className={styles.section}>
-
-
-      <div className={styles.formWrap}>
-        <div
-          className={styles.chatForm}
-          ref={chatFormRef}
-          style={{ height: "500px" }}>
+      <div className={styles.chatForm} ref={chatFormRef}>
+        <div className={styles.chatFormInner}>
           {chat.map((message, i) => {
             let prevMessage;
             let timeDiff;
@@ -179,10 +174,7 @@ function ChatRoom({ roomId, listRefetch }) {
           <div ref={bottomRef}></div>
         </div>
         {isBottom ? null : (
-          <div
-            type="button"
-            onClick={scrollToBottomSmooth}
-            className={styles.toBottomBtn}>
+          <div type="button" onClick={scrollToBottomSmooth} className={styles.toBottomBtn}>
             <img src={downImg} alt="scroll to bottom" />
           </div>
         )}

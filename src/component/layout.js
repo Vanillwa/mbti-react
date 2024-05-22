@@ -36,9 +36,7 @@ const Layout = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <Navbar chatData = {data.result} chatStatus = {status}/>
-    </div>
+    <Navbar chatData = {data.result} chatStatus = {status}/>
   );
 };
 

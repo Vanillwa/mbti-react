@@ -1,13 +1,8 @@
-import React, { useState } from "react";
 import styles from "../css/ChatList.module.css";
-import { useQuery } from "react-query";
-import { getChatList } from "../service/api/chatAPI";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import Paging from "../component/Paging";
 import ChatReportModal from "../component/ChatReportModal";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
 import { socket } from "../service/socket/socket";
 
 const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
@@ -53,19 +48,91 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
       </>
     );
   }
-
+  console.log(listData)
   return (
-    <>
-      <div className={`${styles.chatBox}`}>
-        <div className={styles.chatItems}>
-          {listData.map(item => {
-            return (
-              <div
-                onClick={() => {
-                  handleSetRoomId(item.roomId);
-                }}
-                className={styles.itemBox}
-                key={item.roomId}>
+    <div className={`${styles.listInner}`}>
+      <div className={styles.itemWrap}>
+        {listData.map(item => {
+          return (
+            <div onClick={() => { handleSetRoomId(item.roomId); }} className={styles.item} key={item.roomId}>
+              {userInfo.userId === item.user1.userId ? (
+                <>
+                  <div className={styles.userBox}>
+                    <div className={styles.imgBox}>
+                      <img
+                        className={styles.userImg}
+                        src={item.user2.profileImage}
+                      />
+                    </div>
+                    <div className={styles.contentBox}>
+                      <div className={styles.nickname}>
+                        {item.user2.nickname}
+                      </div>
+
+                      <div className={styles.messageBox}>
+                        <span>{item.recentMessage}</span>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.userBox}>
+                    <div className={styles.imgBox}>
+                      <img
+                        className={styles.userImg}
+                        src={item.user1.profileImage}
+                      />
+                    </div>
+                    <div className={styles.contentBox}>
+                      <div className={styles.nickname}>
+                        {item.user1.nickname}
+                      </div>
+                      <div className={styles.messageBox}>
+                        <span>{item.recentMessage}</span>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+              <div className={styles.numBox}>
+                <div className={item.unreadCount > 0 ? styles.unreadNum : styles.readNum}>
+                  <div>{item.unreadCount > 0 ? item.unreadCount : null}</div>
+                </div>
+              </div>
+              {item.recentMessage === null ? null : 
+              <div className={styles.chatReportModal}>
+                <ChatReportModal roomId={roomId} />
+              </div>
+              }
+            </div>
+
+          );
+        })}
+      </div>
+
+      <Swiper
+        className={styles.swiper}
+        slidesPerView={6} //한번에 보여질 갯수
+        breakpoints={{
+          600: {
+            slidesPerView: 6, // 4 slides per view on screens >= 768px
+          },
+          500: {
+            slidesPerView: 5,
+          },
+          400: {
+            slidesPerView: 4,
+          },
+          0: {
+            slidesPerView: 3, // 1 slide per view on screens >= 320px
+          },
+
+        }}>
+        {listData.map(item => {
+          return (
+            <SwiperSlide key={item.roomId}>
+              <div onClick={() => { handleSetRoomId(item.roomId); }} className={styles.itemBox} >
                 {userInfo.userId == item.user1.userId ? (
                   <>
                     <div className={styles.userBox}>
@@ -83,9 +150,6 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
                         <div className={styles.messageBox}>
                           <span>{item.recentMessage}</span>
                         </div>
-                      </div>
-                      <div className={styles.chatReportModal}>
-                        <ChatReportModal roomId={roomId} />
                       </div>
                     </div>
                   </>
@@ -109,106 +173,12 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
                     </div>
                   </>
                 )}
-                <div className={styles.numBox}>
-                  <div
-                    className={
-                      item.unreadCount > 0 ? styles.unreadNum : styles.readNum
-                    }>
-                    <div>{item.unreadCount > 0 ? item.unreadCount : null}</div>
-                  </div>
-                </div>
               </div>
-            );
-          })}
-        </div>
-
-        <Swiper
-          className={styles.swiper}
-          slidesPerView={6} //한번에 보여질 갯수
-          breakpoints={{
-            600: {
-              slidesPerView: 6, // 4 slides per view on screens >= 768px
-            },
-            500: {
-              slidesPerView: 5,
-            },
-            400: {
-              slidesPerView: 4,
-            },
-            0: {
-              slidesPerView: 3, // 1 slide per view on screens >= 320px
-            },
-
-          }}>
-          {listData.map(item => {
-            return (
-              <SwiperSlide>
-                <div
-                  onClick={() => {
-                    handleSetRoomId(item.roomId);
-                  }}
-                  className={styles.itemBox}
-                  key={item.roomId}>
-                  {userInfo.userId == item.user1.userId ? (
-                    <>
-                      <div className={styles.userBox}>
-                        <div className={styles.imgBox}>
-                          <img
-                            className={styles.userImg}
-                            src={item.user2.profileImage}
-                          />
-                        </div>
-                        <div className={styles.contentBox}>
-                          <div className={styles.nickname}>
-                            {item.user2.nickname}
-                          </div>
-
-                          <div className={styles.messageBox}>
-                            <span>{item.recentMessage}</span>
-                          </div>
-                        </div>
-                        <div className={styles.chatReportModal}>
-                          <ChatReportModal roomId={roomId} />
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className={styles.userBox}>
-                        <div className={styles.imgBox}>
-                          <img
-                            className={styles.userImg}
-                            src={item.user2.profileImage}
-                          />
-                        </div>
-                        <div className={styles.contentBox}>
-                          <div className={styles.nickname}>
-                            {item.user1.nickname}
-                          </div>
-                          <div className={styles.messageBox}>
-                            <span>{item.recentMessage}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                  <div className={styles.numBox}>
-                    <div
-                      className={
-                        item.unreadCount > 0 ? styles.unreadNum : styles.readNum
-                      }>
-                      <div>
-                        {item.unreadCount > 0 ? item.unreadCount : null}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      </div>
-    </>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
   );
 };
 
