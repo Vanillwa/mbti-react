@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import {  useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 import { useEffect, useRef, useState } from "react";
@@ -12,7 +12,8 @@ import downImg from "../svg/arrow-down-circle.svg";
 
 import ChatReportModal from "../component/ChatReportModal";
 
-function ChatRoom({ roomId }) {
+function ChatRoom({listRefetch, roomId }) {
+
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [chat, setChat] = useState([]);
@@ -30,6 +31,7 @@ function ChatRoom({ roomId }) {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: data => {
+        listRefetch()
         console.log("로딩 완료", data);
         socket.emit("join", roomId);
         setChat(data.messageList);
@@ -48,6 +50,7 @@ function ChatRoom({ roomId }) {
         : data.roomInfo.userId1;
     let body = { roomId, message, targetId };
     socket.emit("sendMessage", body);
+    listRefetch();
     e.target.message.value = "";
   };
 

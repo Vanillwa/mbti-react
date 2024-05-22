@@ -2,26 +2,39 @@ import React, { useState } from "react";
 import styles from "../css/Chat.module.css";
 import { useQuery } from "react-query";
 import { getChatList, getChatRoom } from "../service/api/chatAPI";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { socket } from "../service/socket/socket";
 import ChatRoom from "./ChatRoom";
 import ChatList from "./ChatList";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
 function Chat() {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-  const [roomId, setRoomId] = useState(null);
+  const location = useLocation();
+  const number = location.state?.roomId || null;
+  const [roomId, setRoomId] = useState(number);
+  const { data, status, refetch } = useQuery(
+    ["getChatList"],
+    () => getChatList(),
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
     <section className={styles.section}>
       <div className={styles.listCon}>
-      <ChatList setRoomId={setRoomId} roomId={roomId} />
+      <ChatList data={data} status={status} refetch={refetch}  setRoomId={setRoomId} roomId={roomId} />
       </div>
      <div className={styles.roomCon}>
       {roomId === null ? (
         <div >채팅을 시작하세요</div>
       ) : (
-        <ChatRoom roomId={roomId} />
+        <ChatRoom listRefetch={refetch} roomId={roomId} />
       )}
       </div>
       

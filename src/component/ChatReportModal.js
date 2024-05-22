@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import { reportChatRoom } from "../service/api/reportAPI";
 import sweetalert from "./sweetalert";
 import { useNavigate } from "react-router-dom";
+import { PiSirenFill } from "react-icons/pi";
 function ChatReportModal({ roomId }) {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -83,7 +84,7 @@ function ChatReportModal({ roomId }) {
               type="button"
               variant="info"
               onClick={handleShow}>
-              신고하기
+                <PiSirenFill className={styles.svg} />
             </div>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>

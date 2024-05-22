@@ -11,8 +11,8 @@ export const requestChat = async (targetId) => {
   };
   
   // 채팅 리스트
-  export const getChatList = async (page, size) => {
-    const res = await axios.get(`/chat?page=${page}&size=${size}`);
+  export const getChatList = async () => {
+    const res = await axios.get(`/chat`);
     return res.data;
   };
   

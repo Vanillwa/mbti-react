@@ -16,3 +16,20 @@
     height:100vh;
    border-right:1px solid black;
 }
+
+@media screen and (max-width:768px) {
+    .section{
+    flex-direction: column;
+    height:100vh;
+    }
+    .listCon{
+        
+        height:20%;
+        border-bottom: 1px solid lightgray;
+    }
+    .roomCon{
+        height:80%;
+    }
+   
+   
+}

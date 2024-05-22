@@ -174,7 +174,7 @@ const FriendList = () => {
   const handleRequestChat = async (targetId) => {
     const result = await requestChat(targetId);
     if (result.message == "success" || result.message == "duplicated") {
-      navigate(`/chat/list/${result.roomId}`);
+      navigate("/chat",{state:{roomId:result.roomId}});
     }
   };
 

@@ -1,13 +1,7 @@
-.container {
-}
-
 .chatBox {
-
-  display: flex;
-  justify-content: center;
-  
-  height: 60px;
+  height: 100%;
 }
+
 .chatItems {
 
   display: flex;
@@ -15,13 +9,15 @@
   align-items: center;
   gap: 12px;
 }
+
 .userBox {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 36px;
 }
-.imgBox{
+
+.imgBox {
   display: flex;
   align-items: center;
   width: 50px;
@@ -29,6 +25,7 @@
   border-radius: 50%;
   overflow: hidden;
 }
+
 .userImg {
   width: 50px;
   height: auto;
@@ -45,13 +42,15 @@
   gap: 96px;
 }
 
-.contentBox{
+.contentBox {
   text-align: start;
 }
-.nickname{
+
+.nickname {
   font-size: 16px;
   font-weight: 550;
 }
+
 .messageBox {
   width: 200px;
   white-space: nowrap;
@@ -59,10 +58,11 @@
   text-overflow: ellipsis;
 }
 
-.readNum{
+.readNum {
   width: 25px;
 }
-.unreadNum{
+
+.unreadNum {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,4 +70,56 @@
   height: 25px;
   background-color: rgb(255, 106, 37);
   border-radius: 50%;
+}
+
+.swiperChatItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.swiper {display:none ;}
+
+@media screen and (max-width:768px) {
+  .chatList {
+    display: none;
+  }
+
+  .chatItems {
+    display: none;
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .itemBox {
+    gap: 0;
+    border: 0px;
+    align-items: start;
+  }
+
+  .userBox {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .imgBox {
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+  }
+
+  .userImg {
+    width: 100%;
+    height: auto;
+  }
+
+  .chatReportModal {}
+
+  .contentBox {
+    display: none;
+  }
+  .swiper{display:block;}
+
+
 }
