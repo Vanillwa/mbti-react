@@ -67,7 +67,7 @@ function ChatReportModal({ roomId }) {
 
     if (result.message === "success") {
       sweetalert.success("신고가 완료되었습니다.", "", "확인");
-      navigate("/chat/list");
+      navigate("/chat");
     } else if (result.message === "duplicated") {
       sweetalert.warning("이미 신고한 글입니다.", "", "확인");
     }

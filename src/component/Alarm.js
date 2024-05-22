@@ -20,7 +20,7 @@ const Alarm = () => {
       transition : Zoom,
       position: "bottom-right",
       onClick: () => {
-        navigate(`/chat/list/${data.roomId}`);
+        navigate("/chat" ,{state:{roomId:data.roomId}});
         toast.dismiss(toastId)
       },
     });

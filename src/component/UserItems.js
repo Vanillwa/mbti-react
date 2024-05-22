@@ -41,7 +41,7 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
     });
     if (result.message === "success") {
       sweetalert.success("정지 완료");
-      socket.emit("blockUser",user.userId);
+      socket.emit("blockUser", user.userId);
       setShow(false);
       refetch();
     } else if (result.message === "fail") {
@@ -77,11 +77,11 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
     if (user.userId != userInfo.userId) {
       setUser(user);
       setShow(true);
-    }  else if (user.role === "admin") {
+    } else if (user.role === "admin") {
       sweetalert.warning("관리자는 차단할 수 없습니다");
     }
   };
-  
+
   const handleBlock = userId => {
     releaseMutate.mutate(userId, {
       onSuccess: async () => {
@@ -123,11 +123,11 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>유저 관리</Modal.Title>
+          <Modal.Title >유저 관리</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className={styles.blockModalForm} onSubmit={handleSubmit}>
-            {user?.nickname}
+            닉네임: {user?.nickname}
             <select className="me-2" ref={blockRef}>
               <option value={1}>1일</option>
               <option value={3}>3일</option>
@@ -144,11 +144,10 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      {data.result.map(item => {
-        return (
-          <div className="container" key={item.userId}>
-            <div className={`row ${styles.userinfo}`}>
-
+      <div className={`container ${styles.container}`}>
+        {data.result.map(item => {
+          return (
+            <div className={` row ${styles.userinfo}`} key={item.userId}>
               <span className="col-2">유저ID: {item.userId}</span>
               <span className="col-4">이메일: {item.email}</span>
               <span className="col-3"> 닉네임: {item.nickname}</span>
@@ -168,11 +167,11 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
                   onClick={() => handleShowModal(item)}>
                   차단하기
                 </button>
-              ) : null}
+              ) : <button  className={`col-1 btn btn  ${styles.blockBtn}`} onClick={()=>{sweetalert.warning("자기 자신은 차단할 수 없습니다.")}}>나야나😊</button>}
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </>
   );
 }

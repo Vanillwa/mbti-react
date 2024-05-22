@@ -110,6 +110,7 @@ function ChatRoom({ roomId, listRefetch }) {
     <section className={styles.section}>
       <div className={styles.chatForm} ref={chatFormRef}>
         <div className={styles.chatFormInner}>
+
           {chat.map((message, i) => {
             let prevMessage;
             let timeDiff;

@@ -9,11 +9,12 @@ import styles from "../css/Main.module.css";
 
 import logo from "../images/areyout.png";
 
-import { fetchLogin } from "../service/api/loginAPI"
+import { fetchLogin, fetchLogout } from "../service/api/loginAPI"
 import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext, useAuthContext } from "../context/AuthContext";
+import { socket } from "../service/socket/socket";
 
 function Main() {
   console.log("rendered")
@@ -25,7 +26,7 @@ function Main() {
   const location = useLocation();
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-
+  const { logout } = useContext(AuthContext);
   const checkCapsLock = e => {
     let capsLock = e.getModifierState("CapsLock");
     setCapsLockFlag(capsLock);
@@ -63,6 +64,15 @@ function Main() {
   const noLogin = () => {
     navigate("/post/list");
   };
+  const goLogout =async()=>{
+    socket.emit("logout");
+    const result = await fetchLogout();
+   
+    if (result.message === 'success') {
+      logout();
+      navigate("/", { state: "logout" })
+    }
+  }
   return (
     <div className={styles.body}>
       <div className={styles.mainCon}>
@@ -150,6 +160,8 @@ function Main() {
       </div>
       <div className={`text-center ${styles.noLoginBtn} `}>
         <Button onClick={noLogin}>게시판이동</Button>
+        {isLoggedIn ? <Button className={styles.logoutBtn} onClick={goLogout}>로그아웃</Button> : null}
+        
       </div>
       <footer className={styles.footer}>
         <span>소개</span>
