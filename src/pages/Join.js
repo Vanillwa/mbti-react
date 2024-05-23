@@ -99,7 +99,7 @@ function Join() {
       }
     } catch (error) {
       console.error('인증번호 요청 중 오류 발생:', error);
-      alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
+      sweetalert.warning('오류가 발생했습니다. 나중에 다시 시도해주세요.');
     }
   };
 
@@ -200,29 +200,29 @@ function Join() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (emailValidation === 'invalid') {
-      alert('이메일 중복체크 요망')
+      sweetalert.warning('이메일 중복체크 요망')
       emailRef.current.focus()
       return
     }
     if (certificationValidation === 'invalid') {
-      alert('이메일 인증 요망')
+      sweetalert.warning('이메일 인증 요망')
       return
     }
     if (nicknameValidation === 'invalid') {
-      alert('닉네임 중복체크 요망')
+      sweetalert.warning('닉네임 중복체크 요망')
       nicknameRef.current.focus()
       return
     }
 
     if (passwordValidation === 'invalid') {
-      alert('올바르지 않은 비밀번호 형식')
+      sweetalert.warning('올바르지 않은 비밀번호 형식')
       passwordRef1.current.focus()
       return
     }
 
     
     if (!passwordSame) {
-      alert("비밀번호가 일치하지 않습니다.")
+      sweetalert.warning("비밀번호가 일치하지 않습니다.")
       passwordRef2.current.focus()
       return
     }
