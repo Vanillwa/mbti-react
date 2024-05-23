@@ -134,6 +134,7 @@ function FindPwd() {
                     placeholder="E-mail"
                     onInput={handleEmailOnInput}
                     onBlur={handleEmailOnBlur}
+                 
                   />
 
                   <button
@@ -155,7 +156,7 @@ function FindPwd() {
                       placeholder="인증번호"
                       onInput={handleCodeOnInput}
                       maxLength={6}
-                      value={code}
+                    
                     />
                   </div>
                   <p id="codeAlertTag" className={styles.alert}>{checkCodeAlert}</p>

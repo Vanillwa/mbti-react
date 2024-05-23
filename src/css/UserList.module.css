@@ -110,6 +110,34 @@ ul {
     justify-content: center;
 }
 
+@media screen and (max-width:1024px) {
+    .userId {
+        width: 15%;
+        display: block;
+    }
+
+    .userEmail {
+        width: 40%;
+        display: block;
+    }
+
+    .userNickname {
+        width: 30%;
+        display: block;
+
+    }
+
+    .userStatus {
+        width: 15%;
+        display: block;
+    }
+
+    .blockBtn {
+        margin-left: 40%;
+        width: 150px;
+    }
+}
+
 @media screen and (max-width:768px) {
     .showUserType {
         width: 20vw;
@@ -132,7 +160,7 @@ ul {
     .userNickname {
         width: 50%;
         display: block;
-        
+
     }
 
     .userStatus {
@@ -143,13 +171,13 @@ ul {
 
 
     .blockBtn {
-    
-       width:100px;
-        margin-left:40%;
+
+        width: 100px;
+        margin-left: 40%;
     }
 }
 
-@media screen and (max-width:650px) {}
+
 
 @media screen and (max-width:500px) {
     .showUserType {
