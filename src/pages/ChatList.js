@@ -31,7 +31,7 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
     );
   }
 
-  if (listData.length == 0) {
+  if (listData.length === 0) {
     return (
       <div>
         <h1>생성된 채팅방이 없습니다.</h1>
@@ -54,15 +54,12 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
       <div className={styles.itemWrap}>
         {listData.map(item => {
           return (
-            <div onClick={() => { handleSetRoomId(item.roomId); }} className={styles.item} key={item.roomId}>
+            <div onClick={() => { handleSetRoomId(item.roomId); }} className={roomId === item.roomId ? styles.selectedItem : styles.item} key={item.roomId}>
               {userInfo.userId === item.user1.userId ? (
                 <>
                   <div className={styles.userBox}>
                     <div className={styles.imgBox}>
-                      <img
-                        className={styles.userImg}
-                        src={item.user2.profileImage}
-                      />
+                      <img className={styles.userImg} src={item.user2.profileImage} alt="profile" />
                     </div>
                     <div className={styles.contentBox}>
                       <div className={styles.nickname}>
@@ -79,10 +76,7 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
                 <>
                   <div className={styles.userBox}>
                     <div className={styles.imgBox}>
-                      <img
-                        className={styles.userImg}
-                        src={item.user1.profileImage}
-                      />
+                      <img className={styles.userImg} src={item.user1.profileImage} alt="profile" />
                     </div>
                     <div className={styles.contentBox}>
                       <div className={styles.nickname}>
@@ -100,10 +94,10 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
                   <div>{item.unreadCount > 0 ? item.unreadCount : null}</div>
                 </div>
               </div>
-              {item.recentMessage === null ? null : 
-              <div className={styles.chatReportModal}>
-                <ChatReportModal roomId={roomId} />
-              </div>
+              {item.recentMessage === null ? null :
+                <div className={styles.chatReportModal}>
+                  <ChatReportModal roomId={roomId} />
+                </div>
               }
             </div>
 
@@ -133,13 +127,14 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
           return (
             <SwiperSlide key={item.roomId}>
               <div onClick={() => { handleSetRoomId(item.roomId); }} className={styles.itemBox} >
-                {userInfo.userId == item.user1.userId ? (
+                {userInfo.userId === item.user1.userId ? (
                   <>
                     <div className={styles.userBox}>
                       <div className={styles.imgBox}>
                         <img
                           className={styles.userImg}
                           src={item.user2.profileImage}
+                          alt="profile"
                         />
                       </div>
                       <div className={styles.contentBox}>
@@ -160,6 +155,7 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
                         <img
                           className={styles.userImg}
                           src={item.user2.profileImage}
+                          alt="profile"
                         />
                       </div>
                       <div className={styles.contentBox}>

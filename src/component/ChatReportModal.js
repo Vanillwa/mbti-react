@@ -51,7 +51,6 @@ function ChatReportModal({ roomId }) {
         break;
     }
   };
-  console.log(reportType);
 
   const handleReport = async () => {
     let body = {
@@ -62,7 +61,6 @@ function ChatReportModal({ roomId }) {
       sweetalert.warning("신고 유형을 선택해주세요.", "", "확인");
       return;
     }
-    console.log(body);
     const result = await reportChatRoom(body);
 
     if (result.message === "success") {
