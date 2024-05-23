@@ -23,8 +23,7 @@ function ChatRoom({ roomId, listRefetch }) {
   const bottomRef = useRef();
   const { data: roomData, status: roomStatus, refetch: roomRefetch } = useQuery(
     ["getChatRoom", roomId],
-    () => getChatRoom(roomId)
-    ,
+    () => getChatRoom(roomId),
     {
       enabled: !!roomId,
       retry: 0,
@@ -123,17 +122,11 @@ function ChatRoom({ roomId, listRefetch }) {
 
             if (userInfo.userId === message.userId) {
               return (
-                <div
-                  key={message.messageId}
-                  className={`${styles.message} ${styles.mine}`}>
+                <div key={message.messageId} className={`${styles.chat} ${styles.mine}`}>
                   <div className={styles.isRead}>
                     {message.isRead === 1 ? "" : "안읽음"}
                   </div>
-                  <div className={styles.mineContent}>
-                    <div className={styles.myMessageInner}>
-                      {message.message}
-                    </div>
-                  </div>
+                  <div className={styles.content}>{message.message}</div>
                 </div>
               );
             } else if (
@@ -142,31 +135,20 @@ function ChatRoom({ roomId, listRefetch }) {
               timeDiff === 0
             ) {
               return (
-                <div key={message.messageId} className={`${styles.message}`}>
-                  <div className={styles.messageInner}>
-                    <div className={styles.messageContent}>
-                      <div className={styles.messageMsg}>{message.message}</div>
-                    </div>
-                  </div>
+                <div key={message.messageId} className={`${styles.chat} ${styles.continueChat}`}>
+                  <div style={{ width: "40px" }}></div>
+                  <div className={styles.continueContent}>{message.message}</div>
                 </div>
               );
             } else {
               return (
-                <div key={message.messageId} className={`${styles.message}`}>
+                <div key={message.messageId} className={`${styles.chat}`}>
                   <div className={styles.profileBox}>
-                    <img
-                      className={styles.userImg}
-                      src={message.sendUser.profileImage}
-                      alt="profile"
-                    />
+                    <img className={styles.userImg} src={message.sendUser.profileImage} alt="profile" />
                   </div>
-                  <div className={styles.messageInner}>
-                    <div className={styles.messageContent}>
-                      <div className={styles.messageNickname}>
-                        {message.sendUser.nickname}
-                      </div>
-                      <div className={styles.messageMsg}>{message.message}</div>
-                    </div>
+                  <div className={styles.right}>
+                    <div className={styles.yourNickname}>{message.sendUser.nickname}</div>
+                    <div className={styles.yourContent}>{message.message}</div>
                   </div>
                 </div>
               );

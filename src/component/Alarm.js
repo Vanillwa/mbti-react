@@ -17,23 +17,23 @@ const Alarm = () => {
 
     const toastId = toast(`${data.sendUser.nickname} : ${data.message}`, {
       autoClose: 2000,
-      transition : Zoom,
+      transition: Zoom,
       position: "bottom-right",
       onClick: () => {
-        navigate("/chat" ,{state:{roomId:data.roomId}});
+        navigate("/chat", { state: { roomId: data.roomId } });
         toast.dismiss(toastId)
       },
     });
     setUserToastIds({
       ...userToastIds,
-      [data.sendUser.nickname] : toastId,
+      [data.sendUser.nickname]: toastId,
     })
   };
 
-  const reqNotify = () =>{
+  const reqNotify = () => {
     const toastRequestId = toast(`친구 요청이 있습니다.`, {
       autoClose: 2000,
-      transition : Zoom,
+      transition: Zoom,
       position: "bottom-right",
       onClick: () => {
         navigate(`/friend`);
@@ -51,9 +51,9 @@ const Alarm = () => {
     return () => socket.off("notification", notify);
   }, [userToastIds]);
 
-  useEffect(()=>{
+  useEffect(() => {
     socket.on('friendRequest', reqNotify);
-    return()=> socket.off('friendRequest', reqNotify)
+    return () => socket.off('friendRequest', reqNotify)
   }, [requestIds])
 
   return (
