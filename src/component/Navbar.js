@@ -112,7 +112,7 @@ const Navbar = ({ chatData, chatStatus }) => {
           <input type="text" placeholder="검색" name="keyword"  />
           </form>
         </div> */}
-          <div className={styles.menu}>
+          <div className={`${styles.menu} ${styles.hiddenSearch}`}>
             <img src={search} className={styles.svg} />
             <div type="button" className={styles.span}>
               검색
