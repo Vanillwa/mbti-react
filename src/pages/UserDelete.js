@@ -25,7 +25,9 @@ function UserDelete() {
 
 
     const [pwMessage, setPwmessage] = useState('')
+    const [passwordValidColor,setPasswordValidColor]= useState('')
     const passwordRef = useRef();
+    
   
 
     const handlePasswordBtnOnclick = async () => {
@@ -42,9 +44,11 @@ function UserDelete() {
           setPwEditable(true);
           setPwmessage("비밀번호 검증이 완료되었습니다.");
           setPasswordBtn('완료');
+          setPasswordValidColor('is-valid')
         } else if(result.message === "fail"){
           
-          setPwmessage("비밀번호가 틀렸습니다.")        
+          setPwmessage("비밀번호가 틀렸습니다.")     
+          setPasswordValidColor('is-invalid')   
         }
         return;
       }
@@ -117,7 +121,7 @@ function UserDelete() {
               <div>
                 <label htmlFor="user-pw" className="form-label">비밀번호를 입력해주세요.</label>
                 <div className="d-flex gap-2">
-                  <input type="password" className="form-control input1" id="user-pw" placeholder="password" disabled={!pwEditable}  ref={passwordRef}/>
+                  <input type="password" className={`form-control ${passwordBtn === '확인' ? passwordValidColor : passwordValidColor} `} id="user-pw" placeholder="password" disabled={!pwEditable}  ref={passwordRef}/>
                   <button type ='button'className='btn btn-sm btn-primary' onClick={handlePasswordBtnOnclick}>{passwordBtn}</button>
                 </div>
                 <p style={{ color: pwMessage === "비밀번호가 틀렸습니다." ? "red" : "green"}}>{pwMessage}</p>

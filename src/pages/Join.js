@@ -10,6 +10,7 @@ import { requestEmailVerification } from "../service/api/joinAPI";
 import Swal from "sweetalert2"
 import Footer from '../component/Footer';
 import sweetalert from '../component/sweetalert';
+import { async } from 'q';
 //import backgroundImg from '../images/backgroundImg.png';
 
 
@@ -41,12 +42,18 @@ function Join() {
   const [nicknameValidation, setNicknameValidation] = useState('invalid')
 
   // 비밀번호
+ 
   const passwordRef1 = useRef()
   const passwordRef2 = useRef()
   const [passwordAlert, setPasswordAlert] = useState('');
   const [passwordAlert2, setPasswordAlert2] = useState('');
   const [passwordValidation, setPasswordValidation] = useState('invalid');
   const [passwordSame, setPasswordSame] = useState(false);
+
+
+  const [emailValidColor,setEmailValidColor] = useState("")
+  const [passwordValidColor,setPasswordValidColor] =useState("");
+  const [nicknameVailidColor,setNicknameVaildColor] =useState("")
 
   // 이메일 입력
   const handleEmailOnBlur = async (e) => {
@@ -60,6 +67,7 @@ function Join() {
       setCertificationAlert('')
       setCertificationDisabled(true);
       setCertificationInputDisabled(true)
+      setEmailValidColor("")
     }
   }
 
@@ -76,10 +84,12 @@ function Join() {
       setEmailAlert("사용 가능한 이메일입니다.");
       setEmailValidation('valid'); // 이메일이 사용가능
       setCertificationDisabled(false); //초기값 false
+      setEmailValidColor("is-valid")
     } else if (data.message === "duplicated") {
       setEmailAlert("이미 사용중.");
       setEmailValidation('invalid'); // 이메일이 중복
       setCertificationDisabled(true);
+      setEmailValidColor("is-invalid")
     }
   };
 
@@ -130,8 +140,11 @@ function Join() {
       setNickname(e.target.value);
       const result = await nickNameChanged();
       setNicknameAlert("");
+      setNicknameVaildColor("")
     }
   };
+
+
 
   // 닉네임 중복 체크
   const handleCheckDuplicationNickname = async () => {
@@ -146,9 +159,11 @@ function Join() {
     if (data.message === "success") {
       setNicknameAlert("사용 가능한 닉네임 입니다.");
       setNicknameValidation('valid');
+      setNicknameVaildColor("is-valid")
     } else if (data.message === "duplicated") {
       setNicknameAlert("이미 사용중.");
       setNicknameValidation('invalid');
+      setNicknameVaildColor("is-invalid")
     }
   };
 
@@ -157,8 +172,12 @@ function Join() {
     if (passwordRef1.current.value === passwordRef2.current.value) {
       setPasswordAlert2("비밀번호가 일치합니다.")
       setPasswordSame(true)
+      
+      setPasswordValidColor("is-valid")
+      
     } else {
       setPasswordAlert2("비밀번호가 일치하지 않습니다.")
+      
       setPasswordSame(false)
     }
     console.log(passwordSame)
@@ -180,11 +199,13 @@ function Join() {
       setPasswordAlert("올바른 형식의 비밀번호 입니다.");
       setPasswordValidation("valid");
       comparePassword()
+     
     }
     else {
       passwordRef2.current.value = ''
       setPasswordAlert("비밀번호는 최소 6자, 최대 20자이며 한글은 사용할 수 없습니다. 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.");
       setPasswordValidation("invalid");
+      setPasswordValidColor("is-invalid")
     }
 
 
@@ -194,6 +215,7 @@ function Join() {
 
   const handlePasswordOnInput2 = (e) => {
     comparePassword()
+    
   }
 
   // 회원가입 
@@ -277,7 +299,7 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="email" className="form-label">이메일</label>
                 <div className='d-flex gap-2'>
-                  <input type="email" className="form-control form-control-email" name="email" id="email" placeholder="E-mail" ref={emailRef} onBlur={handleEmailOnBlur} required />
+                  <input type="email" className={`form-control ${emailValidation === 'valid' ? emailValidColor : emailValidColor} `} name="email" id="email" placeholder="E-mail" ref={emailRef} onBlur={handleEmailOnBlur} required />
                   <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationEmail}>체크</button>
                 </div>
                 <p className='emailAlert' style={{ color: emailValidation === 'valid' ? "green" : emailValidation === 'invalid' ? "red" : "black" }}>
@@ -302,7 +324,7 @@ function Join() {
               <div className="col-12">
                 <label htmlFor="nickname" className="form-label">닉네임</label>
                 <div className='d-flex gap-2'>
-                  <input type="text" className="form-control" name="nickname" id="nickname" placeholder="nickname" maxLength={16} onBlur={handleNickNameOnBlur} ref={nicknameRef} required />
+                  <input type="text" className={`form-control ${nicknameValidation === 'valid' ? nicknameVailidColor : nicknameVailidColor} `} name="nickname" id="nickname" placeholder="nickname" maxLength={16} onBlur={handleNickNameOnBlur} ref={nicknameRef} required />
                   <button type='button' className='col-2 btn btn-sm btn-primary' onClick={handleCheckDuplicationNickname}>체크</button>
                 </div>
                 <p className='nicknameAlert' style={{ color: nicknameValidation === 'valid' ? "green" : nicknameValidation === 'invalid' ? "red" : "black" }}>
@@ -313,7 +335,7 @@ function Join() {
                 <label htmlFor="user-pw" className="form-label">비밀번호</label>
                 <input
                   type="password"
-                  className={`form-control ${passwordValidation === 'valid' ? 'is-valid' : 'is-invalid'}`}
+                  className={`form-control ${passwordValidation === 'valid' ? 'is-valid' : 'invalid'}`}
                   name="password"
                   id="user-pw"
                   placeholder="Password"
@@ -325,7 +347,7 @@ function Join() {
                 <div className={`text-${passwordValidation === 'valid' ? 'success' : 'danger'}`}>{passwordAlert}</div>
 
 
-                <input type="password" className={`form-control ${passwordValidation === 'valid' ? '' : 'hidden'}`} name="repassword" id="user-pw" placeholder="password" ref={passwordRef2} onInput={handlePasswordOnInput2} />
+                <input type="password"  className={`form-control ${passwordValidation === 'valid' ? passwordValidColor : 'hidden'} $`}name="repassword" id="user-pw" placeholder="password" ref={passwordRef2} onInput={handlePasswordOnInput2} />
                 <div className={`text-${passwordSame === true ? 'success' : 'danger'}`}>{passwordAlert2}</div>
               </div>
 
