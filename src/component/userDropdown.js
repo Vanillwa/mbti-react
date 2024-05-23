@@ -84,7 +84,7 @@ const UserDropdown = ({ item }) => {
               onClick={(e) => handleDropdownClick(e, item.userId)}
               className={styles.userInfoBtn}
             >
-              <DropdownButton title="title" variant="Secondary">
+              <DropdownButton title="" variant="Secondary">
                 <Dropdown.ItemText><Link to={`/user/${item.userId}`}>프로필 보기</Link></Dropdown.ItemText>
                 {isLoggedIn ?<><Dropdown.Item as="button"><li>
                     <div

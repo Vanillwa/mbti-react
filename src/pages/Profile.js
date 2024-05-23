@@ -3,7 +3,6 @@ import styles from "../css/profile.module.css";
 import { Link, useParams } from "react-router-dom";
 import noImg from "../images/noImg.png";
 import { useQuery } from "react-query";
-import chat from "../svg/chat.svg";
 import readhit from "../svg/readhit.svg";
 import like from "../svg/like.svg";
 
