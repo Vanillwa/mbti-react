@@ -41,6 +41,7 @@ const PostList = () => {
     }
   };
   const handleOrderChange = (e) => {
+    e.preventDefault();
     const orderValue = e.target.value;
     if (orderValue == "최신순" || orderValue == "많은순") {
       setOrder("desc");
@@ -48,6 +49,7 @@ const PostList = () => {
       setOrder("asc");
     }
   };
+
   if (status === "loading") {
     return (
       <div className="container">
@@ -72,37 +74,39 @@ const PostList = () => {
     <div className={styles.postBox}>
       {mbti == "null" ? <h2>전체게시판</h2> : <h2>{mbti}게시판</h2>}
       <div className={styles.sortBox}>
-          <Form.Select
-            aria-label="Default select example"
-            onChange={handleSortChange}
-          >
-            <option value="createdAt">날짜순</option>
-            <option value="readhit">조회순</option>
-            <option value="like">좋아요순</option>
-          </Form.Select>
-          <Form.Select
-            aria-label="Default select example"
-            onChange={handleOrderChange}
-          >
-            {sort == "createdAt" ? (
-              <>
-                <option>최신순</option>
-                <option>오래된순</option>
-              </>
-            ) : (
-              <>
-                <option>많은순</option>
-                <option>적은순</option>
-              </>
-            )}
-          </Form.Select>
+        <Form.Select
+          className={styles.sort}
+          aria-label="Default select example"
+          onChange={handleSortChange}
+        >
+          <option value="createdAt">날짜순</option>
+          <option value="readhit">조회순</option>
+          <option value="like">좋아요순</option>
+        </Form.Select>
+        <Form.Select
+          className={styles.sort}
+          aria-label="Default select example"
+          onChange={handleOrderChange}
+        >
+          {sort == "createdAt" ? (
+            <>
+              <option>최신순</option>
+              <option>오래된순</option>
+            </>
+          ) : (
+            <>
+              <option>많은순</option>
+              <option>적은순</option>
+            </>
+          )}
+        </Form.Select>
       </div>
       <div className={styles.postItemsBox}>
         <PostItems data={data} status={status} />
       </div>
-        {data?.list?.length == 0 ? null : (
-          <Paging data={data} status={status} page={page} setPage={setPage} />
-        )}
+      {data?.list?.length == 0 ? null : (<div className={styles.pagingBox}>
+        <Paging data={data} status={status} page={page} setPage={setPage} /></div>
+      )}
     </div>
   );
 };

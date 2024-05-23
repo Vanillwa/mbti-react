@@ -22,10 +22,6 @@
   border-radius: 18px;
   width: 300px;
 }
-.leftSidebar, .rightSidebar{
-  background-color: white;
-  z-index: 10;
-}
 
 .leftSidebar{
   grid-area: leftSidebar;
@@ -33,7 +29,7 @@
   flex-direction: column;
   left: 0;
   height: 100vh; /* 전체 화면 높이 */
-  box-shadow: 4px 0 2px -2px rgba(194, 194, 194, 0.7);
+  border-right: 1px solid rgb(221,221,221);
 }
 .homeMenu{display: none;}
 .rutMenu{display: block;}
@@ -120,11 +116,14 @@
   .mbtiMenu{
     margin-left: 0;
   }
+  .span{
+    display: none;
+  }
 }
 @media(max-width : 768px){
   .container{
     grid-template-columns: 1fr;
-    grid-template-rows:auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
     grid-template-areas:
     'nav'
     'content'
@@ -141,7 +140,7 @@
     height: auto;
     justify-content: center;
     align-items: center;
-    box-shadow: 4px 0 2px -2px rgba(194, 194, 194, 0.7);
+    border-top: 1px solid rgb(221, 221, 221);
   }
   .nav{
     grid-area: nav;
@@ -160,11 +159,6 @@
   justify-content: space-between;
 }
 .homeMenu{margin-top: 0;}
-}
 
-@media(max-width : 1024px) {
-  .span{
-    display: none;
-  }
 }
 
