@@ -104,7 +104,7 @@ function FindPwd() {
 
   return (
     <>
-      <div className="container mt-5">
+      <div className={`${styles.container} container mt-5`}>
         <div className={styles.logo}>
         <Link to="/" className="navbar-logo d-flex justify-content-center">
           <img src={logo} alt="로고"  />
@@ -115,7 +115,7 @@ function FindPwd() {
             <form>
               <div className="text-center mb-5">
                 <h2 className="fw-bold" style={{ fontSize: "40px" }}>
-                  비밀번호 재설정
+                  이메일 인증
                 </h2>
               </div>
 
@@ -167,7 +167,7 @@ function FindPwd() {
                     onClick={isInputPwd}
                     disabled={isButtonDisabled}
                     className={`col-3 btn btn-sm btn-primary ${styles.findbtn}`}>
-                    재설정하기
+                    확인
                   </button>
                   <button
                     onClick={goMain}
