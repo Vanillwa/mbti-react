@@ -247,7 +247,6 @@ const PostWrite = () => {
           <div className={styles.cropperWrapper}>
             <Cropper
               style={{ height: 450, width: '100%' }}
-              aspectRatio={1}
               src={croppedImage}
               viewMode={1}
               guides={true}
@@ -255,10 +254,15 @@ const PostWrite = () => {
               minCropBoxWidth={10}
               background={true}
               responsive={true}
-              autoCropArea={1}
+              autoCropArea={0.8}  
               checkOrientation={false}
               onInitialized={(instance) => {
                 setCropper(instance);
+                // 크롭박스 크기 설정하는곳
+                instance.setCropBoxData({
+                  width: 200,
+                  height: 200,
+                });
               }}
             />
             <div className={styles.cropperButtonWrapper}>

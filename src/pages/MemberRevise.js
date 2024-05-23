@@ -30,6 +30,8 @@ function MemberRevise() {
   const [nicknameEditable, setNicknameEditable] = useState(false);
   const [nicknameBtn, setNicknameBtn] = useState('수정');
 
+  const [nicknameValidColor,setNicknameValidColor] =useState('')
+
   const nicknameRef = useRef();
 
   const passwordRef1 = useRef();
@@ -37,6 +39,7 @@ function MemberRevise() {
   const [pwMessage, setPwmessage] = useState('');
   const [pwEditable, setPwEditable] = useState(false);
   const [passwordBtn, setPasswordBtn] = useState('수정');
+  const [passwordValidColor,setPasswordValidColor] =useState('')
 
   const mbtiRef = useRef();
 
@@ -124,9 +127,11 @@ function MemberRevise() {
         setNicknameAlert("사용 가능한 닉네임 입니다.");
         setNicknameValidation('valid');
         setNicknameBtn('변경');
+        setNicknameValidColor('is-valid')
       } else if (result?.message === "duplicated") {
         setNicknameAlert("이미 사용중.");
         setNicknameValidation('invalid');
+        setNicknameValidColor("is-invalid")
       }
     }
 
@@ -157,13 +162,16 @@ function MemberRevise() {
     if (passwordBtn === '확인') {
       if (!passwordRegex.test(passwordRef1.current.value)) {
         setPwmessage("비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요.");
+        setPasswordValidColor("is-invalid")
         return;
       } else if (passwordRef2.current.value !== passwordRef1.current.value) {
         setPwmessage("비밀번호가 일치하지 않습니다");
+        setPasswordValidColor("is-invalid")
         return;
       }
       setPwmessage("비밀번호가 일치합니다.");
       setPasswordBtn('변경');
+      setPasswordValidColor('is-valid')
     }
 
     if (passwordBtn === '변경') {
@@ -253,7 +261,7 @@ function MemberRevise() {
             <div>
               <label htmlFor="user-nickname" className="form-label">닉네임 변경</label>
               <div className='d-flex gap-2 '>
-                <input type="text" className="form-control" defaultValue={userInfo.nickname} disabled={!nicknameEditable} ref={nicknameRef} id="user-nickname" />
+                <input type="text" className={`form-control ${nicknameValidation === 'valid' ? nicknameValidColor : nicknameValidColor} `} defaultValue={userInfo.nickname} disabled={!nicknameEditable} ref={nicknameRef} id="user-nickname" />
                 <button
                   type='button'
                   className='btn btn-sm btn-primary'
@@ -272,7 +280,7 @@ function MemberRevise() {
             <div>
               <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
               <div className="d-flex gap-2">
-                <input type="password" className="form-control passwordBtn1" name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
+                <input type="password" className={`form-control ${passwordBtn === '확인' ? passwordValidColor : passwordValidColor} `} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
                 <button
                   className='btn btn-sm btn-primary'
                   type='button'
@@ -281,8 +289,8 @@ function MemberRevise() {
                   {passwordBtn}
                 </button>
               </div>
-              <input type="password" className={`form-control passwordBtn2 ${passwordBtn === '수정' ? 'hidden' : ''}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} />
-              <p style={{ color: pwMessage === "비밀번호가 일치하지 않습니다" ? "red" : "green" }}>{pwMessage}</p>
+              <input type="password" className={`form-control passwordBtn2 ${passwordBtn === '수정' ? 'hidden' : passwordValidColor}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} />
+              <p style={{ color: pwMessage === "비밀번호가 일치하지 않습니다" || pwMessage === "비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요." ? "red" : "green" }}>{pwMessage}</p>
             </div>
 
             <div>
