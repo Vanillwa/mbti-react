@@ -40,7 +40,10 @@ function Main() {
       password: e.target.password.value,
     };
 
+   
     const res = await fetchLogin(body);
+
+   
     let array = ["updatePwd", "join", "findPwd", "logout", null]
 
     if (res.message === "success") {

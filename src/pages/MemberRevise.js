@@ -225,7 +225,7 @@ function MemberRevise() {
         guides={true}
         minCropBoxHeight={10}
         minCropBoxWidth={10}
-        background={false}
+        background={true}
         responsive={true}
         autoCropArea={1}
         checkOrientation={false}

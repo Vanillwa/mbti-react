@@ -56,7 +56,7 @@ function Profile() {
       <div className={`row ${styles.postBox}`}>
         {data.recentPost.map((userdata) => (
           
-          <Link to={`/post/view?postId=${userdata.postId}`}to={`/post/view?postId=${userdata.postId}`} className={`col col-3 ${styles.postWrap}`} key={userdata.writerId}>
+          <Link to={`/post/view?postId=${userdata.postId}`} className={`col col-3 ${styles.postWrap}`} key={userdata.writerId}>
             <div className={styles.postHeader}>
               <img
                 className={styles.img}

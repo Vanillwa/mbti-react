@@ -8,6 +8,9 @@ import axios from "axios";
 import ReactQuill, { Quill } from "react-quill";
 import sweetalert from "../component/sweetalert";
 import ImageResize from "quill-image-resize-module-react";
+import 'cropperjs/dist/cropper.css';
+import { Cropper } from 'react-cropper';
+import Modal from 'react-modal';
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -15,88 +18,62 @@ const PostWrite = () => {
   const navigate = useNavigate();
 
   const [mbti, setMbti] = useState(null);
-
   const [selectEMbti, setSelectEMbti] = useState("");
   const [selectIMbti, setSelectIMbti] = useState("");
-
   const [value, setValue] = useState("");
   const quillRef = useRef();
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [cropper, setCropper] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const imageInputRef = useRef(null);
 
+
+
+    
   const imageHandler = () => {
-    console.log("에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!");
-
-    // 1. 이미지를 저장할 input type=file DOM을 만든다.
-    const input = document.createElement("input");
-    // 속성 써주기
+    const input = imageInputRef.current;
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
-    input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
-
-    input.addEventListener("change", async () => {
-      console.log("온체인지");
+    input.click();
+    input.addEventListener("change", () => {
       const file = input.files[0];
-      const resizedImage = await resizeImage(file);
-
-      // multer에 맞는 형식으로 데이터 만들어준다.
-      const formData = new FormData();
-      formData.append("img", resizedImage); // formData는 키-밸류 구조
-      // 백엔드 multer라우터에 이미지를 보낸다.
-      try {
-        const result = await axios.post(
-          "https://192.168.5.17:10000/api/post/img",
-          formData
-        );
-        console.log("성공 시, 백엔드가 보내주는 데이터", result.data.url);
-        const IMG_URL = result.data.url;
-
-        const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-
-        const range = editor.getSelection();
-        // 가져온 위치에 이미지를 삽입한다
-        editor.insertEmbed(range.index, "image", IMG_URL);
-      } catch (error) {
-        console.log("실패했어요ㅠ");
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setCroppedImage(reader.result);
+          setIsModalOpen(true);
+      
+        };
+        reader.readAsDataURL(file);
       }
     });
   };
-  // 이미지 리사이징 함수
-  async function resizeImage(file) {
-    const maxWidth = 250; // 최대 너비
-    const maxHeight = 250; // 최대 높이
-    const reader = new FileReader();
-    const image = new Image();
 
-    return new Promise((resolve, reject) => {
-      reader.onload = (e) => (image.src = e.target.result);
-      image.onload = () => {
-        let width = image.width;
-        let height = image.height;
-
-        if (width > height) {
-          if (width > maxWidth) {
-            height *= maxWidth / width;
-            width = maxWidth;
-          }
-        } else {
-          if (height > maxHeight) {
-            width *= maxHeight / height;
-            height = maxHeight;
-          }
+  const handleCrop = async (e) => {
+    e.preventDefault();
+    if (cropper) {
+      cropper.getCroppedCanvas().toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('img', blob);
+        try {
+          const result = await axios.post("https://192.168.5.17:10000/api/post/img", formData);
+          const IMG_URL = result.data.url;
+          const editor = quillRef.current.getEditor();
+          const range = editor.getSelection();
+          editor.insertEmbed(range.index, "image", IMG_URL);
+          setCroppedImage(null);
+          setIsModalOpen(false);
+        } catch (error) {
+          console.log("Image upload failed", error);
         }
+      }, 'image/jpeg');
+    }
+  };
 
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(image, 0, 0, width, height);
-
-        canvas.toBlob((blob) => resolve(blob), file.type);
-      };
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file);
-    });
-  }
+  const cancelCrop = () => {
+    setCroppedImage(null);
+    setIsModalOpen(false);
+  };
 
   const modules = useMemo(() => {
     return {
@@ -131,22 +108,23 @@ const PostWrite = () => {
     setSelectEMbti(e.target.value);
     setSelectIMbti("I게시판");
   };
+
   const handleIMbtiChange = (e) => {
     setSelectIMbti(e.target.value);
     setSelectEMbti("E게시판");
   };
+
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const handleMbtiClick = (e) => {
-    if (e.target.value == "E게시판") {
-      setMbti(null);
-    } else if (e.target.value == "I게시판") {
+    if (e.target.value === "E게시판" || e.target.value === "I게시판") {
       setMbti(null);
     } else {
       setMbti(e.target.value);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const alertResult = await sweetalert.question(
@@ -165,12 +143,12 @@ const PostWrite = () => {
     };
     const result = await postPost(body);
 
-    if (result.message == "success") {
+    if (result.message === "success") {
       sweetalert.success("작성 완료", "3초 후에 자동으로 닫힙니다.", "확인");
-
       navigate("/post/list");
     }
   };
+
   if (!isLoggedIn) {
     return (
       <>
@@ -243,7 +221,7 @@ const PostWrite = () => {
             <ReactQuill
               ref={quillRef}
               theme="snow"
-              placeholder="내용입력해줘"
+              placeholder="내용 입력해줘"
               value={value}
               onChange={setValue}
               modules={modules}
@@ -256,6 +234,47 @@ const PostWrite = () => {
             작성하기
           </button>
         </form>
+
+        {/* Modal for cropping image */}
+        <Modal 
+          isOpen={isModalOpen} 
+          onRequestClose={cancelCrop} 
+          contentLabel="Image Cropper" 
+          className={styles.modal}
+          overlayClassName={styles.overlay}
+        >
+          {/* 크롭창 수정할거면 여기 건들면됨. */}
+          <div className={styles.cropperWrapper}>
+            <Cropper
+              style={{ height: 450, width: '100%' }}
+              aspectRatio={1}
+              src={croppedImage}
+              viewMode={1}
+              guides={true}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              background={true}
+              responsive={true}
+              autoCropArea={1}
+              checkOrientation={false}
+              onInitialized={(instance) => {
+                setCropper(instance);
+              }}
+            />
+            <div className={styles.cropperButtonWrapper}>
+              <button type="button" className={`${styles.cropButton} btn btn-primary`} onClick={handleCrop}>업로드</button>
+              <button type="button" className={`${styles.cancelButton} btn btn-primary`} onClick={cancelCrop}>뒤로가기</button>
+            </div>
+          </div>
+        </Modal>
+
+        {/* Hidden file input element */}
+        <input
+          type="file"
+          accept="image/*"
+          ref={imageInputRef}
+          style={{ display: "none" }}
+        />
       </div>
     </>
   );
