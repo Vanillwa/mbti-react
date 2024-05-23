@@ -1,138 +1,41 @@
-.container{
-  border: 1px solid black;
-  width: 80vw;
-}
+.section{max-width: 1000px; margin: 0 auto; padding:0 24px;}
 
-.mbti{
-  display: flex;
-  text-align: start;
-  margin-left: 10px;
-  font-weight: bold;
-  color: skyblue;
-  justify-content: space-between;
-  padding: 1vh;
-}
-.editBtn{
-  margin-right: 1vw;
-}
-.delBtn{
-  color: rgb(255, 91, 91);
-}
+.container {  width: 100%; } 
 
-.header{
-  display: flex;
-  justify-content: space-between;
-  padding: 1vh;
-  border-bottom: 1px solid black;
-}
+.mbti { display: flex; text-align: start; margin-left: 10px; font-weight: bold; color: skyblue; justify-content: space-between; padding: 1vh; } 
+.editBtn { margin-right: 1vw; } 
+.delBtn { color: rgb(255, 91, 91); } 
 
-.nickname{
-  
-  margin-left: 10px;
-}
-.date{
-  padding: 1vw 2vw;
-  margin-right: 10px;
-}
 
-.title{
-  padding: 1vw 2vw 1vw 0;
-  font-weight: 1000;
-  font-size: 2vh;
-  display: flex;
-  justify-content: start;
-}
-.content{
-  padding: 2vw;
-  min-height: 30vh;
-  overflow: auto;
-}
-.content::-webkit-scrollbar{
-  height: 10px;
-  background-color: rgb(223, 240, 255);
-  border-radius: 12px;
-}
-.content::-webkit-scrollbar-thumb{
-  background-color: rgb(126, 195, 255);
-  border-radius: 12px;
-}
-.goLogin{
-  border:0px;
-  background-color: transparent;
-}
-.commentContainer{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.commentBox{
-  display: flex;
-  justify-content: space-between;
-}
-.unLabel{
-  display: none;
-}
-.commentForm{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2vw;
-}
-.userImg{
-  width: 3vw;
-  height: auto;
-  margin-right: 5px;
-  border-radius: 25px;
-}
-.myImg{
-  width: auto;
-  height: 2.5vh;
-  margin-right: 5px;
-  border-radius: 50%;
-}
-.commentInput{
-  width: 30vw;
-  height: 3vh;
-  overflow: scroll;
-  margin: 0 10px;
-}
+.nickname { 
+ margin-left: 10px; } 
+.date { padding: 1vw 2vw; margin-right: 10px; } 
 
-@media screen and (max-width : 768px) {
-  .label{
-    display: none;
-  }
-}
+.title { padding: 1vw 2vw 1vw 0; font-weight: 1000; font-size: 2vh; display: flex; justify-content: start; } 
+.content { padding: 2vw; min-height: 30vh; overflow: auto; } 
+.content::-webkit-scrollbar { height: 10px; background-color: rgb(223, 240, 255); border-radius: 12px; } 
+.content::-webkit-scrollbar-thumb { background-color: rgb(126, 195, 255); border-radius: 12px; } 
+.goLogin { border:0px; background-color: transparent; } 
+.commentContainer { display: flex; flex-direction: column; width: 100%; } 
+.commentBox { display: flex; justify-content: space-between; } 
+.unLabel { display: none; } 
+.commentForm { display: flex; justify-content: center; align-items: center; padding: 2vw; } 
+.userImg { width: 3vw; height: auto; margin-right: 5px; border-radius: 25px; } 
+.myImg { width: auto; height: 2.5vh; margin-right: 5px; border-radius: 50%; } 
+.commentInput { width: 30vw; height: 3vh; overflow: scroll; margin: 0 10px; } 
 
-.commentName{
-  width: 15%;
-}
-.commentContent{
-  width: 30%;
-}
-.commentDate{
+@media screen and (max-width : 768px){
+ .label { display: none; } 
+ }
 
-}
-.editInput{
-  width: 80%;
-  margin-right: 10px;
-}
+.commentName { width: 15%; } 
+.commentContent { width: 30%; } 
+.commentDate {}
+.editInput { width: 80%; margin-right: 10px; } 
 
-.editCommentForm{
-  display: flex;
-  justify-content: end;
-  width: 100%;
-}
+.editCommentForm { display: flex; justify-content: end; width: 100%; } 
 
-.readhit{
-  color: black;
-}
-.likesBox{
-  display: flex;
-  justify-content: center;
-  gap: 84px;
-}
+.readhit { color: black; } 
+.likesBox { display: flex; justify-content: center; gap: 84px; } 
 
-.orderBox{
-  display: flex;
-  justify-content: center;
-}
+.orderBox { display: flex; justify-content: center; } 

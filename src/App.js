@@ -6,7 +6,6 @@ import Join from "./pages/Join"; // './pages/Join' 경로에 있는 Join 컴포�
 import MemberRevise from "./pages/MemberRevise"; // './pages/Join' 경로에 있는 Join 컴포넌트를 import
 import PostList from "./pages/PostList";
 import Layout from "./component/layout";
-
 import PostView from "./pages/PostView";
 import PostWrite from "./pages/PostWrite";
 import Profile from "./pages/Profile";
@@ -27,6 +26,7 @@ import { AuthContext, useAuthContext } from "./context/AuthContext";
 import sweetalert from "./component/sweetalert";
 import Search from "./pages/Search";
 import Chat from "./pages/Chat";
+import GlobalStyles from "./GlobalStyles";
 
 function App() {
   const { memoUserInfo } = useAuthContext();
@@ -56,6 +56,7 @@ function App() {
 
   return (
     <div className="App">
+      <GlobalStyles/>
       <Routes>
         <Route element={<Layout />}>
           <Route path="post">
