@@ -29,8 +29,8 @@ ul {
     justify-content: start;
     text-align: start;
     align-items: center;
-    
-  
+
+
     border-bottom: 1px solid black;
     padding: 12px;
     font-family: 'KCC-Hanbit';
@@ -40,9 +40,7 @@ ul {
     border-bottom: 0;
 }
 
-.blockBtn{
-    
-}
+.blockBtn {}
 
 .searchBtn {
     font-family: 'KCC-Hanbit';
@@ -62,10 +60,12 @@ ul {
     font-weight: 400;
     font-size: 14px;
 }
-.searchUserType:focus{
+
+.searchUserType:focus {
     border: 1px solid #9B51E0;
     outline: 2px solid #F8E4FF;
 }
+
 .searchBox {
     width: 20vw;
     border-radius: 5px;
@@ -91,13 +91,13 @@ ul {
 }
 
 .blockModalForm {
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .blockModalBtn {
     font-family: 'KCC-Hanbit';
-    
+
     border: 0px;
     border-radius: 3px;
     padding: 3px 7px;
@@ -111,50 +111,60 @@ justify-content: center;
 }
 
 @media screen and (max-width:768px) {
-    .showUserType{
-        width:20vw;
+    .showUserType {
+        width: 20vw;
     }
-    .userInfo{
-        font-size:12px;
+
+    .userInfo {
+        font-size: 12px;
+    }
+
+    .userId {
+        width: 50%;
+        display: block;
+    }
+
+    .userEmail {
+        width: 50%;
+        display: block;
+    }
+
+    .userNickname {
+        width: 50%;
+        display: block;
+        
+    }
+
+    .userStatus {
+        width: 50%;
+        display: block;
+    }
+
+
+
+    .blockBtn {
     
+       width:100px;
+        margin-left:40%;
     }
-    .userId{width:100px;      display:   block; text-align: center; }
-    .userEmail{
-        width:280px;
-        display:   block; text-align: center;
-    }
-    .userNickname{
-        width:200px;
-        display:   block; text-align: center;
-    }
-    .userStatus{
-        width:100px;
-        display:   block; text-align: center;
-    }
-    
- 
-   
-    .blockBtn{
-        display:   block; text-align: center;
-        width:100px;
-    }
-}
-@media screen and (max-width:650px){
-   
 }
 
+@media screen and (max-width:650px) {}
+
 @media screen and (max-width:500px) {
-    .showUserType{
-        width:30vw;
+    .showUserType {
+        width: 30vw;
     }
-    .searchBtn{
-        width:50px;
+
+    .searchBtn {
+        width: 50px;
     }
-    
+
 }
+
 @media screen and (max-width:400px) {
-    .showUserType{
-        width:40vw;
+    .showUserType {
+        width: 40vw;
     }
-   
+
 }

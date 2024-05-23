@@ -123,7 +123,7 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title >유저 관리</Modal.Title>
+          <Modal.Title>유저 관리</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className={styles.blockModalForm} onSubmit={handleSubmit}>
@@ -148,10 +148,18 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
         {data.result.map(item => {
           return (
             <div className={` row ${styles.userinfo}`} key={item.userId}>
-              <span className={`col-2 ${styles.userId}`}>유저ID: {item.userId}</span>
-              <span className={`col-4 ${styles.userEmail}` }>이메일: {item.email}</span>
-              <span className={`col-3 ${styles.userNickname}`}> 닉네임: {item.nickname}</span>
-              <span className={`col-2 ${styles.userStatus}`}>상태: {item.status}</span>
+              <span className={`col-2 ${styles.userId}`}>
+                유저ID: {item.userId}
+              </span>
+              <span className={`col-4 ${styles.userEmail}`}>
+                이메일: {item.email}
+              </span>
+              <span className={`col-3 ${styles.userNickname}`}>
+                닉네임: {item.nickname}
+              </span>
+              <span className={`col-2 ${styles.userStatus}`}>
+                상태: {item.status}
+              </span>
 
               {item.status === "blocked" ? (
                 <button
@@ -167,7 +175,15 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
                   onClick={() => handleShowModal(item)}>
                   차단하기
                 </button>
-              ) : <button  className={`col-1 btn btn  ${styles.blockBtn}`} onClick={()=>{sweetalert.warning("자기 자신은 차단할 수 없습니다.")}}>나야나😊</button>}
+              ) : (
+                <button
+                  className={`col-1 btn btn  ${styles.blockBtn}`}
+                  onClick={() => {
+                    sweetalert.warning("자기 자신은 차단할 수 없습니다.");
+                  }}>
+                  나야나😊
+                </button>
+              )}
             </div>
           );
         })}
