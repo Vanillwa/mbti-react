@@ -142,10 +142,10 @@ const PostWrite = () => {
       category: mbti,
     };
     const result = await postPost(body);
-
+    console.log(result)
     if (result.message === "success") {
       sweetalert.success("작성 완료", "3초 후에 자동으로 닫힙니다.", "확인");
-      navigate("/post/list");
+      navigate(`/post/view?postId=${result.result.postId}`);
     }
   };
 

@@ -9,7 +9,6 @@ const PostItems = ({ data, status }) => {
   return (
     <>
       {data.list.map(item => {
-        console.log(item)
         const createdAt = new Date(item.createdAt);
         const now = new Date();
         const differenceInSeconds = Math.floor((now - createdAt) / 1000);
