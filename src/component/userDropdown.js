@@ -65,7 +65,7 @@ const UserDropdown = ({ item }) => {
   };
   return (
     <>
-      <div className={`${styles.userBox} col-8`}  >
+      <div className={`${styles.userBox}`}  >
         <div className={styles.profileBox}>
           <img
             src={item.profileImage}

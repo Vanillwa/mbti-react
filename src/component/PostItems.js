@@ -9,6 +9,7 @@ const PostItems = ({ data, status }) => {
   return (
     <>
       {data.list.map(item => {
+        console.log(item)
         const createdAt = new Date(item.createdAt);
         const now = new Date();
         const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -32,17 +33,20 @@ const PostItems = ({ data, status }) => {
         );
         const imgSrc = showImg ? showImg[1] : null;
 
+        function removeHTMLTags(htmlString) {
+          return htmlString.replace(/<[^>]*>?/gm, "");
+        }
         return (
           <div className={styles.container} key={item.postId}>
             <Link
               to={`/post/view?postId=${item.postId}`}
               className={styles.postWrap}>
               <div className={styles.postContent}>
-                <div className={styles.header}>
-                  <UserDropdown item={item.User} />
-                </div>
+                
                 <div className={styles.title}>{item.title}</div>
+                <div className={styles.content}>{removeHTMLTags(item.content)}</div>
                 <div className={styles.readhitBox}>
+                  <UserDropdown item={item.User} />
                   <div className={styles.date}>{dateDisplay}</div>
                   <div className={styles.likes}>
                     <img src={like} alt="likes" /> {item.like}
