@@ -5,20 +5,31 @@ a{
   text-decoration: none;
   color: black;
 }
-.sortBox{
-
-}
 .postBox{
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 12px;
+  padding: 24px;
+}
+.sortBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sort{
+  width: 120px;
 }
 .postItemsBox{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 
+}
+.pagingBox{
+  display: flex;
+  justify-content: center;
+  align-items: end;
 }
 .container {
   width: 600px;

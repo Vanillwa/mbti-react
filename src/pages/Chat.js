@@ -6,6 +6,7 @@ import { useAuthContext } from "../context/AuthContext";
 import { socket } from "../service/socket/socket";
 import ChatRoom from "./ChatRoom";
 import ChatList from "./ChatList";
+import {ReactComponent as ChatIcon} from "../svg/chat-dots.svg"
 
 function Chat() {
   const { memoUserInfo } = useAuthContext();
@@ -25,10 +26,10 @@ function Chat() {
 
 
   useEffect(() => {
-    socket.on("noti", ()=>listRefetch())
+    socket.on("noti", () => listRefetch())
     return () => {
       socket.emit("leaveList")
-      socket.off("noti", ()=>listRefetch())
+      socket.off("noti", () => listRefetch())
     }
   }, [])
 
@@ -39,7 +40,10 @@ function Chat() {
       </div>
       <div className={styles.roomCon}>
         {roomId === null ? (
-          <div >채팅을 시작하세요</div>
+          <div className={styles.startChat}>
+            <ChatIcon width={"50%"} fill="#bbb" height={"50%"} className={styles.chatIcon}></ChatIcon>
+            <p>채팅을 시작해보세요</p>
+          </div>
         ) : (
           <ChatRoom roomId={roomId} listRefetch={listRefetch} />
         )}

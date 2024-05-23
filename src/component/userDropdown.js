@@ -65,7 +65,7 @@ const UserDropdown = ({ item }) => {
   };
   return (
     <>
-      <div className={`${styles.userBox} col-8`}>
+      <div className={`${styles.userBox} col-8`}  >
         <div className={styles.profileBox}>
           <img
             src={item.profileImage}
@@ -84,7 +84,7 @@ const UserDropdown = ({ item }) => {
               onClick={(e) => handleDropdownClick(e, item.userId)}
               className={styles.userInfoBtn}
             >
-              <DropdownButton variant="">
+              <DropdownButton variant="Secondary">
                 <Dropdown.ItemText><Link to={`/user/${item.userId}`}>프로필 보기</Link></Dropdown.ItemText>
                 {isLoggedIn ?<><Dropdown.Item as="button"><li>
                     <div

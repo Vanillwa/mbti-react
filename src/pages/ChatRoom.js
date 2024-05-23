@@ -111,7 +111,7 @@ function ChatRoom({ roomId, listRefetch }) {
       <div className={styles.chatForm} ref={chatFormRef}>
         <div className={styles.chatFormInner}>
 
-          {chat.map((message, i) => {
+          {chat.length === 0 ? <div className={styles.alert}>아직 채팅이 없습니다.</div> : chat.map((message, i) => {
             let prevMessage;
             let timeDiff;
             if (i > 1) {
@@ -180,12 +180,15 @@ function ChatRoom({ roomId, listRefetch }) {
           </div>
         )}
       </div>
-      <form onSubmit={sendMessage} className={styles.inputForm}>
-        <input name="message" autoComplete="off" />
-        <Button variant="secondary btn-sm" type="submit">
-          전송
-        </Button>
-      </form>
+      <div className={styles.bottom}>
+        <form onSubmit={sendMessage} className={styles.inputForm}>
+          <input name="message" autoComplete="off" />
+          <Button variant="secondary btn-sm" type="submit">
+            전송
+          </Button>
+        </form>
+        <ChatReportModal roomId={roomId} />
+      </div>
     </section>
   );
 }
