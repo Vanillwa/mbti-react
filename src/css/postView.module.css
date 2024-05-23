@@ -1,6 +1,6 @@
 .section{max-width: 1000px; margin: 0 auto; padding:0 24px;}
 
-.container {  width: 100%; } 
+.container { width: 100%; } 
 
 .mbti { display: flex; text-align: start; margin-left: 10px; font-weight: bold; color: skyblue; justify-content: space-between; padding: 1vh; } 
 .editBtn { margin-right: 1vw; } 
