@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Slide, ToastContainer, Zoom, toast } from "react-toastify";
+import { ToastContainer, Zoom, toast } from "react-toastify";
 import { socket } from "../service/socket/socket";
 
 import "react-toastify/dist/ReactToastify.css";

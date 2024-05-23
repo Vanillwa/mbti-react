@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../css/Nav.module.css";
 import { Link, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
@@ -42,9 +42,6 @@ const Navbar = ({ chatData, chatStatus }) => {
     }
   };
 
-  const handleRequestLogin = () => {
-    navigate("/", { state: "login" });
-  };
 
   const compareLogin = () => {
     if (isLoggedIn) {

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Navbar from "./Navbar";
-import styles from "../css/Nav.module.css";
 import { useQuery } from "react-query";
 import { getChatList } from "../service/api/chatAPI";
 import { socket } from "../service/socket/socket";

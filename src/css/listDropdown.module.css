@@ -4,6 +4,11 @@
   align-items: center;
   
 }
+.list-menu:hover .svg{
+  width: 28px;
+  height: auto;
+  transition: all 0.5s;
+}
 
 .dropBtn {
   color: black;
@@ -44,15 +49,6 @@
 
 .dropdown-content a:hover {
   background-color: #f1f1f1;
-}
-
-.imgE{
-  width: auto;
-  height: 25px;
-}
-.imgI{
-  width: auto;
-  height: 25px;
 }
 
 @media(max-width : 1024px){

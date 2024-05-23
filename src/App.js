@@ -19,8 +19,6 @@ import FriendList from "./pages/FriendList";
 import ReportList from "./pages/ReportList";
 
 import UserList from "./pages/UserList";
-import ChatList from "./pages/ChatList";
-import ChatRoom from "./pages/ChatRoom";
 import { socket } from "./service/socket/socket";
 import { fetchLogout } from "./service/api/loginAPI";
 import { AuthContext, useAuthContext } from "./context/AuthContext";

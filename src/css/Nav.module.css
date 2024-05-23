@@ -31,6 +31,9 @@
   height: 90px;
   border-bottom: none;
 }
+.rutMenu .menu:hover{
+  background-color: white;
+}
 .menuItems {
   display: flex;
   flex-direction: column;
@@ -48,6 +51,7 @@
   font-size: 15px;
   height: 60px;
 }
+
 .menu:hover{
   background-color: rgb(233, 233, 233);
   transition: all 0.5s;
