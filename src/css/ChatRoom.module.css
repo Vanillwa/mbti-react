@@ -30,7 +30,24 @@
 .bottom { display: flex; align-items: center; padding:24px; gap:12px; } 
 
 
-
+@media screen and (max-width:900px) {
+    .reportList{
+     width:80vw;
+    }
+ }
+ 
+ @media screen and (max-width:650px) {
+   
+     .reportId{width:50%; text-align: start;}
+     .reportWriter{width:50%; text-align: start;}
+     .reportPerson{width:50%;  text-align: start;}
+     .reportType{width:50%;  text-align: start;}
+  }
+  @media screen and (max-width:450px){
+     .reportList{
+         width:100vw;
+     }
+  } 
 
 
 

@@ -320,17 +320,17 @@ function ReportItems({
               <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header >
                   <div className="container">
-                    <div className={`row  ${styles.reportContent}`}>
-                      <span className={`col-3 ${styles.reportId}`}>
+                    <div className={`  ${styles.reportContent}`}>
+                      <span className={` ${styles.reportId}`}>
                         글번호:{item.Post?.postId}
                       </span>
-                      <span className={`col-3  ${styles.reportId}`}>
+                      <span className={`  ${styles.reportWriter}`}>
                         작성자:{item.Post?.User.nickname}
                       </span>
-                      <span className={`col-3 ${styles.reportPerson}`}>
+                      <span className={` ${styles.reportPerson}`}>
                         신고자:{item.User?.nickname}
                       </span>
-                      <span className={`col-3`}>신고유형:{item.type}</span>
+                      <span className={`${styles.reportType}`}>신고유형:{item.type}</span>
                     </div>
                   </div>
                 </Accordion.Header>
@@ -356,17 +356,17 @@ function ReportItems({
               <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
-                    <div className={`row   ${styles.reportContent}`}>
-                      <span className={`col-3 ${styles.reportId}`}>
+                    <div className={`  ${styles.reportContent}`}>
+                      <span className={` ${styles.reportId}`}>
                         글번호:{item.Comment.commentId}
                       </span>
-                      <span className={`col-3  ${styles.reportId}`}>
+                      <span className={` ${styles.reportWriter}`}>
                         작성자:{item.Comment.User.nickname}
                       </span>
-                      <span className={`col-3 ${styles.reportPerson}`}>
+                      <span className={` ${styles.reportPerson}`}>
                         신고자:{item.User.nickname}
                       </span>
-                      <span className={`col-3`}>신고유형:{item.type}</span>
+                      <span className={` ${styles.reportType}`}>신고유형:{item.type}</span>
                     </div>
                   </div>
                 </Accordion.Header>
@@ -394,17 +394,17 @@ function ReportItems({
               <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
-                    <div className={`row  ${chatRoomStyles.reportContent}`}>
-                      <span className={`col-3 ${chatRoomStyles.reportId}`}>
+                    <div className={`  ${styles.reportContent}`}>
+                      <span className={` ${styles.reportId}`}>
                         방번호:{item.roomId}
                       </span>
-                      <span className={`col-3  ${chatRoomStyles.reportId}`}>
+                      <span className={` ${styles.reportId}`}>
                         신고자:{item.reportUser.nickname}
                       </span>
-                      <span className={`col-3 ${chatRoomStyles.reportPerson}`}>
+                      <span className={` ${styles.reportPerson}`}>
                         피신고자:{item.targetUser.nickname}
                       </span>
-                      <span className={`col-3`}>신고유형:{item.type}</span>
+                      <span className={`${styles.reportType}`}>신고유형:{item.type}</span>
                     </div>
                   </div>
                 </Accordion.Header>
