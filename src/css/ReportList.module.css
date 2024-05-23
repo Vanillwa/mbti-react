@@ -4,16 +4,19 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    
 }
 
 .radioForm {
-    
+
     font-weight: 600;
     font-size: 18px;
 }
-.radioType{
+
+.radioType {
     cursor: pointer;
 }
+
 .radioLabel {
     margin-left: -5px;
     margin-right: 10px;
@@ -31,15 +34,18 @@
     justify-content: center;
 
 }
+.Accordion{
+    border:2px solid rgb(154, 225, 227); 
+    border-radius: 5px;
+    
+}
 
 .reportList {
-    border: 1px solid black;
-    border-radius: 7px;
+    
+    
     width: 800px;
-
-
-
-
+    margin-bottom:12px;
+    
 }
 
 .reportContent {
@@ -48,7 +54,9 @@
     align-items: center;
     text-align: start;
     font-size: 18px;
-    width: 80%;
+    width: 100%;
+    height:auto;
+    padding:12px;   
 }
 
 
