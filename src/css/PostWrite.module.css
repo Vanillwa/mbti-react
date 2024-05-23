@@ -98,3 +98,12 @@
 .showImg{
   width: 20vw;
 }
+
+.cropperButtonWrapper{
+  display: flex;
+justify-content: end;}
+
+
+.cropButton {
+  margin-right: 5px;
+}

@@ -1,23 +1,23 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "../css/PostWrite.module.css";
 import { useAuthContext } from "../context/AuthContext";
-import { getPostView, postEdit} from "../service/api/postAPI";
+import { getPostView, postEdit } from "../service/api/postAPI";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import ReactQuill, { Quill } from "react-quill";
 import { useQuery } from "react-query";
 import sweetalert from "../component/sweetalert";
-
 import ImageResize from "quill-image-resize-module-react";
+import 'cropperjs/dist/cropper.css';
+import Cropper from 'react-cropper';
+import Modal from 'react-modal';
 
 Quill.register("modules/imageResize", ImageResize);
 
 const PostEdit = () => {
   const navigate = useNavigate();
-  
-
-  const [query, setQuery] = useSearchParams();
+  const [query] = useSearchParams();
   const postId = query.get("postId");
 
   const { data, status } = useQuery(
@@ -28,100 +28,77 @@ const PostEdit = () => {
       refetchOnWindowFocus: false,
     }
   );
-  const [mbti, setMbti] = useState(null);
 
+  const [mbti, setMbti] = useState(null);
   const [selectEMbti, setSelectEMbti] = useState("");
   const [selectIMbti, setSelectIMbti] = useState("");
-
-  const [titleValue , setTitleValue] = useState('')
+  const [titleValue, setTitleValue] = useState('');
   const [value, setValue] = useState("");
   const quillRef = useRef();
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [cropper, setCropper] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const imageInputRef = useRef(null);
 
-  useEffect(()=>{
-    if(status == "success" && data && data.content && data.title){
-      setValue(data.content)
-      setTitleValue(data.title)
-      setMbti(data.category)
+  useEffect(() => {
+    if (status === "success" && data && data.content && data.title) {
+      setValue(data.content);
+      setTitleValue(data.title);
+      setMbti(data.category);
     }
-  }, [status])
-
+  }, [status, data]);
 
   const imageHandler = () => {
-    console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
-
-    const input = document.createElement('input');
-
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
+    const input = imageInputRef.current;
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
     input.click();
-
-    input.addEventListener('change', async () => {
-      console.log('온체인지');
+    input.addEventListener("change", () => {
       const file = input.files[0];
-      const resizedImage = await resizeImage(file);
-
-
-      const formData = new FormData();
-      formData.append('img', resizedImage);
-      try {
-        const result = await axios.post('https://192.168.5.17:10000/api/post/img', formData);
-        console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
-        const IMG_URL = result.data.url;
-
-        const editor = quillRef.current.getEditor();
-
-        const range = editor.getSelection();
-        editor.insertEmbed(range.index, 'image', IMG_URL);
-      } catch (error) {
-        console.log('실패했어요ㅠ');
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setCroppedImage(reader.result);
+          setIsModalOpen(true);
+        };
+        reader.readAsDataURL(file);
       }
     });
   };
-  async function resizeImage(file) {
-    const maxWidth = 250; // 최대 너비
-    const maxHeight = 250; // 최대 높이
-    const reader = new FileReader();
-    const image = new Image();
 
-    return new Promise((resolve, reject) => {
-      reader.onload = (e) => (image.src = e.target.result);
-      image.onload = () => {
-        let width = image.width;
-        let height = image.height;
-
-        if (width > height) {
-          if (width > maxWidth) {
-            height *= maxWidth / width;
-            width = maxWidth;
-          }
-        } else {
-          if (height > maxHeight) {
-            width *= maxHeight / height;
-            height = maxHeight;
-          }
+  const handleCrop = async (e) => {
+    e.preventDefault();
+    if (cropper && typeof cropper.getCroppedCanvas === 'function') {
+      cropper.getCroppedCanvas().toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('img', blob);
+        try {
+          const result = await axios.post("https://192.168.5.17:10000/api/post/img", formData);
+          const IMG_URL = result.data.url;
+          const editor = quillRef.current.getEditor();
+          const range = editor.getSelection();
+          editor.insertEmbed(range.index, "image", IMG_URL);
+          setCroppedImage(null);
+          setIsModalOpen(false);
+        } catch (error) {
+          console.log("Image upload failed", error);
         }
+      }, 'image/jpeg');
+    }
+  };
 
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(image, 0, 0, width, height);
-
-        canvas.toBlob((blob) => resolve(blob), file.type);
-      };
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file);
-    });
-  }
+  const cancelCrop = () => {
+    setCroppedImage(null);
+    setIsModalOpen(false);
+  };
 
   const modules = useMemo(() => {
     return {
       toolbar: {
         container: [
-          ['image'],
+          ["image"],
           [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          ["bold", "italic", "underline", "strike", "blockquote"],
         ],
         handlers: {
           image: imageHandler,
@@ -133,33 +110,32 @@ const PostEdit = () => {
       },
     };
   }, []);
-  const formats = [
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'image',
-  ];
-  
-  console.log(data)
 
-  const handleEMbtiChange = (e) => { 
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "image",
+  ];
+
+  const handleEMbtiChange = (e) => {
     setSelectEMbti(e.target.value);
     setSelectIMbti("I게시판");
   };
+
   const handleIMbtiChange = (e) => {
     setSelectIMbti(e.target.value);
     setSelectEMbti("E게시판");
   };
+
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const handleMbtiClick = (e) => {
-    if (e.target.value == "E게시판") {
-      setMbti(null);
-    } else if (e.target.value == "I게시판") {
+    if (e.target.value === "E게시판" || e.target.value === "I게시판") {
       setMbti(null);
     } else {
       setMbti(e.target.value);
@@ -168,8 +144,8 @@ const PostEdit = () => {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-    const alertResult = await sweetalert.question('정말 수정하시겠습니까?' ,'' , '네', '아니오')
-    if (alertResult.dismiss){
+    const alertResult = await sweetalert.question('정말 수정하시겠습니까?', '', '네', '아니오');
+    if (alertResult.dismiss) {
       return;
     }
 
@@ -177,20 +153,21 @@ const PostEdit = () => {
       title: e.target.title.value,
       content: value,
       category: mbti,
-      writerId : data.writerId,
-      postId : data.postId
+      writerId: data.writerId,
+      postId: data.postId,
     };
     const result = await postEdit(body);
 
-    if (result.message == "success") {
-      sweetalert.success('수정 완료', '', '확인',)
+    if (result.message === "success") {
+      sweetalert.success('수정 완료', '', '확인');
       navigate(`/post/view?postId=${postId}`);
-    }else if(result.message == 'noAuth'){
-      console.log('권한 없음')
-    }else{
-      console.log('왜그러냐')
+    } else if (result.message === 'noAuth') {
+      console.log('권한 없음');
+    } else {
+      console.log('왜그러냐');
     }
   };
+
   if (!isLoggedIn) {
     return (
       <>
@@ -214,43 +191,43 @@ const PostEdit = () => {
           <div className={styles.selectBox}>
             <div className={styles.selectTitle}>게시판 선택하기</div>
             <div>
-            <select
-              onChange={handleEMbtiChange}
-              value={selectEMbti}
-              defaultValue={data ? data.category : null}
-              onClick={handleMbtiClick}
-              className={styles.mbtiSelectE}
-              id="E"
-            >
-              <option>E게시판</option>
-              <option value="ESTJ">ESTJ</option>
-              <option value="ESTP">ESTP</option>
-              <option value="ESFJ">ESFJ</option>
-              <option value="ESFP">ESFP</option>
-              <option value="ENTJ">ENTJ</option>
-              <option value="ENTP">ENTP</option>
-              <option value="ENFJ">ENFJ</option>
-              <option value="ENFP">ENFP</option>
-            </select>
-            <select
-              onChange={handleIMbtiChange}
-              value={selectIMbti}
-              defaultValue={data ? data.category : null}
-              onClick={handleMbtiClick}
-              className={styles.mbtiSelectI}
-              id="I"
-            >
-              <option>I게시판</option>
-              <option value="ISTJ">ISTJ</option>
-              <option value="ISTP">ISTP</option>
-              <option value="ISFJ">ISFJ</option>
-              <option value="ISFP">ISFP</option>
-              <option value="INTJ">INTJ</option>
-              <option value="INTP">INTP</option>
-              <option value="INFJ">INFJ</option>
-              <option value="INFP">INFP</option>
-            </select>
-          </div>
+              <select
+                onChange={handleEMbtiChange}
+                value={selectEMbti}
+                defaultValue={data ? data.category : null}
+                onClick={handleMbtiClick}
+                className={styles.mbtiSelectE}
+                id="E"
+              >
+                <option>E게시판</option>
+                <option value="ESTJ">ESTJ</option>
+                <option value="ESTP">ESTP</option>
+                <option value="ESFJ">ESFJ</option>
+                <option value="ESFP">ESFP</option>
+                <option value="ENTJ">ENTJ</option>
+                <option value="ENTP">ENTP</option>
+                <option value="ENFJ">ENFJ</option>
+                <option value="ENFP">ENFP</option>
+              </select>
+              <select
+                onChange={handleIMbtiChange}
+                value={selectIMbti}
+                defaultValue={data ? data.category : null}
+                onClick={handleMbtiClick}
+                className={styles.mbtiSelectI}
+                id="I"
+              >
+                <option>I게시판</option>
+                <option value="ISTJ">ISTJ</option>
+                <option value="ISTP">ISTP</option>
+                <option value="ISFJ">ISFJ</option>
+                <option value="ISFP">ISFP</option>
+                <option value="INTJ">INTJ</option>
+                <option value="INTP">INTP</option>
+                <option value="INFJ">INFJ</option>
+                <option value="INFP">INFP</option>
+              </select>
+            </div>
           </div>
           <div className={styles.titleBox}>
             <input
@@ -263,22 +240,51 @@ const PostEdit = () => {
             />
           </div>
           <div className={styles.contentBox}>
-          <ReactQuill
-            ref={quillRef}
-            theme="snow"
-            placeholder="내용입력해줘"
-            value={value}
-            onChange={setValue}
-            modules={modules}
-            formats={formats}
-            className={styles.editorBox}
-          />
+            <ReactQuill
+              ref={quillRef}
+              theme="snow"
+              placeholder="내용 입력해줘"
+              value={value}
+              onChange={setValue}
+              modules={modules}
+              formats={formats}
+              className={styles.editorBox}
+            />
           </div>
 
           <button type="submit" className={styles.submitBtn}>
             수정하기
           </button>
         </form>
+
+        {/* Modal for cropping */}
+        <Modal isOpen={isModalOpen} onRequestClose={cancelCrop} contentLabel="Image Cropper">
+          <div>
+            
+            {croppedImage && (
+              <Cropper
+                src={croppedImage}
+                style={{ height: 400, width: "100%" }}
+                initialAspectRatio={16 / 9}
+                guides={false}
+                onInitialized={(instance) => setCropper(instance)}
+                viewMode={1}
+                minCropBoxHeight={10}
+                minCropBoxWidth={10}
+                background={true}
+                responsive={true}
+                autoCropArea={1}
+                checkOrientation={false}
+              />
+            )}
+             <div className={styles.cropperButtonWrapper}>
+            <button className={`${styles.cropButton} btn btn-primary`} onClick={handleCrop}>업로드</button>
+            <button className={`${styles.cancelButton} btn btn-primary`} onClick={cancelCrop}>뒤로가기</button>
+          </div>
+          </div>
+        </Modal>
+
+        <input type="file" ref={imageInputRef} style={{ display: "none" }} />
       </div>
     </>
   );
