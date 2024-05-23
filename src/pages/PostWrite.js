@@ -64,7 +64,7 @@ const PostWrite = () => {
         } catch (error) {
           console.log("Image upload failed", error);
         }
-      }, 'image/jpeg');
+      }, 'image/png');
     }
   };
 
