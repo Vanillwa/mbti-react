@@ -23,9 +23,9 @@
 .inputForm > input { width: 100%; font-size: 18px; padding: 0 7px; } 
 .reportBtn { border: none; background-color: transparent; color: #93979b; font-size: 12px; } 
 
-.toBottomBtn { position: sticky; bottom: 0; padding: 48px 0 18px; width: 100%; background: linear-gradient(360deg, rgba(35, 37, 66, 0.3) 0%, transparent 100%); } 
+.toBottomBtn { position: fixed; bottom: 100px;  padding: 48px 0 18px; width: calc(100vw - 650px); background: linear-gradient(360deg, rgba(35, 37, 66, 0.3) 0%, transparent 100%); } 
 
-.alert { color:#888; font-size: 24px; height: 100%; display: flex; align-items: center; justify-content: center; } 
+.alert { color:#888; font-size: 36px; height: 100%; display: flex; align-items: center; justify-content: center; } 
 
 .bottom { display: flex; align-items: center; padding:24px; gap:12px; } 
 
@@ -48,6 +48,12 @@
          width:100vw;
      }
   } 
+@media(max-width : 1024px){
+  .toBottomBtn{width: calc(100vw - 410px);}
+}
+@media(max-width : 768px){
+  .toBottomBtn{width: 100%; bottom: 160px;}
+}
 
 
 

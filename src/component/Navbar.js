@@ -20,7 +20,6 @@ import ProfileDropDown from "../component/ProfileDropDown";
 import sweetalert from "./sweetalert";
 import Alarm from "./Alarm";
 import home from "../svg/house.svg";
-
 const Navbar = ({ chatData, chatStatus }) => {
   const { memoUserInfo } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -29,7 +28,7 @@ const Navbar = ({ chatData, chatStatus }) => {
   const [showChat, setShowChat] = useState(false);
 
   const navigate = useNavigate();
-
+  
   const handleopenModal = async () => {
     const result = await sweetalert.question(
       "로그인이 필요한 컨텐츠입니다.",
@@ -83,6 +82,7 @@ const Navbar = ({ chatData, chatStatus }) => {
 
   return (
     <div className={styles.container}>
+      
       {/* 768px 상단 내브 */}
       <div className={styles.nav}>
         <Link to="/" className={styles.logoBox}>
@@ -95,8 +95,10 @@ const Navbar = ({ chatData, chatStatus }) => {
         </div>
       </div>
       {/*왼쪽 사이드바*/}
+      
       <div className={`${styles.item} ${styles.leftSidebar}`}>
         <div className={styles.menuItems}>
+          
           <div className={styles.rutMenu}>
             <Link to="/" className={`${styles.menu}`}>
               <img src={RUT} className={`${styles.logo}`} />
@@ -117,7 +119,6 @@ const Navbar = ({ chatData, chatStatus }) => {
             <div type="button" className={styles.span}>
               검색
             </div>
-            
           </div>
           <Link className={styles.menu} to="/post/list">
             <img className={styles.svg} src={list} />
