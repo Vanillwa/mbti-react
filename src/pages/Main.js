@@ -9,7 +9,7 @@ import styles from "../css/Main.module.css";
 
 import logo from "../images/areyout.png";
 
-import { fetchLogin, fetchLogout } from "../service/api/loginAPI"
+import { fetchLogin, fetchLogout } from "../service/api/loginAPI";
 import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import { AuthContext, useAuthContext } from "../context/AuthContext";
 import { socket } from "../service/socket/socket";
 
 function Main() {
-  console.log("rendered")
+  console.log("rendered");
   const navigate = useNavigate();
   const [capsLockFlag, setCapsLockFlag] = useState(false);
   const { login } = useAuthContext();
@@ -28,8 +28,8 @@ function Main() {
   const { isLoggedIn, userInfo } = memoUserInfo;
   const { logout } = useContext(AuthContext);
 
-  const [emailValidColor,setEmailValidColor] =useState('')
-  const [passwordValidColor,setPasswordValidColor] = useState('')
+  const [emailValidColor, setEmailValidColor] = useState("");
+  const [passwordValidColor, setPasswordValidColor] = useState("");
 
   const checkCapsLock = e => {
     let capsLock = e.getModifierState("CapsLock");
@@ -44,30 +44,29 @@ function Main() {
       password: e.target.password.value,
     };
 
-   
     const res = await fetchLogin(body);
 
-   
-    let array = ["updatePwd", "join", "findPwd", "logout", null]
+    let array = ["updatePwd", "join", "findPwd", "logout", null];
 
     if (res.message === "success") {
-
       login(res.userInfo);
       if (array.includes(location.state)) navigate("/post/list");
       else navigate(-1);
     } else if (res.message === "blocked") {
-      setEmailAlert(`${new Date(res.blockDate).toLocaleString()} 까지 차단된 계정입니다`);
+      setEmailAlert(
+        `${new Date(res.blockDate).toLocaleString()} 까지 차단된 계정입니다`
+      );
     } else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
-      setEmailValidColor('is-invalid')
+      setEmailValidColor("is-invalid");
       setPwdAlert("");
       return;
-      
+
       return;
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
-      setPasswordValidColor('is-invalid')
+      setPasswordValidColor("is-invalid");
       return;
     }
   };
@@ -75,15 +74,15 @@ function Main() {
   const noLogin = () => {
     navigate("/post/list");
   };
-  const goLogout =async()=>{
+  const goLogout = async () => {
     socket.emit("logout");
     const result = await fetchLogout();
-   
-    if (result.message === 'success') {
+
+    if (result.message === "success") {
       logout();
-      navigate("/", { state: "logout" })
+      navigate("/", { state: "logout" });
     }
-  }
+  };
   return (
     <div className={styles.body}>
       <div className={styles.mainCon}>
@@ -100,15 +99,15 @@ function Main() {
               <div className={styles.nickname}>
                 🎉{userInfo.nickname}님 어서오세요 반갑습니다.
               </div>
-              <Link to={"/memberevise"}>
-                <div className={styles.imageBox}>
-                  <img
-                    className={styles.profileImage}
-                    src={userInfo.profileImage}
-                    alt="유저 프로필사진"
-                  />{" "}
-                </div>
-              </Link>
+
+              <div className={styles.imageBox}>
+                <img
+                  className={styles.profileImage}
+                  src={userInfo.profileImage}
+                  alt="유저 프로필사진"
+                />{" "}
+              </div>
+
               <p className={styles.goodDay}>😀즐거운 하루 되세요~</p>
             </div>
           ) : (
@@ -127,7 +126,11 @@ function Main() {
                       name="email"
                       type="email"
                       placeholder="Email"
-                      className={`form-control ${emailAlert === '이메일을 다시 확인해주세요.' ? emailValidColor : emailValidColor} `}
+                      className={`form-control ${
+                        emailAlert === "이메일을 다시 확인해주세요."
+                          ? emailValidColor
+                          : emailValidColor
+                      } `}
                       required
                     />
                     <p className={styles.alert}>{emailAlert}</p>
@@ -136,7 +139,11 @@ function Main() {
                 <div>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
-                    className={`form-control ${pwdAlert === '비밀번호가 올바르지않습니다.' ? passwordValidColor : passwordValidColor} `}
+                      className={`form-control ${
+                        pwdAlert === "비밀번호가 올바르지않습니다."
+                          ? passwordValidColor
+                          : passwordValidColor
+                      } `}
                       name="password"
                       type="password"
                       placeholder="Password"
@@ -173,8 +180,11 @@ function Main() {
       </div>
       <div className={`text-center ${styles.noLoginBtn} `}>
         <Button onClick={noLogin}>게시판이동</Button>
-        {isLoggedIn ? <Button className={styles.logoutBtn} onClick={goLogout}>로그아웃</Button> : null}
-        
+        {isLoggedIn ? (
+          <Button className={styles.logoutBtn} onClick={goLogout}>
+            로그아웃
+          </Button>
+        ) : null}
       </div>
       <footer className={styles.footer}>
         <span>소개</span>
