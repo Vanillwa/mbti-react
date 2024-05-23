@@ -225,22 +225,26 @@ function MemberRevise() {
             {croppedImage && (
   <div >
     <div className="cropper-wrapper cropperBox ">
-      <Cropper
-        style={{ height: 400, width: '100%', }}
-        aspectRatio={1}
-        src={croppedImage}
-        viewMode={1}
-        guides={true}
-        minCropBoxHeight={10}
-        minCropBoxWidth={10}
-        background={true}
-        responsive={true}
-        autoCropArea={1}
-        checkOrientation={false}
-        onInitialized={(instance) => {
-          setCropper(instance);
-        }}
-      />
+    <Cropper
+              style={{ height: 450, width: '100%' }}
+              src={croppedImage}
+              viewMode={1}
+              guides={true}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              background={true}
+              responsive={true}
+              autoCropArea={0.8}  
+              checkOrientation={false}
+              onInitialized={(instance) => {
+                setCropper(instance);
+                // 크롭박스 크기 설정하는곳
+                instance.setCropBoxData({
+                  width: 200,
+                  height: 200,
+                });
+              }}
+            />
     </div>
         <div className='cropperboxbtn'>
     <button type="submit" className='btn btn-primary mt-3 uploadbtn1'>업로드</button>

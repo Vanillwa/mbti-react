@@ -27,6 +27,8 @@ function Main() {
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const { logout } = useContext(AuthContext);
+
+  const [emailValidColor,setEmailValidColor] =useState('')
   const checkCapsLock = e => {
     let capsLock = e.getModifierState("CapsLock");
     setCapsLockFlag(capsLock);
@@ -56,6 +58,7 @@ function Main() {
     } else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
       setPwdAlert("");
+      
       return;
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
