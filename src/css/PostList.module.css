@@ -82,13 +82,14 @@ a{
   align-items: center;
   width: 100%;
 }
-
 .title {
   font-size: 2vh;
   margin-bottom: 10px;
   margin-left: 2vw;
 }
-
+.userBox{
+  display: flex;
+}
 
 
 
