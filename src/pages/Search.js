@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import searchStyles from "../css/Search.module.css";
 import styles from "../css/PostList.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import  { Mousewheel } from 'swiper';
 import { Navigation } from "swiper";
 import UserDropdown from "../component/userDropdown";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -98,8 +99,9 @@ function Search() {
             <Swiper
               className={searchStyles.swiper}
               slidesPerView={6} //한번에 보여질 갯수
-              modules={[Navigation]}
+              modules={[Navigation,Mousewheel]}
               navigation={true}
+              mousewheel={true} 
               breakpoints={{
                 1600: {
                   slidesPerView: 6, // 4 slides per view on screens >= 768px
@@ -121,59 +123,59 @@ function Search() {
                 console.log("item:", item);
                 return (
                   <>
-                  <p>{item.nickname}의 검색결과</p>
-                  <SwiperSlide>
-                    <div className={searchStyles.userItem}>
-                      <div className={searchStyles.imgWrap}>
-                        <Link to={`/user/${item.userId}`}>
-                          <img
-                            src={item.profileImage ? item.profileImage : null}
-                          />
-                        </Link>
-                      </div>
+                    <p>{item.nickname}의 검색결과</p>
+                    <SwiperSlide>
+                      <div className={searchStyles.userItem}>
+                        <div className={searchStyles.imgWrap}>
+                          <Link to={`/user/${item.userId}`}>
+                            <img
+                              src={item.profileImage ? item.profileImage : null}
+                            />
+                          </Link>
+                        </div>
 
-                      <div className={searchStyles.nickname}>
-                        <div>
-                          <Dropdown className={searchStyles.dropdown}>
-                            <Dropdown.Toggle variant="" id="dropdown-basic">
-                              {item.nickname}
-                            </Dropdown.Toggle>
+                        <div className={searchStyles.nickname}>
+                          <div>
+                            <Dropdown className={searchStyles.dropdown}>
+                              <Dropdown.Toggle variant="" id="dropdown-basic">
+                                {item.nickname}
+                              </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
-                              <Dropdown.Item
-                                onClick={() => {
-                                  navigate(`/user/${item.userId}`);
-                                }}>
-                                프로필 보기
-                              </Dropdown.Item>
+                              <Dropdown.Menu>
+                                <Dropdown.Item
+                                  onClick={() => {
+                                    navigate(`/user/${item.userId}`);
+                                  }}>
+                                  프로필 보기
+                                </Dropdown.Item>
 
-                              {isLoggedIn ? (
-                                <>
-                                  <Dropdown.Item
-                                    key="requestFriend"
-                                    onClick={e => {
-                                      handleRequestFreind(e, item.userId);
-                                    }}>
-                                    친구요청
-                                  </Dropdown.Item>
+                                {isLoggedIn ? (
+                                  <>
+                                    <Dropdown.Item
+                                      key="requestFriend"
+                                      onClick={e => {
+                                        handleRequestFreind(e, item.userId);
+                                      }}>
+                                      친구요청
+                                    </Dropdown.Item>
 
-                                  <Dropdown.Item
-                                    key="requestChat"
-                                    onClick={e => {
-                                      handleRequestChat(e, item.userId);
-                                    }}>
-                                    채팅하기
-                                  </Dropdown.Item>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </Dropdown.Menu>
-                          </Dropdown>
+                                    <Dropdown.Item
+                                      key="requestChat"
+                                      onClick={e => {
+                                        handleRequestChat(e, item.userId);
+                                      }}>
+                                      채팅하기
+                                    </Dropdown.Item>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </SwiperSlide>
+                    </SwiperSlide>
                   </>
                 );
               })}
@@ -207,36 +209,35 @@ function Search() {
             );
             const imgSrc = showImg ? showImg[1] : null;
             return (
-              <div
-                className={`${styles.container} container`}
-                key={item.postId}>
-                <Link
-                  to={`/post/view?postId=${item.postId}`}
-                  className={`${styles.postWrap} row-cols-2`}>
-                  <div className={`${styles.postContent} col-8`}>
-                    <div className={styles.header}>
-                      <UserDropdown item={item.User} />
-                      <div className={`${styles.title} col-4`}>
-                        {item.title}
-                      </div>
-                    </div>
-                    <div className={`${styles.readhitBox}`}>
-                      <div className={styles.date}>{dateDisplay}</div>
-                      <div className={styles.likes}>
-                        <img src={like} /> {item.like}
-                      </div>
-                      <div className={styles.readhit}>
-                        <img src={eye} /> {item.readhit}
-                      </div>
-                    </div>
+              <div className={styles.container} key={item.postId}>
+            <Link
+              to={`/post/view?postId=${item.postId}`}
+              className={styles.postWrap}>
+              <div className={styles.postContent}>
+                <div className={styles.header}>
+                  <UserDropdown item={item.User} />
+                </div>
+                <div className={styles.title}>{item.title}</div>
+                <div className={styles.readhitBox}>
+                  <div className={styles.date}>{dateDisplay}</div>
+                  <div className={styles.likes}>
+                    <img src={like} alt="likes" /> {item.like}
                   </div>
-                  <div className={`${styles.imgBox} col-4`}>
-                    <div className={styles.thumbnail}>
-                      <img className={styles.img} src={imgSrc} />
-                    </div>
+                  <div className={styles.readhit}>
+                    <img src={eye} alt="views" /> {item.readhit}
                   </div>
-                </Link>
+                </div>
               </div>
+
+              {imgSrc && (
+                <div className={styles.imgBox}>
+                  <div className={styles.thumbnail}>
+                    <img className={styles.img} src={imgSrc} alt="thumbnail" />
+                  </div>
+                </div>
+              )}
+            </Link>
+          </div>
             );
           })}
           <Paging data={data} status={status} page={page} setPage={setPage} />
