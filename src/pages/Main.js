@@ -29,6 +29,8 @@ function Main() {
   const { logout } = useContext(AuthContext);
 
   const [emailValidColor,setEmailValidColor] =useState('')
+  const [passwordValidColor,setPasswordValidColor] = useState('')
+
   const checkCapsLock = e => {
     let capsLock = e.getModifierState("CapsLock");
     setCapsLockFlag(capsLock);
@@ -57,12 +59,15 @@ function Main() {
       setEmailAlert(`${new Date(res.blockDate).toLocaleString()} 까지 차단된 계정입니다`);
     } else if (res.message === "NoExist") {
       setEmailAlert("이메일을 다시 확인해주세요.");
+      setEmailValidColor('is-invalid')
       setPwdAlert("");
+      return;
       
       return;
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
+      setPasswordValidColor('is-invalid')
       return;
     }
   };
@@ -122,6 +127,7 @@ function Main() {
                       name="email"
                       type="email"
                       placeholder="Email"
+                      className={`form-control ${emailAlert === '이메일을 다시 확인해주세요.' ? emailValidColor : emailValidColor} `}
                       required
                     />
                     <p className={styles.alert}>{emailAlert}</p>
@@ -130,6 +136,7 @@ function Main() {
                 <div>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
+                    className={`form-control ${pwdAlert === '비밀번호가 올바르지않습니다.' ? passwordValidColor : passwordValidColor} `}
                       name="password"
                       type="password"
                       placeholder="Password"
