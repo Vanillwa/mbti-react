@@ -33,8 +33,9 @@
 .homeMenu {
   display: none;
 }
-.rutMenu {
-  display: block;
+.rutMenu .menu{
+  height: 90px;
+  border-bottom: none;
 }
 .menuItems {
   display: flex;
@@ -46,12 +47,21 @@
 }
 
 .menu {
-  padding: 12px 0;
-  margin-top: 10px;
+  padding: 18px 0;
   border-bottom: 1px solid whitesmoke;
   display: flex;
   align-items: center;
   font-size: 15px;
+  height: 60px;
+}
+.menu:hover{
+  background-color: rgb(233, 233, 233);
+  transition: all 0.5s;
+}
+.menu:hover .svg{
+  width: 28px;
+  height: auto;
+  transition: all 0.5s;
 }
 .showChat {
   display: flex;
