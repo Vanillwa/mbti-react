@@ -7,12 +7,14 @@ import { socket } from "../service/socket/socket";
 import ChatRoom from "./ChatRoom";
 import ChatList from "./ChatList";
 import {ReactComponent as ChatIcon} from "../svg/chat-dots.svg"
+import { useLocation } from "react-router";
 
 function Chat() {
+  const location = useLocation()
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-  const [roomId, setRoomId] = useState(null);
-
+  const [roomId, setRoomId] = useState(location.state?.roomId || null);
+ 
   socket.emit("joinList")
 
   const { data: listData, status: listStatus, refetch: listRefetch } = useQuery(

@@ -3,30 +3,31 @@
 .chatForm { position: relative; overflow-y: scroll; height: 100%; display: flex; flex-direction: column; } 
 .chatForm::-webkit-scrollbar { width: 4px; } 
 .chatForm::-webkit-scrollbar-thumb { background-color: gray; border-radius: 12px 12px 12px 12px; } 
-.chatFormInner {height: 100%; padding:0 12px; } 
-.message { display: flex; padding: 3px 0; font-size: 18px; gap:8px; } 
-.mine { display: flex; justify-content: end; align-items: end; } 
+.chatFormInner { height: 100%; padding:12px 12px 0; } 
+.chat { display: flex; padding: 8px 0 0; font-size: 18px; gap:8px; } 
+.mine { justify-content: end; align-items: end; padding: 4px 0 0;} 
 .isRead { font-size:12px; } 
-.mineContent { display: flex; justify-content: end; max-width: 150px; } 
-.myMessageInner { padding: 5px 12px; background-color: #F9EB54; color: black; border-radius: 5px; text-align: start; word-break: break-all; } 
-.messageInner { display: flex; justify-content: center; align-items: center; } 
-.messageContent { display: flex; flex-direction: column; max-width: 150px; gap:4px; } 
-.messageNickname { font-size:16px; text-align: start; } 
-.messageMsg { max-width: 150px; background-color: #eee; padding: 5px 12px; color: black; border-radius: 5px; text-align: start; word-break: break-all; } 
-.messageMsg:first-of-type { margin-left:48px; } 
-.messageMsg:not(:first-of-type) { } 
-.profileBox { width: 40px; height: 40px; overflow: hidden; border-radius: 50%; display: flex; align-items: center; } 
-.userImg { width:100%; height: auto; } 
-.inputForm { width: 100%; display: flex; justify-content: center; gap: 5px;} 
+.content { display: flex; width: auto; max-width: 240px; padding: 5px 12px; background-color: #F9EB54; color: black; border-radius: 5px; text-align: start; word-break: break-all;} 
 
+.continueChat{padding:4px 0 0;}
+.continueContent{background-color: #eee; padding: 5px 12px; color: black; border-radius: 5px; text-align: start; word-break: break-all;}
+
+.yourChat .right{display: flex; flex-flow: column;}
+.yourNickname { font-size:16px; text-align: start; } 
+.yourContent {width: max-content; background-color: #eee; padding: 5px 12px; color: black; border-radius: 5px; text-align: start; word-break: break-all; } 
+
+.profileBox { width: 40px; height: 40px; overflow: hidden; border-radius: 50%; display: flex; align-items: center; } 
+.userImg { width:100%; height: auto; }
+
+.inputForm { width: 100%; display: flex; justify-content: center; gap: 5px; } 
 .inputForm > input { width: 100%; font-size: 18px; padding: 0 7px; } 
 .reportBtn { border: none; background-color: transparent; color: #93979b; font-size: 12px; } 
 
-.toBottomBtn { position: sticky; bottom: 0; padding: 48px 0 18px; width: 100%; background: linear-gradient(360deg, rgba(35, 37, 66, 0.3) 0%, transparent 100%); }
+.toBottomBtn { position: sticky; bottom: 0; padding: 48px 0 18px; width: 100%; background: linear-gradient(360deg, rgba(35, 37, 66, 0.3) 0%, transparent 100%); } 
 
-.alert{color:#888; font-size: 24px; height: 100%; display: flex; align-items: center; justify-content: center;}
+.alert { color:#888; font-size: 24px; height: 100%; display: flex; align-items: center; justify-content: center; } 
 
-.bottom{display: flex; align-items: center; padding:24px; gap:12px;}
+.bottom { display: flex; align-items: center; padding:24px; gap:12px; } 
 
 
 
