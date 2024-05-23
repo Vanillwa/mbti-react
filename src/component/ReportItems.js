@@ -38,7 +38,7 @@ function ReportItems({
   const handleClose1 = () => setShow1(false);
   const handleClose2 = () => setShow2(false);
 
-  console.log("chatRoom",chatRoomData)
+  console.log("chatRoom", chatRoomData);
   const completePostMutate = useMutation(reportId => {
     return updatePostReport(reportId);
   });
@@ -424,7 +424,7 @@ function ReportItems({
                     </div>
                   </div>
                 </Accordion.Header>
-                <Accordion.Body>
+                <Accordion.Body className={styles.AccordionBody}>
                   <section className={chatRoomStyles.section}>
                     <div className={chatRoomStyles.chatForm}>
                       <div className={chatRoomStyles.chatFormInner}>
@@ -434,23 +434,27 @@ function ReportItems({
                           </div>
                         ) : (
                           item.chat.map((message, i) => {
-                            
-                            
-
                             if (message.userId === item.reportUser.userId) {
                               return (
                                 <div
                                   key={message.messageId}
                                   className={`${chatRoomStyles.chat} ${chatRoomStyles.mine}`}>
-                                  <div className={chatRoomStyles.isRead}>
-                                    {message.isRead === 1 ? "" : "안읽음"}
+                                  <div >
+                                    <div  className={chatRoomStyles.yourNickname}>{message.nickname}</div>
+
+                                    <div className={chatRoomStyles.content}>
+                                      {message.message}
+                                    </div>
                                   </div>
-                                  <div className={chatRoomStyles.content}>
-                                    {message.message}
+                                  <div className={chatRoomStyles.profileBox}>
+                                    <img
+                                    className={chatRoomStyles.userImg}
+                                      src={message.profileImage}
+                                      alt="profile"></img>
                                   </div>
                                 </div>
                               );
-                            }  else {
+                            } else {
                               return (
                                 <div
                                   key={message.messageId}

@@ -61,6 +61,7 @@ function ReportList() {
 
   return (
     <div className={styles.container}>
+      <h2 className={styles.title}>신고목록</h2>
       <Form onChange={handleRadioOnChange}>
         <div className={`mb-3 radio ${styles.radioForm}`}>
           <Form.Check
@@ -97,7 +98,6 @@ function ReportList() {
         </div>
       </Form>
 
-      <h2 className={styles.title}>신고목록</h2>
       <div className={styles.reportBox}>
         <div className={styles.reportList}>
           <ReportItems

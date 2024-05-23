@@ -17,7 +17,8 @@ ul {
     justify-content: center;
     align-items: center;
     width: 100%;
-    
+    padding-top: 48px;
+
 }
 
 .radioForm {
@@ -38,7 +39,7 @@ ul {
 
 .title {
     font-weight: bold;
-    margin-bottom: 7vh;
+    margin-bottom: 24px;
 }
 
 .reportBox {
@@ -47,18 +48,21 @@ ul {
     justify-content: center;
 
 }
-.Accordion{
-    border:2px solid rgb(154, 225, 227); 
+
+.Accordion {
+    border: 2px solid rgb(154, 225, 227);
     border-radius: 5px;
-    
+
+}
+
+.AccordionBody {
+    height:600px;
+    margin-bottom:30px;
 }
 
 .reportList {
-    
-    
-   width:70vw;
-    margin-bottom:12px;
-    
+    width: 70vw;
+    margin-bottom: 12px;
 }
 
 .reportContent {
@@ -68,15 +72,10 @@ ul {
     text-align: start;
     font-size: 18px;
     width: 100%;
-    height:auto;
-    padding:12px;   
+    height: auto;
+    padding: 12px;
     flex-wrap: wrap;
 }
-
-
-
-
-
 
 .postTitle {
     font-family: 'KCC-Hanbit';
@@ -104,11 +103,12 @@ ul {
 .reportBtn {
     font-family: 'KCC-Hanbit';
     width: max-content;
-    padding:5px 7px;
+    padding: 5px 7px;
     border: 0px;
     border-radius: 3px;
     background-color: cornflowerblue;
     color: white;
+   
 }
 
 /* 모달 */
@@ -133,23 +133,40 @@ ul {
 }
 
 @media screen and (max-width:1024px) {
-   .reportList{
-    width:80vw;
-   }
-   .blockModalBtn{
-    width:50px;
-   }
+    .reportList {
+        width: 80vw;
+    }
+
+    .blockModalBtn {
+        width: 50px;
+    }
 }
 
 @media screen and (max-width:768px) {
-  
-    .reportId{width:50%; text-align: start;}
-    .reportWriter{width:50%; text-align: start;}
-    .reportPerson{width:50%;  text-align: start;}
-    .reportType{width:50%;  text-align: start;}
- }
- @media screen and (max-width:450px){
-    .reportList{
-        width:100vw;
+
+    .reportId {
+        width: 50%;
+        text-align: start;
     }
- } 
+
+    .reportWriter {
+        width: 50%;
+        text-align: start;
+    }
+
+    .reportPerson {
+        width: 50%;
+        text-align: start;
+    }
+
+    .reportType {
+        width: 50%;
+        text-align: start;
+    }
+}
+
+@media screen and (max-width:450px) {
+    .reportList {
+        width: 100vw;
+    }
+}
