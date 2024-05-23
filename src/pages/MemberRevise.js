@@ -4,7 +4,7 @@ import 'cropperjs/dist/cropper.css';
 import { Cropper } from 'react-cropper';
 import logo from '../images/areyout.png';
 import { Link, useNavigate } from "react-router-dom";
-import '../css/MemberRevise.css';
+import  styles  from '../css/MemberRevise.module.css';
 import sweetalert from "../component/sweetalert";
 import Footer from '../component/Footer';
 import { useAuthContext } from "../context/AuthContext";
@@ -79,7 +79,7 @@ function MemberRevise() {
           console.log('Image upload failed', error);
           sweetalert.error('이미지 업로드 실패', '이미지 업로드 중 문제가 발생했습니다. 다시 시도해 주세요.', '확인');
         }
-      }, 'image/jpeg');
+      }, 'image/png');
     }
   };
 
@@ -209,22 +209,25 @@ function MemberRevise() {
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className="logo" />
       </Link>
-      <div className="card">
-        <div className="card-body">
+      <div className={styles.card}>
+        <div className={styles.cardbody}>
           <form onSubmit={handleCrop}>
-            <div className="text-center mb-5">
-              <img src={imgUrl} alt="회원사진" className="user-image" />
-              <h2 className="fw-bold" style={{ fontSize: '40px', color: "#0866ff" }}>프로필 편집</h2>
+            <div className={styles.imageWrap}>
+            <div className={`text-center mb-5 ${styles.imageBox}`}>
+           
+              <img src={imgUrl} alt="회원사진" className={styles.userImage} />
+             
             </div>
-            <div className='buttonWrap'>
+            </div>
+            <div className={styles.buttonWrap}>
               <input type="file" hidden="hidden" onChange={handleImageChange} ref={imageRef} />
-              <button type="button" id="custom-button" className='buttonsim' onClick={handleButtonOnClick}><strong>파일 선택</strong></button>
-              <button type='button' onClick={imageDeleteHandler} className='buttonjun'><strong>삭제</strong></button>
+              <button type="button" id="custom-button" className={styles.buttonsim} onClick={handleButtonOnClick}><strong>파일 선택</strong></button>
+              <button type='button' onClick={imageDeleteHandler} className={styles.buttonjun}><strong>삭제</strong></button>
             </div>
 
             {croppedImage && (
   <div >
-    <div className="cropper-wrapper cropperBox ">
+    <div className={`cropper-wrapper ${styles.cropperBox}`} >
     <Cropper
               style={{ height: 450, width: '100%' }}
               src={croppedImage}
@@ -246,9 +249,9 @@ function MemberRevise() {
               }}
             />
     </div>
-        <div className='cropperboxbtn'>
-    <button type="submit" className='btn btn-primary mt-3 uploadbtn1'>업로드</button>
-    <button type="button" className='btn btn-secondary mt-3 ml-2 uploadbtn2' onClick={cancel}> 뒤로가기</button> 
+        <div className={styles.cropperboxbtn}>
+    <button type="submit" className={`btn btn-primary mt-3 ${styles.uploadbtn1}`}>업로드</button>
+    <button type="button" className={`btn btn-secondary mt-3 ml-2 ${styles.uploadbtn2}`} onClick={cancel}> 뒤로가기</button> 
   </div>
   </div>
 )}
@@ -258,7 +261,7 @@ function MemberRevise() {
             <div className="col-12">
               <label htmlFor="email" className="form-label">이메일</label>
               <div className='d-flex gap-2'>
-                <input type="text" className="form-control form-control-control-email emailinput" name="email" id="email" placeholder={userInfo.email} disabled />
+                <input type="text" className={`form-control form-control-control-email ${styles.emailinput}`} name="email" id="email" placeholder={userInfo.email} disabled />
               </div>
             </div>
 
@@ -284,7 +287,7 @@ function MemberRevise() {
             <div>
               <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
               <div className="d-flex gap-2">
-                <input type="password" className={`form-control ${passwordBtn === '확인' ? passwordValidColor : passwordValidColor} `} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
+                <input type="password" className={`form-control ${styles.passwordBtn1}${passwordBtn === '확인' ? passwordValidColor : passwordValidColor} `} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
                 <button
                   className='btn btn-sm btn-primary'
                   type='button'
@@ -293,7 +296,7 @@ function MemberRevise() {
                   {passwordBtn}
                 </button>
               </div>
-              <input type="password" className={`form-control passwordBtn2 ${passwordBtn === '수정' ? 'hidden' : passwordValidColor}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} />
+              <input type="password" className={`form-control ${styles.passwordBtn2} ${passwordBtn === '수정' ? 'hidden' : passwordValidColor}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} />
               <p style={{ color: pwMessage === "비밀번호가 일치하지 않습니다" || pwMessage === "비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요." ? "red" : "green" }}>{pwMessage}</p>
             </div>
 
@@ -327,7 +330,7 @@ function MemberRevise() {
                   <option value="ESFP">ESFP</option>
                 </select>
               </div>
-              <div className='buttondong d-flex gap-2' style={{ paddingTop: '10px' }}>
+              <div className={`${styles.buttondong} d-flex gap-2`} >
                 <button
                   type="button"
                   className='btn btn-sm btn-primary'
