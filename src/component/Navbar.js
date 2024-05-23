@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../css/Nav.module.css";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import EListDropdown from "./EListDropdown";
 import IListDropdown from "./IListDropdown";
 
+import search from "../svg/search.svg";
 import User from "../svg/people-fill.svg";
 import RUT from "../images/areyout.png";
 import write from "../svg/pencil-square.svg";
@@ -80,16 +81,25 @@ const Navbar = ({ chatData, chatStatus }) => {
     return <h1>에러</h1>;
   }
 
-  console.log(chatData);
-
   return (
     <div className={styles.container}>
+      {/* 768px 상단 내브 */}
+      <div className={styles.nav}>
+        <Link to="/" className={styles.logoBox}>
+          <img className={styles.topLogo} src={RUT} />
+        </Link>
+        <div className={styles.navbarSearch}>
+          <form onSubmit={handleSearch}>
+            <input type="text" placeholder="검색" name="keyword" />
+          </form>
+        </div>
+      </div>
       {/*왼쪽 사이드바*/}
       <div className={`${styles.item} ${styles.leftSidebar}`}>
         <div className={styles.menuItems}>
           <div className={styles.rutMenu}>
             <Link to="/" className={`${styles.menu}`}>
-              <img src={RUT} className={styles.logo}/>
+              <img src={RUT} className={`${styles.logo}`} />
             </Link>
           </div>
           <div className={styles.homeMenu}>
@@ -102,7 +112,13 @@ const Navbar = ({ chatData, chatStatus }) => {
           <input type="text" placeholder="검색" name="keyword"  />
           </form>
         </div> */}
-
+          <div className={styles.menu} onClick=''>
+            <img src={search} className={styles.svg} />
+            <div type="button" className={styles.span}>
+              검색
+            </div>
+            
+          </div>
           <Link className={styles.menu} to="/post/list">
             <img className={styles.svg} src={list} />
             <div className={styles.span}>모두의공간</div>
@@ -184,22 +200,21 @@ const Navbar = ({ chatData, chatStatus }) => {
           ) : (
             ""
           )}
-          <div className={styles.menu}>
-            <button
-              className={styles.profileBtn}
-              type="button"
-              onClick={compareLogin}
-            >
-              <div className={styles.span}>프로필</div>
-              {isLoggedIn ? (
+          <div onClick={compareLogin} className={styles.menu}>
+            {isLoggedIn ? (
+              <>
                 <img
                   src={userInfo.profileImage}
                   className={`${styles.userImg} ${styles.svg}`}
                 />
-              ) : (
-                <img src={notImg} alt="회원사진" className={styles.userImg} />
-              )}
-            </button>
+                <div className={styles.span}>프로필</div>
+              </>
+            ) : (
+              <>
+                <img src={notImg} alt="회원사진" className={styles.svg} />
+                <div className={styles.span}>로그인 해주세요.</div>
+              </>
+            )}
             {showDropdown && <ProfileDropDown />}
           </div>
         </div>
