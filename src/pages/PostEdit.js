@@ -60,6 +60,8 @@ const PostEdit = () => {
         reader.onload = () => {
           setCroppedImage(reader.result);
           setIsModalOpen(true);
+          // Clear the input value to allow re-selection of the same file
+          input.value = '';
         };
         reader.readAsDataURL(file);
       }
@@ -260,33 +262,32 @@ const PostEdit = () => {
         {/* Modal for cropping */}
         <Modal isOpen={isModalOpen} onRequestClose={cancelCrop} contentLabel="Image Cropper">
           <div>
-            
             {croppedImage && (
               <Cropper
-              style={{ height: 450, width: '100%' }}
-              src={croppedImage}
-              viewMode={1}
-              guides={true}
-              minCropBoxHeight={10}
-              minCropBoxWidth={10}
-              background={true}
-              responsive={true}
-              autoCropArea={0.8}  
-              checkOrientation={false}
-              onInitialized={(instance) => {
-                setCropper(instance);
-                // 크롭박스 크기 설정하는곳
-                instance.setCropBoxData({
-                  width: 200,
-                  height: 200,
-                });
-              }}
-            />
+                style={{ height: 450, width: '100%' }}
+                src={croppedImage}
+                viewMode={1}
+                guides={true}
+                minCropBoxHeight={10}
+                minCropBoxWidth={10}
+                background={true}
+                responsive={true}
+                autoCropArea={0.8}
+                checkOrientation={false}
+                onInitialized={(instance) => {
+                  setCropper(instance);
+                  // 크롭박스 크기 설정하는곳
+                  instance.setCropBoxData({
+                    width: 200,
+                    height: 200,
+                  });
+                }}
+              />
             )}
-             <div className={styles.cropperButtonWrapper}>
-            <button className={`${styles.cropButton} btn btn-primary`} onClick={handleCrop}>업로드</button>
-            <button className={`${styles.cancelButton} btn btn-primary`} onClick={cancelCrop}>뒤로가기</button>
-          </div>
+            <div className={styles.cropperButtonWrapper}>
+              <button className={`${styles.cropButton} btn btn-primary`} onClick={handleCrop}>업로드</button>
+              <button className={`${styles.cancelButton} btn btn-primary`} onClick={cancelCrop}>뒤로가기</button>
+            </div>
           </div>
         </Modal>
 

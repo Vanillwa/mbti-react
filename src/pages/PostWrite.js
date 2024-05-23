@@ -27,9 +27,6 @@ const PostWrite = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const imageInputRef = useRef(null);
 
-
-
-    
   const imageHandler = () => {
     const input = imageInputRef.current;
     input.setAttribute("type", "file");
@@ -42,7 +39,8 @@ const PostWrite = () => {
         reader.onload = () => {
           setCroppedImage(reader.result);
           setIsModalOpen(true);
-      
+          // Clear the input value to allow re-selection of the same file
+          input.value = '';
         };
         reader.readAsDataURL(file);
       }
