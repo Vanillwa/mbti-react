@@ -5,13 +5,10 @@ import UserDropdown from "./userDropdown";
 import like from "../svg/like.svg";
 import eye from "../svg/eye.svg";
 
-
 const PostItems = ({ data, status }) => {
-
-  
   return (
     <>
-      {data.list.map((item) => {
+      {data.list.map(item => {
         const createdAt = new Date(item.createdAt);
         const now = new Date();
         const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -34,10 +31,12 @@ const PostItems = ({ data, status }) => {
           /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
         );
         const imgSrc = showImg ? showImg[1] : null;
-        
+
         return (
           <div className={styles.container} key={item.postId}>
-            <Link to={`/post/view?postId=${item.postId}`} className={styles.postWrap}>
+            <Link
+              to={`/post/view?postId=${item.postId}`}
+              className={styles.postWrap}>
               <div className={styles.postContent}>
                 <div className={styles.header}>
                   <UserDropdown item={item.User} />
@@ -53,7 +52,7 @@ const PostItems = ({ data, status }) => {
                   </div>
                 </div>
               </div>
-              
+
               {imgSrc && (
                 <div className={styles.imgBox}>
                   <div className={styles.thumbnail}>
@@ -61,7 +60,6 @@ const PostItems = ({ data, status }) => {
                   </div>
                 </div>
               )}
-              
             </Link>
           </div>
         );

@@ -148,10 +148,10 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
         {data.result.map(item => {
           return (
             <div className={` row ${styles.userinfo}`} key={item.userId}>
-              <span className="col-2">유저ID: {item.userId}</span>
-              <span className="col-4">이메일: {item.email}</span>
-              <span className="col-3"> 닉네임: {item.nickname}</span>
-              <span className="col-2">상태: {item.status}</span>
+              <span className={`col-2 ${styles.userId}`}>유저ID: {item.userId}</span>
+              <span className={`col-4 ${styles.userEmail}` }>이메일: {item.email}</span>
+              <span className={`col-3 ${styles.userNickname}`}> 닉네임: {item.nickname}</span>
+              <span className={`col-2 ${styles.userStatus}`}>상태: {item.status}</span>
 
               {item.status === "blocked" ? (
                 <button

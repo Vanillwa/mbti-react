@@ -313,12 +313,12 @@ function ReportItems({
         </Modal.Footer>
       </Modal>
 
-      <Accordion>
+      <Accordion >
         {type === "post" && postData.list.length > 0 ? (
           postData.list.map(item => {
             return (
-              <Accordion.Item eventKey={item.reportId} key={item.reportId}>
-                <Accordion.Header>
+              <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
+                <Accordion.Header >
                   <div className="container">
                     <div className={`row  ${styles.reportContent}`}>
                       <span className={`col-3 ${styles.reportId}`}>
@@ -353,7 +353,7 @@ function ReportItems({
         ) : type === "comment" && commentData.list.length > 0 ? (
           commentData.list.map(item => {
             return (
-              <Accordion.Item eventKey={item.reportId} key={item.reportId}>
+              <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
                     <div className={`row   ${styles.reportContent}`}>
@@ -391,7 +391,7 @@ function ReportItems({
           chatRoomData.list.map(item => {
             console.log(chatRoomData.list);
             return (
-              <Accordion.Item eventKey={item.reportId} key={item.reportId}>
+              <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
                     <div className={`row  ${chatRoomStyles.reportContent}`}>
