@@ -263,19 +263,25 @@ const PostEdit = () => {
             
             {croppedImage && (
               <Cropper
-                src={croppedImage}
-                style={{ height: 400, width: "100%" }}
-                initialAspectRatio={16 / 9}
-                guides={false}
-                onInitialized={(instance) => setCropper(instance)}
-                viewMode={1}
-                minCropBoxHeight={10}
-                minCropBoxWidth={10}
-                background={true}
-                responsive={true}
-                autoCropArea={1}
-                checkOrientation={false}
-              />
+              style={{ height: 450, width: '100%' }}
+              src={croppedImage}
+              viewMode={1}
+              guides={true}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              background={true}
+              responsive={true}
+              autoCropArea={0.8}  
+              checkOrientation={false}
+              onInitialized={(instance) => {
+                setCropper(instance);
+                // 크롭박스 크기 설정하는곳
+                instance.setCropBoxData({
+                  width: 200,
+                  height: 200,
+                });
+              }}
+            />
             )}
              <div className={styles.cropperButtonWrapper}>
             <button className={`${styles.cropButton} btn btn-primary`} onClick={handleCrop}>업로드</button>
