@@ -38,6 +38,7 @@ function ReportItems({
   const handleClose1 = () => setShow1(false);
   const handleClose2 = () => setShow2(false);
 
+  console.log("chatRoom", chatRoomData);
   const completePostMutate = useMutation(reportId => {
     return updatePostReport(reportId);
   });
@@ -313,12 +314,15 @@ function ReportItems({
         </Modal.Footer>
       </Modal>
 
-      <Accordion >
+      <Accordion>
         {type === "post" && postData.list.length > 0 ? (
           postData.list.map(item => {
             return (
-              <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
-                <Accordion.Header >
+              <Accordion.Item
+                className={styles.Accordion}
+                eventKey={item.reportId}
+                key={item.reportId}>
+                <Accordion.Header>
                   <div className="container">
                     <div className={`  ${styles.reportContent}`}>
                       <span className={` ${styles.reportId}`}>
@@ -330,7 +334,9 @@ function ReportItems({
                       <span className={` ${styles.reportPerson}`}>
                         신고자:{item.User?.nickname}
                       </span>
-                      <span className={`${styles.reportType}`}>신고유형:{item.type}</span>
+                      <span className={`${styles.reportType}`}>
+                        신고유형:{item.type}
+                      </span>
                     </div>
                   </div>
                 </Accordion.Header>
@@ -353,7 +359,10 @@ function ReportItems({
         ) : type === "comment" && commentData.list.length > 0 ? (
           commentData.list.map(item => {
             return (
-              <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
+              <Accordion.Item
+                className={styles.Accordion}
+                eventKey={item.reportId}
+                key={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
                     <div className={`  ${styles.reportContent}`}>
@@ -366,7 +375,9 @@ function ReportItems({
                       <span className={` ${styles.reportPerson}`}>
                         신고자:{item.User.nickname}
                       </span>
-                      <span className={` ${styles.reportType}`}>신고유형:{item.type}</span>
+                      <span className={` ${styles.reportType}`}>
+                        신고유형:{item.type}
+                      </span>
                     </div>
                   </div>
                 </Accordion.Header>
@@ -389,9 +400,12 @@ function ReportItems({
           })
         ) : type === "chat" && chatRoomData.list.length > 0 ? (
           chatRoomData.list.map(item => {
-            console.log(chatRoomData.list);
+            console.log(item);
             return (
-              <Accordion.Item className={styles.Accordion} eventKey={item.reportId} key={item.reportId}>
+              <Accordion.Item
+                className={styles.Accordion}
+                eventKey={item.reportId}
+                key={item.reportId}>
                 <Accordion.Header>
                   <div className="container">
                     <div className={`  ${styles.reportContent}`}>
@@ -404,54 +418,71 @@ function ReportItems({
                       <span className={` ${styles.reportPerson}`}>
                         피신고자:{item.targetUser.nickname}
                       </span>
-                      <span className={`${styles.reportType}`}>신고유형:{item.type}</span>
+                      <span className={`${styles.reportType}`}>
+                        신고유형:{item.type}
+                      </span>
                     </div>
                   </div>
                 </Accordion.Header>
-                <Accordion.Body>
-                  <div
-                    className={chatRoomStyles.chatForm}
-                    style={{ height: "500px" }}>
-                    {item.chat.map((message, i) => {
-                      if (item.reportUser.userId === message.userId) {
-                        return (
-                          <div
-                            key={message.messageId}
-                            className={`${chatRoomStyles.message} ${chatRoomStyles.mine}`}>
-                            <div className={chatRoomStyles.mineContent}>
-                              <div className={chatRoomStyles.myMessageInner}>
-                                {message.message}
-                              </div>
-                            </div>
+                <Accordion.Body className={styles.AccordionBody}>
+                  <section className={chatRoomStyles.section}>
+                    <div className={chatRoomStyles.chatForm}>
+                      <div className={chatRoomStyles.chatFormInner}>
+                        {item.chat.length === 0 ? (
+                          <div className={chatRoomStyles.alert}>
+                            아직 채팅이 없습니다.
                           </div>
-                        );
-                      } else {
-                        return (
-                          <div
-                            key={message.messageId}
-                            className={`${chatRoomStyles.message}`}>
-                            <div className={chatRoomStyles.profileBox}>
-                              <img
-                                className={chatRoomStyles.userImg}
-                                src={message.profileImage}
-                                alt="profile"
-                              />
-                            </div>
-                            <div className={chatRoomStyles.messageInner}>
-                              <div className={chatRoomStyles.messageContent}>
-                                <div className={chatRoomStyles.messageNickname}>
-                                  {message.nickname}
+                        ) : (
+                          item.chat.map((message, i) => {
+                            if (message.userId === item.reportUser.userId) {
+                              return (
+                                <div
+                                  key={message.messageId}
+                                  className={`${chatRoomStyles.chat} ${chatRoomStyles.mine}`}>
+                                  <div >
+                                    <div  className={chatRoomStyles.yourNickname}>{message.nickname}</div>
+
+                                    <div className={chatRoomStyles.content}>
+                                      {message.message}
+                                    </div>
+                                  </div>
+                                  <div className={chatRoomStyles.profileBox}>
+                                    <img
+                                    className={chatRoomStyles.userImg}
+                                      src={message.profileImage}
+                                      alt="profile"></img>
+                                  </div>
                                 </div>
-                                <div className={chatRoomStyles.messageMsg}>
-                                  {message.message}
+                              );
+                            } else {
+                              return (
+                                <div
+                                  key={message.messageId}
+                                  className={`${chatRoomStyles.chat}`}>
+                                  <div className={chatRoomStyles.profileBox}>
+                                    <img
+                                      className={chatRoomStyles.userImg}
+                                      src={message.profileImage}
+                                      alt="profile"
+                                    />
+                                  </div>
+                                  <div className={chatRoomStyles.right}>
+                                    <div
+                                      className={chatRoomStyles.yourNickname}>
+                                      {message.nickname}
+                                    </div>
+                                    <div className={chatRoomStyles.yourContent}>
+                                      {message.message}
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      }
-                    })}
-                  </div>
+                              );
+                            }
+                          })
+                        )}
+                      </div>
+                    </div>
+                  </section>
                   {/* <div className={styles.postContent}>
                     <ContentComponent content={item.Post.content} />
                   </div> */}

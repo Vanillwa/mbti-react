@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Autoplay, Navigation, Pagination } from "swiper";
+import { Autoplay, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -29,10 +29,10 @@ function MainImageSlider() {
   return (
     <>
       <Swiper
-        navigation={true}
+        
         className={styles.swiper}
         slidesPerView={1} //한번에 보여질 갯수
-        modules={[Autoplay, Navigation, Pagination]}
+        modules={[Autoplay, Pagination]}
         autoplay={{ delay: 2500 }} //자동슬라이드
         loop={true} //무한반복
         pagination={{ clickable: true }}>

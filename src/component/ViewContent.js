@@ -136,15 +136,8 @@ function ViewContent() {
 
         <div className={styles.editBox}></div>
         <div className={styles.header}>
-          <div className={styles.nickname}>
-            <img
-              className={styles.userImg}
-              src={data.User.profileImage}
-            />
-            {data.User.nickname}
-          </div>
           <div className={styles.title}>{data.title}</div>
-          <div className={styles.date}>{dateDisplay}</div>
+          
         </div>
         <div className={styles.main}>
           <div className={styles.content}>
@@ -161,6 +154,15 @@ function ViewContent() {
             </div>
           </div>
         </div>
+        <div className={styles.nickname}>
+            <img
+              className={styles.userImg}
+              src={data.User.profileImage}
+            />
+            {data.User.nickname}
+           
+          </div>
+          <div className={styles.date}>{dateDisplay}</div>
       </div>
     </>
   );
