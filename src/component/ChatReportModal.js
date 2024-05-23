@@ -82,7 +82,7 @@ function ChatReportModal({ roomId }) {
               type="button"
               variant="info"
               onClick={handleShow}>
-                <PiSirenFill className={styles.svg} />
+              <PiSirenFill style={{fontSize:'24px'}} />
             </div>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
