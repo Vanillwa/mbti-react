@@ -84,18 +84,27 @@ function ChatRoom({ roomId, listRefetch }) {
   useEffect(() => {
     const handleReceiveMessage = newData => {
       setChat(prevChat => [...prevChat, newData]);
+      listRefetch();
     };
 
     const handleUserJoined = newData => {
       setChat(newData);
     };
 
+    const handleNotAvailable = (newData)=>{
+      if(newData.targetId === userInfo.userId){
+        alert("채팅이 불가능한 상태입니다.")
+      }
+    }
+
     socket.on("sendMessage", handleReceiveMessage);
     socket.on("userJoined", handleUserJoined);
+    socket.on("notAvailable", handleNotAvailable)
     return () => {
       socket.emit("leaveRoom", roomId);
       socket.off("sendMessage", handleReceiveMessage);
       socket.off("userJoined", handleUserJoined);
+      socket.off("notAvailable", handleNotAvailable)
     };
   }, []);
 
