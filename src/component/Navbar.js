@@ -79,7 +79,6 @@ const Navbar = ({ chatData, chatStatus }) => {
 
   return (
     <div className={styles.container}>
-      
       {/* 768px 상단 내브 */}
       <div className={styles.nav}>
         <Link to="/" className={styles.logoBox}>
