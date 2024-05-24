@@ -1,6 +1,7 @@
-.listInner { width: 100%; } 
+.listInner { width: 100%; height: 100%; } 
 
-.itemWrap { display: flex; flex-direction: column; } 
+.itemWrap { display: flex; flex-direction: column; height: 100%; }
+.noList{display: flex; font-size: 24px; justify-content: center; align-items: center; height: 100%; color:#888;}
 
 .item { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid lightgray; padding: 12px; } 
 
