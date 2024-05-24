@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../css/postView.module.css";
+import styles from "../css/postViewComment.module.css";
 
 import {
   Link,
@@ -21,7 +21,8 @@ import {
 
 import Paging from "../component/Paging";
 import CommentReportModal from "./CommentReportModal";
-import { Form } from "react-bootstrap";
+import { Dropdown, Form } from "react-bootstrap";
+import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
 
 function ViewComment() {
   const queryClient = new QueryClient();
@@ -147,11 +148,86 @@ function ViewComment() {
     );
   }
 
-  console.log(data);
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a href="" ref={ref} onClick={(e) => { e.preventDefault(); onClick(e); }}>
+      {children}
+    </a>
+  ));
 
   return (
     <div className={styles.container}>
-      <div>
+      <div className={styles.top}>
+        <span>댓글</span>
+        {data.commentList?.length == 0 ? null : (
+          <Form className={styles.orderBox} onChange={handleOrderChange}>
+            <Form.Group controlId="orderSelect">
+              <Form.Control as="select" value={order}>
+                <option value="desc">최신순</option>
+                <option value="asc">오래된순</option>
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        )}
+      </div>
+      <div className={styles.list}>
+        {data.commentList.map((item) => {
+          return item.status == "ok" ? (
+            <div key={item.commentId} className={styles.commentBox}>
+              <div className={styles.commentUserInfo}>
+                <div className={styles.commentProfileImageWrap}>
+                  <img src={item.User.profileImage} alt="" />
+                </div>
+                <div className={styles.commentNickname}>{item.User.nickname}</div>
+              </div>
+
+              {editingCommentId === item.commentId ? (
+                <form
+                  className={styles.editCommentForm}
+                  onSubmit={(event) => handleEditSubmit(event, item.commentId)}
+                >
+                  <input
+                    className={styles.editInput}
+                    value={editingContent}
+                    onChange={(e) => setEditingContent(e.target.value)}
+                  />
+                  <button className={styles.editBtn}>완료</button>
+                </form>
+              ) : (
+                <>
+                  <div className={styles.commentContent}>{item.content}</div>
+                  <div className={styles.commentRight}>
+                    <div className={styles.commentDate}>{new Date(item.createdAt).toLocaleDateString()}</div>
+                    {isLoggedIn ? <Dropdown >
+                      <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                        <ThreeDots />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu >
+                        {userInfo.userId != item.userId ? <Dropdown.Item eventKey="1"><CommentReportModal commentId={item.commentId} /></Dropdown.Item> : null}
+                        {userInfo?.userId == item.userId && isLoggedIn ? (
+                          <>
+                            <Dropdown.Item eventKey="2" onClick={() => handleEditClick(item.commentId, item.content)}>수정</Dropdown.Item>
+                            <Dropdown.Item eventKey="3" onClick={() => handleCommentDelete(item.commentId)}>
+                              삭제
+                            </Dropdown.Item>
+                          </>
+                        ) : null}
+                      </Dropdown.Menu>
+                    </Dropdown> : null}
+                  </div>
+                </>
+              )}
+            </div>
+          ) : item.status == "deleted" ? (
+            <div className={styles.commentAlert}>삭제된 댓글입니다.</div>
+          ) : (
+            <div className={styles.commentAlert}>차단된 댓글입니다.</div>
+          );
+        })}
+        <div className={styles.paging} >
+          {data.commentList?.length == 0 ? null : (
+            <Paging data={data} status={status} page={page} setPage={setPage} />
+          )}
+        </div>
         {isLoggedIn ? (
           <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
             <img className={styles.myImg} src={img} alt=""></img>
@@ -178,83 +254,6 @@ function ViewComment() {
             </button>
           </div>
         )}
-        {data.commentList?.length == 0 ? null : (
-          <Form className={styles.orderBox} onChange={handleOrderChange}>
-            <Form.Group controlId="orderSelect">
-              <Form.Control as="select" value={order}>
-                <option value="desc">최신순</option>
-                <option value="asc">오래된순</option>
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        )}
-        {data.commentList.map((item) => {
-          return item.status == "ok" ? (
-            <div key={item.commentId} className={styles.commentBox}>
-              <div className={styles.commentName}>{item.User.nickname}</div>
-              {editingCommentId === item.commentId ? (
-                <form
-                  className={styles.editCommentForm}
-                  onSubmit={(event) => handleEditSubmit(event, item.commentId)}
-                >
-                  <input
-                    className={styles.editInput}
-                    value={editingContent}
-                    onChange={(e) => setEditingContent(e.target.value)}
-                  />
-                  <button className={styles.editBtn}>완료</button>
-                </form>
-              ) : (
-                <>
-                  <div className={styles.commentContent}>{item.content}</div>
-                  <div className={styles.commentDate}>
-                    {new Date(item.createdAt).toLocaleDateString()}
-                  </div>
-                  {userInfo?.userId != item.userId ? (
-                    <CommentReportModal commentId={item.commentId} />
-                  ) : null}
-                </>
-              )}
-
-              {userInfo?.userId == item.userId ? (
-                <div className={styles.buttonBox}>
-                  {editingCommentId === item.commentId ? (
-                    <></>
-                  ) : (
-                    <>
-                      <button
-                        className={styles.editBtn}
-                        type="button"
-                        onClick={() => {
-                          handleEditClick(item.commentId, item.content);
-                        }}
-                      >
-                        수정
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleCommentDelete(item.commentId)}
-                      >
-                        삭제
-                      </button>
-                    </>
-                  )}
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </div>
-          ) : item.status == "deleted" ? (
-            <div>삭제된 댓글입니다.</div>
-          ) : (
-            <div>차단된 댓글입니다.</div>
-          );
-        })}
-        <div className="d-flex justify-content-center mt-3">
-          {data.commentList?.length == 0 ? null : (
-            <Paging data={data} status={status} page={page} setPage={setPage} />
-          )}
-        </div>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import { reportChatRoom } from "../service/api/reportAPI";
 import sweetalert from "./sweetalert";
 import { useNavigate } from "react-router-dom";
 import { PiSirenFill } from "react-icons/pi";
+import { socket } from "../service/socket/socket";
 function ChatReportModal({ roomId }) {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);

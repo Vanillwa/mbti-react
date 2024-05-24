@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../css/postView.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
-import {
-  clickPostLikes,
-  getPostView,
-  postDelete,
-} from "../service/api/postAPI";
-
+import { clickPostLikes, getPostView, postDelete } from "../service/api/postAPI";
 import { useQuery } from "react-query";
 import { useAuthContext } from "../context/AuthContext";
 import notImg from "../svg/person-circle.svg";
@@ -16,6 +10,10 @@ import UserDropdown from "./userDropdown";
 import sweetalert from "./sweetalert";
 
 import like from "../svg/like.svg";
+import { ReactComponent as Eye } from "../svg/eye.svg"
+import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
+import { Dropdown } from "react-bootstrap";
+
 function ViewContent() {
   const [likes, setLikes] = useState("checked");
   const navigate = useNavigate();
@@ -110,59 +108,60 @@ function ViewContent() {
   } else {
     dateDisplay = createdAt.toLocaleDateString("ko-KR");
   }
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a href="" ref={ref} onClick={(e) => { e.preventDefault(); onClick(e); }}>
+      {children}
+    </a>
+  ));
   return (
     <>
       <div className={styles.container}>
         <div className={styles.mbti}>
           <span>{data.category ? data.category + ' ' + '게시판' : '전체게시판'}</span>
-          <div>
-            <ReportModal data={data} />
-            {userInfo?.userId == data.User.userId && isLoggedIn ? (
-              <div className="d-flex">
-                <div className={styles.editBtn} type="button" onClick={goEdit}>
-                  수정
-                </div>
-                <div
-                  onClick={handleDelete}
-                  className={styles.delBtn}
-                  type="button"
-                >
-                  삭제
-                </div>
-              </div>
-            ) : null}
-          </div>
+
         </div>
 
         <div className={styles.editBox}></div>
         <div className={styles.header}>
           <div className={styles.title}>{data.title}</div>
-          
         </div>
+
         <div className={styles.main}>
           <div className={styles.content}>
             <ContentComponent content={data.content} />
           </div>
-          <div className={styles.likesBox}>
-            <div className={styles.readhit}>조회 : {data.readhit}</div>
-            <div
-              type="button"
-              className={styles[likes]}
-              onClick={handleLikeClick}
-            >
-              <img src={like} /> : {data.like}
-            </div>
+          <div type="button" className={styles.likeBtn} onClick={handleLikeClick}>
+            <img src={like} />
+            <div>( {data.like} )</div>
           </div>
         </div>
-        <div className={styles.nickname}>
-            <img
-              className={styles.userImg}
-              src={data.User.profileImage}
-            />
-            {data.User.nickname}
-           
+        <div className={styles.info}>
+          <div className={styles.userInfo}>
+            <img className={styles.userImg} src={data.User.profileImage} />
+            <div className={styles.nickname}>{data.User.nickname}</div>
           </div>
-          <div className={styles.date}>{dateDisplay}</div>
+          <div className={styles.postInfo}>
+            <div className={styles.readhit}><Eye /> {data.readhit}</div>
+            <div className={styles.date}>{dateDisplay}</div>
+            {isLoggedIn ? <Dropdown >
+              <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                <ThreeDots />
+              </Dropdown.Toggle>
+              <Dropdown.Menu >
+                {userInfo.userId != data.User.userId ? <Dropdown.Item eventKey="1"><ReportModal data={data} /></Dropdown.Item> : null}
+                {userInfo?.userId == data.User.userId && isLoggedIn ? (
+                  <>
+                    <Dropdown.Item eventKey="2" onClick={goEdit}>수정</Dropdown.Item>
+                    <Dropdown.Item eventKey="3" onClick={handleDelete}>
+                      삭제
+                    </Dropdown.Item>
+                  </>
+                ) : null}
+              </Dropdown.Menu>
+            </Dropdown> : null}
+          </div>
+        </div>
       </div>
     </>
   );
