@@ -134,7 +134,7 @@ function ViewContent() {
         </div>
         <div className={styles.info}>
           <div className={styles.userInfo}>
-            <img className={styles.userImg} src={data.User.profileImage} />
+            <div className={styles.userImg}><img  src={data.User.profileImage} /></div>
             <div className={styles.nickname}>{data.User.nickname}</div>
           </div>
           <div className={styles.postInfo}>
@@ -146,7 +146,7 @@ function ViewContent() {
               </Dropdown.Toggle>
               <Dropdown.Menu >
                 {userInfo.userId != data.User.userId ? <Dropdown.Item eventKey="1"><ReportModal data={data} /></Dropdown.Item> : null}
-                {userInfo?.userId == data.User.userId && isLoggedIn ?   (
+                {userInfo?.userId == data.User.userId && isLoggedIn ? (
                   <>
                     <Dropdown.Item eventKey="2" onClick={goEdit}>수정</Dropdown.Item>
                     <Dropdown.Item eventKey="3" onClick={handleDelete}>

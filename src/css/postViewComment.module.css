@@ -4,7 +4,7 @@
 .list{border-bottom:1px solid #ccc;}
 .commentBox {padding:12px; display: flex; justify-content: space-between; align-items: center; border-bottom:1px solid #eee;  }
 .commentUserInfo{min-width: 120px; display: flex; align-items: center; gap:7px;}
-.commentProfileImageWrap{width: 30px; height: 30px; overflow: hidden; border-radius: 100%; border:1px solid #999;}
+.commentProfileImageWrap{width: 30px; height: 30px; overflow: hidden; border-radius: 100%; border:1px solid #ddd;}
 .commentProfileImageWrap img{width: 100%;}
 .commentContent{width: 100%; max-width: 600px; padding:12px;}
 .commentRight{min-width: 112px; display: flex; align-items: center; gap:12px;}
