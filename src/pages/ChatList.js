@@ -31,13 +31,6 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
     );
   }
 
-  if (listData.length === 0) {
-    return (
-      <div>
-        <h1>생성된 채팅방이 없습니다.</h1>
-      </div>
-    );
-  }
   if (!isLoggedIn || userInfo.userId == null) {
     return (
       <>
@@ -51,7 +44,7 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
   return (
     <div className={`${styles.listInner}`}>
       <div className={styles.itemWrap}>
-        {listData.length === 0 ? <div>개설된 채팅방이 없습니다</div> : listData.map(item => {
+        {listData.length === 0 ? <div className={styles.noList}>개설된 채팅방이 없습니다</div> : listData.map(item => {
           return (
             <div onClick={() => { handleSetRoomId(item.roomId); }} className={roomId === item.roomId ? `${styles.selectedItem} ${styles.item}` : styles.item} key={item.roomId}>
               <div className={styles.userBox}>

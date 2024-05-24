@@ -12,6 +12,7 @@ import sweetalert from "./sweetalert";
 import like from "../svg/like.svg";
 import { ReactComponent as Eye } from "../svg/eye.svg"
 import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
+import { ReactComponent as Like } from "../svg/like.svg"
 import { Dropdown } from "react-bootstrap";
 
 function ViewContent() {
@@ -117,11 +118,6 @@ function ViewContent() {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.mbti}>
-          <span>{data.category ? data.category + ' ' + '게시판' : '전체게시판'}</span>
-
-        </div>
-
         <div className={styles.editBox}></div>
         <div className={styles.header}>
           <div className={styles.title}>{data.title}</div>
@@ -132,7 +128,7 @@ function ViewContent() {
             <ContentComponent content={data.content} />
           </div>
           <div type="button" className={styles.likeBtn} onClick={handleLikeClick}>
-            <img src={like} />
+            <Like></Like>
             <div>( {data.like} )</div>
           </div>
         </div>
@@ -150,7 +146,7 @@ function ViewContent() {
               </Dropdown.Toggle>
               <Dropdown.Menu >
                 {userInfo.userId != data.User.userId ? <Dropdown.Item eventKey="1"><ReportModal data={data} /></Dropdown.Item> : null}
-                {userInfo?.userId == data.User.userId && isLoggedIn ? (
+                {userInfo?.userId == data.User.userId && isLoggedIn ?   (
                   <>
                     <Dropdown.Item eventKey="2" onClick={goEdit}>수정</Dropdown.Item>
                     <Dropdown.Item eventKey="3" onClick={handleDelete}>
