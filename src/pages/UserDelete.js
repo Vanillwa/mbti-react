@@ -88,10 +88,9 @@ function UserDelete() {
     return (
     
       <div className="container mt-5" >
-        <a href="/" className="navbar-logo d-flex justify-content-center">
-      
-          <img src={logo} alt="로고" className="logo" />
-        </a>
+        <Link to="/" className="navbar-logo d-flex justify-content-center">     
+          <img src={logo} alt="로고" className={styles.logo} />
+        </Link>
         <div className={styles.card}>
           <div className={styles.cardbody}>
             <div className="text-center mb-5">
