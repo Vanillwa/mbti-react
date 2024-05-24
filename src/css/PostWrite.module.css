@@ -4,24 +4,25 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2vh;
+  padding: 48px;
 }
 
 .form{
   border: 1px solid black;
-  border-radius: 5px;
-  width: 70vw;
+  border-radius: 12px;
+  width: 650px;
   min-height: 70vh;
-  padding: 1vw;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 36px;
 }
 .selectBox{
-  padding: 0.5vw;
+  padding: 12px;
   display: flex;
   justify-content: space-between;
-  width: 60vw;
+  width: 600px;
 }
 .selectTitle{
   font-size: 1.7vh;
@@ -31,27 +32,21 @@
   border-radius: 5px;
   font-size: 1.7vh; 
   font-weight: bold;
-}
-.mbtiSelectE{
-
-}
-.mbtiSelectI{
-
+  margin-right: 6px;
 }
 
 .titleBox{
   padding: 1vw;
 }
 .titleInput{
-  width: 60vw;
-  padding: 0.5vw;
-  border-radius: 5px;
+  width: 550px;
+  padding: 6px;
+  border-radius: 12px;
   border: 1px solid black;
 }
 .editorBox{
-  width: 60vw;
+  width: 550px;
   height: 40vh;
-  border-radius: 5px;
 }
 
 .contentBox{
@@ -106,4 +101,26 @@ justify-content: end;}
 
 .cropButton {
   margin-right: 5px;
+}
+
+@media(max-width : 768px) {
+  .form{width: 500px;}
+  .selectBox{width: 450px;}
+  .editorBox{width: 450px;}
+  .titleInput{width: 450px;}
+  .textarea{width: 450px;}
+}
+@media(max-width : 576px) {
+  .form{width: 450px;}
+  .selectBox{width: 400px;}
+  .editorBox{width: 400px;}
+  .titleInput{width: 400px;}
+  .textarea{width: 400px;}
+}
+@media(max-width : 500px) {
+  .form{width: 400px;}
+  .selectBox{width: 350px;}
+  .editorBox{width: 350px;}
+  .titleInput{width: 350px;}
+  .textarea{width: 350px;}
 }

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "../css/Nav.module.css";
 import { Link, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import EListDropdown from "./EListDropdown";
-import IListDropdown from "./IListDropdown";
 
 import search from "../svg/search.svg";
 import User from "../svg/people-fill.svg";
@@ -120,12 +118,6 @@ const Navbar = ({ chatData, chatStatus }) => {
             <img className={styles.svg} src={list} />
             <div className={styles.span}>모두의공간</div>
           </Link>
-          <div className={`${styles.menu} ${styles.mbtiMenu}`}>
-            <EListDropdown />
-          </div>
-          <div className={`${styles.menu} ${styles.mbtiMenu}`}>
-            <IListDropdown />
-          </div>
           {isLoggedIn ? (
             <Link className={styles.menu} to="/post/write">
               <img className={styles.svg} src={write} />

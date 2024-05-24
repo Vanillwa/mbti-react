@@ -26,7 +26,7 @@ function IListDropdown() {
   return (
     <div className={styles.listMenu} ref={dropdownRef}>
       <div className={`${styles.dropBtn} ${styles.link}`} onClick={toggleDropdown}>
-      <img className={styles.svg} src={mbtiI}/><div className={styles.span}>나는 I야!</div>
+      <img className={styles.svg} src={mbtiI}/><div className={styles.span}>I게시판</div>
       </div>
       <div className={`${styles.dropdownContent} ${dropdown ? styles.show : ""}`}>
         
