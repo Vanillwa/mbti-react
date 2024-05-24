@@ -111,6 +111,7 @@
   width: auto;
   height: 25px;
   margin-left: 12px;
+  margin-right: 12px;
 }
 
 @media (max-width: 1024px) {

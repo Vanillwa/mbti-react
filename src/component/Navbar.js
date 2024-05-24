@@ -116,7 +116,7 @@ const Navbar = ({ chatData, chatStatus }) => {
           </div>
           <Link className={styles.menu} to="/post/list">
             <img className={styles.svg} src={list} />
-            <div className={styles.span}>모두의공간</div>
+            <div className={styles.span}>게시판</div>
           </Link>
           {isLoggedIn ? (
             <Link className={styles.menu} to="/post/write">

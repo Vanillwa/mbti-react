@@ -10,7 +10,7 @@ a{
   flex-direction: column;
   justify-content: center;
   gap: 12px;
-  padding: 24px;
+  padding: 48px;
 }
 .sortBox{
   display: flex;
