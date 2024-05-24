@@ -1,105 +1,101 @@
+.logo {
+  width: 250px;
+  margin-bottom: 12px;
+}
 
-.imageWrap{
+.imageWrap {
   display: flex;
   justify-content: center;
 }
-.imageBox{
+
+.imageBox {
   width: 200px;
   height: 200px;
   display: flex;
   justify-content: center;
 }
 
-.userImage{ 
+.userImage {
   width: 100%;
- border-radius: 100%;
- justify-content: center;
- align-items: center;
+  border-radius: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .card {
-  max-width: 500px; 
-  margin: 0 auto; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .cardbody {
-  padding: 20px; 
-  
+  padding: 20px;
 }
-
 
 @media (max-width: 768px) {
   .card {
-    max-width: 95%; 
+    max-width: 95%;
   }
 }
 
-.hidden{
-    display: none;
+.hidden {
+  display: none;
+}
 
-  }
-
-
-
-.buttonWrap{
+.buttonWrap {
   display: flex;
   justify-content: end;
 }
-.buttonsim, .buttonjun{
+
+.buttonsim,
+.buttonjun {
   padding: 2px;
   margin: 0 0.5vw;
   width: 7vw;
-  
   background-color: white;
   border: 1px solid black;
   border-radius: 5px;
-  }
-  
-.buttonjun{
+}
+
+.buttonjun {
   background-color: rgb(250, 3, 81);
   color: white;
 }
 
-.buttonsim{
+.buttonsim {
   background-color: #0d6efd;
   color: white;
 }
 
-.buttondong{
+.buttondong {
   display: flex;
   justify-content: end;
   padding-top: 10px;
 }
 
-.passwordBtn1{
- 
- width: 500px;
+.passwordBtn1 {
+  width: 500px;
 }
 
-.passwordBtn2{
- margin-top: 10px;
+.passwordBtn2 {
+  margin-top: 10px;
   width: 412px;
   height: 50px;
- }
- 
-
-.emailinput{
- 
-height: 50px;
 }
 
-.cropperBox{
+.emailinput {
+  height: 50px;
+}
+
+.cropperBox {
   margin-top: 15px;
-
 }
 
-.cropperboxbtn{
+.cropperboxbtn {
   display: flex;
   justify-content: end;
-
 }
 
-
-
-.uploadbtn1{margin-right: 5px;}
+.uploadbtn1 {
+  margin-right: 5px;
+}

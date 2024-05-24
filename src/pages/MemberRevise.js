@@ -144,6 +144,7 @@ function MemberRevise() {
         setNicknameBtn("수정");
         logout();
         login(result.newUserInfo);
+        setNicknameValidColor("")
       } else {
         console.log('nickname change failed:', result.message);
       }
@@ -156,6 +157,7 @@ function MemberRevise() {
     if (passwordBtn === '수정') {
       setPwEditable(true);
       setPasswordBtn('확인');
+     
       return;
     }
 
@@ -183,6 +185,9 @@ function MemberRevise() {
         setPwEditable(false);
         setPwmessage("");
         setPasswordBtn("수정");
+
+        setPasswordValidColor("")
+        
       }
     }
   };
@@ -207,7 +212,7 @@ function MemberRevise() {
   return (
     <div className="container mt-5">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
-        <img src={logo} alt="로고" className="logo" />
+        <img src={logo} alt="로고" className={styles.logo} />
       </Link>
       <div className={styles.card}>
         <div className={styles.cardbody}>
@@ -287,7 +292,7 @@ function MemberRevise() {
             <div>
               <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
               <div className="d-flex gap-2">
-                <input type="password" className={`form-control ${styles.passwordBtn1}${passwordBtn === '확인' ? passwordValidColor : passwordValidColor} `} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
+                <input type="password" className={`form-control ${styles.passwordBtn1}  ${passwordBtn === '확인' ? passwordValidColor : passwordValidColor} `} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
                 <button
                   className='btn btn-sm btn-primary'
                   type='button'
