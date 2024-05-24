@@ -33,7 +33,8 @@
  
 .unLabel { display: none; } 
 .commentForm { display: flex; justify-content: center; align-items: center; padding: 2vw; } 
-.userImg { width: 3vw; height: auto; margin-right: 5px; border-radius: 25px; }  
+.userImg { width: 30px; height: 30px; margin-right: 5px; border-radius: 100%; border:1px solid #eee; overflow: hidden; } 
+.userImg img{width: 100%;} 
 .commentInput { width: 30vw; height: 3vh; overflow: scroll; margin: 0 10px; } 
 
 @media screen and (max-width : 768px){
@@ -43,7 +44,7 @@
 .commentName { width: 15%; } 
 .commentContent { width: 30%; } 
 .commentDate { } 
-.editInput { resize: none; } 
+
 
 .editCommentForm { display: flex; justify-content: end; width: 100%; } 
 
