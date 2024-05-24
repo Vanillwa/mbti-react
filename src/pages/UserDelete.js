@@ -130,7 +130,8 @@ function UserDelete() {
               <h5 style={{color:"red"}} className='mb-3'>회원탈퇴를 신청하기전에, 내용을 꼭 확인해주세요. </h5>
               <li>고객정보 및 개인형 서비스 이용 기록은 정보보호처리 기준에따라 삭제됩니다.</li>
               <li>회원탈퇴 시 보유하시던 적립금은 회원정보에 등록된 계좌로 자동이체 됩니다.</li>
-              <li>회원탈퇴 시 더이상 <strong style={{color:"#0866ff"}}>R U T ?</strong>서비스를 이용불가능 합니다.</li>          
+              <li>회원탈퇴 시 더이상 <strong style={{color:"#0866ff"}}>R U T ?</strong>서비스를 이용불가능 합니다.</li>      
+              <p><strong>더 보기...</strong></p>    
               </div>
 
 

@@ -292,7 +292,7 @@ function MemberRevise() {
             <div>
               <label htmlFor="user-pw" className="form-label">비밀번호 변경</label>
               <div className="d-flex gap-2">
-                <input type="password" className={`form-control ${styles.passwordBtn1}  ${passwordBtn === '확인' ? passwordValidColor : passwordValidColor} `} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
+                <input type="password" className={`form-control ${styles.passwordBtn1}  ${passwordBtn === '확인' ? passwordValidColor : passwordValidColor} `} name="password1" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef1} onChange={handlePasswordChange} />
                 <button
                   className='btn btn-sm btn-primary'
                   type='button'
@@ -301,7 +301,7 @@ function MemberRevise() {
                   {passwordBtn}
                 </button>
               </div>
-              <input type="password" className={`form-control ${styles.passwordBtn2} ${passwordBtn === '수정' ? 'hidden' : passwordValidColor}`} name="password" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} />
+              <input type="password" className={`form-control ${styles.passwordBtn2} ${passwordBtn === '수정' ? 'hidden' : passwordValidColor}`} name="password2" id="user-pw" placeholder="password" disabled={!pwEditable} ref={passwordRef2} onChange={handlePasswordChange} />
               <p style={{ color: pwMessage === "비밀번호가 일치하지 않습니다" || pwMessage === "비밀번호는 숫자와 영문자를 포함하여 6자 이상 20자 이하로 입력해주세요." ? "red" : "green" }}>{pwMessage}</p>
             </div>
 
