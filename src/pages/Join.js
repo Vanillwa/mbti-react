@@ -86,7 +86,7 @@ function Join() {
       setCertificationDisabled(false); //초기값 false
       setEmailValidColor("is-valid")
     } else if (data.message === "duplicated") {
-      setEmailAlert("이미 사용중.");
+      setEmailAlert("이미 사용중."); 
       setEmailValidation('invalid'); // 이메일이 중복
       setCertificationDisabled(true);
       setEmailValidColor("is-invalid")
