@@ -25,7 +25,7 @@ function EListDropdown() {
   return (
     <div className={styles.listMenu} ref={dropdownRef}>
       <div  className={`${styles.dropBtn} ${styles.link}`} onClick={toggleDropdown}>
-      <img className={styles.svg} src={mbtiE} /><div className={styles.span}>나는 E야!</div>
+      <img className={styles.svg} src={mbtiE} /><div className={styles.span}>E게시판</div>
       </div>
       <div className={`${styles.dropdownContent} ${dropdown ? styles.show : ""}`}>
         <Link to="/post/list?mbti=ESTJ" onClick={closeDropdown}>ESTJ</Link>

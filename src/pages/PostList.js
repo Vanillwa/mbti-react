@@ -6,6 +6,8 @@ import PostItems from "../component/PostItems";
 import styles from "../css/PostList.module.css";
 import Paging from "../component/Paging";
 import { Form } from "react-bootstrap";
+import EListDropdown from "../component/EListDropdown";
+import IListDropdown from "../component/IListDropdown";
 
 const PostList = () => {
   const [query, setQuery] = useSearchParams();
@@ -27,8 +29,8 @@ const PostList = () => {
     }
   );
   useEffect(() => {
-    setQuery({ page, mbti , sort, order});
-  }, [page, mbti, sort,order]);
+    setQuery({ page, mbti, sort, order });
+  }, [page, mbti, sort, order]);
 
   const handleSortChange = (e) => {
     e.preventDefault();
@@ -74,6 +76,12 @@ const PostList = () => {
     <div className={styles.postBox}>
       {mbti == "null" ? <h2>전체게시판</h2> : <h2>{mbti}게시판</h2>}
       <div className={styles.sortBox}>
+        <div className={`${styles.menu} ${styles.mbtiMenu}`}>
+          <EListDropdown />
+        </div>
+        <div className={`${styles.menu} ${styles.mbtiMenu}`}>
+          <IListDropdown />
+        </div>
         <Form.Select
           className={styles.sort}
           aria-label="Default select example"
@@ -104,8 +112,10 @@ const PostList = () => {
       <div className={styles.postItemsBox}>
         <PostItems data={data} status={status} />
       </div>
-      {data?.list?.length == 0 ? null : (<div className={styles.pagingBox}>
-        <Paging data={data} status={status} page={page} setPage={setPage} /></div>
+      {data?.list?.length == 0 ? null : (
+        <div className={styles.pagingBox}>
+          <Paging data={data} status={status} page={page} setPage={setPage} />
+        </div>
       )}
     </div>
   );
