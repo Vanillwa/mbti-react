@@ -62,7 +62,7 @@ function Main() {
       setPwdAlert("");
       return;
 
-      return;
+     
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
