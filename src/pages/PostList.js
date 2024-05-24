@@ -27,8 +27,8 @@ const PostList = () => {
     }
   );
   useEffect(() => {
-    setQuery({ page, mbti });
-  }, [page, mbti]);
+    setQuery({ page, mbti , sort, order});
+  }, [page, mbti, sort,order]);
 
   const handleSortChange = (e) => {
     e.preventDefault();
