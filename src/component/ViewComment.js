@@ -198,7 +198,7 @@ function ViewComment() {
                         <div className={styles.commentDate}>{new Date(item.createdAt).toLocaleDateString()}</div>
                         {isLoggedIn ? <Dropdown >
                           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                            <ThreeDots />
+                            <ThreeDots width="18px"/>
                           </Dropdown.Toggle>
                           <Dropdown.Menu >
                             {userInfo.userId != item.userId ? <Dropdown.Item eventKey="1"><CommentReportModal commentId={item.commentId} /></Dropdown.Item> : null}
