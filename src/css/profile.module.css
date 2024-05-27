@@ -1,4 +1,10 @@
-.container {
+.mainTitle {
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.outerContainer {
   width: 100%;
   padding: 24px;
   display: flex;
@@ -6,11 +12,12 @@
   align-items: center;
 }
 
-.postBox {
-  margin-left: 120px;
-  gap: 36px; 
+.innerContainer {
+  display: flex;
+  justify-content: center; 
+  flex-wrap: wrap;
+  gap: 155px; 
 }
-
 
 .postWrap {
   width: 320px;
@@ -42,12 +49,6 @@
 .img {
   width: auto;
   height: 100%;
-}
-
-.title {
-  font-size: 30px;
-  margin-top: 40px;
-  text-align: center;
 }
 
 .content {
