@@ -38,7 +38,7 @@ function UserList() {
 
   return (
     <>
-      <div>
+      <div className={styles.searchUser}>
         <select className={styles.searchUserType} ref={typeRef}>
           <option value="email">이메일</option>
           <option value="nickname">닉네임</option>
@@ -54,7 +54,7 @@ function UserList() {
       </div>
 
       <h1 className="p-2">회원목록</h1>
-
+    <div className={styles.showUser}>
       <select
         className={`mb-4 ${styles.showUserType}`}
         onChange={handleFilterOnChange}>
@@ -62,6 +62,7 @@ function UserList() {
         <option value="blocked">차단된 유저</option>
         <option value="ok">일반 유저</option>
       </select>
+      </div>
       <UserItems
         data={data}
         status={status}

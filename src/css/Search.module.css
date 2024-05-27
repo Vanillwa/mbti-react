@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+   
 }
 .imgWrap {
     display: flex;
@@ -27,6 +28,7 @@
     height: auto;
 }
 .postWrap{
+    margin-top:12px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,8 +36,9 @@
 }
 .nickname{
     display: flex;
-    
 
+    
+  
 }
 
 .dropdown{
