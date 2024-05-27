@@ -18,7 +18,10 @@ function FindPwd() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [checkCodeAlert, setCheckCodeAlert] = useState();
   const [code, setCode] = useState();
+
+  const [checkCodeAlertColor,setCheckCodeAlertColor]=useState('')
   const navigate = useNavigate();
+
 
 
   const isInputPwd = email => {
@@ -90,10 +93,12 @@ function FindPwd() {
 
       if (result.message === "success") {
         setIsButtonDisabled(false);
-        setCheckCodeAlert("인증번호가 일치합니다.");
+        setCheckCodeAlert(<span style={{ color: "green" }}>인증번호가 일치합니다.</span>);
+        setCheckCodeAlertColor('is-valid')
         
       } else {
-        setCheckCodeAlert("인증번호가 올바르지 않습니다.");
+        setCheckCodeAlert(<span style={{color:"red"}}>인증번호가 일치하지 않습니다.</span>);
+        setCheckCodeAlertColor('is-invalid')
       }
     }
     if (inputCode.length < 6) {
@@ -150,7 +155,7 @@ function FindPwd() {
                     <input
                       disabled={isInputDisabled}
                       type="text"
-                      className="form-control"
+                      className={`form-control ${setCheckCodeAlert === '인증번호가 일치합니다.' ? checkCodeAlertColor : checkCodeAlertColor}`}
                       name="requestNum"
                       id="requestNum"
                       placeholder="인증번호"

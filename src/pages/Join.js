@@ -10,9 +10,7 @@ import { requestEmailVerification } from "../service/api/joinAPI";
 import Swal from "sweetalert2"
 import Footer from '../component/Footer';
 import sweetalert from '../component/sweetalert';
-import { async } from 'q';
 import { Modal, Button } from 'react-bootstrap';
-//import backgroundImg from '../images/backgroundImg.png';
 
 
 function Join() {

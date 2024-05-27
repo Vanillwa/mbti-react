@@ -50,7 +50,11 @@ ul {
     background-color: cornflowerblue;
     color: white;
 }
+.searchUser{text-align: center;}
 
+.showUser{
+    text-align: center;
+}
 .searchUserType {
     border: 1px solid #40d1e7;
     font-family: 'KCC-Hanbit';
