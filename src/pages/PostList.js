@@ -5,9 +5,7 @@ import { getPostList } from "../service/api/postAPI";
 import PostItems from "../component/PostItems";
 import styles from "../css/PostList.module.css";
 import Paging from "../component/Paging";
-import EListDropdown from "../component/EListDropdown";
-import IListDropdown from "../component/IListDropdown";
-import SortDropdown from "../component/SortDropdown";
+import Setting from "../component/Setting";
 
 const PostList = () => {
   const [query, setQuery] = useSearchParams();
@@ -20,6 +18,7 @@ const PostList = () => {
   const [sort, setSort] = useState("createdAt");
   const [order, setOrder] = useState("desc");
 
+  const [listStyle, setListStyle] = useState("list");
 
   const { data, status } = useQuery(
     ["getPostList", mbti, size, sort, order, page],
@@ -30,9 +29,8 @@ const PostList = () => {
     }
   );
   useEffect(() => {
-    setQuery({ page, mbti, sort, order });
-  }, [page, mbti, sort, order]);
-
+    setQuery({ page, mbti, sort, order, size });
+  }, [page, mbti, sort, order, size]);
 
   if (status === "loading") {
     return (
@@ -56,22 +54,18 @@ const PostList = () => {
   }
   return (
     <div className={styles.postBox}>
-      {mbti == "null" ? <h2>전체게시판</h2> : <h2>{mbti}게시판</h2>}
-      <div className={styles.sortBox}>
-        <div className={`${styles.menu} ${styles.mbtiMenu}`}>
-          <EListDropdown />
-        </div>
-        <div className={`${styles.menu} ${styles.mbtiMenu}`}>
-          <IListDropdown />
-        </div>
-        <SortDropdown sort = {sort} setSort={setSort} setOrder={setOrder} />
+      <div className="d-flex justify-content-between">
+        {mbti == "null" ? <h2>전체게시판</h2> : <h2>{mbti}게시판</h2>}
+        <Setting listStyle={listStyle} setListStyle={setListStyle} sort={sort} setSort={setSort} setOrder={setOrder} setSize={setSize}/>
       </div>
       <div className={styles.postItemsBox}>
-        <PostItems data={data} status={status} />
+        {listStyle === "list" ? (
+          <PostItems data={data} status={status} />
+        ) : null}
       </div>
       {data?.list?.length == 0 ? null : (
         <div className={styles.pagingBox}>
-          <Paging data={data} status={status} page={page} setPage={setPage} />
+          <Paging data={data} status={status} page={page} setPage={setPage}  />
         </div>
       )}
     </div>

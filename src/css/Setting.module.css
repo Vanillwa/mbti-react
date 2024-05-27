@@ -1,0 +1,27 @@
+.button{
+  border: 1px solid lightgray;
+  width: 120px;
+}
+.wrap{
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.listStyle, .mbtiStyle, .listLength, .sort{
+  border-bottom: 1px solid lightgray;
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+.name{
+  width: 180px;
+}
+
+.mbtiBox{
+  display: flex;
+  gap: 12px;
+}
+.sortBox{
+  display: flex;
+  gap: 12px;
+}
