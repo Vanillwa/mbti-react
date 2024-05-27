@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import { socket } from "../service/socket/socket";
+import { io } from "socket.io-client";
 
 export const AuthContext = createContext(null);
 
@@ -8,9 +8,12 @@ export const AuthProvider = ({ children }) => {
   const sessionIsLoggedIn = sessionStorage.getItem("isLoggedIn");
   const [isLoggedIn, setIsLoggedIn] = useState(sessionIsLoggedIn);
   const [userInfo, setUserInfo] = useState(sessionUserInfo);
-
-  if (isLoggedIn) socket.emit('login')
-
+  let socket
+  if (isLoggedIn) {
+    const url = process.env.REACT_APP_SOCKET_URL;
+    socket = io(url, { withCredentials: true })
+    socket.emit('login')
+  }
   const login = async (info) => {
     sessionStorage.setItem("userInfo", JSON.stringify(info));
     sessionStorage.setItem("isLoggedIn", true);
@@ -29,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     return { userInfo, setUserInfo, isLoggedIn, setIsLoggedIn };
   }, [userInfo, isLoggedIn]);
 
-  return <AuthContext.Provider value={{ memoUserInfo, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ memoUserInfo, login, logout, socket }}>{children}</AuthContext.Provider>;
 };
 
 

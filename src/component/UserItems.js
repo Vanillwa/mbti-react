@@ -7,11 +7,11 @@ import Button from "react-bootstrap/Button";
 import styles from "../css/UserList.module.css";
 import sweetalert from "./sweetalert";
 import { useAuthContext } from "../context/AuthContext";
-import { socket } from "../service/socket/socket";
+//import { socket } from "../service/socket/socket";
 function UserItems({ data, status, filter, keyword, type, refetch }) {
   const blockRef = useRef();
   const [show, setShow] = useState(false);
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, socket } = useAuthContext();
   const { userInfo } = memoUserInfo;
   const [user, setUser] = useState();
   const queryClient = new QueryClient();

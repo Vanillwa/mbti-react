@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import ChatReportModal from "../component/ChatReportModal";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { socket } from "../service/socket/socket";
 
 const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, socket } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const handleSetRoomId = (roomId) => {

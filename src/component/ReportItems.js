@@ -4,7 +4,7 @@ import styles from "../css/ReportList.module.css";
 import chatRoomStyles from "../css/ChatRoom.module.css";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { socket } from "../service/socket/socket";
+
 import {
   suspendUser,
   updateChatRoomReport,
@@ -13,6 +13,7 @@ import {
 } from "../service/api/reportAPI";
 import sweetalert from "./sweetalert";
 import { QueryClient, useMutation } from "react-query";
+import { useAuthContext } from "../context/AuthContext";
 function ReportItems({
   postData,
   postStatus,
@@ -37,7 +38,8 @@ function ReportItems({
   const handleClose = () => setShow(false);
   const handleClose1 = () => setShow1(false);
   const handleClose2 = () => setShow2(false);
-
+  const { memoUserInfo } = useAuthContext();
+  const { socket } = memoUserInfo;
 
   const completePostMutate = useMutation(reportId => {
     return updatePostReport(reportId);
@@ -74,7 +76,7 @@ function ReportItems({
   };
 
   const handleChatRoomComplete = async (body) => {
-  
+
     completeChatRoomMutate.mutate(body, {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["getChatRoomReportList"]);
@@ -150,15 +152,15 @@ function ReportItems({
       userId: user.userId,
       roomId: report.roomId,
       blockDate,
-      
+
     });
     if (result.message === "success") {
       socket.emit("blockUser", report.targetUser.userId);
       sweetalert.success("정지 완료");
       completeChatRoomMutate.mutate({
-       reportId: report.reportId,
-      targetId:  report.targetUser.userId,
-       roomId: report.roomId,
+        reportId: report.reportId,
+        targetId: report.targetUser.userId,
+        roomId: report.roomId,
       },
         {
           onSuccess: async () => {
@@ -300,17 +302,17 @@ function ReportItems({
           </form>
         </Modal.Body>
         <Modal.Footer>
-          {console.log("report",report)}
+          {console.log("report", report)}
           <Button
             variant="secondary"
             onClick={() =>
               handleChatRoomComplete(
                 {
-               reportId: report.reportId,
-               targetId: report.targetUser.userId,
-               roomId: report.roomId
+                  reportId: report.reportId,
+                  targetId: report.targetUser.userId,
+                  roomId: report.roomId
                 }
-                )
+              )
             }>
             처리완료
           </Button>

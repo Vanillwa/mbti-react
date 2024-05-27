@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, Zoom, toast } from "react-toastify";
-import { socket } from "../service/socket/socket";
 
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
+
 const Alarm = () => {
   const navigate = useNavigate();
-
+  const { memoUserInfo,socket } = useAuthContext();
   const [userToastIds, setUserToastIds] = useState({});
   const [requestIds, setRequestIds] = useState({})
 

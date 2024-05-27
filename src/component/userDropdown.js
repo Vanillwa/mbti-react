@@ -7,12 +7,12 @@ import { requestChat } from "../service/api/chatAPI";
 import styles from "../css/PostList.module.css";
 import { requestFriend } from "../service/api/friendAPI";
 import sweetalert from "./sweetalert";
-import { socket } from "../service/socket/socket";
+//import { socket } from "../service/socket/socket";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const UserDropdown = ({ item }) => {
   const navigate = useNavigate();
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo,socket } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const [friend, setFriend] = useState("");

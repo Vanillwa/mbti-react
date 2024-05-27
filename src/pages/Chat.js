@@ -3,7 +3,7 @@ import styles from "../css/Chat.module.css";
 import { useQuery } from "react-query";
 import { getChatList, getChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
-import { socket } from "../service/socket/socket";
+
 import ChatRoom from "./ChatRoom";
 import ChatList from "./ChatList";
 import {ReactComponent as ChatIcon} from "../svg/chat-dots.svg"
@@ -11,7 +11,7 @@ import { useLocation } from "react-router";
 
 function Chat() {
   const location = useLocation()
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, socket } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [roomId, setRoomId] = useState(location.state?.roomId || null);
  

@@ -3,10 +3,9 @@ import { Link, useNavigate,  } from 'react-router-dom';
 import styles from '../css/SettingDropdown.module.css'
 import { fetchLogout } from "../service/api/loginAPI";
 import { AuthContext, useAuthContext } from '../context/AuthContext';
-import { socket } from '../service/socket/socket';
 
 const SettingDropdown = () => {
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, socket } = useAuthContext();
   const { isLoggedIn } = memoUserInfo;
   const navigate = useNavigate()
   const { logout } = useContext(AuthContext);

@@ -18,7 +18,6 @@ import FriendList from "./pages/FriendList";
 import ReportList from "./pages/ReportList";
 
 import UserList from "./pages/UserList";
-import { socket } from "./service/socket/socket";
 import { fetchLogout } from "./service/api/loginAPI";
 import { AuthContext, useAuthContext } from "./context/AuthContext";
 import sweetalert from "./component/sweetalert";
@@ -27,34 +26,37 @@ import Chat from "./pages/Chat";
 import GlobalStyles from "./GlobalStyles";
 
 function App() {
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, socket } = useAuthContext();
   const { isLoggedIn } = memoUserInfo;
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
 
-  socket.on("uBlocked", async () => {
-    socket.emit("logout");
-    const result = await fetchLogout();
-    if (result.message === "success") {
-      logout();
-      navigate("/", { state: "logout" });
-      sweetalert.warning("차단된 계정입니다.", "", "닫기");
-    }
-  });
+  if (isLoggedIn) {
+    socket.on("uBlocked", async () => {
+      socket.emit("logout");
+      const result = await fetchLogout();
+      if (result.message === "success") {
+        logout();
+        navigate("/", { state: "logout" });
+        sweetalert.warning("차단된 계정입니다.", "", "닫기");
+      }
+    });
 
-  socket.on("duplicatedLogin", async () => {
-    socket.emit("logout");
-    const result = await fetchLogout();
-    if (result.message === "success") {
-      logout();
-      navigate("/", { state: "logout" });
-      sweetalert.warning("로그인 중복이 감지되었습니다.", "", "닫기");
-    }
-  });
+    socket.on("duplicatedLogin", async () => {
+      socket.emit("logout");
+      const result = await fetchLogout();
+      if (result.message === "success") {
+        logout();
+        navigate("/", { state: "logout" });
+        sweetalert.warning("로그인 중복이 감지되었습니다.", "", "닫기");
+      }
+    });
+  }
+
 
   return (
     <div className="App">
-      <GlobalStyles/>
+      <GlobalStyles />
       <Routes>
         <Route element={<Layout />}>
           <Route path="post">

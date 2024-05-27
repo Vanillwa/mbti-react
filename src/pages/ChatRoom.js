@@ -6,8 +6,6 @@ import { Button } from "react-bootstrap";
 import styles from "../css/ChatRoom.module.css";
 import { getChatRoom, quitChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
-import { socket } from "../service/socket/socket";
-
 import downImg from "../svg/arrow-down-circle.svg";
 
 import ChatReportModal from "../component/ChatReportModal";
@@ -15,7 +13,7 @@ import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
 import { Dropdown } from "react-bootstrap";
 function ChatRoom({ roomId, setRoomId, listRefetch }) {
 
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, socket } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [isBottom, setIsBottom] = useState(true);
   const [chat, setChat] = useState([]);
@@ -101,11 +99,13 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
     socket.on("sendMessage", handleReceiveMessage);
     socket.on("userJoined", handleUserJoined);
     socket.on("notAvailable", handleNotAvailable)
+    socket.on("quitRoom", roomRefetch)
     return () => {
       socket.emit("leaveRoom", roomId);
       socket.off("sendMessage", handleReceiveMessage);
       socket.off("userJoined", handleUserJoined);
       socket.off("notAvailable", handleNotAvailable)
+      socket.off("quitRoom", roomRefetch)
     };
   }, []);
 
@@ -135,7 +135,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
       <div className={styles.chatForm} ref={chatFormRef}>
         <div className={styles.chatFormInner}>
 
-          {chat.length === 0 ? <div className={styles.alert}>아직 채팅이 없습니다.</div> : chat.map((message, i) => {
+          {chat.length === 0 ? <div className={styles.noMessage}>아직 채팅이 없습니다.</div> : chat.map((message, i) => {
             let prevMessage;
             let timeDiff;
             if (i > 1) {
@@ -179,6 +179,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
               );
             }
           })}
+          {roomData.roomInfo.user1Status === 'quit' || roomData.roomInfo.user2Status === 'quit' ? <div className={styles.quitAlert}>상대방이 채팅방을 나갔습니다.</div> : null}
           <div ref={bottomRef}></div>
         </div>
         {isBottom ? null : (
@@ -187,6 +188,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
           </div>
         )}
       </div>
+
       <div className={styles.bottom}>
         <form onSubmit={sendMessage} className={styles.inputForm}>
           <input name="message" autoComplete="off" />

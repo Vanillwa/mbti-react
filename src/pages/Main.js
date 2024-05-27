@@ -14,7 +14,6 @@ import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext, useAuthContext } from "../context/AuthContext";
-import { socket } from "../service/socket/socket";
 
 function Main() {
   console.log("rendered");
@@ -24,9 +23,8 @@ function Main() {
   const [emailAlert, setEmailAlert] = useState();
   const [pwdAlert, setPwdAlert] = useState();
   const location = useLocation();
-  const { memoUserInfo } = useAuthContext();
-  const { isLoggedIn, userInfo } = memoUserInfo;
-  const { logout } = useContext(AuthContext);
+  const { memoUserInfo, logout, socket } = useAuthContext();
+  const { isLoggedIn, userInfo,  } = memoUserInfo;
 
   const [emailValidColor, setEmailValidColor] = useState("");
   const [passwordValidColor, setPasswordValidColor] = useState("");

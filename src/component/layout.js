@@ -2,19 +2,21 @@ import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import { useQuery } from "react-query";
 import { getChatList } from "../service/api/chatAPI";
-import { socket } from "../service/socket/socket";
+//import { socket } from "../service/socket/socket";
 import { useLocation } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 const Layout = () => {
-  const {pathname} = useLocation()
+  const { socket } = useAuthContext()
+  const { pathname } = useLocation()
   const { data, status, refetch } = useQuery(
     ["getChatList"],
     () => getChatList(),
     { retry: false, refetchOnWindowFocus: false }
   );
-  useEffect(()=>{
+  useEffect(() => {
     refetch()
-  },[pathname, refetch])
+  }, [pathname, refetch])
 
   socket.on("notification", async () => {
     await refetch();
@@ -35,7 +37,7 @@ const Layout = () => {
   }
 
   return (
-    <Navbar chatData = {data.result} chatStatus = {status}/>
+    <Navbar chatData={data.result} chatStatus={status} />
   );
 };
 
