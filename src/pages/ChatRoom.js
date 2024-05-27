@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import styles from "../css/ChatRoom.module.css";
-import { getChatRoom } from "../service/api/chatAPI";
+import { getChatRoom, quitChatRoom } from "../service/api/chatAPI";
 import { useAuthContext } from "../context/AuthContext";
 import { socket } from "../service/socket/socket";
 
@@ -115,6 +115,11 @@ function ChatRoom({ roomId, listRefetch }) {
     </a>
   ));
 
+  const handleQuit = async ()=>{
+    socket.emit("quitRoom", roomId)
+    const result = await quitChatRoom(roomId)
+  }
+
   if (roomStatus === "loading") {
     return <div>loading...</div>;
   }
@@ -190,8 +195,8 @@ function ChatRoom({ roomId, listRefetch }) {
             <ThreeDots width='24px'/>
           </Dropdown.Toggle>
           <Dropdown.Menu >
-            <Dropdown.Item eventKey="1"> <ChatReportModal roomId={roomId} /></Dropdown.Item>
-            <Dropdown.Item eventKey="2" >나가기</Dropdown.Item>
+            <Dropdown.Item eventKey="1"><ChatReportModal roomId={roomId} /></Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={handleQuit}>나가기</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 
