@@ -1,96 +1,93 @@
-import React, { useState, useEffect, useRef } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState, useEffect, useRef } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, redirect, useNavigate } from "react-router-dom";
-import logo from '../images/areyout.png';
-import styles from '../css/UserDelete.module.css';
+import logo from "../images/areyout.png";
+import styles from "../css/UserDelete.module.css";
 import { useAuthContext } from "../context/AuthContext";
-import { deleteUser, deletePasswordCheck } from "../service/api/memberReviseAPI";
-import Swal from "sweetalert2"
+import {
+  deleteUser,
+  deletePasswordCheck,
+} from "../service/api/memberReviseAPI";
+import Swal from "sweetalert2";
 import sweetalert from "../component/sweetalert";
-import Footer from '../component/Footer';
+import Footer from "../component/Footer";
 
 function UserDelete() {
-     const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const { memoUserInfo, login, logout } = useAuthContext();
-    const { userInfo, isLoggedIn } = memoUserInfo;
-    
-   console.log(userInfo)
+  const { memoUserInfo, login, logout } = useAuthContext();
+  const { userInfo, isLoggedIn } = memoUserInfo;
 
+  console.log(userInfo);
 
+  // 비밀번호
+  const [passwordBtn, setPasswordBtn] = useState("확인");
+  const [pwEditable, setPwEditable] = useState(true);
 
-// 비밀번호
-    const [passwordBtn,setPasswordBtn] =useState("확인")
-    const [pwEditable, setPwEditable] = useState(true)
+  const [pwMessage, setPwmessage] = useState("");
+  const [passwordValidColor, setPasswordValidColor] = useState("");
+  const passwordRef = useRef();
 
+  const handlePasswordBtnOnclick = async () => {
+    const passwordRegex =
+      /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_.-]{6,20}$/;
 
-    const [pwMessage, setPwmessage] = useState('')
-    const [passwordValidColor,setPasswordValidColor]= useState('')
-    const passwordRef = useRef();
-    
-  
-
-    const handlePasswordBtnOnclick = async () => {
-      const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_.-]{6,20}$/;
-    
-    
-    
-      if (passwordBtn === '확인') {
-        const result = await deletePasswordCheck({password:passwordRef.current.value})
-        console.log(result)
-        if (result.message ==="success") {
-          
-         
-          setPwEditable(true);
-          setPwmessage("비밀번호 검증이 완료되었습니다.");
-          setPasswordBtn('완료');
-          setPasswordValidColor('is-valid')
-        } else if(result.message === "fail"){
-          
-          setPwmessage("비밀번호가 틀렸습니다.")     
-          setPasswordValidColor('is-invalid')   
-        }
-        return;
-      }
-    };
-
-    const handleDeleteOnclick = async () => {
-      Swal.fire({
-        title: "정말 삭제하시겠습니까?",
-        text: "이 작업이 끝나면 영구적으로 회원정보가 삭제됩니다.",
-        icon: "error",
-        showCancelButton: true,
-        confirmButtonColor: "#6c757d",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "네 삭제 하겠습니다.",
-        cancelButtonText: "아니요 다시 한번 생각해보겠습니다."
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const result = await deleteUser();
-            if (result.message === "success") {
-              sweetalert.success('탈퇴 완료', '탈퇴되셨습니다.', '확인')
-              logout();
-              navigate("/");
-            } else if (result.message === "fail") {
-              setPwmessage("회원탈퇴에 실패하셨습니다.");
-            } else {
-              setPwmessage("알 수 없는 오류가 발생했습니다.");
-            }
-          } catch (error) {
-            console.error("Error deleting user:", error);
-            setPwmessage("회원탈퇴에 실패하셨습니다.");
-          }
-        }
+    if (passwordBtn === "확인") {
+      const result = await deletePasswordCheck({
+        password: passwordRef.current.value,
       });
-    };
+      console.log(result);
+      if (result.message === "success") {
+        setPwEditable(true);
+        setPwmessage("비밀번호 검증이 완료되었습니다.");
+        setPasswordBtn("완료");
+        setPasswordValidColor("is-valid");
+      } else if (result.message === "fail") {
+        setPwmessage("비밀번호가 틀렸습니다.");
+        setPasswordValidColor("is-invalid");
+      }
+      return;
+    }
+  };
+
+  const handleDeleteOnclick = async () => {
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      text: "이 작업이 끝나면 영구적으로 회원정보가 삭제됩니다.",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonColor: "#6c757d",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "네 삭제 하겠습니다.",
+      cancelButtonText: "아니요 다시 한번 생각해보겠습니다.",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const result = await deleteUser();
+          if (result.message === "success") {
+            sweetalert.success("탈퇴 완료", "탈퇴되셨습니다.", "확인");
+            logout();
+            navigate("/");
+          } else if (result.message === "fail") {
+            setPwmessage("회원탈퇴에 실패하셨습니다.");
+          } else {
+            setPwmessage("알 수 없는 오류가 발생했습니다.");
+          }
+        } catch (error) {
+          console.error("Error deleting user:", error);
+          setPwmessage("회원탈퇴에 실패하셨습니다.");
+        }
+      }
+    });
+  };
 
     return (
     
       <div className="container mt-5" >
-        <Link to="/" className="navbar-logo d-flex justify-content-center">     
-          <img src={logo} alt="로고" className={styles.logo} />
-        </Link>
+        <a href="/" className="navbar-logo d-flex justify-content-center">
+      
+          <img src={logo} alt="로고" className="logo" />
+        </a>
         <div className={styles.card}>
           <div className={styles.cardbody}>
             <div className="text-center mb-5">
@@ -130,33 +127,45 @@ function UserDelete() {
               <h5 style={{color:"red"}} className='mb-3'>회원탈퇴를 신청하기전에, 내용을 꼭 확인해주세요. </h5>
               <li>고객정보 및 개인형 서비스 이용 기록은 정보보호처리 기준에따라 삭제됩니다.</li>
               <li>회원탈퇴 시 보유하시던 적립금은 회원정보에 등록된 계좌로 자동이체 됩니다.</li>
-              <li>회원탈퇴 시 더이상 <strong style={{color:"#0866ff"}}>R U T ?</strong>서비스를 이용불가능 합니다.</li>      
-              <p><strong>더 보기...</strong></p>    
+              <li>회원탈퇴 시 더이상 <strong style={{color:"#0866ff"}}>R U T ?</strong>서비스를 이용불가능 합니다.</li>          
               </div>
 
-
-              <div>
-                <label htmlFor="user-mbti" className="form-label mt-5">계속하시면 회원님의 회원정보가 <strong style={{color:"red"}}>삭제</strong>됩니다. <strong>삭제</strong>를 원하시면 하단의 회원정보 탈퇴 버튼을 눌러주세요.</label>
-                <div className="d-flex gap-2">
+            <div>
+              <label htmlFor="user-mbti" className="form-label mt-5">
+                계속하시면 회원님의 회원정보가{" "}
+                <strong style={{ color: "red" }}>삭제</strong>됩니다.{" "}
+                <strong>삭제</strong>를 원하시면 하단의 회원정보 탈퇴 버튼을
+                눌러주세요.
+              </label>
+              <div className="d-flex gap-2"></div>
+              <div className="col-12 d-flex justify-content-center">
+                <div className="button" style={{ paddingTop: "10px" }}>
+                  <button
+                    type="btn btn-secondary"
+                    className="btn btn-primary me-2"
+                    disabled={!pwEditable}
+                    onClick={handleDeleteOnclick}
+                  >
+                    회원탈퇴
+                  </button>
                 </div>
-                <div className='col-12 d-flex justify-content-center'>
-                <div className='button' style={{ paddingTop: '10px' }}>
-                  <button type="btn btn-secondary" className="btn btn-primary me-2"disabled={!pwEditable} onClick={handleDeleteOnclick}>회원탈퇴</button>                 
-                </div>
-                <div className='button' style={{ paddingTop: '10px' }}>
-                  <button type="button" className="btn btn-secondary"onClick={() => navigate('/memberevise')}>뒤로가기</button>
-                 
-                </div>
-               
+                <div className="button" style={{ paddingTop: "10px" }}>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => navigate("/memberevise")}
+                  >
+                    뒤로가기
+                  </button>
                 </div>
               </div>
             </div>
-          </div>  
+          </div>
         </div>
-      <Footer></Footer>
       </div>
-   
-    );
-  }
+      <Footer></Footer>
+    </div>
+  );
+}
 
-  export default UserDelete;
+export default UserDelete;
