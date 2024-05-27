@@ -100,6 +100,7 @@ function Search() {
               slidesPerView={6} //한번에 보여질 갯수
               modules={[Navigation, Mousewheel]}
               navigation={true}
+              
               mousewheel={true}
               breakpoints={{
                 1600: {

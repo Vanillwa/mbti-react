@@ -3,6 +3,8 @@
 }
 
 .userWrap {
+    
+    
     margin: 20px;
     background-color: whitesmoke;
 }
@@ -22,16 +24,17 @@
     align-items: center;
     justify-content: center;
     width: 140px;
-    height: 140px;
+    height:140px;
     border-radius: 50%;
     border: 1px solid gray;
     background-color: white;
     overflow: hidden;
+    
 }
 
 .imgWrap img {
     width: 100%;
-    height: auto;
+    height: 140px;
 }
 
 .postWrap {
@@ -57,6 +60,7 @@
 }
 
 .dropdown button:focus {
+
     border: 0;
 }
 
