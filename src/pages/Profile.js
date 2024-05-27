@@ -49,62 +49,52 @@ function Profile() {
   console.log(data)
   return (
     <>
-      <div className={`container ${styles.container}`}>
-        <h2>{nickname}님의 게시글</h2>
-      </div>
-      <div className={`row ${styles.postBox}`}>
-        {data.recentPost.map((userdata) => (
-          
-          <Link to={`/post/view?postId=${userdata.postId}`} className={`col col-3 ${styles.postWrap}`} key={userdata.writerId}>
-            <div className={styles.postHeader}>
-              <img
-                className={styles.img}
-                src={
-                  userdata.content.match(
-                    /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
-                  )?.[1] || noImg
-                }
-              />
-              
-            </div>
-            
-            <div className={styles.postBody}>
-            <div >
-                <div className={styles.imgBox}>
-                  <div className={styles.thumbnail}></div>
-                  <div className={styles.dateReadhitBox}>
-                    <div className={styles.title}> {userdata.title}</div>
-                    <div className={styles.content} >
-                    {'\u00A0\u00A0'}
-                      {removeHTMLTags(userdata.content)}
-                    </div>
-
-                    <div className={styles.bottom}>
-                    <div>
-                    {new Date(userdata.createdAt).toLocaleDateString()}
-                    </div>
-                    <div className={styles.icone}>
-                    <div>
-                    <img src={like}/>
-                    {userdata.like}
-                    </div>
-                    <div>
-                    <img src={readhit}/>
-                    {userdata.readhit}
-                    </div>
-                    </div>
-                    
-
-                    </div>
-                    
-                  </div>
-                
-                </div>
-                <div className={styles.titleBox}></div>
+     <h2 className={styles.mainTitle}>{nickname}님의 게시글</h2>
+      <div className={`container ${styles.outerContainer}`}>
+        <div className={`row ${styles.innerContainer}`}>
+          {data.recentPost.map((userdata) => (
+            <Link to={`/post/view?postId=${userdata.postId}`} className={`col col-3 ${styles.postWrap}`} key={userdata.writerId}>
+              <div className={styles.postHeader}>
+                <img
+                  className={styles.img}
+                  src={
+                    userdata.content.match(
+                      /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
+                    )?.[1] || noImg
+                  }
+                />
               </div>
-            </div>
-          </Link>
-        ))}
+              <div className={styles.postBody}>
+                <div>
+                  <div className={styles.imgBox}>
+                    <div className={styles.thumbnail}></div>
+                    <div className={styles.dateReadhitBox}>
+                      <div className={styles.title}>{userdata.title}</div>
+                      <div className={styles.content}>
+                        {'\u00A0\u00A0'}
+                        {removeHTMLTags(userdata.content)}
+                      </div>
+                      <div className={styles.bottom}>
+                        <div>{new Date(userdata.createdAt).toLocaleDateString()}</div>
+                        <div className={styles.icone}>
+                          <div>
+                            <img src={like} />
+                            {userdata.like}
+                          </div>
+                          <div>
+                            <img src={readhit} />
+                            {userdata.readhit}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.titleBox}></div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );
