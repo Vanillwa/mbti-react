@@ -10,6 +10,8 @@ import sweetalert from "../component/sweetalert";
 import Footer from "../component/Footer";
 import { Modal, Button } from 'react-bootstrap';
 
+
+
 function UserDelete() {
   const navigate = useNavigate();
 
@@ -73,7 +75,8 @@ function UserDelete() {
           } else if (result.message === "fail") {
             setPwmessage("회원탈퇴에 실패하셨습니다.");
           } else {
-            setPwmessage("알 수 없는 오류가 발생했습니다.");
+            setPwmessage(<span style={{ color: "red" }}>비밀번호 인증을 완료해주세요.</span>);
+            sweetalert.warning('비밀번호 인증을 완료해주세요.');
           }
         } catch (error) {
           console.error("Error deleting user:", error);
