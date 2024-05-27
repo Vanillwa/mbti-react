@@ -70,7 +70,7 @@ function ReportItems({
         return;
       },
     });
-    setShow(false);
+    setShow1(false);
   };
 
   const handleChatRoomComplete = async (body) => {
@@ -82,7 +82,7 @@ function ReportItems({
         return;
       },
     });
-    setShow(false);
+    setShow2(false);
   };
 
   //게시글 신고처리
