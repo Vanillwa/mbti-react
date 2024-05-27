@@ -56,10 +56,14 @@ ul {
 }
 
 .AccordionBody {
+  
+    text-align: center;
+}
+.chatAccordionBody{
+    text-align: center;
     height:600px;
     margin-bottom:30px;
 }
-
 .reportList {
     width: 70vw;
     margin-bottom: 12px;
@@ -130,6 +134,10 @@ ul {
 .reportPaging {
     display: flex;
     justify-content: center;
+}
+.nullReport{
+    text-align: center;
+    font-size:18px;
 }
 
 @media screen and (max-width:1024px) {
