@@ -13,7 +13,7 @@ import downImg from "../svg/arrow-down-circle.svg";
 import ChatReportModal from "../component/ChatReportModal";
 import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
 import { Dropdown } from "react-bootstrap";
-function ChatRoom({ roomId, listRefetch }) {
+function ChatRoom({ roomId, setRoomId, listRefetch }) {
 
   const { memoUserInfo } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
@@ -115,9 +115,13 @@ function ChatRoom({ roomId, listRefetch }) {
     </a>
   ));
 
-  const handleQuit = async ()=>{
+  const handleQuit = async () => {
     socket.emit("quitRoom", roomId)
     const result = await quitChatRoom(roomId)
+    if (result.message === 'success') {
+      listRefetch()
+      setRoomId(null)
+    }
   }
 
   if (roomStatus === "loading") {
@@ -192,7 +196,7 @@ function ChatRoom({ roomId, listRefetch }) {
         </form>
         <Dropdown >
           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-            <ThreeDots width='24px'/>
+            <ThreeDots width='24px' />
           </Dropdown.Toggle>
           <Dropdown.Menu >
             <Dropdown.Item eventKey="1"><ChatReportModal roomId={roomId} /></Dropdown.Item>

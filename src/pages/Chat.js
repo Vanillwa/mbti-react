@@ -47,7 +47,7 @@ function Chat() {
             <p>채팅을 시작해보세요</p>
           </div>
         ) : (
-          <ChatRoom roomId={roomId} listRefetch={listRefetch} />
+          <ChatRoom roomId={roomId} setRoomId={setRoomId} listRefetch={listRefetch} />
         )}
       </div>
 
