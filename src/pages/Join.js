@@ -346,7 +346,7 @@ function Join() {
                 />
                 <div className={`text-${passwordValidation === 'valid' ? 'success' : 'danger'}`}>{passwordAlert}</div>
 
-
+                <label htmlFor="user-pw" className="form-label">비밀번호 재확인</label>
                 <input type="password"  className={`form-control ${passwordValidation === 'valid' ? passwordValidColor : 'hidden'} $`}name="repassword" id="user-pw" placeholder="password" ref={passwordRef2} onInput={handlePasswordOnInput2} />
                 <div className={`text-${passwordSame === true ? 'success' : 'danger'}`}>{passwordAlert2}</div>
               </div>
