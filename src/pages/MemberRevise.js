@@ -10,6 +10,7 @@ import Footer from '../component/Footer';
 import { useAuthContext } from "../context/AuthContext";
 import { userCheckDuplicationNickname, userUpdateNickname, userUpdatePassword, userUpdateMbti, userDeleteImage } from "../service/api/memberReviseAPI";
 import axios from 'axios';
+import { Modal, Button } from 'react-bootstrap';
 
 function MemberRevise() {
   const { memoUserInfo, login, logout } = useAuthContext();
@@ -42,6 +43,7 @@ function MemberRevise() {
   const [passwordValidColor,setPasswordValidColor] =useState('')
 
   const mbtiRef = useRef();
+  const [showModal, setShowModal] = useState(false);
 
   const handleButtonOnClick = () => {
     imageRef.current.click();
@@ -306,6 +308,7 @@ function MemberRevise() {
             </div>
 
             <div>
+            <p className={styles.mbtiCheck}><a href="#" onClick={() => setShowModal(true)}><strong >[클릭]</strong><strong style={{ color: "#0866ff" }}> MBTI</strong>란 무엇인가요? </a></p>
               <label htmlFor="user-mbti" className="form-label">MBTI</label>
               <div className="d-flex gap-2">
                 <select
@@ -348,6 +351,25 @@ function MemberRevise() {
         </div>
       </div>
       <Footer />
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>MBTI란 무엇인가요?!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ul>
+            <li>INFP - 이상주의적이며 창의적. 감성적이고 예술적인 장점을 가짐.</li> <li>ENFJ - 자연스러운 지도자, 타인의 성장을 도움. 따뜻하고 카리스마 있는 성격.</li> <li>INTJ - 전략적 사고와 계획을 중시. 독립적이며 복잡한 문제 해결에 뛰어남.</li> <li>ENTP - 혁신적이고 창의적. 새로운 아이디어 탐구와 토론을 즐김.</li> <li>ISFJ - 책임감 있고 신뢰할 수 있음. 타인을 돌보는 데 뛰어난 장점을 가짐.</li> <li>ESTP - 에너지가 넘치고 모험적. 실용적이며 즉각적인 결과를 선호함.</li> <li>INFJ - 직관적이고 통찰력이 있음. 감정 이해에 뛰어나며 사회 정의에 열정적임.</li> <li>ESFP - 사교적이고 즐거움을 추구. 에너지 넘치고 순간을 즐기는 데 장점이 있음.</li> <li>INTP - 분석적이고 논리적인 사고. 복잡한 이론 탐구를 즐기며 독립적으로 일하는 것을 선호함.</li> <li>ESFJ - 사교적이고 배려심이 깊음. 커뮤니티에서 중요한 역할을 하며 전통과 규칙을 중시함.</li> <li>ISTJ - 신뢰할 수 있고 책임감이 강함. 조직적이고 세부 사항에 주의를 기울임.</li> <li>ENTJ - 전략적 사고를 중시하는 자연스러운 리더. 목표 달성을 위해 체계적으로 접근함.</li> <li>ISFP - 부드럽고 예술적. 자신의 감정과 경험을 소중히 여기며 타인에 대한 배려심이 깊음.</li> <li>ESTJ - 실용적이고 조직적. 규칙과 절차를 중시하며 효율성을 강조함.</li> <li>ISTP - 분석적이고 실용적. 문제 해결 능력이 뛰어나며 독립적으로 일하는 것을 선호함.</li> <li>ENFP - 열정적이고 창의적. 새로운 아이디어와 가능성을 탐구하는 데 장점이 있음.</li>
+          </ul>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary">
+            <a href='https://www.kmbti.co.kr/' style={{ color: 'inherit', textDecoration: 'none' }}>
+              Check! MBTI
+            </a>
+          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>네. 알겠습니다.</Button>
+
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
