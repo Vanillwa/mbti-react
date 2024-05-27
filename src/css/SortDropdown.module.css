@@ -1,0 +1,7 @@
+.dropdown{
+  border: 1px solid lightgray;
+  width: 120px;
+}
+.dropdown:hover{
+  border: 1px solid gray;
+}
