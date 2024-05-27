@@ -38,7 +38,7 @@ function ReportItems({
   const handleClose1 = () => setShow1(false);
   const handleClose2 = () => setShow2(false);
 
-  console.log("chatRoom", chatRoomData);
+
   const completePostMutate = useMutation(reportId => {
     return updatePostReport(reportId);
   });
@@ -47,8 +47,8 @@ function ReportItems({
     return updateCommentReport(reportId);
   });
 
-  const completeChatRoomMutate = useMutation((reportId, targetId, roomId) => {
-    return updateChatRoomReport(reportId, targetId, roomId);
+  const completeChatRoomMutate = useMutation((body) => {
+    return updateChatRoomReport(body);
   });
 
   const handlePostComplete = async reportId => {
@@ -73,8 +73,9 @@ function ReportItems({
     setShow(false);
   };
 
-  const handleChatRoomComplete = async (reportId, targetId, roomId) => {
-    completeChatRoomMutate.mutate((reportId, targetId, roomId), {
+  const handleChatRoomComplete = async (body) => {
+  
+    completeChatRoomMutate.mutate(body, {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["getChatRoomReportList"]);
         await chatRefetch();
@@ -139,7 +140,7 @@ function ReportItems({
       sweetalert.warning("정지 실패");
     }
   };
-  //채팅 신고처리
+  //채팅 신고정지처리
   const handleChatRoomSubmit = async e => {
     e.preventDefault();
     const now = new Date();
@@ -149,14 +150,16 @@ function ReportItems({
       userId: user.userId,
       roomId: report.roomId,
       blockDate,
+      
     });
     if (result.message === "success") {
       socket.emit("blockUser", report.targetUser.userId);
       sweetalert.success("정지 완료");
-      completeChatRoomMutate.mutate(
-        report.reportId,
-        report.targetUser.userId,
-        report.roomId,
+      completeChatRoomMutate.mutate({
+       reportId: report.reportId,
+      targetId:  report.targetUser.userId,
+       roomId: report.roomId,
+      },
         {
           onSuccess: async () => {
             await queryClient.invalidateQueries(["getChatRoomReportList"]);
@@ -297,14 +300,17 @@ function ReportItems({
           </form>
         </Modal.Body>
         <Modal.Footer>
+          {console.log("report",report)}
           <Button
             variant="secondary"
             onClick={() =>
               handleChatRoomComplete(
-                report.reportId,
-                report.targetUser.userId,
-                report.roomId
-              )
+                {
+               reportId: report.reportId,
+               targetId: report.targetUser.userId,
+               roomId: report.roomId
+                }
+                )
             }>
             처리완료
           </Button>
@@ -340,7 +346,7 @@ function ReportItems({
                     </div>
                   </div>
                 </Accordion.Header>
-                <Accordion.Body>
+                <Accordion.Body className={styles.AccordionBody}>
                   <div className={styles.postTitle}>{item.Post?.title}</div>
                   <div className={styles.postContent}>
                     <ContentComponent content={item.Post?.content} />
@@ -381,7 +387,7 @@ function ReportItems({
                     </div>
                   </div>
                 </Accordion.Header>
-                <Accordion.Body>
+                <Accordion.Body className={styles.AccordionBody}>
                   <div className={styles.commentContent}>
                     <ContentComponent content={item.Comment.content} />
                   </div>
@@ -424,7 +430,7 @@ function ReportItems({
                     </div>
                   </div>
                 </Accordion.Header>
-                <Accordion.Body className={styles.AccordionBody}>
+                <Accordion.Body className={styles.chatAccordionBody}>
                   <section className={chatRoomStyles.section}>
                     <div className={chatRoomStyles.chatForm}>
                       <div className={chatRoomStyles.chatFormInner}>
@@ -439,8 +445,11 @@ function ReportItems({
                                 <div
                                   key={message.messageId}
                                   className={`${chatRoomStyles.chat} ${chatRoomStyles.mine}`}>
-                                  <div >
-                                    <div  className={chatRoomStyles.yourNickname}>{message.nickname}</div>
+                                  <div>
+                                    <div
+                                      className={chatRoomStyles.yourNickname}>
+                                      {message.nickname}
+                                    </div>
 
                                     <div className={chatRoomStyles.content}>
                                       {message.message}
@@ -448,7 +457,7 @@ function ReportItems({
                                   </div>
                                   <div className={chatRoomStyles.profileBox}>
                                     <img
-                                    className={chatRoomStyles.userImg}
+                                      className={chatRoomStyles.userImg}
                                       src={message.profileImage}
                                       alt="profile"></img>
                                   </div>
@@ -498,7 +507,7 @@ function ReportItems({
             );
           })
         ) : (
-          <div>작성된 신고가 없습니다.</div>
+          <div className={styles.nullReport}>작성된 신고가 없습니다.</div>
         )}
       </Accordion>
     </>

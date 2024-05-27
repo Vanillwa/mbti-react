@@ -51,9 +51,9 @@ export const reportPost = async (body) =>{
     return res.data;
   }
   //채팅방신고 처리
-  export const updateChatRoomReport = async(reportId,targetId,roomId)=>{
-    console.log(targetId,roomId)
-    const res= await axios.put(`/report/chatroom/${reportId}`,{targetId,roomId})
+  export const updateChatRoomReport = async(body)=>{
+    
+    const res= await axios.put(`/report/chatroom/${body.reportId}`,body)
     
     return res.data;
   }
