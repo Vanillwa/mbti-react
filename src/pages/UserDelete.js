@@ -1,5 +1,3 @@
-
-
 import React, { useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from "react-router-dom";
@@ -7,10 +5,10 @@ import logo from '../images/areyout.png';
 import styles from '../css/UserDelete.module.css';
 import { useAuthContext } from "../context/AuthContext";
 import { deleteUser, deletePasswordCheck } from "../service/api/memberReviseAPI";
-
 import Swal from "sweetalert2";
 import sweetalert from "../component/sweetalert";
 import Footer from "../component/Footer";
+import { Modal, Button } from 'react-bootstrap';
 
 function UserDelete() {
   const navigate = useNavigate();
@@ -30,6 +28,9 @@ function UserDelete() {
   // 삭제 이유
   const [deleteReason, setDeleteReason] = useState('');
   const [otherReason, setOtherReason] = useState('');
+
+  // 그 모달 더보기창 약관때매 만듬
+  const [showModal, setShowModal] = useState(false);
 
   const handlePasswordBtnOnclick = async () => {
     if (passwordBtn === '확인') {
@@ -60,17 +61,13 @@ function UserDelete() {
       confirmButtonColor: "#6c757d",
       cancelButtonColor: "#3085d6",
       confirmButtonText: "네 삭제 하겠습니다.",
-
       cancelButtonText: "아니요 다시 한번 생각해보겠습니다."
-
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           const result = await deleteUser();
           if (result.message === "success") {
-
             sweetalert.success('탈퇴 완료', '탈퇴되셨습니다.', '확인');
-
             logout();
             navigate("/");
           } else if (result.message === "fail") {
@@ -85,7 +82,6 @@ function UserDelete() {
       }
     });
   };
-
 
   const handleReasonChange = (event) => {
     setDeleteReason(event.target.value);
@@ -118,7 +114,7 @@ function UserDelete() {
                     <option value="재미없음">이 사이트가 재미가없습니다.</option>
                     <option value="더 좋은 사이트 발견">더 좋은 사이트를 찾았습니다.</option>
                     <option value="현질유도">현질유도가 심합니다.</option>
-                    <option value="욕설하는 유저 많음">욕설하는 유저가 너무 많습니다.</option>                   
+                    <option value="욕설하는 유저 많음">욕설하는 유저가 너무 많습니다.</option>
                     <option value="기타">기타</option>
                   </select>
                 </div>
@@ -154,7 +150,7 @@ function UserDelete() {
                 <li>회원탈퇴 시 보유하시던 적립금은 회원정보에 등록된 계좌로 자동이체 됩니다.</li>
                 <li>회원탈퇴 시 더이상 <strong style={{ color: "#0866ff" }}>R U T ?</strong>서비스를 이용불가능 합니다.</li>
 
-                {/* <p><strong>더 보기...</strong></p> */}
+                <p><strong><a href="#" onClick={() => setShowModal(true)}>더 보기...</a></strong></p>
               </div>
 
               <div>
@@ -179,6 +175,24 @@ function UserDelete() {
       </div>
       <Footer />
 
+   
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>추가 정보</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ul>
+            <li>고객정보 및 개인형 서비스 이용 기록은 정보보호처리 기준에 따라 삭제됩니다.</li>
+            <li>회원탈퇴 시 보유하시던 적립금은 회원정보에 등록된 계좌로 자동이체 됩니다.</li>
+            <li>회원탈퇴 시 더 이상 <strong style={{ color: "#0866ff" }}>R U T ?</strong> 서비스를 이용 불가능합니다.</li>
+            <li>회원 탈퇴 후 재가입 시 혜택을 다시 받을 수 없습니다.</li>
+            <li>기타 궁금한 사항이 있으시면 고객센터로 문의해 주세요.</li>
+          </ul>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>네 항목에 대하여 확인하였습니다!ㅎㅎ.</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

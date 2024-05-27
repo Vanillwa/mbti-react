@@ -11,6 +11,7 @@ import Swal from "sweetalert2"
 import Footer from '../component/Footer';
 import sweetalert from '../component/sweetalert';
 import { async } from 'q';
+import { Modal, Button } from 'react-bootstrap';
 //import backgroundImg from '../images/backgroundImg.png';
 
 
@@ -42,7 +43,7 @@ function Join() {
   const [nicknameValidation, setNicknameValidation] = useState('invalid')
 
   // 비밀번호
- 
+
   const passwordRef1 = useRef()
   const passwordRef2 = useRef()
   const [passwordAlert, setPasswordAlert] = useState('');
@@ -51,9 +52,11 @@ function Join() {
   const [passwordSame, setPasswordSame] = useState(false);
 
 
-  const [emailValidColor,setEmailValidColor] = useState("")
-  const [passwordValidColor,setPasswordValidColor] =useState("");
-  const [nicknameVailidColor,setNicknameVaildColor] =useState("")
+  const [emailValidColor, setEmailValidColor] = useState("")
+  const [passwordValidColor, setPasswordValidColor] = useState("");
+  const [nicknameVailidColor, setNicknameVaildColor] = useState("")
+
+  const [showModal, setShowModal] = useState(false);
 
   // 이메일 입력
   const handleEmailOnBlur = async (e) => {
@@ -86,7 +89,7 @@ function Join() {
       setCertificationDisabled(false); //초기값 false
       setEmailValidColor("is-valid")
     } else if (data.message === "duplicated") {
-      setEmailAlert("이미 사용중."); 
+      setEmailAlert("이미 사용중.");
       setEmailValidation('invalid'); // 이메일이 중복
       setCertificationDisabled(true);
       setEmailValidColor("is-invalid")
@@ -105,7 +108,7 @@ function Join() {
         setCertificationAlert("인증 번호가 발송되었습니다.")
         setCertificationInputDisabled(false) // false값으로 바꿈 이건 인풋상자
       } else {
-        sweetalert.error('인증번호 발송에 실패했습니다. 나중에 다시 시도해주세요.','','확인');
+        sweetalert.error('인증번호 발송에 실패했습니다. 나중에 다시 시도해주세요.', '', '확인');
       }
     } catch (error) {
       console.error('인증번호 요청 중 오류 발생:', error);
@@ -167,17 +170,17 @@ function Join() {
     }
   };
 
- 
+
   const comparePassword = () => {
     if (passwordRef1.current.value === passwordRef2.current.value) {
       setPasswordAlert2("비밀번호가 일치합니다.")
       setPasswordSame(true)
-      
+
       setPasswordValidColor("is-valid")
-      
+
     } else {
       setPasswordAlert2("비밀번호가 일치하지 않습니다.")
-      
+
       setPasswordSame(false)
     }
     console.log(passwordSame)
@@ -199,7 +202,7 @@ function Join() {
       setPasswordAlert("올바른 형식의 비밀번호 입니다.");
       setPasswordValidation("valid");
       comparePassword()
-     
+
     }
     else {
       passwordRef2.current.value = ''
@@ -215,7 +218,7 @@ function Join() {
 
   const handlePasswordOnInput2 = (e) => {
     comparePassword()
-    
+
   }
 
   // 회원가입 
@@ -242,7 +245,7 @@ function Join() {
       return
     }
 
-    
+
     if (!passwordSame) {
       sweetalert.warning("비밀번호가 일치하지 않습니다.")
       passwordRef2.current.focus()
@@ -281,7 +284,7 @@ function Join() {
   }
 
   return (
- 
+
     <div className="container mt-5 c1">
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className={styles.logo} />
@@ -347,34 +350,36 @@ function Join() {
                 <div className={`text-${passwordValidation === 'valid' ? 'success' : 'danger'}`}>{passwordAlert}</div>
 
                 <label htmlFor="user-pw" className="form-label">비밀번호 재확인</label>
-                <input type="password"  className={`form-control ${passwordValidation === 'valid' ? passwordValidColor : 'hidden'} $`}name="repassword" id="user-pw" placeholder="password" ref={passwordRef2} onInput={handlePasswordOnInput2} />
+                <input type="password" className={`form-control ${passwordValidation === 'valid' ? passwordValidColor : 'hidden'} $`} name="repassword" id="user-pw" placeholder="password" ref={passwordRef2} onInput={handlePasswordOnInput2} />
                 <div className={`text-${passwordSame === true ? 'success' : 'danger'}`}>{passwordAlert2}</div>
               </div>
 
               <div className="d-flex gap-2">
                 <select className="form-control" name="mbti" id="user-mbti" required>
                   <option value="">MBTI를 선택해주세요.</option>
-                  <option value="INTJ">INTJ - 전략가</option>
-                  <option value="INTP">INTP - 논리술사</option>
-                  <option value="ENTJ">ENTJ - 지도자</option>
-                  <option value="ENTP">ENTP - 변론가</option>
-                  <option value="INFJ">INFJ - 옹호자</option>
-                  <option value="INFP">INFP - 중재자</option>
-                  <option value="ENFJ">ENFJ - 선도자</option>
-                  <option value="ENFP">ENFP - 활동가</option>
-                  <option value="ISTJ">ISTJ - 논리주의자</option>
-                  <option value="ISFJ">ISFJ - 수호자</option>
-                  <option value="ESTJ">ESTJ - 행정관</option>
-                  <option value="ESFJ">ESFJ - 친선대사</option>
-                  <option value="ISTP">ISTP - 장인</option>
-                  <option value="ISFP">ISFP - 모험가</option>
-                  <option value="ESTP">ESTP - 사업가</option>
-                  <option value="ESFP">ESFP - 연예인</option>
+                  <option value ="INTJ" >INTJ</option>
+                  <option value="INTP">INTP</option>
+                  <option value="ENTJ">ENTJ</option>
+                  <option value="ENTP">ENTP</option>
+                  <option value="INFJ">INFJ</option>
+                  <option value="INFP">INFP</option>
+                  <option value="ENFJ">ENFJ</option>
+                  <option value="ENFP">ENFP</option>
+                  <option value="ISTJ">ISTJ</option>
+                  <option value="ISFJ">ISFJ</option>
+                  <option value="ESTJ">ESTJ</option>
+                  <option value="ESFJ">ESFJ</option>
+                  <option value="ISTP">ISTP</option>
+                  <option value="ISFP">ISFP</option>
+                  <option value="ESTP">ESTP</option>
+                  <option value="ESFP">ESFP</option>
                   <option value="">미정 - 아직 잘 모르겠습니다.</option>
                 </select>
               </div>
               <div className="col-12">
+                <p className={styles.mbtiCheck}><a href="#" onClick={() => setShowModal(true)}><strong >[클릭]</strong><strong style={{ color: "#0866ff" }}> MBTI</strong>란 무엇인가요? </a></p>
                 <div className="form-check">
+
                   <input className="form-check-input" type="checkbox" id="checkBox1" required />
                   <label className="form-check-label" htmlFor="checkBox1">
                     <strong>[<strong style={{ color: "red" }}>필수</strong>] </strong>회원가입 이용약관 동의
@@ -395,8 +400,28 @@ function Join() {
         </div>
       </div>
       <Footer></Footer>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>MBTI란 무엇인가요?!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ul>
+            <li>INFP - 이상주의적이며 창의적. 감성적이고 예술적인 장점을 가짐.</li> <li>ENFJ - 자연스러운 지도자, 타인의 성장을 도움. 따뜻하고 카리스마 있는 성격.</li> <li>INTJ - 전략적 사고와 계획을 중시. 독립적이며 복잡한 문제 해결에 뛰어남.</li> <li>ENTP - 혁신적이고 창의적. 새로운 아이디어 탐구와 토론을 즐김.</li> <li>ISFJ - 책임감 있고 신뢰할 수 있음. 타인을 돌보는 데 뛰어난 장점을 가짐.</li> <li>ESTP - 에너지가 넘치고 모험적. 실용적이며 즉각적인 결과를 선호함.</li> <li>INFJ - 직관적이고 통찰력이 있음. 감정 이해에 뛰어나며 사회 정의에 열정적임.</li> <li>ESFP - 사교적이고 즐거움을 추구. 에너지 넘치고 순간을 즐기는 데 장점이 있음.</li> <li>INTP - 분석적이고 논리적인 사고. 복잡한 이론 탐구를 즐기며 독립적으로 일하는 것을 선호함.</li> <li>ESFJ - 사교적이고 배려심이 깊음. 커뮤니티에서 중요한 역할을 하며 전통과 규칙을 중시함.</li> <li>ISTJ - 신뢰할 수 있고 책임감이 강함. 조직적이고 세부 사항에 주의를 기울임.</li> <li>ENTJ - 전략적 사고를 중시하는 자연스러운 리더. 목표 달성을 위해 체계적으로 접근함.</li> <li>ISFP - 부드럽고 예술적. 자신의 감정과 경험을 소중히 여기며 타인에 대한 배려심이 깊음.</li> <li>ESTJ - 실용적이고 조직적. 규칙과 절차를 중시하며 효율성을 강조함.</li> <li>ISTP - 분석적이고 실용적. 문제 해결 능력이 뛰어나며 독립적으로 일하는 것을 선호함.</li> <li>ENFP - 열정적이고 창의적. 새로운 아이디어와 가능성을 탐구하는 데 장점이 있음.</li>
+          </ul>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary">
+            <a href='https://www.kmbti.co.kr/' style={{ color: 'inherit', textDecoration: 'none' }}>
+              Check! MBTI
+            </a>
+          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>네. 알겠습니다.</Button>
+
+        </Modal.Footer>
+      </Modal>
     </div>
-   
+
 
 
 
