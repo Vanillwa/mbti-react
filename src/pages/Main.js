@@ -29,11 +29,6 @@ function Main() {
   const [emailValidColor, setEmailValidColor] = useState("");
   const [passwordValidColor, setPasswordValidColor] = useState("");
 
-  const checkCapsLock = e => {
-    let capsLock = e.getModifierState("CapsLock");
-    setCapsLockFlag(capsLock);
-  };
-
   //로그인 기능
   const handleSubmit = async e => {
     e.preventDefault();
@@ -60,8 +55,6 @@ function Main() {
       setEmailValidColor("is-invalid");
       setPwdAlert("");
       return;
-
-     
     } else if (res.message === "PwdFail") {
       setPwdAlert("비밀번호가 올바르지않습니다.");
       setEmailAlert("");
@@ -146,7 +139,6 @@ function Main() {
                       placeholder="Password"
                       pattern=".{6,20}"
                       title="6~20 글자 사이의 비밀번호를 입력해주세요"
-                      onKeyDown={e => checkCapsLock(e)}
                       required
                     />
                     <p className={styles.alert}>{pwdAlert}</p>

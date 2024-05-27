@@ -284,9 +284,11 @@ function Join() {
   return (
 
     <div className="container mt-5 c1">
+      <div className={styles.logoBox}>
       <Link to="/" className="navbar-logo d-flex justify-content-center">
         <img src={logo} alt="로고" className={styles.logo} />
       </Link>
+      </div>
       <div className={styles.card}>
         <div className={styles.cardbody}>
           <form onSubmit={handleSubmit}>
@@ -397,7 +399,7 @@ function Join() {
           </form>
         </div>
       </div>
-      <Footer></Footer>
+     
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton >

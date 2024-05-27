@@ -87,7 +87,6 @@ function Search() {
       </div>
     );
   }
-  console.log(data);
 
   return (
     <div>
@@ -120,64 +119,57 @@ function Search() {
                 },
               }}>
               {data.userList.map(item => {
-                console.log("userList:", item);
-                return (
-                  <>
-                    {item.status === "deleted" ? null : (
-                      <SwiperSlide key={item.userId}>
-                        <div className={searchStyles.userItem}>
-                          <div className={searchStyles.imgWrap}>
-                            <Link to={`/user/${item.userId}`}>
-                              <img
-                                src={
-                                  item.profileImage ? item.profileImage : null
-                                }
-                              />
-                            </Link>
-                          </div>
+                return item.status === "deleted" ? null : (
+                  <SwiperSlide key={item.userId}>
+                    <div className={searchStyles.userItem}>
+                      <div className={searchStyles.imgWrap}>
+                        <Link to={`/user/${item.userId}`}>
+                          <img
+                            src={item.profileImage ? item.profileImage : null}
+                          />
+                        </Link>
+                      </div>
 
-                          <div className={searchStyles.nickname}>
-                            <div>
-                              <Dropdown className={searchStyles.dropdown}>
-                                <Dropdown.Toggle variant="" id="dropdown-basic">
-                                  {item.nickname}
-                                </Dropdown.Toggle>
+                      <div className={searchStyles.nickname}>
+                        <div>
+                          <Dropdown className={searchStyles.dropdown}>
+                            <Dropdown.Toggle variant="" id="dropdown-basic">
+                              {item.nickname}
+                            </Dropdown.Toggle>
 
-                                <Dropdown.Menu>
+                            <Dropdown.Menu>
+                              <Dropdown.Item
+                                onClick={() => {
+                                  navigate(`/user/${item.userId}`);
+                                }}>
+                                프로필 보기
+                              </Dropdown.Item>
+
+                              {isLoggedIn ? (
+                                <>
                                   <Dropdown.Item
-                                    onClick={() => {
-                                      navigate(`/user/${item.userId}`);
+                                    onClick={e => {
+                                      handleRequestFreind(e, item.userId);
                                     }}>
-                                    프로필 보기
+                                    친구요청
                                   </Dropdown.Item>
 
-                                  {isLoggedIn ? (
-                                    <>
-                                      <Dropdown.Item
-                                        onClick={e => {
-                                          handleRequestFreind(e, item.userId);
-                                        }}>
-                                        친구요청
-                                      </Dropdown.Item>
-
-                                      <Dropdown.Item
-                                        onClick={e => {
-                                          handleRequestChat(e, item.userId);
-                                        }}>
-                                        채팅하기
-                                      </Dropdown.Item>
-                                    </>
-                                  ) : (
-                                    <></>
-                                  )}
-                                </Dropdown.Menu>
-                              </Dropdown>
-                            </div>
-                          </div>
+                                  <Dropdown.Item
+                                    onClick={e => {
+                                      handleRequestChat(e, item.userId);
+                                    }}>
+                                    채팅하기
+                                  </Dropdown.Item>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </Dropdown.Menu>
+                          </Dropdown>
                         </div>
-                      </SwiperSlide>
-                    )}
-                  </>
+                      </div>
+                    </div>
+                  </SwiperSlide>
                 );
               })}
             </Swiper>
@@ -187,7 +179,6 @@ function Search() {
       {data.postList.length == 0 ? null : (
         <div className={searchStyles.postWrap}>
           {data.postList.map(item => {
-            console.log("postList:", item);
             const createdAt = new Date(item.createdAt);
             const now = new Date();
             const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -210,44 +201,40 @@ function Search() {
               /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
             );
             const imgSrc = showImg ? showImg[1] : null;
-            return (
-              <>
-                {item.status === "deleted" ? null : (
-                  <div className={styles.container} key={item.postId}>
-                    <Link
-                      to={`/post/view?postId=${item.postId}`}
-                      className={styles.postWrap}>
-                      <div className={styles.postContent}>
-                        <div className={styles.header}>
-                          <UserDropdown item={item.User} />
-                        </div>
-                        <div className={styles.title}>{item.title}</div>
-                        <div className={styles.readhitBox}>
-                          <div className={styles.date}>{dateDisplay}</div>
-                          <div className={styles.likes}>
-                            <img src={like} alt="likes" /> {item.like}
-                          </div>
-                          <div className={styles.readhit}>
-                            <img src={eye} alt="views" /> {item.readhit}
-                          </div>
-                        </div>
+            return item.status === "deleted" ? null : (
+              <div className={styles.container} key={item.postId}>
+                <Link
+                  to={`/post/view?postId=${item.postId}`}
+                  className={styles.postWrap}>
+                  <div className={styles.postContent}>
+                    <div className={styles.header}>
+                      <UserDropdown item={item.User} />
+                    </div>
+                    <div className={styles.title}>{item.title}</div>
+                    <div className={styles.readhitBox}>
+                      <div className={styles.date}>{dateDisplay}</div>
+                      <div className={styles.likes}>
+                        <img src={like} alt="likes" /> {item.like}
                       </div>
-
-                      {imgSrc && (
-                        <div className={styles.imgBox}>
-                          <div className={styles.thumbnail}>
-                            <img
-                              className={styles.img}
-                              src={imgSrc}
-                              alt="thumbnail"
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </Link>
+                      <div className={styles.readhit}>
+                        <img src={eye} alt="views" /> {item.readhit}
+                      </div>
+                    </div>
                   </div>
-                )}{" "}
-              </>
+
+                  {imgSrc && (
+                    <div className={styles.imgBox}>
+                      <div className={styles.thumbnail}>
+                        <img
+                          className={styles.img}
+                          src={imgSrc}
+                          alt="thumbnail"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </Link>
+              </div>
             );
           })}
           <Paging data={data} status={status} page={page} setPage={setPage} />

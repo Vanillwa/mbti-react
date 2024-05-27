@@ -97,10 +97,12 @@ function ResetPassword() {
 
   return (
     <>
-      <div className="container mt-5">
-        <Link to="/" className="navbar-logo d-flex justify-content-center">
+      <div className={`container mt-5 ${styles.container}`}>
+        <div className={` ${styles.logoBox}`}>
+        <Link to="/" >
           <img src={logo} alt="로고" className={styles.logo} />
         </Link>
+        </div>
         <div className={styles.card}>
           <div className="card-body">
             <form>

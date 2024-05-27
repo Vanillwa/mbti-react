@@ -3,12 +3,17 @@
 }
 
 .logo {
-  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  width:250px;
+  margin:0 auto;
+  margin-bottom: 50px; 
 }
 
 .logo img {
+
   text-align: center;
-  width:20vw;
+  width:250px;
 
 }
 
@@ -48,4 +53,5 @@
   .card {
     max-width: 95%;
   }
+ 
 }

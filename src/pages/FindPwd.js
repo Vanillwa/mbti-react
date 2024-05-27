@@ -111,7 +111,7 @@ function FindPwd() {
     <>
       <div className={`${styles.container} container mt-5`}>
         <div className={styles.logo}>
-        <Link to="/" className="navbar-logo d-flex justify-content-center">
+        <Link to="/" className="navbar-logo">
           <img src={logo} alt="로고"  />
         </Link>
         </div>
