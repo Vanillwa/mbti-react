@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import { useQuery } from "react-query";
 import { getChatList } from "../service/api/chatAPI";
-//import { socket } from "../service/socket/socket";
 import { useLocation } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 

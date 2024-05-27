@@ -13,7 +13,7 @@ import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 
 function MemberRevise() {
-  const { memoUserInfo, login, logout } = useAuthContext();
+  const { memoUserInfo, login, logout, socket } = useAuthContext();
   const { userInfo } = memoUserInfo;
 
   const navigate = useNavigate();
