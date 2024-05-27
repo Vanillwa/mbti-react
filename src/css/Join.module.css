@@ -1,3 +1,9 @@
+.logoBox{
+  width:250px;
+  display: flex;
+  justify-content: center;
+  margin:0 auto;
+}
 .logo {
   width: 250px;
   margin-bottom: 12px;
