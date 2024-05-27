@@ -17,7 +17,6 @@ import { AuthContext, useAuthContext } from "../context/AuthContext";
 import Footer from "../component/Footer";
 
 function Main() {
-  console.log("rendered");
   const navigate = useNavigate();
   const [capsLockFlag, setCapsLockFlag] = useState(false);
   const { login } = useAuthContext();
@@ -49,6 +48,7 @@ function Main() {
 
     if (res.message === "success") {
       login(res.userInfo);
+      socket.emit('login')
       if (array.includes(location.state)) navigate("/post/list");
       else navigate(-1);
     } else if (res.message === "blocked") {
@@ -74,11 +74,9 @@ function Main() {
     navigate("/post/list");
   };
   const goLogout = async () => {
-    socket.emit("logout");
+    logout();
     const result = await fetchLogout();
-
     if (result.message === "success") {
-      logout();
       navigate("/", { state: "logout" });
     }
   };

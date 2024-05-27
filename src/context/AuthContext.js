@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 
 export const AuthContext = createContext(null);
@@ -9,11 +9,10 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(sessionIsLoggedIn);
   const [userInfo, setUserInfo] = useState(sessionUserInfo);
   let socket
-  if (isLoggedIn) {
-    const url = process.env.REACT_APP_SOCKET_URL;
-    socket = io(url, { withCredentials: true })
-    socket.emit('login')
-  }
+  const url = process.env.REACT_APP_SOCKET_URL;
+  socket = io(url, { withCredentials: true })
+
+
   const login = async (info) => {
     sessionStorage.setItem("userInfo", JSON.stringify(info));
     sessionStorage.setItem("isLoggedIn", true);

@@ -26,12 +26,13 @@ import Chat from "./pages/Chat";
 import GlobalStyles from "./GlobalStyles";
 
 function App() {
-  const { memoUserInfo, socket } = useAuthContext();
+  const { memoUserInfo, socket, logout } = useAuthContext();
   const { isLoggedIn } = memoUserInfo;
   const navigate = useNavigate();
-  const { logout } = useContext(AuthContext);
+  
 
   if (isLoggedIn) {
+
     socket.on("uBlocked", async () => {
       socket.emit("logout");
       const result = await fetchLogout();
