@@ -29,7 +29,6 @@
 
 .bottom { display: flex; align-items: center; padding:24px; gap:12px; } 
 
-
 @media screen and (max-width:900px) {
     .reportList{
      width:80vw;

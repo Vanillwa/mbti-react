@@ -83,7 +83,7 @@ function ChatReportModal({ roomId }) {
               type="button"
               variant="info"
               onClick={handleShow}>
-              <PiSirenFill style={{fontSize:'24px'}} />
+              신고하기
             </div>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>

@@ -9,7 +9,6 @@ import ReportModal from "./PostReportModal";
 import UserDropdown from "./userDropdown";
 import sweetalert from "./sweetalert";
 
-import like from "../svg/like.svg";
 import { ReactComponent as Eye } from "../svg/eye.svg"
 import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
 import { ReactComponent as Like } from "../svg/like.svg"
@@ -142,7 +141,7 @@ function ViewContent() {
             <div className={styles.date}>{dateDisplay}</div>
             {isLoggedIn ? <Dropdown >
               <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                <ThreeDots />
+                <ThreeDots width='18px' />
               </Dropdown.Toggle>
               <Dropdown.Menu >
                 {userInfo.userId != data.User.userId ? <Dropdown.Item eventKey="1"><ReportModal data={data} /></Dropdown.Item> : null}

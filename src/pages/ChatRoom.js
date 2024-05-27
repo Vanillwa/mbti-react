@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import styles from "../css/ChatRoom.module.css";
 import { getChatRoom } from "../service/api/chatAPI";
@@ -11,7 +11,8 @@ import { socket } from "../service/socket/socket";
 import downImg from "../svg/arrow-down-circle.svg";
 
 import ChatReportModal from "../component/ChatReportModal";
-
+import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
+import { Dropdown } from "react-bootstrap";
 function ChatRoom({ roomId, listRefetch }) {
 
   const { memoUserInfo } = useAuthContext();
@@ -91,8 +92,8 @@ function ChatRoom({ roomId, listRefetch }) {
       setChat(newData);
     };
 
-    const handleNotAvailable = (newData)=>{
-      if(newData.targetId === userInfo.userId){
+    const handleNotAvailable = (newData) => {
+      if (newData.targetId === userInfo.userId) {
         alert("채팅이 불가능한 상태입니다.")
       }
     }
@@ -107,6 +108,12 @@ function ChatRoom({ roomId, listRefetch }) {
       socket.off("notAvailable", handleNotAvailable)
     };
   }, []);
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a href="" ref={ref} onClick={(e) => { e.preventDefault(); onClick(e); }}>
+      {children}
+    </a>
+  ));
 
   if (roomStatus === "loading") {
     return <div>loading...</div>;
@@ -178,7 +185,16 @@ function ChatRoom({ roomId, listRefetch }) {
             전송
           </Button>
         </form>
-        <ChatReportModal roomId={roomId} />
+        <Dropdown >
+          <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+            <ThreeDots width='24px'/>
+          </Dropdown.Toggle>
+          <Dropdown.Menu >
+            <Dropdown.Item eventKey="1"> <ChatReportModal roomId={roomId} /></Dropdown.Item>
+            <Dropdown.Item eventKey="2" >나가기</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+
       </div>
     </section>
   );
