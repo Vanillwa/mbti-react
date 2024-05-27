@@ -10,7 +10,6 @@ import { requestEmailVerification } from "../service/api/joinAPI";
 import Swal from "sweetalert2"
 import Footer from '../component/Footer';
 import sweetalert from '../component/sweetalert';
-
 import { Modal, Button } from 'react-bootstrap';
 
 
