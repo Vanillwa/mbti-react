@@ -402,8 +402,8 @@ function Join() {
       <Footer></Footer>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>MBTI란 무엇인가요?!</Modal.Title>
+        <Modal.Header closeButton >
+          <Modal.Title className={styles.modalTitle}>MBTI란 무엇인가요?!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ul>
@@ -411,12 +411,12 @@ function Join() {
           </ul>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary">
+          <Button className={styles.modalbtn1} variant="secondary">
             <a href='https://www.kmbti.co.kr/' style={{ color: 'inherit', textDecoration: 'none' }}>
               Check! MBTI
             </a>
           </Button>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>네. 알겠습니다.</Button>
+          <Button className={styles.modalbtn2}variant="secondary" onClick={() => setShowModal(false)}>네. 알겠습니다.</Button>
 
         </Modal.Footer>
       </Modal>

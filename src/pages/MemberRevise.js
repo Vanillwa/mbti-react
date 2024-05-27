@@ -361,12 +361,12 @@ function MemberRevise() {
           </ul>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary">
+          <Button className={styles.modalbtn1} variant="secondary">
             <a href='https://www.kmbti.co.kr/' style={{ color: 'inherit', textDecoration: 'none' }}>
               Check! MBTI
             </a>
           </Button>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>네. 알겠습니다.</Button>
+          <Button  className={styles.modalbtn2} variant="secondary" onClick={() => setShowModal(false)}>네. 알겠습니다.</Button>
 
         </Modal.Footer>
       </Modal>

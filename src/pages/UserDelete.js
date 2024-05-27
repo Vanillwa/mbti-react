@@ -150,7 +150,7 @@ function UserDelete() {
                 <li>회원탈퇴 시 보유하시던 적립금은 회원정보에 등록된 계좌로 자동이체 됩니다.</li>
                 <li>회원탈퇴 시 더이상 <strong style={{ color: "#0866ff" }}>R U T ?</strong>서비스를 이용불가능 합니다.</li>
 
-                <p><strong><a href="#" onClick={() => setShowModal(true)}>더 보기...</a></strong></p>
+                <p className={styles.moreRead}><strong><a href="#" onClick={() => setShowModal(true)}>더 보기...</a></strong></p>
               </div>
 
               <div>
@@ -190,7 +190,7 @@ function UserDelete() {
           </ul>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>네 항목에 대하여 확인하였습니다!ㅎㅎ.</Button>
+          <Button className={styles.modalbtn1} variant="secondary" onClick={() => setShowModal(false)}>네 항목에 대하여 확인하였습니다!ㅎㅎ.</Button>
         </Modal.Footer>
       </Modal>
     </div>
