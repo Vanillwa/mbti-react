@@ -11,9 +11,10 @@ import { useLocation } from "react-router";
 
 function Chat() {
   const location = useLocation()
+  const [roomId, setRoomId] = useState(location.state?.roomId || null);
+  window.history.replaceState({},'')
   const { memoUserInfo, socket } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
-  const [roomId, setRoomId] = useState(location.state?.roomId || null);
  
   socket.emit("joinList")
 
@@ -26,8 +27,8 @@ function Chat() {
     }
   );
 
-
   useEffect(() => {
+  
     socket.on("noti", () => listRefetch())
     return () => {
       socket.emit("leaveList")
