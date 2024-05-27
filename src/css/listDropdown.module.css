@@ -1,4 +1,7 @@
 .dropBtn{
   border: 1px solid lightgray;
+  width: 120px;
 }
-
+.dropBtn:hover{
+  border: 1px solid gray;
+}
