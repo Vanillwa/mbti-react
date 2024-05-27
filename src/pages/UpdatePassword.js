@@ -14,6 +14,7 @@ function ResetPassword() {
   const [isSame, setIsSame] = useState(false);
   const [regxAlert, setRegxAlert] = useState("");
   const [checkRegx, setCheckRex] = useState(false);
+  const [regxAlertColor,setRegxAlertColor] =useState('')
   const passwordRegex =
     /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()_-]{6,20}$/;
 
@@ -31,14 +32,14 @@ function ResetPassword() {
     }
 
     if (!passwordRegex.test(input) || 5 >= input.length > 20) {
-      setRegxAlert(
-        " 숫자와  영어가 있어야 하며 총 길이가 6에서 20 사이여야 합니다."
+      setRegxAlert(<span style={{color:"red"}}> " 숫자와  영어가 있어야 하며 총 길이가 6자에서 20자 사이여야 합니다."</span>   
+      
       );
-
       setIsSame(false);
+        
     } else {
       setCheckRex(true);
-      setRegxAlert("올바른 형식입니다.");
+      setRegxAlert(<span style={{color:"green"}}>"올바른 형식입니다."</span>);
     }
   };
 //비밀번호 확인의 onInput 함수
@@ -64,11 +65,14 @@ function ResetPassword() {
       setIsSame(false);
     }
      else if (password === checkPassword) {
-      setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치합니다.");
+      setCheckCodeAlert(<span style={{color:"green"}}>"비밀번호와 비밀번호 확인이 일치합니다."</span>);
       setIsSame(true);
+      setRegxAlertColor('is-valid')
+
     } else if (password != checkPassword) {
       setIsSame(false);
-      setCheckCodeAlert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      setCheckCodeAlert(<span style={{color:"red"}}>"비밀번호와 비밀번호 확인이 일치하지 않습니다."</span>);
+      setRegxAlertColor('is-invalid')
     }
   };
   useEffect(() => {
@@ -114,7 +118,7 @@ function ResetPassword() {
                 <div className="d-flex gap-1">
                   <input
                     type="password"
-                    className="form-control"
+                    className={`form-control ${setCheckCodeAlert === "비밀번호와 비밀번호 확인이 일치합니다."?regxAlertColor : regxAlertColor}`}
                     name="password"
                     id="password"
                     placeholder="Password"
@@ -130,7 +134,7 @@ function ResetPassword() {
                     <input
                       disabled={!checkRegx}
                       type="password"
-                      className="form-control"
+                      className={`form-control ${setCheckCodeAlert === "비밀번호와 비밀번호 확인이 일치합니다."?regxAlertColor : regxAlertColor}`}
                       name="checkPassword"
                       id="checkPassword"
                       placeholder="CheckPassword"
