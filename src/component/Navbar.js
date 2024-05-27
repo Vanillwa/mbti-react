@@ -18,6 +18,7 @@ import ProfileDropDown from "../component/ProfileDropDown";
 import sweetalert from "./sweetalert";
 import Alarm from "./Alarm";
 import home from "../svg/house.svg";
+import { Spinner } from "react-bootstrap";
 const Navbar = ({ chatData, chatStatus }) => {
   const { memoUserInfo } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -26,7 +27,7 @@ const Navbar = ({ chatData, chatStatus }) => {
   const [showChat, setShowChat] = useState(false);
 
   const navigate = useNavigate();
-  
+
   const handleopenModal = async () => {
     const result = await sweetalert.question(
       "로그인이 필요한 컨텐츠입니다.",
@@ -40,7 +41,6 @@ const Navbar = ({ chatData, chatStatus }) => {
     }
   };
 
-
   const compareLogin = () => {
     if (isLoggedIn) {
       setShowDropdown(!showDropdown);
@@ -53,7 +53,7 @@ const Navbar = ({ chatData, chatStatus }) => {
     e.preventDefault();
     let keyword = e.target.keyword.value;
 
-    if(keyword == "")return;
+    if (keyword == "") return;
 
     navigate("/search", { state: { keyword } });
   };
@@ -69,7 +69,11 @@ const Navbar = ({ chatData, chatStatus }) => {
   }, [chatData]);
 
   if (chatStatus === "loading") {
-    return <h1>로딩</h1>;
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
   }
   if (chatStatus === "error") {
     return <h1>에러</h1>;
@@ -89,10 +93,9 @@ const Navbar = ({ chatData, chatStatus }) => {
         </div>
       </div>
       {/*왼쪽 사이드바*/}
-      
+
       <div className={`${styles.item} ${styles.leftSidebar}`}>
         <div className={styles.menuItems}>
-          
           <div className={styles.rutMenu}>
             <Link to="/" className={`${styles.menu}`}>
               <img src={RUT} className={`${styles.logo}`} />

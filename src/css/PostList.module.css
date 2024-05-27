@@ -5,24 +5,25 @@ a{
   text-decoration: none;
   color: black;
 }
+
 .postBox{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 12px;
-  padding: 48px;
-}
-.sortBox{
-  display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 12px;
+  padding: 72px;
 }
-.sort{
-  width: 120px;
+.header{
+  display: flex;
+  justify-content: space-between;
+  width: 1000px;
 }
 .postItemsBox{
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 12px;
 }
 .pagingBox{
@@ -34,135 +35,72 @@ a{
   display: flex;
   justify-content: center;
 }
+.contentHeader{
+  display: flex;
+  width: 1000px;
+  padding: 6px 12px;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+  text-align: center;
+}
+.type1{width: 10%;}
+.type2{width: 35%;}
+.type3{width: 20%;}
+.type4{width: 15%;}
+.type5{width: 10%;}
+.type6{width: 10%;}
 
 .postWrap{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 700px;
-  height: 200px;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  width: 1000px;
+  height: 50px;
+  border-bottom: 1px solid lightgray;
 }
 .postContent{
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 12px;
-}
-.imgBox{
-  height: 180px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.imgBox img{
-  height: 100%;
-  width: auto;
-}
-
-.readhitBox{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.content {
-  padding: 0 24px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
+  padding: 6px 12px;
   width: 100%;
-}
-.title {
-  font-size: 2vh;
-  font-weight: 550;
-  display: flex;
-  padding: 0 24px;
-}
-.userBox{
-  display: flex;
-}
-
-.imgBox{
-  width: 30%;
-}
-.thumbnail{
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  text-align: center;
 }
-.titleBox{
-  display: flex;
-  align-items: center;
-}
+.postMbti{width: 10%;}
 
-.sortBox{
-  display: flex;
-  gap: 6px;
-}
-.profileBox{
-  height: 100%;
-  display: flex;
-  gap: 12px;
-  white-space: nowrap;
-}
-.nicknameBox{
-  display: flex;
-  flex-direction: column;
-}
-.nickname{
-  font-weight: bold;
-}
-.mbti{
+.title {
+  width: 35%;
+  font-size: 2vh;
   font-weight: 550;
-  color: rgb(29, 182, 233);
-}
-
-.dropdown{
-  display: none;
-}
-.dropdownOpen{
-  position: absolute;
-  background-color:white;
-  border: 1px solid black;
-  border-bottom: 0;
-  list-style-type: none;
-  padding-left: 0;
-  top: 100%;
-  left: 10%;
   display: flex;
-  flex-direction: column;
-  font-size: 1.5vh;
-  text-align: start;
-  z-index: 10;
+  justify-content: center;
 }
-.dropdownOpen li{
-  border-bottom: 1px solid #000;
-  padding: 3px 10px;
+.span{
+  width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+.nickname{width: 20%; font-weight: 550; overflow: hidden;
+  text-overflow: ellipsis;}
 
-.profileImg {
-  width: 48px;
-  height: auto; 
-  border-radius: 50%;
-}
+.date{width: 15%;}
+.likes{width: 10%;}
+.readhit{width: 10%;}
 
-.nickname, .date {
-  flex-grow: 1;
+@media (max-width : 1300px){
+  .postWrap, .contentHeader, .header{
+    width: 800px;
+  }
 }
 @media (max-width : 1024px){
-  .postWrap{
+  .postWrap, .contentHeader, .header{
     width: 650px;
   }
 }
 @media (max-width : 768px){
-  .postWrap{
+  .postWrap, .contentHeader, .header {
     width: 550px;
   }
+  .title{width: 35%;}
 }
