@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import styles from "../css/listDropdown.module.css";
 function IListDropdown({ mbti, setMbti }) {
