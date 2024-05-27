@@ -401,6 +401,7 @@ function Join() {
       </div>
      
 
+      <Footer></Footer>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton >
           <Modal.Title className={styles.modalTitle}>MBTI란 무엇인가요?!</Modal.Title>
