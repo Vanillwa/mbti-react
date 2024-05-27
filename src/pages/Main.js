@@ -14,6 +14,7 @@ import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext, useAuthContext } from "../context/AuthContext";
+import Footer from "../component/Footer";
 
 function Main() {
   console.log("rendered");
@@ -184,21 +185,9 @@ function Main() {
           </Button>
         ) : null}
       </div>
-      <footer className={styles.footer}>
-        <span>소개</span>
-        <span>블로그</span>
-        <span>도움말</span>
-        <span>API</span>
-        <span>개인정보처리방침</span>
-        <span>약관</span>
-        <span>위치</span>
-        <span>Are You T Lite</span>
-        <span>Threads</span>
-        <span>비사용자</span>
-        <span>Meta Verified</span>
-        <span>한국어</span>
-        <span>© 2024 Are You T ?</span>
-      </footer>
+      
+      {/* 푸터로 변경 */}
+      <Footer></Footer>
     </div>
   );
 }

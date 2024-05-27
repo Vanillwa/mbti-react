@@ -1,18 +1,16 @@
 
-  
-  .footer {
-    display: flex;
-    justify-content: center;
-    font-size: 10px;
-    color: rgb(159, 159, 159);
-    gap: 10px;
-    flex-flow: wrap;
-    margin:0px 12px;
-    padding-top: 30px;
-  }
+.footer {
  
-
- 
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+  color: rgb(159, 159, 159);
+  gap: 10px;
+  flex-flow: wrap;
+  margin: 20px 12px;
+  padding-top: 10px;
+  border-top: 1px solid #dddfe2;; 
+}
 
 
 
