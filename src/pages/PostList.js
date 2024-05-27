@@ -6,6 +6,7 @@ import PostItems from "../component/PostItems";
 import styles from "../css/PostList.module.css";
 import Paging from "../component/Paging";
 import Setting from "../component/Setting";
+import { Spinner } from "react-bootstrap";
 
 const PostList = () => {
   const [query, setQuery] = useSearchParams();
@@ -35,7 +36,9 @@ const PostList = () => {
   if (status === "loading") {
     return (
       <div className="container">
-        <h1>Loading...</h1>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
       </div>
     );
   } else if (status === "error") {
@@ -54,9 +57,16 @@ const PostList = () => {
   }
   return (
     <div className={styles.postBox}>
-      <div className="d-flex justify-content-between">
+      <div className={styles.header}>
         {mbti == "null" ? <h2>전체게시판</h2> : <h2>{mbti}게시판</h2>}
-        <Setting listStyle={listStyle} setListStyle={setListStyle} sort={sort} setSort={setSort} setOrder={setOrder} setSize={setSize}/>
+        <Setting
+          listStyle={listStyle}
+          setListStyle={setListStyle}
+          sort={sort}
+          setSort={setSort}
+          setOrder={setOrder}
+          setSize={setSize}
+        />
       </div>
       <div className={styles.postItemsBox}>
         {listStyle === "list" ? (
@@ -65,7 +75,7 @@ const PostList = () => {
       </div>
       {data?.list?.length == 0 ? null : (
         <div className={styles.pagingBox}>
-          <Paging data={data} status={status} page={page} setPage={setPage}  />
+          <Paging data={data} status={status} page={page} setPage={setPage} />
         </div>
       )}
     </div>

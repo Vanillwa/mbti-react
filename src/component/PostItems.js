@@ -7,7 +7,14 @@ import eye from "../svg/eye.svg";
 
 const PostItems = ({ data, status }) => {
   return (
-    <>
+    <><div className={styles.contentHeader}>
+      <div className={styles.type1}>게시판</div>
+      <div className={styles.type2}>제목</div>
+      <div className={styles.type3}>유저 정보</div>
+      <div className={styles.type4}>작성일</div>
+      <div className={styles.type5}>좋아요</div>
+      <div className={styles.type6}>조회수</div>
+    </div>
       {data.list.map(item => {
         const createdAt = new Date(item.createdAt);
         const now = new Date();
@@ -26,6 +33,7 @@ const PostItems = ({ data, status }) => {
         } else {
           dateDisplay = createdAt.toLocaleDateString("ko-KR");
         }
+        console.log(item)
 
         const showImg = item.content.match(
           /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
@@ -41,28 +49,19 @@ const PostItems = ({ data, status }) => {
               to={`/post/view?postId=${item.postId}`}
               className={styles.postWrap}>
               <div className={styles.postContent}>
-                
-                <div className={styles.title}>{item.title}</div>
-                <div className={styles.content}>{removeHTMLTags(item.content)}</div>
-                <div className={styles.readhitBox}>
-                  <UserDropdown item={item.User} />
+                <div className={styles.postMbti}>{item.category ? item.category : '없음'}</div>
+                <div className={styles.title}><div className={styles.span}>{item.title}</div></div>
+                {/* <div className={styles.content}>{removeHTMLTags(item.content)}</div> */}
+                {/* <UserDropdown item={item.User} /> */}
+                <div className={styles.nickname}>{item.User.nickname}</div>
                   <div className={styles.date}>{dateDisplay}</div>
                   <div className={styles.likes}>
-                    <img src={like} alt="likes" /> {item.like}
+                    {/* <img src={like} alt="likes" />*/} {item.like} 
                   </div>
                   <div className={styles.readhit}>
-                    <img src={eye} alt="views" /> {item.readhit}
+                    {/* <img src={eye} alt="views" />*/} {item.readhit} 
                   </div>
-                </div>
               </div>
-
-              {imgSrc && (
-                <div className={styles.imgBox}>
-                  <div className={styles.thumbnail}>
-                    <img className={styles.img} src={imgSrc} alt="thumbnail" />
-                  </div>
-                </div>
-              )}
             </Link>
           </div>
         );
