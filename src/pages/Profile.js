@@ -50,8 +50,8 @@ function Profile() {
   return (
     <>
      <h2 className={styles.mainTitle}>{nickname}님의 게시글</h2>
-      <div className={`container ${styles.outerContainer}`}>
-        <div className={`row ${styles.innerContainer}`}>
+      <div className={`container ${styles.Container}`}>
+        <div className={`row ${styles.Wrap}`}>
           {data.recentPost.map((userdata) => (
             <Link to={`/post/view?postId=${userdata.postId}`} className={`col col-3 ${styles.postWrap}`} key={userdata.writerId}>
               <div className={styles.postHeader}>
