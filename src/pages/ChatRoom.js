@@ -84,7 +84,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
     };
 
     const handleUserJoined = (newData) => {
-      if(newData === userInfo.userId){
+      if (newData === userInfo.userId) {
         roomRefetch()
         listRefetch()
       }
@@ -100,7 +100,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
     socket.on("userJoined", handleUserJoined);
     socket.on("notAvailable", handleNotAvailable)
     socket.on("quitRoom", (newData) => {
-      console.log("targetId : ",newData)
+      console.log("targetId : ", newData)
       if (newData === userInfo.userId) roomRefetch()
     })
     return () => {
@@ -197,14 +197,13 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
         </form>
         <Dropdown >
           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-            <ThreeDots width='24px' />
+            <ThreeDots width='24px' height='24px' />
           </Dropdown.Toggle>
           <Dropdown.Menu >
             <Dropdown.Item eventKey="1"><ChatReportModal roomId={roomId} /></Dropdown.Item>
             <Dropdown.Item eventKey="2" onClick={handleQuit}>나가기</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-
       </div>
     </section>
   );

@@ -158,9 +158,9 @@ function ViewComment() {
     <div className={styles.container}>
       <div className={styles.top}>
         <span>댓글</span>
-        <Form className={styles.orderBox} onChange={handleOrderChange}>
-          <Form.Group controlId="orderSelect">
-            <Form.Control as="select" value={order}>
+        <Form className={styles.orderBox} onChange={handleOrderChange} >
+          <Form.Group controlId="orderSelect" >
+            <Form.Control as="select" value={order} key={order}>
               <option value="desc">최신순</option>
               <option value="asc">오래된순</option>
             </Form.Control>
@@ -198,7 +198,7 @@ function ViewComment() {
                         <div className={styles.commentDate}>{new Date(item.createdAt).toLocaleDateString()}</div>
                         {isLoggedIn ? <Dropdown >
                           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                            <ThreeDots width="18px"/>
+                            <ThreeDots width="18px" height='18px'/>
                           </Dropdown.Toggle>
                           <Dropdown.Menu >
                             {userInfo.userId != item.userId ? <Dropdown.Item eventKey="1"><CommentReportModal commentId={item.commentId} /></Dropdown.Item> : null}
