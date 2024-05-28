@@ -13,6 +13,7 @@ import { ReactComponent as Eye } from "../svg/eye.svg"
 import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
 import { ReactComponent as Like } from "../svg/like.svg"
 import { Dropdown } from "react-bootstrap";
+import ViewUserDropdown from "./ViewUserDropdown";
 
 function ViewContent() {
   const [likes, setLikes] = useState("checked");
@@ -132,10 +133,7 @@ function ViewContent() {
           </div>
         </div>
         <div className={styles.info}>
-          <div className={styles.userInfo}>
-            <div className={styles.userImg}><img  src={data.User.profileImage} /></div>
-            <div className={styles.nickname}>{data.User.nickname}</div>
-          </div>
+          <ViewUserDropdown data={data}/>
           <div className={styles.postInfo}>
             <div className={styles.readhit}><Eye /> {data.readhit}</div>
             <div className={styles.date}>{dateDisplay}</div>
@@ -157,7 +155,7 @@ function ViewContent() {
             </Dropdown> : null}
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }
