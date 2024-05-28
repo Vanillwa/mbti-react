@@ -144,9 +144,11 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
           </Button>
         </Modal.Footer>
       </Modal>
+
       <div className={`container ${styles.container}`}>
         {data.result.map(item => {
-          return (
+          console.log(item);
+          return item.email === "deleted" ? null : (
             <div className={` row ${styles.userinfo}`} key={item.userId}>
               <span className={`col-2 ${styles.userId}`}>
                 유저ID: {item.userId}

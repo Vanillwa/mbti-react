@@ -91,7 +91,7 @@ function Search() {
   return (
     <div>
       {data.userList.length == 0 && data.postList.length == 0 ? (
-        <div>검색 결과가 없습니다.</div>
+        <h3 className={searchStyles.searchResult}>검색 결과가 없습니다.</h3>
       ) : data.userList.length == 0 ? null : (
         <div className={searchStyles.userWrap}>
           <div className={searchStyles.userInner}>
@@ -100,7 +100,6 @@ function Search() {
               slidesPerView={6} //한번에 보여질 갯수
               modules={[Navigation, Mousewheel]}
               navigation={true}
-              
               mousewheel={true}
               breakpoints={{
                 1600: {
@@ -178,7 +177,17 @@ function Search() {
         </div>
       )}
       {data.postList.length == 0 ? null : (
+    
         <div className={searchStyles.postWrap}>
+              <h3>게시글 검색결과 목록</h3>
+          <div className={styles.contentHeader}>
+            <div className={styles.type1}>게시판</div>
+            <div className={styles.type2}>제목</div>
+            <div className={styles.type3}>유저 정보</div>
+            <div className={styles.type4}>작성일</div>
+            <div className={styles.type5}>좋아요</div>
+            <div className={styles.type6}>조회수</div>
+          </div>
           {data.postList.map(item => {
             const createdAt = new Date(item.createdAt);
             const now = new Date();
@@ -197,43 +206,39 @@ function Search() {
             } else {
               dateDisplay = createdAt.toLocaleDateString("ko-KR");
             }
+            console.log(item);
 
             const showImg = item.content.match(
               /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
             );
             const imgSrc = showImg ? showImg[1] : null;
-            return item.status === "deleted" ? null : (
+
+            function removeHTMLTags(htmlString) {
+              return htmlString.replace(/<[^>]*>?/gm, "");
+            }
+            return (
               <div className={styles.container} key={item.postId}>
                 <Link
                   to={`/post/view?postId=${item.postId}`}
                   className={styles.postWrap}>
                   <div className={styles.postContent}>
-                    <div className={styles.header}>
-                      <UserDropdown item={item.User} />
+                    <div className={styles.postMbti}>
+                      {item.category ? item.category : "없음"}
                     </div>
-                    <div className={styles.title}>{item.title}</div>
-                    <div className={styles.readhitBox}>
-                      <div className={styles.date}>{dateDisplay}</div>
-                      <div className={styles.likes}>
-                        <img src={like} alt="likes" /> {item.like}
-                      </div>
-                      <div className={styles.readhit}>
-                        <img src={eye} alt="views" /> {item.readhit}
-                      </div>
+                    <div className={styles.title}>
+                      <div className={styles.span}>{item.title}</div>
+                    </div>
+                    {/* <div className={styles.content}>{removeHTMLTags(item.content)}</div> */}
+                    {/* <UserDropdown item={item.User} /> */}
+                    <div className={styles.nickname}>{item.User.nickname}</div>
+                    <div className={styles.date}>{dateDisplay}</div>
+                    <div className={styles.likes}>
+                      {/* <img src={like} alt="likes" />*/} {item.like}
+                    </div>
+                    <div className={styles.readhit}>
+                      {/* <img src={eye} alt="views" />*/} {item.readhit}
                     </div>
                   </div>
-
-                  {imgSrc && (
-                    <div className={styles.imgBox}>
-                      <div className={styles.thumbnail}>
-                        <img
-                          className={styles.img}
-                          src={imgSrc}
-                          alt="thumbnail"
-                        />
-                      </div>
-                    </div>
-                  )}
                 </Link>
               </div>
             );
