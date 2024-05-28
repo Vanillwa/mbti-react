@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+.searchResult{
+    text-align: center;
+    margin-top:100px;
+}
+
 .userWrap {
     
     
@@ -34,7 +39,7 @@
 
 .imgWrap img {
     width: 100%;
-    height: 140px;
+    height:140px;
 }
 
 .postWrap {

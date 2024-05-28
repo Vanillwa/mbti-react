@@ -17,7 +17,11 @@ ul {
     font-weight: normal;
     font-style: normal;
 }
+.userType{
+    display: flex;
+    justify-content: space-between;
 
+}
 
 .container {
     border: 1px solid black;
