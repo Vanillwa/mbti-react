@@ -30,7 +30,7 @@ function UserList() {
   };
 
   const search = () => {
-    if(searchRef.current.value === "")return;
+    if (searchRef.current.value === "") return;
     setKeyword(searchRef.current.value);
     setType(typeRef.current.value);
   };
@@ -40,8 +40,8 @@ function UserList() {
     <>
       <div className={styles.searchUser}>
         <select className={styles.searchUserType} ref={typeRef}>
-          <option value="email">이메일</option>
           <option value="nickname">닉네임</option>
+          <option value="email">이메일</option>
         </select>
         <input
           className={`me-1 ms-1 ${styles.searchBox}`}
@@ -54,14 +54,14 @@ function UserList() {
       </div>
 
       <h1 className="p-2">회원목록</h1>
-    <div className={styles.showUser}>
-      <select
-        className={`mb-4 ${styles.showUserType}`}
-        onChange={handleFilterOnChange}>
-        <option value="">전체보기</option>
-        <option value="blocked">차단된 유저</option>
-        <option value="ok">일반 유저</option>
-      </select>
+      <div className={styles.showUser}>
+        <select
+          className={`mb-4 ${styles.showUserType}`}
+          onChange={handleFilterOnChange}>
+          <option value="">전체보기</option>
+          <option value="blocked">차단된 유저</option>
+          <option value="ok">일반 유저</option>
+        </select>
       </div>
       <UserItems
         data={data}
@@ -72,9 +72,9 @@ function UserList() {
         refetch={refetch}
       />
       <div className={styles.userPaging}>
-        {data?.result?.length == 0 ? 
-          null
-        : <Paging data={data} status={status} page={page} setPage={setPage} />}
+        {data?.result?.length == 0 ? null : (
+          <Paging data={data} status={status} page={page} setPage={setPage} />
+        )}
       </div>
     </>
   );

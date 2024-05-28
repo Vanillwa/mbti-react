@@ -183,7 +183,7 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
                   onClick={() => {
                     sweetalert.warning("자기 자신은 차단할 수 없습니다.");
                   }}>
-                  나야나😊
+                  나야나😏
                 </button>
               )}
             </div>
