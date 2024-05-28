@@ -141,7 +141,7 @@ function ViewContent() {
             <div className={styles.date}>{dateDisplay}</div>
             {isLoggedIn ? <Dropdown >
               <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                <ThreeDots width='18px' />
+                <ThreeDots width='18px' height='18px' />
               </Dropdown.Toggle>
               <Dropdown.Menu >
                 {userInfo.userId != data.User.userId ? <Dropdown.Item eventKey="1"><ReportModal data={data} /></Dropdown.Item> : null}
