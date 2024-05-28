@@ -441,7 +441,7 @@ function Join() {
      
 
       <Footer></Footer>
-      {/* 질문창 모달ㅋ */}
+      {/* 질문창 모달임 */}
       <Modal show={showModal1} onHide={() => setShowModal1(false)}>
         <Modal.Header closeButton >
           <Modal.Title className={styles.modalTitle}>MBTI란 무엇인가요?!</Modal.Title>
@@ -470,10 +470,8 @@ function Join() {
         <Modal.Body>
          {mbtiDescription}
         </Modal.Body>
-        <Modal.Footer>
-          
+        <Modal.Footer> 
           <Button className={styles.modalbtn2}variant="secondary" onClick={() => setShowModal2(false)}>네. 이해했습니다.</Button>
-
         </Modal.Footer>
       </Modal>
     </div>
