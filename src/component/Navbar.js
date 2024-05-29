@@ -16,14 +16,14 @@ import chatting from "../svg/chat-dots.svg";
 import { PiSirenFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
-import ProfileDropDown from "../component/ProfileDropDown";
 import sweetalert from "./sweetalert";
 import Alarm from "./Alarm";
 import home from "../svg/house.svg";
-import { Form, Spinner } from "react-bootstrap";
+import { Dropdown, DropdownButton, Form, Spinner } from "react-bootstrap";
+import SettingDropdown from "./SettingDropdown";
 const Navbar = ({ chatData, chatStatus }) => {
   const { memoUserInfo } = useAuthContext();
-  const [showDropdown, setShowDropdown] = useState(false);
+  
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const [showChat, setShowChat] = useState(false);
@@ -50,7 +50,6 @@ const Navbar = ({ chatData, chatStatus }) => {
 
   const compareLogin = () => {
     if (isLoggedIn) {
-      setShowDropdown(!showDropdown);
     } else {
       navigate("/", { state: { state: "login" } });
     }
@@ -132,9 +131,12 @@ const Navbar = ({ chatData, chatStatus }) => {
               <Modal.Title>검색하기</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Form onSubmit={(e)=>{
-                handleSearch(e) 
-                handleClose()}}>
+              <Form
+                onSubmit={(e) => {
+                  handleSearch(e);
+                  handleClose();
+                }}
+              >
                 <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
@@ -148,8 +150,7 @@ const Navbar = ({ chatData, chatStatus }) => {
                 </Form.Group>
               </Form>
             </Modal.Body>
-            <Modal.Footer>
-            </Modal.Footer>
+            <Modal.Footer></Modal.Footer>
           </Modal>
           <Link className={styles.menu} to="/post/list">
             <img className={styles.svg} src={list} />
@@ -236,6 +237,17 @@ const Navbar = ({ chatData, chatStatus }) => {
                   />
                 </div>
                 <div className={styles.span}>프로필</div>
+                <DropdownButton variant="">
+                  <Dropdown.Item as={Link} to={`/user/${userInfo.userId}`}>
+                    게시물 보기
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/memberevise">
+                    정보 수정
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <SettingDropdown />
+                  </Dropdown.Item>
+                </DropdownButton>
               </>
             ) : (
               <div>
@@ -243,7 +255,6 @@ const Navbar = ({ chatData, chatStatus }) => {
                 <div className={styles.span}>로그인 해주세요.</div>
               </div>
             )}
-            {showDropdown && <ProfileDropDown />}
           </div>
         </div>
       </div>
