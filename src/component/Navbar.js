@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "../css/Nav.module.css";
 import { Link, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 import search from "../svg/search.svg";
 import User from "../svg/people-fill.svg";
@@ -18,13 +20,18 @@ import ProfileDropDown from "../component/ProfileDropDown";
 import sweetalert from "./sweetalert";
 import Alarm from "./Alarm";
 import home from "../svg/house.svg";
-import { Spinner } from "react-bootstrap";
+import { Form, Spinner } from "react-bootstrap";
 const Navbar = ({ chatData, chatStatus }) => {
   const { memoUserInfo } = useAuthContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const [showChat, setShowChat] = useState(false);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
 
@@ -111,12 +118,39 @@ const Navbar = ({ chatData, chatStatus }) => {
           <input type="text" placeholder="검색" name="keyword"  />
           </form>
         </div> */}
-          <div className={`${styles.menu} ${styles.hiddenSearch}`}>
+          <Button
+            className={`${styles.menu} ${styles.hiddenSearch}`}
+            variant=""
+            onClick={handleShow}
+            style={{ padding: 0 }}
+          >
             <img src={search} className={styles.svg} />
-            <div type="button" className={styles.span}>
-              검색
-            </div>
-          </div>
+            검색
+          </Button>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>검색하기</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={(e)=>{
+                handleSearch(e) 
+                handleClose()}}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Control
+                    name="keyword"
+                    type="text"
+                    placeholder="검색"
+                    autoFocus
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+            </Modal.Footer>
+          </Modal>
           <Link className={styles.menu} to="/post/list">
             <img className={styles.svg} src={list} />
             <div className={styles.span}>게시판</div>
