@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
 import { getPostList } from "../service/api/postAPI";
 import PostItems from "../component/PostItems";
+import PostItemsCard from "../component/PostItemsCard";
 import styles from "../css/PostList.module.css";
 import Paging from "../component/Paging";
 import Setting from "../component/Setting";
@@ -19,7 +20,7 @@ const PostList = () => {
   const [sort, setSort] = useState("createdAt");
   const [order, setOrder] = useState("desc");
 
-  const [listStyle, setListStyle] = useState("list");
+  const [listStyle, setListStyle] = useState(window.localStorage.getItem('listType')=='card' ? 'card' : 'list');
 
   const { data, status } = useQuery(
     ["getPostList", mbti, size, sort, order, page],
@@ -71,7 +72,7 @@ const PostList = () => {
       <div className={styles.postItemsBox}>
         {listStyle === "list" ? (
           <PostItems data={data} status={status} />
-        ) : null}
+        ) : <PostItemsCard data={data}/>}
       </div>
       {data?.list?.length == 0 ? null : (
         <div className={styles.pagingBox}>

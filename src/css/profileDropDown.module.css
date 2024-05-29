@@ -1,43 +1,31 @@
 .dropdown {
-    position: relative;
-   
-  }
-  
+  position: relative;
+}
 
-
-  .menu {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
- 
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    
-   
-  }
+.menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
 
 .box1 {
   border: 1px solid black;
-
-
 }
 .box2 {
- border-left: 1px solid black;
- border-bottom: 1px solid black;
- border-right: 1px solid black;
-
-
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .box3 {
   border-top: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
- 
- }
- 
-.dropdownToggle{
-  border-radius: 100%;
+}
 
+.dropdownToggle {
+  border-radius: 100%;
 }

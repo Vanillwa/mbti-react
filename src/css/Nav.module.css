@@ -59,6 +59,11 @@
   height: auto;
   transition: all 0.5s;
 }
+.menu:hover .imgBox{
+  width: 28px;
+  height: 28px;
+  transition: all 0.5s;
+}
 .showChat {
   display: flex;
   align-items: center;
@@ -92,11 +97,20 @@
   padding: 0 1vw;
   border: 2px solid rgb(0, 54, 75);
 }
+.imgBox{
+  display: flex;
+  width: 25px;
+  height: 25px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 0 12px;
+}
 
 .userImg {
-  border-radius: 50%;
+  width: 100%;
   height: auto;
-  overflow: hidden;
 }
 .span {
   text-align: center;
