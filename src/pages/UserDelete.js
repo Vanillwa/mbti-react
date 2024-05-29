@@ -193,7 +193,7 @@ function UserDelete() {
           </ul>
         </Modal.Body>
         <Modal.Footer>
-          <Button className={styles.modalbtn1} variant="secondary" onClick={() => setShowModal(false)}>네 항목에 대하여 확인하였습니다!ㅎㅎ.</Button>
+          <Button className={styles.modalbtn1} variant="secondary" onClick={() => setShowModal(false)}>네 항목에 대하여 확인하였습니다.</Button>
         </Modal.Footer>
       </Modal>
     </div>

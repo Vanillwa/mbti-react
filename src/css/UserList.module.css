@@ -18,6 +18,17 @@ ul {
     font-style: normal;
 }
 
+.section{
+    padding: 24px 0px;
+}
+.searchType{
+
+}
+.userType {
+    display: flex;
+    justify-content: space-between;
+
+}
 
 .container {
     border: 1px solid black;
@@ -40,7 +51,13 @@ ul {
     border-bottom: 0;
 }
 
-.blockBtn {}
+
+.blockBtn {
+    text-align: center;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #ffffff;
+}
 
 .searchBtn {
     font-family: 'KCC-Hanbit';
@@ -50,16 +67,20 @@ ul {
     background-color: cornflowerblue;
     color: white;
 }
-.searchUser{text-align: center;}
 
-.showUser{
+.searchUser {
     text-align: center;
 }
+
+.showUser {
+    text-align: center
+}
+
 .searchUserType {
     border: 1px solid #40d1e7;
     font-family: 'KCC-Hanbit';
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -77,7 +98,7 @@ ul {
 }
 
 .showUserType {
-    width: 10vw;
+    width: max-content;
     border: 1px solid #40d1e7;
     font-family: 'KCC-Hanbit';
     border-radius: 10px;

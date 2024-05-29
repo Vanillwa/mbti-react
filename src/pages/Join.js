@@ -54,7 +54,13 @@ function Join() {
   const [passwordValidColor, setPasswordValidColor] = useState("");
   const [nicknameVailidColor, setNicknameVaildColor] = useState("")
 
-  const [showModal, setShowModal] = useState(false);
+
+  const [mbtiDescription,setMbtiDescription] =useState('')
+  // 설명서 모달
+  const [showModal1, setShowModal1] = useState(false);
+  //객체 너 mbti 모달
+  const [showModal2, setShowModal2] = useState(false);
+
 
   // 이메일 입력
   const handleEmailOnBlur = async (e) => {
@@ -281,6 +287,39 @@ function Join() {
     }
   }
 
+
+
+
+  const mbtiDescriptions = {
+    ENFP: 'ENFP는 열정적이고 창의적이며, 사람들과의 상호작용을 즐기는 성격입니다.',
+    ENTJ: 'ENTJ는 리더십이 강하고, 목표 지향적인 성격입니다.', 
+    ENTP: 'ENTP는 혁신적이고 논리적인 사고를 즐기는 성격입니다.', 
+    ESFJ: 'ESFJ는 사교적이고 타인에게 도움을 주는 것을 좋아하는 성격입니다.', 
+    ESFP: 'ESFP는 활기차고 즐거움을 추구하는 성격입니다.', 
+    ESTJ: 'ESTJ는 실용적이고 조직적인 성격입니다.', 
+    ESTP: 'ESTP는 모험적이고 문제 해결을 즐기는 성격입니다.', 
+    ENFJ: "ENFJ는 멋지고 잘생겼고 아름다운 성격입니다.",
+    INFJ: 'INFJ는 직관적이고 이상주의적인 성격입니다.', 
+    INFP: 'INFP는 감성적이고 이상을 추구하는 성격입니다.', 
+    INTJ: 'INTJ는 전략적이고 계획적인 성격입니다.', 
+    INTP: 'INTP는 논리적이고 분석적인 성격입니다.', 
+    ISFJ: 'ISFJ는 신뢰할 수 있고 헌신적인 성격입니다.', 
+    ISFP: 'ISFP는 예술적이고 유연한 성격입니다.', 
+    ISTJ: 'ISTJ는 신뢰할 수 있고 책임감 있는 성격입니다.', 
+    ISTP: 'ISTP는 실용적이고 모험을 즐기는 성격입니다.' ,
+    미정 : '천천히 생각해보세요! 저희 사이트는 MBTI성격검사도 할수있습니다!'
+    
+};
+
+  const handleMBTIChange = (e) => {
+    const value = e.target.value;
+    if (value !== '') {
+      setMbtiDescription(mbtiDescriptions[value]);
+      setShowModal2(true);
+    }
+  };
+
+
   return (
 
     <div className="container mt-5 c1">
@@ -355,7 +394,7 @@ function Join() {
               </div>
 
               <div className="d-flex gap-2">
-                <select className="form-control" name="mbti" id="user-mbti" required>
+                <select className="form-control" name="mbti" id="user-mbti" required onChange={handleMBTIChange}>
                   <option value="">MBTI를 선택해주세요.</option>
                   <option value ="INTJ" >INTJ</option>
                   <option value="INTP">INTP</option>
@@ -373,11 +412,11 @@ function Join() {
                   <option value="ISFP">ISFP</option>
                   <option value="ESTP">ESTP</option>
                   <option value="ESFP">ESFP</option>
-                  <option value="">미정 - 아직 잘 모르겠습니다.</option>
+                  <option value="미정">미정 - 아직 잘 모르겠습니다.</option>
                 </select>
               </div>
               <div className="col-12">
-                <p className={styles.mbtiCheck}><a href="#" onClick={() => setShowModal(true)}><strong >[클릭]</strong><strong style={{ color: "#0866ff" }}> MBTI</strong>란 무엇인가요? </a></p>
+                <p className={styles.mbtiCheck}><a href="#" onClick={() => setShowModal1(true)}><strong >[클릭]</strong><strong style={{ color: "#0866ff" }}> MBTI</strong>란 무엇인가요? </a></p>
                 <div className="form-check">
 
                   <input className="form-check-input" type="checkbox" id="checkBox1" required />
@@ -402,7 +441,8 @@ function Join() {
      
 
       <Footer></Footer>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      {/* 질문창 모달임 */}
+      <Modal show={showModal1} onHide={() => setShowModal1(false)}>
         <Modal.Header closeButton >
           <Modal.Title className={styles.modalTitle}>MBTI란 무엇인가요?!</Modal.Title>
         </Modal.Header>
@@ -417,8 +457,21 @@ function Join() {
               Check! MBTI
             </a>
           </Button>
-          <Button className={styles.modalbtn2}variant="secondary" onClick={() => setShowModal(false)}>네. 알겠습니다.</Button>
+          <Button className={styles.modalbtn2}variant="secondary" onClick={() => setShowModal1(false)}>네. 알겠습니다.</Button>
 
+        </Modal.Footer>
+      </Modal>
+      
+    {/*너의 mbti설명임. */}
+      <Modal show={showModal2} onHide={() => setShowModal2(false)}>
+        <Modal.Header closeButton >
+          <Modal.Title className={styles.modalTitle}>당신의 MBTI는?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+         {mbtiDescription}
+        </Modal.Body>
+        <Modal.Footer> 
+          <Button className={styles.modalbtn2}variant="secondary" onClick={() => setShowModal2(false)}>네. 이해했습니다.</Button>
         </Modal.Footer>
       </Modal>
     </div>

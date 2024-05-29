@@ -17,7 +17,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
   const { isLoggedIn, userInfo } = memoUserInfo;
   const [isBottom, setIsBottom] = useState(true);
   const [chat, setChat] = useState([]);
-
+  const [targetId, setTargetId] = useState(null);
   const chatFormRef = useRef();
   const bottomRef = useRef();
   const { data: roomData, status: roomStatus, refetch: roomRefetch } = useQuery(
@@ -27,10 +27,10 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
       enabled: !!roomId,
       retry: 0,
       refetchOnWindowFocus: false,
-      onSuccess: async (data) => {
-        console.log("로딩 완료", data);
+      onSuccess: async (roomData) => {
+        console.log("로딩 완료", roomData);
         socket.emit("joinRoom", roomId);
-        setChat(data.messageList);
+        setChat(roomData.messageList);
         await listRefetch()
       },
     }
@@ -41,10 +41,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
     setIsBottom(true);
     let message = e.target.message.value;
     if (message === "") return;
-    let targetId =
-      userInfo.userId === roomData.roomInfo.userId1
-        ? roomData.roomInfo.userId2
-        : roomData.roomInfo.userId1;
+    let targetId = userInfo.userId === roomData.roomInfo.userId1 ? roomData.roomInfo.userId2 : roomData.roomInfo.userId1
     let body = { roomId, message, targetId };
     socket.emit("sendMessage", body);
     listRefetch();
@@ -86,8 +83,11 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
       listRefetch();
     };
 
-    const handleUserJoined = newData => {
-      setChat(newData);
+    const handleUserJoined = (newData) => {
+      if (newData === userInfo.userId) {
+        roomRefetch()
+        listRefetch()
+      }
     };
 
     const handleNotAvailable = (newData) => {
@@ -99,13 +99,12 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
     socket.on("sendMessage", handleReceiveMessage);
     socket.on("userJoined", handleUserJoined);
     socket.on("notAvailable", handleNotAvailable)
-    socket.on("quitRoom", roomRefetch)
+    socket.on("quitRoom", (newData) => {
+      console.log("targetId : ", newData)
+      if (newData === userInfo.userId) roomRefetch()
+    })
     return () => {
       socket.emit("leaveRoom", roomId);
-      socket.off("sendMessage", handleReceiveMessage);
-      socket.off("userJoined", handleUserJoined);
-      socket.off("notAvailable", handleNotAvailable)
-      socket.off("quitRoom", roomRefetch)
     };
   }, []);
 
@@ -116,12 +115,12 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
   ));
 
   const handleQuit = async () => {
-    socket.emit("quitRoom", roomId)
     const result = await quitChatRoom(roomId)
     if (result.message === 'success') {
       listRefetch()
       setRoomId(null)
     }
+    await socket.emit("quitRoom", roomData.roomInfo)
   }
 
   if (roomStatus === "loading") {
@@ -198,14 +197,13 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
         </form>
         <Dropdown >
           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-            <ThreeDots width='24px' />
+            <ThreeDots width='24px' height='24px' />
           </Dropdown.Toggle>
           <Dropdown.Menu >
             <Dropdown.Item eventKey="1"><ChatReportModal roomId={roomId} /></Dropdown.Item>
             <Dropdown.Item eventKey="2" onClick={handleQuit}>나가기</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-
       </div>
     </section>
   );

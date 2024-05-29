@@ -49,7 +49,7 @@ function ReportItems({
     return updateCommentReport(reportId);
   });
 
-  const completeChatRoomMutate = useMutation((body) => {
+  const completeChatRoomMutate = useMutation(body => {
     return updateChatRoomReport(body);
   });
 
@@ -75,8 +75,7 @@ function ReportItems({
     setShow1(false);
   };
 
-  const handleChatRoomComplete = async (body) => {
-
+  const handleChatRoomComplete = async body => {
     completeChatRoomMutate.mutate(body, {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["getChatRoomReportList"]);
@@ -98,7 +97,9 @@ function ReportItems({
       userId: user.userId,
       blockDate,
     });
-    if (result.message === "success") {
+    if (report.Post.User.status === "deleted") {
+      sweetalert.warning("탈퇴한 유저는 정지시킬 수 없습니다.");
+    } else if (result.message === "success") {
       sweetalert.success("정지 완료");
       socket.emit("blockUser", report.Post.User.userId);
       completePostMutate.mutate(report.reportId, {
@@ -126,10 +127,13 @@ function ReportItems({
       commentId: report.Comment?.commentId,
       blockDate,
     });
-
-    if (result.message === "success") {
+    if (report.Comment.User.status === "deleted") {
+      sweetalert.warning("탈퇴한 유저는 정지시킬 수 없습니다.");
+    } else if (result.message === "success") {
       sweetalert.success("정지 완료");
+
       socket.emit("blockUser", report.Comment.User.userId);
+
       completeCommentMutate.mutate(report.reportId, {
         onSuccess: async () => {
           await queryClient.invalidateQueries(["getCommentReportList"]);
@@ -152,16 +156,20 @@ function ReportItems({
       userId: user.userId,
       roomId: report.roomId,
       blockDate,
-
     });
-    if (result.message === "success") {
+    if(report.targetUser.status === "deleted"){
+      sweetalert.warning("탈퇴한 유저는 정지시킬 수 없습니다.")
+    }
+   else if (result.message === "success") {
       socket.emit("blockUser", report.targetUser.userId);
+
       sweetalert.success("정지 완료");
-      completeChatRoomMutate.mutate({
-        reportId: report.reportId,
-        targetId: report.targetUser.userId,
-        roomId: report.roomId,
-      },
+      completeChatRoomMutate.mutate(
+        {
+          reportId: report.reportId,
+          targetId: report.targetUser.userId,
+          roomId: report.roomId,
+        },
         {
           onSuccess: async () => {
             await queryClient.invalidateQueries(["getChatRoomReportList"]);
@@ -306,13 +314,11 @@ function ReportItems({
           <Button
             variant="secondary"
             onClick={() =>
-              handleChatRoomComplete(
-                {
-                  reportId: report.reportId,
-                  targetId: report.targetUser.userId,
-                  roomId: report.roomId
-                }
-              )
+              handleChatRoomComplete({
+                reportId: report.reportId,
+                targetId: report.targetUser.userId,
+                roomId: report.roomId,
+              })
             }>
             처리완료
           </Button>
@@ -366,6 +372,7 @@ function ReportItems({
           })
         ) : type === "comment" && commentData.list.length > 0 ? (
           commentData.list.map(item => {
+            console.log(item);
             return (
               <Accordion.Item
                 className={styles.Accordion}
@@ -408,7 +415,7 @@ function ReportItems({
           })
         ) : type === "chat" && chatRoomData.list.length > 0 ? (
           chatRoomData.list.map(item => {
-            console.log(item);
+            console.log("chat",item)
             return (
               <Accordion.Item
                 className={styles.Accordion}

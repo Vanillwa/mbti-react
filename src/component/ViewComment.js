@@ -23,6 +23,7 @@ import Paging from "../component/Paging";
 import CommentReportModal from "./CommentReportModal";
 import { Dropdown, Form } from "react-bootstrap";
 import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
+import ViewUserDropdown from "./ViewUserDropdown";
 
 function ViewComment() {
   const queryClient = new QueryClient();
@@ -159,8 +160,8 @@ function ViewComment() {
       <div className={styles.top}>
         <span>댓글</span>
         <Form className={styles.orderBox} onChange={handleOrderChange}>
-          <Form.Group controlId="orderSelect">
-            <Form.Control as="select" value={order}>
+          <Form.Group controlId="orderSelect" >
+            <Form.Control as="select" value={order} readOnly >
               <option value="desc">최신순</option>
               <option value="asc">오래된순</option>
             </Form.Control>
@@ -172,7 +173,7 @@ function ViewComment() {
           <>
             {data.commentList.map((item) => {
               return item.status == "ok" ? (editingCommentId === item.commentId) ?
-                <form className={styles.commentBox} onSubmit={(event) => handleEditSubmit(event, item.commentId)}>
+                <form key={item.commentId} className={styles.commentBox} onSubmit={(event) => handleEditSubmit(event, item.commentId)}>
                   <div className={styles.commentUserInfo}>
                     <div className={styles.commentProfileImageWrap}>
                       <img src={userInfo.profileImage} alt="" />
@@ -186,19 +187,14 @@ function ViewComment() {
                 </form>
                 : (
                   <div key={item.commentId} className={styles.commentBox}>
-                    <div className={styles.commentUserInfo}>
-                      <div className={styles.commentProfileImageWrap}>
-                        <img src={item.User.profileImage} alt="" />
-                      </div>
-                      <div className={styles.commentNickname}>{item.User.nickname}</div>
-                    </div>
+                    <ViewUserDropdown data={item} />
                     <>
                       <div className={styles.commentContent}>{item.content}</div>
                       <div className={styles.commentRight}>
                         <div className={styles.commentDate}>{new Date(item.createdAt).toLocaleDateString()}</div>
                         {isLoggedIn ? <Dropdown >
                           <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                            <ThreeDots width="18px"/>
+                            <ThreeDots width="18px" height='18px' />
                           </Dropdown.Toggle>
                           <Dropdown.Menu >
                             {userInfo.userId != item.userId ? <Dropdown.Item eventKey="1"><CommentReportModal commentId={item.commentId} /></Dropdown.Item> : null}
@@ -217,9 +213,9 @@ function ViewComment() {
 
                   </div>
                 ) : item.status == "deleted" ? (
-                  <div className={styles.commentAlert}>삭제된 댓글입니다.</div>
+                  <div key={item.commentId} className={styles.commentAlert}>삭제된 댓글입니다.</div>
                 ) : (
-                <div className={styles.commentAlert}>차단된 댓글입니다.</div>
+                <div key={item.commentId} className={styles.commentAlert}>차단된 댓글입니다.</div>
               );
 
             })}

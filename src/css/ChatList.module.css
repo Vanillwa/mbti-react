@@ -32,7 +32,7 @@
  .item { height: 100%; display: flex; flex-flow: column; align-items: center; justify-content:center; gap:12px; border-bottom:none; position: relative; } 
  .selectedItem { display: flex; align-items: center; justify-content:center; border-bottom:none; } 
  
- .imgBox { width: 60px; height: 60px; border: 1px solid black; } 
+ .imgBox { width: 60px; height: 60px; border: 1px solid gray; } 
  .userImg { width: 100%; } 
  .nickname { font-size: 14px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; } 
 

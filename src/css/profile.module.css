@@ -3,21 +3,21 @@
   text-align: center;
 }
 
-.outerContainer {
-  margin-bottom: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.Container {
+  width: 100%;
+  padding: 24px;
 }
 
-.innerContainer {
+.Wrap {
   display: flex;
-  justify-content: center;
-  gap: 36px;
+  justify-content: start;
+  gap: 36px; 
+  flex-wrap: wrap; 
+  max-width: 1325px; 
 }
 
 .postWrap {
-  width: 320px;
+  width: 280px; 
   height: 400px;
   border: 1px solid #dddddd;
   border-radius: 12px;
