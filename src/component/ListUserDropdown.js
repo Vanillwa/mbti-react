@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "../css/postView.module.css"
 import { requestChat } from "../service/api/chatAPI";
 import { requestFriend } from "../service/api/friendAPI";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "./sweetalert";
 import { Dropdown } from "react-bootstrap";

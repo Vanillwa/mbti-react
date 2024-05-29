@@ -19,12 +19,11 @@ import { useNavigate } from "react-router-dom";
 import sweetalert from "./sweetalert";
 import Alarm from "./Alarm";
 import home from "../svg/house.svg";
-import { Dropdown, DropdownButton, Form, Spinner } from "react-bootstrap";
+import { Dropdown, Form, Spinner } from "react-bootstrap";
 import SettingDropdown from "./SettingDropdown";
-import Footer from "./Footer";
 const Navbar = ({ chatData, chatStatus }) => {
   const { memoUserInfo } = useAuthContext();
-  
+
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const [showChat, setShowChat] = useState(false);
@@ -74,6 +73,19 @@ const Navbar = ({ chatData, chatStatus }) => {
       }
     }
   }, [chatData]);
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </a>
+  ));
 
   if (chatStatus === "loading") {
     return (
@@ -231,24 +243,43 @@ const Navbar = ({ chatData, chatStatus }) => {
           <div onClick={compareLogin} className={styles.menu}>
             {isLoggedIn ? (
               <>
-                <div className={styles.imgBox}>
-                  <img
-                    src={userInfo.profileImage}
-                    className={`${styles.userImg} ${styles.svg}`}
-                  />
-                </div>
-                <div className={styles.span}>프로필</div>
-                <DropdownButton variant="">
-                  <Dropdown.Item as={Link} to={`/user/${userInfo.userId}`}>
-                    게시물 보기
-                  </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/memberevise">
-                    정보 수정
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <SettingDropdown />
-                  </Dropdown.Item>
-                </DropdownButton>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    as={CustomToggle}
+                    id="dropdown-custom-components"
+                  >
+                    <div className="d-flex">
+                      <div className={styles.imgBox}>
+                        <img
+                          src={userInfo.profileImage}
+                          className={`${styles.userImg} ${styles.svg}`}
+                        />
+                      </div>
+                      <div className={styles.nickname}>{userInfo.nickname}</div>
+                    </div>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      eventKey="1"
+                      onClick={() => {
+                        navigate(`/user/${userInfo.userId}`);
+                      }}
+                    >
+                      프로필 보기
+                    </Dropdown.Item>
+                    <>
+                      <Dropdown.Item
+                        eventKey="2"
+                        onClick={() => navigate("/memberevise")}
+                      >
+                        회원 정보 수정
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <SettingDropdown />
+                      </Dropdown.Item>
+                    </>
+                  </Dropdown.Menu>
+                </Dropdown>
               </>
             ) : (
               <div>

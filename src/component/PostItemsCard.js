@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "../css/CardItems.module.css";
 import { Link } from "react-router-dom";
-import UserDropdown from "./userDropdown";
 import like from "../svg/like.svg";
 import eye from "../svg/eye.svg";
 import ViewUserDropdown from "./ViewUserDropdown";
