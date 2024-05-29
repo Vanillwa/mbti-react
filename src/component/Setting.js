@@ -15,7 +15,7 @@ const Setting = ({listStyle, setListStyle, sort, setSort, setOrder, setSize}) =>
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [listStyleLabel, setListStyleLabel] = useState(listStyle == 'card' ? '카드 형식' : '리스트 형식') 
-  const [listLengthLabel, setListLengthLabel] = useState(window.localStorage('size') || 10)
+  const [listLengthLabel, setListLengthLabel] = useState(window.localStorage.getItem('size') || 10)
 
   const handleLabelChange = (eventKey, e)=>{
     if(e.target.textContent == '리스트 형식'){

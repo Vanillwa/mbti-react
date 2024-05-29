@@ -13,7 +13,9 @@ const PostItems = ({ data, status }) => {
       <div className={styles.type5}>좋아요</div>
       <div className={styles.type6}>조회수</div>
     </div>
-      {data.list.map(item => {
+
+      { data.length > 0 ? 
+      data.list.map(item => {
         const createdAt = new Date(item.createdAt);
         const now = new Date();
         const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -53,7 +55,7 @@ const PostItems = ({ data, status }) => {
             </Link>
           </div>
         );
-      })}
+      }) : <div>작성된 글이 없습니다.</div>}
     </>
   );
 };

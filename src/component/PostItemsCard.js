@@ -8,7 +8,8 @@ import ViewUserDropdown from "./ViewUserDropdown";
 const PostItems = ({ data, status }) => {
   return (
     <><div className={styles.body}>
-      {data.list.map((item) => {
+      {data.length > 0 ?
+      data.list.map((item) => {
         const createdAt = new Date(item.createdAt);
         const now = new Date();
         const differenceInSeconds = Math.floor((now - createdAt) / 1000);
@@ -63,7 +64,7 @@ const PostItems = ({ data, status }) => {
             </Link>
           </div>
         );
-      })}
+      }) : <div>작성된 글이 없습니다.</div>}
       </div>
     </>
   );

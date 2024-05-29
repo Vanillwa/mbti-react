@@ -50,13 +50,7 @@ const PostList = () => {
       </div>
     );
   }
-  if (data.list.length === 0) {
-    return (
-      <div>
-        <h1>작성된 글이 없습니다.</h1>
-      </div>
-    );
-  }
+
   return (
     <div className={styles.postBox}>
       <div className={styles.header}>
