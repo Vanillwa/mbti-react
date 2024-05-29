@@ -20,6 +20,7 @@ import { requestChat } from "../service/api/chatAPI";
 import sweetalert from "../component/sweetalert";
 import { Form } from "react-bootstrap";
 import Paging from "../component/Paging";
+import Footer from "../component/Footer";
 
 const FriendList = () => {
   const queryClient = new QueryClient();
@@ -392,6 +393,7 @@ const FriendList = () => {
         : null
       ) : null}
       </div>
+      <Footer/>
     </div>
   );
 };

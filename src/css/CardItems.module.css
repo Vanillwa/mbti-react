@@ -69,3 +69,7 @@
 @media(max-width : 1300px){
   .body{width: 1000px;}
 }
+@media(max-width : 960px){
+  .body{width: 700px;}
+  .container{width: 400px;}
+}

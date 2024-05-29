@@ -11,6 +11,7 @@ import ImageResize from "quill-image-resize-module-react";
 import 'cropperjs/dist/cropper.css';
 import { Cropper } from 'react-cropper';
 import Modal from 'react-modal';
+import Footer from "../component/Footer";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -278,6 +279,7 @@ const PostWrite = () => {
           style={{ display: "none" }}
         />
       </div>
+      <Footer/>
     </>
   );
 };

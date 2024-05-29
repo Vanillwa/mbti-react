@@ -5,6 +5,7 @@ import noImg from "../images/noImg.png";
 import { useQuery } from "react-query";
 import readhit from "../svg/readhit.svg";
 import like from "../svg/like.svg";
+import Footer from "../component/Footer";
 
 function Profile() {
   const { userId } = useParams();

@@ -8,6 +8,7 @@ import styles from "../css/PostList.module.css";
 import Paging from "../component/Paging";
 import Setting from "../component/Setting";
 import { Spinner } from "react-bootstrap";
+import Footer from '../component/Footer'
 
 const PostList = () => {
   const [query, setQuery] = useSearchParams();
@@ -79,6 +80,7 @@ const PostList = () => {
           <Paging data={data} status={status} page={page} setPage={setPage} />
         </div>
       )}
+      <Footer/>
     </div>
   );
 };

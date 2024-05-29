@@ -15,7 +15,6 @@ return(
         <span>개인정보처리방침</span>
         <span>약관</span>
         <span>위치</span>
-        <span>Are You T Lite</span>
         <span>Threads</span>
         <span>비사용자</span>
         <span>Meta Verified</span>

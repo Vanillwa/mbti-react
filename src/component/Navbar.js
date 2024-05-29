@@ -21,6 +21,7 @@ import Alarm from "./Alarm";
 import home from "../svg/house.svg";
 import { Dropdown, DropdownButton, Form, Spinner } from "react-bootstrap";
 import SettingDropdown from "./SettingDropdown";
+import Footer from "./Footer";
 const Navbar = ({ chatData, chatStatus }) => {
   const { memoUserInfo } = useAuthContext();
   
@@ -124,7 +125,7 @@ const Navbar = ({ chatData, chatStatus }) => {
             style={{ padding: 0 }}
           >
             <img src={search} className={styles.svg} />
-            검색
+            <span className={styles.span}>검색</span>
           </Button>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
