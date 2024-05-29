@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ListUserDropdown from "./ListUserDropdown";
 
 const PostItems = ({ data, status }) => {
+  console.log(data)
   return (
     <><div className={styles.contentHeader}>
       <div className={styles.type1}>게시판</div>
@@ -14,7 +15,7 @@ const PostItems = ({ data, status }) => {
       <div className={styles.type6}>조회수</div>
     </div>
 
-      { data == null ? <div>작성된 글이 없습니다.</div> :
+      { data.list.length === 0 ? <div>작성된 글이 없습니다.</div> :
       data.list.map(item => {
         const createdAt = new Date(item.createdAt);
         const now = new Date();

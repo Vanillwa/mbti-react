@@ -5,10 +5,10 @@ import like from "../svg/like.svg";
 import eye from "../svg/eye.svg";
 import ViewUserDropdown from "./ViewUserDropdown";
 
-const PostItems = ({ data, status }) => {
+const PostItemsCard = ({ data, status }) => {
   return (
     <><div className={styles.body}>
-      {data == null ?  <div>작성된 글이 없습니다.</div> :
+      {data.list.length === 0 ?  <div>작성된 글이 없습니다.</div> :
       data.list.map((item) => {
         const createdAt = new Date(item.createdAt);
         const now = new Date();
@@ -70,4 +70,4 @@ const PostItems = ({ data, status }) => {
   );
 };
 
-export default PostItems;
+export default PostItemsCard;
