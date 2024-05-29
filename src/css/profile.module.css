@@ -1,23 +1,19 @@
 .mainTitle {
   margin: 30px;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
 
 .outerContainer {
-  width: 100%;
-  padding: 24px;
+  margin-bottom: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
 }
 
 .innerContainer {
   display: flex;
-  justify-content: center; 
-  flex-wrap: wrap;
-  gap: 155px; 
+  justify-content: center;
+  gap: 36px;
 }
 
 .postWrap {
@@ -43,14 +39,8 @@
   width: 100%; 
 }
 
-.dateReadhitBox {
-  position: relative;
-}
-
-.img {
-  width: auto;
-  height: 100%;
-}
+.dateReadhitBox {position: relative;}
+.img {width: auto;height: 100%;}
 
 .content {
   margin-top: 20px;
