@@ -17,7 +17,7 @@ const PostList = () => {
   const readPage = parseInt(query.get("page") || "1", 10);
 
   const [page, setPage] = useState(readPage);
-  const [size, setSize] = useState(8);
+  const [size, setSize] = useState(10);
   const [sort, setSort] = useState("createdAt");
   const [order, setOrder] = useState("desc");
 
