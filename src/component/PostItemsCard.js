@@ -8,7 +8,7 @@ import ViewUserDropdown from "./ViewUserDropdown";
 const PostItems = ({ data, status }) => {
   return (
     <><div className={styles.body}>
-      {data.length > 0 ?
+      {data == null ?  <div>작성된 글이 없습니다.</div> :
       data.list.map((item) => {
         const createdAt = new Date(item.createdAt);
         const now = new Date();
@@ -64,7 +64,7 @@ const PostItems = ({ data, status }) => {
             </Link>
           </div>
         );
-      }) : <div>작성된 글이 없습니다.</div>}
+      }) }
       </div>
     </>
   );

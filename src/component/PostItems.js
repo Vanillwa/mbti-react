@@ -14,7 +14,7 @@ const PostItems = ({ data, status }) => {
       <div className={styles.type6}>조회수</div>
     </div>
 
-      { data.length > 0 ? 
+      { data == null ? <div>작성된 글이 없습니다.</div> :
       data.list.map(item => {
         const createdAt = new Date(item.createdAt);
         const now = new Date();
@@ -55,7 +55,7 @@ const PostItems = ({ data, status }) => {
             </Link>
           </div>
         );
-      }) : <div>작성된 글이 없습니다.</div>}
+      })}
     </>
   );
 };
