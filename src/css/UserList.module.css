@@ -18,6 +18,12 @@ ul {
     font-style: normal;
 }
 
+.section{
+    padding: 24px 0px;
+}
+.searchType{
+
+}
 .userType {
     display: flex;
     justify-content: space-between;
@@ -67,14 +73,14 @@ ul {
 }
 
 .showUser {
-    text-align: center;
+    text-align: center
 }
 
 .searchUserType {
     border: 1px solid #40d1e7;
     font-family: 'KCC-Hanbit';
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -92,7 +98,7 @@ ul {
 }
 
 .showUserType {
-    width: 10vw;
+    width: max-content;
     border: 1px solid #40d1e7;
     font-family: 'KCC-Hanbit';
     border-radius: 10px;
