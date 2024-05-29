@@ -1,9 +1,7 @@
 import React from "react";
 import styles from "../css/PostList.module.css";
 import { Link } from "react-router-dom";
-import UserDropdown from "./userDropdown";
-import like from "../svg/like.svg";
-import eye from "../svg/eye.svg";
+import ListUserDropdown from "./ListUserDropdown";
 
 const PostItems = ({ data, status }) => {
   return (
@@ -33,16 +31,6 @@ const PostItems = ({ data, status }) => {
         } else {
           dateDisplay = createdAt.toLocaleDateString("ko-KR");
         }
-        console.log(item)
-
-        const showImg = item.content.match(
-          /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
-        );
-        const imgSrc = showImg ? showImg[1] : null;
-
-        function removeHTMLTags(htmlString) {
-          return htmlString.replace(/<[^>]*>?/gm, "");
-        }
         return (
           <div className={styles.container} key={item.postId}>
             <Link
@@ -53,7 +41,7 @@ const PostItems = ({ data, status }) => {
                 <div className={styles.title}><div className={styles.span}>{item.title}</div></div>
                 {/* <div className={styles.content}>{removeHTMLTags(item.content)}</div> */}
                 {/* <UserDropdown item={item.User} /> */}
-                <div className={styles.nickname}>{item.User.nickname}</div>
+                <div className={styles.nickname}><ListUserDropdown data={item}/></div>
                   <div className={styles.date}>{dateDisplay}</div>
                   <div className={styles.likes}>
                     {/* <img src={like} alt="likes" />*/} {item.like} 

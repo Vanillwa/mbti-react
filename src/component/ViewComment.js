@@ -24,6 +24,7 @@ import CommentReportModal from "./CommentReportModal";
 import { Dropdown, Form } from "react-bootstrap";
 import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
 import ViewUserDropdown from "./ViewUserDropdown";
+import sweetalert from "./sweetalert";
 
 function ViewComment() {
   const queryClient = new QueryClient();
@@ -116,8 +117,9 @@ function ViewComment() {
   };
 
   // 삭제 핸들러
-  const handleCommentDelete = (commentId) => {
-    if (!window.confirm("정말 삭제하시겠습니까?")) return;
+  const handleCommentDelete = async(commentId) => {
+    const result = await sweetalert.question('정말 삭제하시겠습니까?', '', '네', '아니오')
+    if(result.dismiss)return
     deleteMutate.mutate(commentId, {
       onSuccess: async () => {
         console.log("onSuccess");

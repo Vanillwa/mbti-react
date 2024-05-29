@@ -108,7 +108,6 @@ const UserDropdown = ({ item }) => {
                 <Dropdown.Item as="button"><li>
                     <div type="button">차단하기</div>
                   </li></Dropdown.Item></> : null}
-                
               </DropdownButton>
             </div>
           </>

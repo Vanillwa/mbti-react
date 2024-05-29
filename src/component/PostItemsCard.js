@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import UserDropdown from "./userDropdown";
 import like from "../svg/like.svg";
 import eye from "../svg/eye.svg";
+import ViewUserDropdown from "./ViewUserDropdown";
 
 const PostItems = ({ data, status }) => {
   return (
@@ -39,7 +40,7 @@ const PostItems = ({ data, status }) => {
         return (
           <div className={`${styles.container}`} key={item.postId}>
             <div className={styles.header}>
-              <UserDropdown item={item.User} />
+              <ViewUserDropdown data={item} />
             </div>
             <Link to={`/post/view?postId=${item.postId}`} className={styles.contentWrap}>
               <div className={styles.title}>{item.title}</div>
