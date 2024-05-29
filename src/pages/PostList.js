@@ -21,7 +21,7 @@ const PostList = () => {
   const [sort, setSort] = useState("createdAt");
   const [order, setOrder] = useState("desc");
 
-  const [listStyle, setListStyle] = useState(window.localStorage.getItem('listType')=='card' ? 'card' : 'list');
+  const [listStyle, setListStyle] = useState(window.localStorage.getItem('listType')=='card' ? 'card' : 'list' || 'list');
 
   const { data, status } = useQuery(
     ["getPostList", mbti, size, sort, order, page],

@@ -41,11 +41,11 @@ const Setting = ({listStyle, setListStyle, sort, setSort, setOrder, setSize}) =>
     }
   }
   const handleSettingSave = ()=>{
-    const listType = window.localStorage.getItem('listType')
+    const listType = window.localStorage.getItem('listType') || 'list'
     const mbtiType = window.localStorage.getItem('mbtiType')
-    const order = window.localStorage.getItem('order')
-    const listLength = window.localStorage.getItem('listLength')
-    const sort = window.localStorage.getItem('sort')
+    const order = window.localStorage.getItem('order') || 'desc'
+    const listLength = window.localStorage.getItem('listLength') || 10
+    const sort = window.localStorage.getItem('sort') || 'createdAt'
     setListStyle(listType)
     setSize(listLength)
     setOrder(order)
