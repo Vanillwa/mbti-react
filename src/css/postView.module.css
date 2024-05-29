@@ -6,6 +6,7 @@
 
 .main{border-bottom: 1px solid #ccc; padding:24px; }
 .content{min-height: 200px;}
+.content > div > p > img {max-width: 100%; margin-bottom: 24px;}
 .likeBtn{width: max-content; margin:0 auto; padding:10px 18px; border:1px solid #ccc; border-radius: 7px; background-color: #fff; display: flex; flex-flow: column; align-items: center;}
 .likeBtn:hover{background-color: #eee;}
 
