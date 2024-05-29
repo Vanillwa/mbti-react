@@ -37,7 +37,7 @@ a{
 }
 .contentHeader{
   display: flex;
-  width: 1000px;
+  width: 1200px;
   padding: 6px 12px;
   justify-content: space-between;
   border-bottom: 1px solid lightgray;
@@ -54,8 +54,8 @@ a{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 1000px;
-  height: 50px;
+  width: 1200px;
+  height: 40px;
   border-bottom: 1px solid lightgray;
 }
 .postContent{
@@ -80,6 +80,7 @@ a{
   width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .nickname{width: 20%; font-weight: 550; overflow: hidden;
   text-overflow: ellipsis;}
@@ -90,17 +91,27 @@ a{
 
 @media (max-width : 1300px){
   .postWrap, .contentHeader, .header{
+    width: 1000px;
+  }
+}
+@media (max-width : 1250px){
+  .postWrap, .contentHeader, .header{
+    width: 900px;
+  }
+}
+@media (max-width : 1200px){
+  .postWrap, .contentHeader, .header{
     width: 800px;
   }
 }
 @media (max-width : 1024px){
   .postWrap, .contentHeader, .header{
-    width: 650px;
+    width: 700px;
   }
 }
 @media (max-width : 768px){
   .postWrap, .contentHeader, .header {
-    width: 550px;
+    width: 600px;
   }
   .title{width: 35%;}
 }

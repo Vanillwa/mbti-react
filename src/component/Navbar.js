@@ -195,17 +195,19 @@ const Navbar = ({ chatData, chatStatus }) => {
           <div onClick={compareLogin} className={styles.menu}>
             {isLoggedIn ? (
               <>
-                <img
-                  src={userInfo.profileImage}
-                  className={`${styles.userImg} ${styles.svg}`}
-                />
+                <div className={styles.imgBox}>
+                  <img
+                    src={userInfo.profileImage}
+                    className={`${styles.userImg} ${styles.svg}`}
+                  />
+                </div>
                 <div className={styles.span}>프로필</div>
               </>
             ) : (
-              <>
+              <div>
                 <img src={notImg} alt="회원사진" className={styles.svg} />
                 <div className={styles.span}>로그인 해주세요.</div>
-              </>
+              </div>
             )}
             {showDropdown && <ProfileDropDown />}
           </div>

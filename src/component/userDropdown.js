@@ -1,13 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
 import { requestChat } from "../service/api/chatAPI";
 
-import styles from "../css/PostList.module.css";
+import styles from "../css/userDropdown.module.css";
 import { requestFriend } from "../service/api/friendAPI";
 import sweetalert from "./sweetalert";
-//import { socket } from "../service/socket/socket";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const UserDropdown = ({ item }) => {
