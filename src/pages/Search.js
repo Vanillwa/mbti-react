@@ -17,6 +17,7 @@ import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "../component/sweetalert";
 import { requestFriend } from "../service/api/friendAPI";
 import { requestChat } from "../service/api/chatAPI";
+import ListUserDropdown from "../component/ListUserDropdown";
 function Search() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,39 +41,9 @@ function Search() {
     setPage(1);
   }, [keyword]);
 
-  const handleRequestChat = async (e, targetId) => {
-    e.preventDefault();
-    const result = await requestChat(targetId);
-
-    if (result.message === "success") {
-      navigate(`/chat/list/${result.roomId}`);
-    } else if (result.message === "noAuth") {
-      sweetalert.warning("로그인이 필요한 서비스입니다.");
-    } else if (result.message === "notFriend") {
-      sweetalert.warning("친구가 아닙니다.");
-    } else if (result.message === "duplicated") {
-      navigate(`/chat/list/${result.roomId}`);
-    }
-  };
-
-  const handleRequestFreind = async (e, userId) => {
-    e.preventDefault();
-    const result = await requestFriend(userId);
-
-    if (result.message == "success") {
-      setFriend("친구 요청 완료");
-      sweetalert.success("친구 요청 완료", "", "확인");
-    } else if (result.message == "duplicated") {
-      setFriend("이미 친구임.");
-      sweetalert.warning("이미 친구임.", "", "확인");
-    } else if (result.message == "blocked") {
-      setFriend("차단한 친구임.");
-      sweetalert.warning("차단한 친구임.", "", "확인");
-    } else if (result.message == "pending") {
-      setFriend("이미 요청한 친구임.");
-      sweetalert.warning("이미 요청한 친구임.", "", "확인");
-    }
-  };
+  
+console.log(data)
+  
 
   if (status === "loading") {
     return (
@@ -131,42 +102,7 @@ function Search() {
                       </div>
 
                       <div className={searchStyles.nickname}>
-                        <div>
-                          <Dropdown className={searchStyles.dropdown}>
-                            <Dropdown.Toggle variant="" id="dropdown-basic">
-                              {item.nickname}
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                              <Dropdown.Item
-                                onClick={() => {
-                                  navigate(`/user/${item.userId}`);
-                                }}>
-                                프로필 보기
-                              </Dropdown.Item>
-
-                              {isLoggedIn ? (
-                                <>
-                                  <Dropdown.Item
-                                    onClick={e => {
-                                      handleRequestFreind(e, item.userId);
-                                    }}>
-                                    친구요청
-                                  </Dropdown.Item>
-
-                                  <Dropdown.Item
-                                    onClick={e => {
-                                      handleRequestChat(e, item.userId);
-                                    }}>
-                                    채팅하기
-                                  </Dropdown.Item>
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </div>
+                        <ListUserDropdown />
                       </div>
                     </div>
                   </SwiperSlide>
@@ -206,7 +142,7 @@ function Search() {
             } else {
               dateDisplay = createdAt.toLocaleDateString("ko-KR");
             }
-            console.log(item);
+            
 
             const showImg = item.content.match(
               /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
