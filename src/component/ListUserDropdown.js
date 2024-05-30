@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../css/postView.module.css"
 import { requestChat } from "../service/api/chatAPI";
-import { requestFriend } from "../service/api/friendAPI";
+import { blockFriend, requestFriend } from "../service/api/friendAPI";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "./sweetalert";
@@ -51,8 +51,15 @@ function ListUserDropdown({ data }) {
 		}
 	};
 
-	const handleRequestBlock = () => {
+	const handleRequestBlock = async(e,targetId) => {
+		e.preventDefault();
+		const result = await blockFriend(targetId);
 
+		if(result.message === 'success'){
+			sweetalert.warning("차단에 성공했습니다.");
+		}else if(result.message === 'duplicated'){
+			sweetalert.warning("이미 차단한 유저입니다.");
+		}
 	}
 
 	const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -73,7 +80,7 @@ function ListUserDropdown({ data }) {
 					<>
 						<Dropdown.Item eventKey="2" onClick={(e) => handleRequestFreind(e, data.userId)}>친구 추가</Dropdown.Item>
 						<Dropdown.Item eventKey="3" onClick={(e) => handleRequestChat(e, data.userId)}>채팅 요청</Dropdown.Item>
-						<Dropdown.Item eventKey="4" onClick={handleRequestBlock}>차단하기</Dropdown.Item>
+						<Dropdown.Item eventKey="4" onClick={(e) => handleRequestBlock(e, data.userId)}>차단하기</Dropdown.Item>
 					</>
 				) : null}
 			</Dropdown.Menu>
