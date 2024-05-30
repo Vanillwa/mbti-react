@@ -1,9 +1,8 @@
-import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+
 import MainImageSlider from "../component/MainImageSlider";
+import Footer from "../component/Footer";
 
 import styles from "../css/Main.module.css";
 
@@ -12,19 +11,18 @@ import logo from "../images/areyout.png";
 import { fetchLogin, fetchLogout } from "../service/api/loginAPI";
 import { useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext, useAuthContext } from "../context/AuthContext";
-import Footer from "../component/Footer";
+import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
+
 
 function Main() {
   const navigate = useNavigate();
-  const [capsLockFlag, setCapsLockFlag] = useState(false);
   const { login } = useAuthContext();
   const [emailAlert, setEmailAlert] = useState();
   const [pwdAlert, setPwdAlert] = useState();
   const location = useLocation();
-  const { memoUserInfo, logout, socket } = useAuthContext();
-  const { isLoggedIn, userInfo,  } = memoUserInfo;
+  const { memoUserInfo, logout } = useAuthContext();
+  const { isLoggedIn, userInfo } = memoUserInfo;
 
   const [emailValidColor, setEmailValidColor] = useState("");
   const [passwordValidColor, setPasswordValidColor] = useState("");
@@ -174,7 +172,7 @@ function Main() {
           </Button>
         ) : null}
       </div>
-      
+
       {/* 푸터로 변경 */}
       <Footer></Footer>
     </div>

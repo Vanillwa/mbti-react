@@ -1,29 +1,17 @@
 import { useQuery } from "react-query";
 import { getSearchResult } from "../service/api/searchAPI";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import searchStyles from "../css/Search.module.css";
 import styles from "../css/PostList.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper";
 import { Navigation } from "swiper";
-import UserDropdown from "../component/userDropdown";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import like from "../svg/like.svg";
-import eye from "../svg/eye.svg";
 import Paging from "../component/Paging";
 import { useEffect, useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
-import sweetalert from "../component/sweetalert";
-import { requestFriend } from "../service/api/friendAPI";
-import { requestChat } from "../service/api/chatAPI";
 import ListUserDropdown from "../component/ListUserDropdown";
+
 function Search() {
-  const navigate = useNavigate();
   const location = useLocation();
-  const [friend, setFriend] = useState("");
-  const { memoUserInfo } = useAuthContext();
-  const { isLoggedIn, userInfo } = memoUserInfo;
   const keyword = location.state.keyword;
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
@@ -41,9 +29,7 @@ function Search() {
     setPage(1);
   }, [keyword]);
 
-  
-console.log(data)
-  
+
 
   if (status === "loading") {
     return (
@@ -113,9 +99,8 @@ console.log(data)
         </div>
       )}
       {data.postList.length == 0 ? null : (
-    
         <div className={searchStyles.postWrap}>
-              <h3>게시글 검색결과 목록</h3>
+          <h3>게시글 검색결과 목록</h3>
           <div className={styles.contentHeader}>
             <div className={styles.type1}>게시판</div>
             <div className={styles.type2}>제목</div>
@@ -142,7 +127,6 @@ console.log(data)
             } else {
               dateDisplay = createdAt.toLocaleDateString("ko-KR");
             }
-
 
             const showImg = item.content.match(
               /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/

@@ -53,7 +53,7 @@ function Profile() {
   }
 
 
-  console.log(userInfo)
+ 
   const { mbti } = data.userInfo;
   
   return (

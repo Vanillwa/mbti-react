@@ -1,17 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../images/areyout.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import img from "../images/MBTI.png";
+
 import styles from "../css/FindPwd.module.css";
 import {
   checkCodeFindPwd,
   emailChangedFindPwd,
   requestCodeFindPwd,
 } from "../service/api/loginAPI";
-import { useAuthContext } from "../context/AuthContext";
-import Swal from "sweetalert2";
 import sweetalert from "../component/sweetalert";
 
 function FindPwd() {

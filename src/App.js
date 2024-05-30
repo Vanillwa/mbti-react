@@ -11,7 +11,6 @@ import PostWrite from "./pages/PostWrite";
 import Profile from "./pages/Profile";
 import FindPwd from "./pages/FindPwd";
 import UpdatePassword from "./pages/UpdatePassword";
-import CompleteLogin from "./pages/CompleteLogin";
 import PostEdit from "./pages/PostEdit";
 import UserDelete from "./pages/UserDelete";
 import FriendList from "./pages/FriendList";
@@ -30,30 +29,34 @@ function App() {
   const { isLoggedIn } = memoUserInfo;
   const navigate = useNavigate();
 
-  if(isLoggedIn){
-    socket.emit("login")
+  useEffect(() => {
+    if (isLoggedIn) {
+      socket.emit("refresh")
 
-    socket.on("uBlocked", async () => {
-      console.log("로그아웃 요청 도착")
-      socket.emit("logout");
-      const result = await fetchLogout();
-      if (result.message === "success") {
-        logout();
-        navigate("/", { state: "logout" });
-        sweetalert.warning("차단된 계정입니다.", "", "닫기");
-      }
-    });
-  
-    socket.on("duplicatedLogin", async () => {
-      socket.emit("logout");
-      const result = await fetchLogout();
-      if (result.message === "success") {
-        logout();
-        navigate("/", { state: "logout" });
-        sweetalert.warning("로그인 중복이 감지되었습니다.", "", "닫기");
-      }
-    });
-  }
+      socket.on("uBlocked", async () => {
+        console.log("로그아웃 요청 도착")
+        socket.emit("logout");
+        const result = await fetchLogout();
+        if (result.message === "success") {
+          logout();
+          navigate("/", { state: "logout" });
+          sweetalert.warning("차단된 계정입니다.", "", "닫기");
+        }
+      });
+
+      socket.on("duplicatedLogin", async () => {
+        socket.emit("logout");
+        const result = await fetchLogout();
+        if (result.message === "success") {
+          logout();
+          navigate("/", { state: "logout" });
+          sweetalert.warning("로그인 중복이 감지되었습니다.", "", "닫기");
+        }
+      });
+    }
+  }, [])
+
+
 
   return (
     <div className="App">
@@ -86,7 +89,6 @@ function App() {
         <Route path="userdelete" element={<UserDelete />} />
         <Route path="updatepwd" element={<UpdatePassword />} />
         <Route path="findpwd" element={<FindPwd />} />
-        <Route path="completelogin" element={<CompleteLogin />} />
       </Routes>
     </div>
   );

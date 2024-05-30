@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useQuery } from "react-query";
 
 import Form from "react-bootstrap/Form";
@@ -14,7 +14,6 @@ import Paging from "../component/Paging";
 
 function ReportList() {
   const [type, setType] = useState("post");
-  const [chatRoomMessageInfo, setChatRoomMessageInfo] = useState(null);
   const [page, setPage] = useState(1);
   // const handleCommentReport = report=>{
   //   setReport(report);

@@ -1,4 +1,4 @@
-import { QueryClient, useMutation, useQuery } from "react-query";
+import { QueryClient, useMutation } from "react-query";
 import { releaseUser, suspendUser } from "../service/api/reportAPI";
 
 import Modal from "react-bootstrap/Modal";

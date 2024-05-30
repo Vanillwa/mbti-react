@@ -4,10 +4,9 @@ import { useRef, useState } from "react";
 import UserItems from "../component/UserItems";
 import styles from "../css/UserList.module.css";
 import Paging from "../component/Paging";
-import { useSearchParams } from "react-router-dom";
 
 function UserList() {
-  const [query, setQuery] = useSearchParams();
+
   const [size, setSize] = useState(10);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("");
