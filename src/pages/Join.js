@@ -14,7 +14,7 @@ import { Modal, Button } from 'react-bootstrap';
 
 
 function Join() {
-  console.log('rendered')
+
   const navigate = useNavigate()
 
 
@@ -105,10 +105,10 @@ function Join() {
   const handleRequestVerificationCode = async () => {
     try {
       const response = await requestEmailVerification(email);
-      console.log(response)
+      
       if (response.message === 'success') {
 
-        //나중에 삭제 인증번호 콘솔창
+        //나중에 삭제 인증번호 콘솔창 로그
         console.log("인증번호 : ", response.code)
 
         setCertificationValidation('valid');
