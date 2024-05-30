@@ -102,7 +102,7 @@ console.log(data)
                       </div>
 
                       <div className={searchStyles.nickname}>
-                        <ListUserDropdown />
+                        <ListUserDropdown data={item} />
                       </div>
                     </div>
                   </SwiperSlide>
