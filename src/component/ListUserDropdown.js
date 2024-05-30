@@ -64,15 +64,15 @@ function ListUserDropdown({ data }) {
 		<Dropdown>
 			<Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
 				<div className={styles.userInfo}>
-					<div className={styles.nickname}>{data.User.nickname}</div>
+					<div className={styles.nickname}>{data.nickname}</div>
 				</div>
 			</Dropdown.Toggle>
 			<Dropdown.Menu >
-				<Dropdown.Item eventKey="1" onClick={() => { navigate(`/user/${data.User.userId}`) }}>프로필 보기</Dropdown.Item>
-				{isLoggedIn && userInfo.userId != data.User.userId ? (
+				<Dropdown.Item eventKey="1" onClick={() => { navigate(`/user/${data.userId}`) }}>프로필 보기</Dropdown.Item>
+				{isLoggedIn && userInfo.userId != data.userId ? (
 					<>
-						<Dropdown.Item eventKey="2" onClick={(e) => handleRequestFreind(e, data.User.userId)}>친구 추가</Dropdown.Item>
-						<Dropdown.Item eventKey="3" onClick={(e) => handleRequestChat(e, data.User.userId)}>채팅 요청</Dropdown.Item>
+						<Dropdown.Item eventKey="2" onClick={(e) => handleRequestFreind(e, data.userId)}>친구 추가</Dropdown.Item>
+						<Dropdown.Item eventKey="3" onClick={(e) => handleRequestChat(e, data.userId)}>채팅 요청</Dropdown.Item>
 						<Dropdown.Item eventKey="4" onClick={handleRequestBlock}>차단하기</Dropdown.Item>
 					</>
 				) : null}

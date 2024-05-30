@@ -42,7 +42,7 @@ const PostItems = ({ data, status }) => {
                 <Link to={`/post/view?postId=${item.postId}`} className={styles.title}><div className={styles.span}>{item.title}</div></Link>
                 {/* <div className={styles.content}>{removeHTMLTags(item.content)}</div> */}
                 {/* <UserDropdown item={item.User} /> */}
-                <div className={styles.nickname}><ListUserDropdown data={item}/></div>
+                <div className={styles.nickname}><ListUserDropdown data={item.User}/></div>
                   <div className={styles.date}>{dateDisplay}</div>
                   <div className={styles.likes}>
                     {/* <img src={like} alt="likes" />*/} {item.like} 
