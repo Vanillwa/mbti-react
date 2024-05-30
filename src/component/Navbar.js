@@ -20,9 +20,10 @@ import sweetalert from "./sweetalert";
 import Alarm from "./Alarm";
 import home from "../svg/house.svg";
 import { Dropdown, Form, Spinner } from "react-bootstrap";
-import SettingDropdown from "./SettingDropdown";
+import { fetchLogout } from "../service/api/loginAPI";
+
 const Navbar = ({ chatData, chatStatus }) => {
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, logout } = useAuthContext();
 
   const { isLoggedIn, userInfo } = memoUserInfo;
 
@@ -86,6 +87,15 @@ const Navbar = ({ chatData, chatStatus }) => {
       {children}
     </a>
   ));
+
+  const clickLogout = async () => {
+    logout();
+    const result = await fetchLogout()
+    console.log(result.message)
+    if (result.message === 'success') {
+      navigate("/", { state: "logout" })
+    }
+  }
 
   if (chatStatus === "loading") {
     return (
@@ -274,8 +284,8 @@ const Navbar = ({ chatData, chatStatus }) => {
                       >
                         회원 정보 수정
                       </Dropdown.Item>
-                      <Dropdown.Item>
-                        <SettingDropdown />
+                      <Dropdown.Item onClick={clickLogout}>
+                        로그아웃
                       </Dropdown.Item>
                     </>
                   </Dropdown.Menu>
