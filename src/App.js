@@ -30,34 +30,30 @@ function App() {
   const { isLoggedIn } = memoUserInfo;
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      socket.emit("refresh")
+  if(isLoggedIn){
+    socket.emit("login")
 
-      socket.on("uBlocked", async () => {
-        console.log("로그아웃 요청 도착")
-        socket.emit("logout");
-        const result = await fetchLogout();
-        if (result.message === "success") {
-          logout();
-          navigate("/", { state: "logout" });
-          sweetalert.warning("차단된 계정입니다.", "", "닫기");
-        }
-      });
-
-      socket.on("duplicatedLogin", async () => {
-        socket.emit("logout");
-        const result = await fetchLogout();
-        if (result.message === "success") {
-          logout();
-          navigate("/", { state: "logout" });
-          sweetalert.warning("로그인 중복이 감지되었습니다.", "", "닫기");
-        }
-      });
-    }
-  }, [])
-
-
+    socket.on("uBlocked", async () => {
+      console.log("로그아웃 요청 도착")
+      socket.emit("logout");
+      const result = await fetchLogout();
+      if (result.message === "success") {
+        logout();
+        navigate("/", { state: "logout" });
+        sweetalert.warning("차단된 계정입니다.", "", "닫기");
+      }
+    });
+  
+    socket.on("duplicatedLogin", async () => {
+      socket.emit("logout");
+      const result = await fetchLogout();
+      if (result.message === "success") {
+        logout();
+        navigate("/", { state: "logout" });
+        sweetalert.warning("로그인 중복이 감지되었습니다.", "", "닫기");
+      }
+    });
+  }
 
   return (
     <div className="App">
