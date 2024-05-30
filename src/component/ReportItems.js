@@ -38,8 +38,8 @@ function ReportItems({
   const handleClose = () => setShow(false);
   const handleClose1 = () => setShow1(false);
   const handleClose2 = () => setShow2(false);
-  const { memoUserInfo } = useAuthContext();
-  const { socket } = memoUserInfo;
+  const { memoUserInfo,socket } = useAuthContext();
+  
 
   const completePostMutate = useMutation(reportId => {
     return updatePostReport(reportId);
@@ -86,7 +86,7 @@ function ReportItems({
     setShow2(false);
   };
 
-  //게시글 신고처리
+  //게시글 신고정지처리
   const handlePostSubmit = async e => {
     e.preventDefault();
     const now = new Date();
@@ -99,7 +99,8 @@ function ReportItems({
     });
     if (report.Post.User.status === "deleted") {
       sweetalert.warning("탈퇴한 유저는 정지시킬 수 없습니다.");
-    } else if (result.message === "success") {
+    } else
+     if (result.message === "success") {
       sweetalert.success("정지 완료");
       socket.emit("blockUser", report.Post.User.userId);
       completePostMutate.mutate(report.reportId, {
@@ -109,14 +110,14 @@ function ReportItems({
           return;
         },
       });
-
       setShow(false);
+      
     } else if (result.message === "fail") {
       sweetalert.warning("정지 실패");
     }
   };
 
-  //댓글 신고처리
+  //댓글 신고정지처리
   const handleCommentSubmit = async e => {
     e.preventDefault();
     const now = new Date();
