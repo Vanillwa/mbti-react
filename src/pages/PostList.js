@@ -17,9 +17,9 @@ const PostList = () => {
   const readPage = parseInt(query.get("page") || "1", 10);
 
   const [page, setPage] = useState(readPage);
-  const [size, setSize] = useState(10);
-  const [sort, setSort] = useState("createdAt");
-  const [order, setOrder] = useState("desc");
+  const [size, setSize] = useState(window.localStorage.getItem('listLength') || 10);
+  const [sort, setSort] = useState(window.localStorage.getItem('sort') || "createdAt");
+  const [order, setOrder] = useState(window.localStorage.getItem('order') || "desc");
 
   const [listStyle, setListStyle] = useState(window.localStorage.getItem('listType')=='card' ? 'card' : 'list' || 'list');
 
