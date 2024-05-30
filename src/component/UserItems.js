@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import styles from "../css/UserList.module.css";
 import sweetalert from "./sweetalert";
 import { useAuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 //import { socket } from "../service/socket/socket";
 function UserItems({ data, status, filter, keyword, type, refetch }) {
   const blockRef = useRef();
@@ -157,7 +158,9 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
                 이메일: {item.email}
               </span>
               <span className={`col-3 ${styles.userNickname}`}>
+                <Link to={`/user/${item.userId}`}>
                 닉네임: {item.nickname}
+                </Link>
               </span>
               <span className={`col-2 ${styles.userStatus}`}>
                 상태: {item.status}
