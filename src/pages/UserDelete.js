@@ -18,7 +18,7 @@ function UserDelete() {
   const { memoUserInfo, logout } = useAuthContext();
   const { userInfo } = memoUserInfo;
 
-  console.log(userInfo);
+  
 
   // 비밀번호
   const [passwordBtn, setPasswordBtn] = useState("확인");
@@ -38,7 +38,7 @@ function UserDelete() {
     if (passwordBtn === '확인') {
       const result = await deletePasswordCheck({ password: passwordRef.current.value });
 
-      console.log(result);
+     
       if (result.message === "success") {
         setPwEditable(true);
         setPwmessage("비밀번호 검증이 완료되었습니다.");

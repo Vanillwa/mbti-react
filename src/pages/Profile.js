@@ -46,13 +46,13 @@ function Profile() {
     );
   }
 
-  const { nickname } = data.userInfo;
+ 
 
   function removeHTMLTags(htmlString) {
     return htmlString.replace(/<[^>]*>?/gm, "");
   }
 
-  console.log(data)
+ 
   return (
     <section className={styles.section}>
       <div className={`container ${styles.Container}`}>
