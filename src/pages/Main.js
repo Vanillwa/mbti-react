@@ -43,7 +43,6 @@ function Main() {
 
     if (res.message === "success") {
       login(res.userInfo);
-      socket.emit('login')
       if (array.includes(location.state)) navigate("/post/list");
       else navigate(-1);
     } else if (res.message === "blocked") {
