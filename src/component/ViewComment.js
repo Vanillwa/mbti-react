@@ -84,7 +84,6 @@ function ViewComment() {
 
     postMutate.mutate(body, {
       onSuccess: async () => {
-        console.log("onSuccess");
         await queryClient.invalidateQueries(["getViewComment", postId]);
         await refetch();
         setInputContent("");
@@ -122,7 +121,6 @@ function ViewComment() {
     if(result.dismiss)return
     deleteMutate.mutate(commentId, {
       onSuccess: async () => {
-        console.log("onSuccess");
         await queryClient.invalidateQueries(["getViewComment", postId]);
         await refetch();
         return;
@@ -156,7 +154,6 @@ function ViewComment() {
       {children}
     </a>
   ));
-  console.log(data)
 
   return (
     <div className={styles.container}>

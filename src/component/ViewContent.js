@@ -65,13 +65,10 @@ function ViewContent() {
   const handleLikeClick = async () => {
     const result = await clickPostLikes(data.postId);
     if (result.message == "success") {
-      console.log("좋아요 눌렀음.");
       refetch();
     } else if (result.message == "duplicated") {
-      console.log("추천함");
       sweetalert.warning("이미 추천한 게시물입니다.", "", "확인");
     }
-    console.log(result.message);
   };
 
   function ContentComponent({ content }) {
@@ -115,7 +112,6 @@ function ViewContent() {
       {children}
     </a>
   ));
-  console.log(data)
   return (
     <>
       <div className={styles.container}>

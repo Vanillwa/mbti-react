@@ -191,7 +191,6 @@ const FriendList = () => {
   useEffect(()=>{
     setKeyword('')
   },[btn])
-  console.log(btn)
   if (
     requestStatus === "loading" ||
     friendStatus === "loading" ||
@@ -213,8 +212,6 @@ const FriendList = () => {
       </>
     );
   }
-
-  console.log(friendData);
 
   return (
     <div className={styles.body}>
@@ -259,7 +256,6 @@ const FriendList = () => {
           <div className={styles.title}>친구 목록</div>
           {friendData.result.length > 0 ? (
             friendData.result.map((item) => {
-              console.log("data",friendData.result)
               return (
                 <div key={item.friendId} className={styles.contentBox}>
                   <Link

@@ -311,7 +311,6 @@ function ReportItems({
           </form>
         </Modal.Body>
         <Modal.Footer>
-          {console.log("report", report)}
           <Button
             variant="secondary"
             onClick={() =>
@@ -373,7 +372,6 @@ function ReportItems({
           })
         ) : type === "comment" && commentData.list.length > 0 ? (
           commentData.list.map(item => {
-            console.log(item);
             return (
               <Accordion.Item
                 className={styles.Accordion}
@@ -416,7 +414,6 @@ function ReportItems({
           })
         ) : type === "chat" && chatRoomData.list.length > 0 ? (
           chatRoomData.list.map(item => {
-            console.log("chat",item)
             return (
               <Accordion.Item
                 className={styles.Accordion}

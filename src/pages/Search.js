@@ -206,13 +206,10 @@ function Search() {
             } else {
               dateDisplay = createdAt.toLocaleDateString("ko-KR");
             }
-            console.log(item);
-
             const showImg = item.content.match(
               /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
             );
             const imgSrc = showImg ? showImg[1] : null;
- 
             function removeHTMLTags(htmlString) {
               return htmlString.replace(/<[^>]*>?/gm, "");
             }

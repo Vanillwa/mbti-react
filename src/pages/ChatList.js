@@ -9,7 +9,6 @@ const ChatList = ({ listData, listStatus, listRefetch, setRoomId, roomId }) => {
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const handleSetRoomId = (roomId) => {
-    console.log("roomId", roomId)
     setRoomId((preRoomId => {
       if (preRoomId != null) socket.emit("leaveRoom", preRoomId)
       return roomId

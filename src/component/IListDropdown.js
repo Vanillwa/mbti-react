@@ -29,7 +29,6 @@ function IListDropdown({ mbti, setMbti }) {
     "INFJ",
     "INFP",
   ];
-  console.log(localMbti);
 
   return (
     <>

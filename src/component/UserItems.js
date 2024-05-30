@@ -74,7 +74,6 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
   };
 
   const handleShowModal = user => {
-    console.log(user);
     if (user.userId != userInfo.userId) {
       setUser(user);
       setShow(true);
@@ -148,7 +147,6 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
 
       <div className={`container ${styles.container}`}>
         {data.result.map(item => {
-          {console.log("item:",item)}
           return (
             <div className={` row ${styles.userinfo}`} key={item.userId}>
               <span className={`col-2 ${styles.userId}`}>

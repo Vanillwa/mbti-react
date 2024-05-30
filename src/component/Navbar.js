@@ -91,7 +91,6 @@ const Navbar = ({ chatData, chatStatus }) => {
   const clickLogout = async () => {
     logout();
     const result = await fetchLogout()
-    console.log(result.message)
     if (result.message === 'success') {
       navigate("/", { state: "logout" })
     }

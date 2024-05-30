@@ -52,7 +52,6 @@ function Profile() {
     return htmlString.replace(/<[^>]*>?/gm, "");
   }
 
-  console.log(data)
   return (
     <section className={styles.section}>
       <div className={`container ${styles.Container}`}>

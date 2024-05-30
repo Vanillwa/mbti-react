@@ -34,7 +34,6 @@ function UserList() {
     setKeyword(searchRef.current.value);
     setType(typeRef.current.value);
   };
-  console.log(data);
 
   return (
     <section className={styles.section}>

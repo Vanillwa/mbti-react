@@ -28,7 +28,6 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: async (roomData) => {
-        console.log("로딩 완료", roomData);
         socket.emit("joinRoom", roomId);
         setChat(roomData.messageList);
         await listRefetch()
@@ -100,7 +99,6 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
     socket.on("userJoined", handleUserJoined);
     socket.on("notAvailable", handleNotAvailable)
     socket.on("quitRoom", (newData) => {
-      console.log("targetId : ", newData)
       if (newData === userInfo.userId) roomRefetch()
     })
     return () => {
