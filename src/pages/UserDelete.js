@@ -36,6 +36,7 @@ function UserDelete() {
     if (passwordBtn === '확인') {
       const result = await deletePasswordCheck({ password: passwordRef.current.value });
 
+
       if (result.message === "success") {
         setPwEditable(true);
         setPwmessage("비밀번호 검증이 완료되었습니다.");

@@ -14,6 +14,7 @@ import { Modal, Button } from 'react-bootstrap';
 
 
 function Join() {
+  console.log('rendered')
   const navigate = useNavigate()
 
 
@@ -104,8 +105,12 @@ function Join() {
   const handleRequestVerificationCode = async () => {
     try {
       const response = await requestEmailVerification(email);
+      console.log(response)
       if (response.message === 'success') {
+
+        //나중에 삭제 인증번호 콘솔창
         console.log("인증번호 : ", response.code)
+
         setCertificationValidation('valid');
         setCertificationAlert("인증 번호가 발송되었습니다.")
         setCertificationInputDisabled(false) // false값으로 바꿈 이건 인풋상자
@@ -185,7 +190,7 @@ function Join() {
 
       setPasswordSame(false)
     }
-    console.log(passwordSame)
+   
   }
 
   // 첫번째 비밀번호 입력

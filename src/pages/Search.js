@@ -206,6 +206,7 @@ function Search() {
             } else {
               dateDisplay = createdAt.toLocaleDateString("ko-KR");
             }
+
             const showImg = item.content.match(
               /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/
             );
