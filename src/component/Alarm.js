@@ -41,7 +41,6 @@ const Alarm = () => {
         toast.dismiss(toastRequestId)
       },
     });
-    console.log('요청옴')
     setRequestIds({
       ...requestIds,
     })

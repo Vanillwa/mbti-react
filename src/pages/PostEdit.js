@@ -83,7 +83,6 @@ const PostEdit = () => {
           setCroppedImage(null);
           setIsModalOpen(false);
         } catch (error) {
-          console.log("Image upload failed", error);
         }
       }, 'image/png');
     }
@@ -164,9 +163,8 @@ const PostEdit = () => {
       sweetalert.success('수정 완료', '', '확인');
       navigate(`/post/view?postId=${postId}`);
     } else if (result.message === 'noAuth') {
-      console.log('권한 없음');
+      
     } else {
-      console.log('왜그러냐');
     }
   };
 

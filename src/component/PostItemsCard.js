@@ -27,7 +27,6 @@ const PostItemsCard = ({ data, status }) => {
         } else {
           dateDisplay = createdAt.toLocaleDateString("ko-KR");
         }
-        console.log(item);
 
         const showImg = item.content.match(
           /<img\s+[^>]*?src\s*=\s*['"]([^'"]*?)['"][^>]*?>/

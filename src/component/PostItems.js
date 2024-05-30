@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import ListUserDropdown from "./ListUserDropdown";
 
 const PostItems = ({ data, status }) => {
-  console.log(data)
   return (
     <><div className={styles.contentHeader}>
       <div className={styles.type1}>게시판</div>
@@ -36,12 +35,11 @@ const PostItems = ({ data, status }) => {
         }
         return (
           <div className={styles.container} key={item.postId}>
-            <Link
-              to={`/post/view?postId=${item.postId}`}
+            <div
               className={styles.postWrap}>
               <div className={styles.postContent}>
                 <div className={styles.postMbti}>{item.category ? item.category : '없음'}</div>
-                <div className={styles.title}><div className={styles.span}>{item.title}</div></div>
+                <Link to={`/post/view?postId=${item.postId}`} className={styles.title}><div className={styles.span}>{item.title}</div></Link>
                 {/* <div className={styles.content}>{removeHTMLTags(item.content)}</div> */}
                 {/* <UserDropdown item={item.User} /> */}
                 <div className={styles.nickname}><ListUserDropdown data={item}/></div>
@@ -53,7 +51,7 @@ const PostItems = ({ data, status }) => {
                     {/* <img src={eye} alt="views" />*/} {item.readhit} 
                   </div>
               </div>
-            </Link>
+            </div>
           </div>
         );
       })}

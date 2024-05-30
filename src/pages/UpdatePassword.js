@@ -84,14 +84,12 @@ function ResetPassword() {
 
   const UpdatePwd = async () => {
     const result = await requestUpdatePwd(password);
-    console.log(result.message);
-    console.log(result);
     if (result.message === "success") {
       sweetalert.success('비밀번호 변경완료')
       
       navigate("/", { state: "updatePwd" });
     } else {
-     sweetalert.error('에러발생')
+      sweetalert.error('에러발생')
     }
   };
 

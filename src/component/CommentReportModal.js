@@ -55,7 +55,6 @@ function CommentReportModal({commentId}) {
         break;
     }
   };
-  console.log(reportType);
 
 
 
@@ -69,7 +68,6 @@ function CommentReportModal({commentId}) {
       sweetalert.warning("신고 유형을 선택해주세요.",'','확인');
       return;
     }
-    console.log(body);
     const result = await reportComment(body);
 
     if(result.message === "success"){
