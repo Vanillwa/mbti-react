@@ -50,10 +50,6 @@
   height: 60px;
 }
 
-.menu:hover{
-  background-color: rgb(233, 233, 233);
-  transition: all 0.5s;
-}
 .menu:hover .svg{
   width: 28px;
   height: auto;
