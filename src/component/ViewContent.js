@@ -130,7 +130,7 @@ function ViewContent() {
           </div>
         </div>
         <div className={styles.info}>
-          <ViewUserDropdown user={data}/>
+          <ViewUserDropdown user={data.User}/>
           <div className={styles.postInfo}>
             <div className={styles.readhit}><Eye /> {data.readhit}</div>
             <div className={styles.date}>{dateDisplay}</div>
