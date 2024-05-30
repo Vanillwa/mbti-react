@@ -40,7 +40,7 @@ const PostItemsCard = ({ data, status }) => {
         return (
           <div className={`${styles.container}`} key={item.postId}>
             <div className={styles.header}>
-              <ViewUserDropdown data={item} />
+              <ViewUserDropdown user={item.User} />
             </div>
             <Link to={`/post/view?postId=${item.postId}`} className={styles.contentWrap}>
               <div className={styles.title}>{item.title}</div>

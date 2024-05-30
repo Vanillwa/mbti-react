@@ -6,9 +6,16 @@ import { useQuery } from "react-query";
 import readhit from "../svg/readhit.svg";
 import like from "../svg/like.svg";
 import Footer from "../component/Footer";
+import React from "react";
+import { Dropdown } from "react-bootstrap";
+import { useAuthContext } from "../context/AuthContext";
+import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
+import ViewUserDropdown from "../component/ViewUserDropdown";
 
 function Profile() {
   const { userId } = useParams();
+  const { memoUserInfo } = useAuthContext();
+  const { isLoggedIn, userInfo } = memoUserInfo;
 
   const { data, status } = useQuery(
     ["getProfileList", userId],
@@ -18,6 +25,12 @@ function Profile() {
       refetchOnWindowFocus: false,
     }
   );
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a href="" ref={ref} onClick={(e) => { e.preventDefault(); onClick(e); }}>
+      {children}
+    </a>
+  ));
 
   if (status === "loading") {
     return (
@@ -33,14 +46,6 @@ function Profile() {
     );
   }
 
-  if (data.length == 0) {
-    return (
-      <div>
-        <h1>작성된 글이 없습니다.</h1>
-      </div>
-    );
-  }
-
   const { nickname } = data.userInfo;
 
   function removeHTMLTags(htmlString) {
@@ -49,12 +54,15 @@ function Profile() {
 
   console.log(data)
   return (
-    <>
-     <h2 className={styles.mainTitle}>{nickname}님의 게시글</h2>
+    <section className={styles.section}>
+      <div className={styles.header}>
+        <span>최근 게시글</span>
+        <ViewUserDropdown user={data.userInfo} />
+      </div>
+
       <div className={`container ${styles.Container}`}>
         <div className={`row ${styles.Wrap}`}>
-
-          {data.recentPost.map((userdata) => (
+          {data.recentPost.length === 0 ? <div className={styles.noList}>작성된 글이 없습니다.</div> : data.recentPost.map((userdata) => (
             <Link to={`/post/view?postId=${userdata.postId}`} className={`col-2 ${styles.postWrap}`} key={userdata.writerId}>
               <div className={styles.postHeader}>
                 <img
@@ -98,7 +106,7 @@ function Profile() {
           ))}
         </div>
       </div>
-    </>
+    </section>
   );
 }
 

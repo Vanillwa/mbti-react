@@ -156,6 +156,7 @@ function ViewComment() {
       {children}
     </a>
   ));
+  console.log(data)
 
   return (
     <div className={styles.container}>
@@ -189,7 +190,7 @@ function ViewComment() {
                 </form>
                 : (
                   <div key={item.commentId} className={styles.commentBox}>
-                    <ViewUserDropdown data={item} />
+                    <ViewUserDropdown user={item.User} />
                     <>
                       <div className={styles.commentContent}>{item.content}</div>
                       <div className={styles.commentRight}>

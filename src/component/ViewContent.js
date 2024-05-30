@@ -115,6 +115,7 @@ function ViewContent() {
       {children}
     </a>
   ));
+  console.log(data)
   return (
     <>
       <div className={styles.container}>
@@ -133,7 +134,7 @@ function ViewContent() {
           </div>
         </div>
         <div className={styles.info}>
-          <ViewUserDropdown data={data}/>
+          <ViewUserDropdown user={data}/>
           <div className={styles.postInfo}>
             <div className={styles.readhit}><Eye /> {data.readhit}</div>
             <div className={styles.date}>{dateDisplay}</div>

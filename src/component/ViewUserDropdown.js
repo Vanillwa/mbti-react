@@ -7,7 +7,7 @@ import { useAuthContext } from "../context/AuthContext";
 import sweetalert from "./sweetalert";
 import { Dropdown } from "react-bootstrap";
 
-function ViewUserDropdown({ data }) {
+function ViewUserDropdown({ user }) {
 	const navigate = useNavigate();
 	const { memoUserInfo, socket } = useAuthContext();
 	const { isLoggedIn, userInfo } = memoUserInfo;
@@ -71,17 +71,17 @@ function ViewUserDropdown({ data }) {
 		<Dropdown>
 			<Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
 				<div className={styles.userInfo}>
-					<div className={styles.userImg}><img src={data.User.profileImage} /></div>
-					<div className={styles.nickname}>{data.User.nickname}</div>
+					<div className={styles.userImg}><img src={user.profileImage} /></div>
+					<div className={styles.nickname}>{user.nickname}</div>
 				</div>
 			</Dropdown.Toggle>
 			<Dropdown.Menu >
-				<Dropdown.Item eventKey="1" onClick={() => { navigate(`/user/${data.User.userId}`) }}>프로필 보기</Dropdown.Item>
-				{isLoggedIn && userInfo.userId != data.User.userId ? (
+				<Dropdown.Item eventKey="1" onClick={() => { navigate(`/user/${user.userId}`) }}>프로필 보기</Dropdown.Item>
+				{isLoggedIn && userInfo.userId != user.userId ? (
 					<>
-						<Dropdown.Item eventKey="2" onClick={(e) => handleRequestFreind(e, data.User.userId)}>친구 추가</Dropdown.Item>
-						<Dropdown.Item eventKey="3" onClick={(e) => handleRequestChat(e, data.User.userId)}>채팅 요청</Dropdown.Item>
-						<Dropdown.Item eventKey="4" onClick={(e) => handleRequestBlock(e, data.User.userId)}>차단하기</Dropdown.Item>
+						<Dropdown.Item eventKey="2" onClick={(e) => handleRequestFreind(e, user.userId)}>친구 추가</Dropdown.Item>
+						<Dropdown.Item eventKey="3" onClick={(e) => handleRequestChat(e, user.userId)}>채팅 요청</Dropdown.Item>
+						<Dropdown.Item eventKey="4" onClick={(e) => handleRequestBlock(e, user.userId)}>차단하기</Dropdown.Item>
 					</>
 				) : null}
 			</Dropdown.Menu>
