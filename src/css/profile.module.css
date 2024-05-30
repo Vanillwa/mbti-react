@@ -3,9 +3,9 @@
 .header { display: flex; justify-content: space-between; padding : 24px 48px; align-items: center; } 
 .header > span { font-size: 36px; } 
 
-.Container { width: 100%; padding: 24px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray; } 
+.Container { width: 100%; border-bottom: 1px solid lightgray; } 
 
-.Wrap { display: flex; justify-content: start; gap: 36px; flex-wrap: wrap; max-width: 1325px; } 
+.Wrap { display: flex; justify-content: start; gap: 36px; flex-wrap: wrap; max-width: 1325px; border-top: 1px solid lightgray; padding :24px; } 
 
 .postWrap { width: 280px; height: 400px; border: 1px solid #dddddd; border-radius: 12px; } 
 

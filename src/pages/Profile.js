@@ -55,12 +55,11 @@ function Profile() {
   console.log(data)
   return (
     <section className={styles.section}>
-      <div className={styles.header}>
-        <span>최근 게시글</span>
-        <ViewUserDropdown user={data.userInfo} />
-      </div>
-
       <div className={`container ${styles.Container}`}>
+        <div className={styles.header}>
+          <span>최근 게시글</span>
+          <ViewUserDropdown user={data.userInfo} />
+        </div>
         <div className={`row ${styles.Wrap}`}>
           {data.recentPost.length === 0 ? <div className={styles.noList}>작성된 글이 없습니다.</div> : data.recentPost.map((userdata) => (
             <Link to={`/post/view?postId=${userdata.postId}`} className={`col-2 ${styles.postWrap}`} key={userdata.writerId}>
