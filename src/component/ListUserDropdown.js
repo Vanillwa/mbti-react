@@ -9,7 +9,7 @@ import { Dropdown } from "react-bootstrap";
 
 function ListUserDropdown({ data }) {
 	const navigate = useNavigate();
-	const { memoUserInfo, socket } = useAuthContext();
+	const { memoUserInfo, socket, logout } = useAuthContext();
 	const { isLoggedIn, userInfo } = memoUserInfo;
 	const [friend, setFriend] = useState("");
 
