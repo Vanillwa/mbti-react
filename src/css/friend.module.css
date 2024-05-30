@@ -1,17 +1,22 @@
 .body{
+  padding: 60px 60px 0 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 12px;
+  height: 100vh;
 }
 .container{
   display: flex ;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
+  height: 100%;
 }
 .title{
-  
+  text-align: center;
+  font-size: 2vh;
+  font-weight: 550;
 }
 .contentBox{
   width: 600px;
@@ -30,9 +35,16 @@
 .button{
   border-radius: 12px;
   background-color: rgb(145, 227, 255);
-  padding: 2px 4px;
+  padding: 4px 8px;
   font-weight: 600;
 }
 .blockBtn, .delBtn{
   background-color: rgb(255, 93, 93);
+  color: white;
+}
+
+.search{
+  padding: 3px 12px;
+  border-radius: 12px;
+  border: 1px solid lightgrey;
 }
