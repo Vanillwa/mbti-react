@@ -148,8 +148,8 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
 
       <div className={`container ${styles.container}`}>
         {data.result.map(item => {
-          console.log(item);
-          return item.email === "deleted" ? null : (
+          {console.log("item:",item)}
+          return (
             <div className={` row ${styles.userinfo}`} key={item.userId}>
               <span className={`col-2 ${styles.userId}`}>
                 유저ID: {item.userId}
@@ -158,9 +158,7 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
                 이메일: {item.email}
               </span>
               <span className={`col-3 ${styles.userNickname}`}>
-                <Link to={`/user/${item.userId}`}>
-                닉네임: {item.nickname}
-                </Link>
+                <Link to={`/user/${item.userId}`}>닉네임: {item.nickname}</Link>
               </span>
               <span className={`col-2 ${styles.userStatus}`}>
                 상태: {item.status}

@@ -11,10 +11,12 @@ const SettingDropdown = () => {
   const { logout } = useContext(AuthContext);
   
   const clickLogout = async () => {
-    logout();
+   
     const result = await fetchLogout();
+    
     console.log(result.message)
     if (result.message === 'success') {
+      logout();
       navigate("/", { state: "logout" })
     }
   }
