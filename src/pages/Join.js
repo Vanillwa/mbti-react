@@ -319,6 +319,10 @@ function Join() {
     }
   };
 
+  
+
+
+
 
   return (
 
@@ -419,7 +423,8 @@ function Join() {
                 <p className={styles.mbtiCheck}><a href="#" onClick={() => setShowModal1(true)}><strong >[클릭]</strong><strong style={{ color: "#0866ff" }}> MBTI</strong>란 무엇인가요? </a></p>
                 <div className="form-check">
 
-                  <input className="form-check-input" type="checkbox" id="checkBox1" required />
+                <input className="form-check-input" type="checkbox" id="checkBox1" required  />
+
                   <label className="form-check-label" htmlFor="checkBox1">
                     <strong>[<strong style={{ color: "red" }}>필수</strong>] </strong>회원가입 이용약관 동의
                   </label>
