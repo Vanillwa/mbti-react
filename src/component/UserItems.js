@@ -148,7 +148,7 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
 
       <div className={`container ${styles.container}`}>
         {data.result.map(item => {
-          {console.log("item:",item)}
+         console.log(item)
           return (
             <div className={` row ${styles.userinfo}`} key={item.userId}>
               <span className={`col-2 ${styles.userId}`}>
@@ -171,22 +171,14 @@ function UserItems({ data, status, filter, keyword, type, refetch }) {
                   onClick={() => handleRelease(item.userId)}>
                   차단해제
                 </button>
-              ) : item.userId != userInfo.userId ? (
+              ) : 
                 <button
                   type="button"
                   className={`col-1 btn btn-danger btn-ghost ${styles.blockBtn}`}
                   onClick={() => handleShowModal(item)}>
                   차단하기
                 </button>
-              ) : (
-                <button
-                  className={`col-1 btn btn  ${styles.blockBtn}`}
-                  onClick={() => {
-                    sweetalert.warning("자기 자신은 차단할 수 없습니다.");
-                  }}>
-                  나야나😏
-                </button>
-              )}
+                }
             </div>
           );
         })}
