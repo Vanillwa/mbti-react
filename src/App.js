@@ -29,11 +29,13 @@ function App() {
   const { memoUserInfo, socket, logout } = useAuthContext();
   const { isLoggedIn } = memoUserInfo;
   const navigate = useNavigate();
-  
+
 
   if (isLoggedIn) {
+    socket.emit("refresh")
 
     socket.on("uBlocked", async () => {
+      console.log("로그아웃 요청 도착")
       socket.emit("logout");
       const result = await fetchLogout();
       if (result.message === "success") {
