@@ -23,8 +23,8 @@ import { Dropdown, Form, Spinner } from "react-bootstrap";
 import { fetchLogout } from "../service/api/loginAPI";
 
 const Navbar = ({ chatData, chatStatus }) => {
-  const { memoUserInfo, logout } = useAuthContext();
-
+  const { memoUserInfo, logout,socket } = useAuthContext();
+ 
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const [showChat, setShowChat] = useState(false);
@@ -90,6 +90,7 @@ const Navbar = ({ chatData, chatStatus }) => {
 
   const clickLogout = async () => {
     logout();
+    socket.emit("logout");
     const result = await fetchLogout()
     if (result.message === 'success') {
       navigate("/", { state: "logout" })
