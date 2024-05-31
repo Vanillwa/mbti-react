@@ -12,14 +12,14 @@ import sweetalert from "./sweetalert";
 import { useNavigate } from "react-router-dom";
 import { PiSirenFill } from "react-icons/pi";
 
-function ChatReportModal({ roomId }) {
+function ChatReportModal({ roomId, setRoomId, listRefetch, roomData }) {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [reportType, setReportType] = useState(0);
   const [modalRoomId, setModalRoomId] = useState(true);
   const [modalUserNickName, setModalUserNickName] = useState(true);
 
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, socket } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const handleShow = () => setShow(true);
@@ -66,9 +66,13 @@ function ChatReportModal({ roomId }) {
 
     if (result.message === "success") {
       sweetalert.success("신고가 완료되었습니다.", "", "확인");
-      navigate("/chat");
+      await socket.emit("quitRoom", roomData.roomInfo)
+      setRoomId(null)
+      listRefetch()
     } else if (result.message === "duplicated") {
       sweetalert.warning("이미 신고한 채팅방입니다.", "", "확인");
+    } else if (result.message === 'noChat') {
+      sweetalert.warning("신고할 채팅이 없습니다.", "", "확인");
     }
     setShow(false);
   };
@@ -147,7 +151,7 @@ function ChatReportModal({ roomId }) {
                 </Form>
               </Modal.Body>
               <Modal.Footer>
-                <Form.Label>신고시 해당 유저가 차단됩니다.</Form.Label>
+                <Form.Label>신고시 방에서 나가집니다.</Form.Label>
                 <Button type="submit" variant="primary" onClick={handleReport}>
                   신고하기
                 </Button>

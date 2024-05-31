@@ -11,6 +11,7 @@ import downImg from "../svg/arrow-down-circle.svg";
 import ChatReportModal from "../component/ChatReportModal";
 import { ReactComponent as ThreeDots } from "../svg/three-dots.svg"
 import { Dropdown } from "react-bootstrap";
+import sweetalert from "../component/sweetalert";
 function ChatRoom({ roomId, setRoomId, listRefetch }) {
 
   const { memoUserInfo, socket } = useAuthContext();
@@ -91,7 +92,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
 
     const handleNotAvailable = (newData) => {
       if (newData.targetId === userInfo.userId) {
-        alert("채팅이 불가능한 상태입니다.")
+        sweetalert.warning("상대방이 채팅이 불가능한 상태입니다.", "", "확인");
       }
     }
 
@@ -198,7 +199,7 @@ function ChatRoom({ roomId, setRoomId, listRefetch }) {
             <ThreeDots width='24px' height='24px' />
           </Dropdown.Toggle>
           <Dropdown.Menu >
-            <Dropdown.Item eventKey="1"><ChatReportModal roomId={roomId} /></Dropdown.Item>
+            <Dropdown.Item eventKey="1"><ChatReportModal roomId={roomId} setRoomId={setRoomId} listRefetch={listRefetch} roomData={roomData} /></Dropdown.Item>
             <Dropdown.Item eventKey="2" onClick={handleQuit}>나가기</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
