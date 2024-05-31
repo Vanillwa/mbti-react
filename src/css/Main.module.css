@@ -81,9 +81,8 @@
 }
 
 .profileImage {
-  object-fit: fill;
-  width: 101%;
-  height:240px;
+  width: 100%;
+  height: auto;
 }
 
 .goodDay {
