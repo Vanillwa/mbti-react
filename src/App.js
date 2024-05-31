@@ -31,7 +31,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      socket.emit("refresh")
+      socket.emit("login")
 
       socket.on("uBlocked", async () => {
         console.log("로그아웃 요청 도착")
