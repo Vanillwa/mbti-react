@@ -272,7 +272,9 @@ const FriendList = () => {
               className={styles.search}
               name="keyword"
               placeholder="검색"
+              defaultValue={keyword}
             />
+            <button type="reset" className={styles.reset} onClick={()=>{setKeyword('')}}>✖</button>
           </form>
           <div className={styles.title}>친구 목록</div>
           {friendData.result.length > 0 ? (

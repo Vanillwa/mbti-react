@@ -48,3 +48,8 @@
   border-radius: 12px;
   border: 1px solid lightgrey;
 }
+.reset{
+  background-color: white;
+  border: none;
+  padding: 6px;
+}
