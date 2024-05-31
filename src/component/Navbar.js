@@ -262,7 +262,7 @@ const Navbar = ({ chatData, chatStatus }) => {
                       <div className={styles.imgBox}>
                         <img
                           src={userInfo.profileImage}
-                          className={`${styles.userImg} ${styles.svg}`}
+                          className={`${styles.userImg}`}
                         />
                       </div>
                       <div className={styles.nickname}>{userInfo.nickname}</div>
