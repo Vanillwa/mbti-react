@@ -21,7 +21,7 @@ function Main() {
   const [emailAlert, setEmailAlert] = useState();
   const [pwdAlert, setPwdAlert] = useState();
   const location = useLocation();
-  const { memoUserInfo, logout } = useAuthContext();
+  const { memoUserInfo, logout, socket } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
 
   const [emailValidColor, setEmailValidColor] = useState("");
