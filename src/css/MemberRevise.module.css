@@ -1,13 +1,11 @@
 .logo {
   width: 250px;
   margin-bottom: 12px;
- 
 }
 
 .imageWrap {
   display: flex;
   justify-content: center;
-  
 }
 
 .imageBox {
@@ -16,15 +14,13 @@
   display: flex;
   justify-content: center;
   border: 1px solid #dddddd;
-  border-radius: 100%;
-  
+  border-radius: 50%;
 }
 
 .userImage {
-  width: 100%;
-  border-radius: 100%;
-  justify-content: center;
-  
+  height: 100%;
+  width: auto;
+  border-radius: 50%;
 }
 
 .card {
@@ -105,11 +101,10 @@
   margin-right: 5px;
 }
 
-
-.modalbtn1{
-  background-color: rgb(250, 3, 81)
+.modalbtn1 {
+  background-color: rgb(250, 3, 81);
 }
 
-.modalbtn2{
+.modalbtn2 {
   background-color: #0d6efd;
 }
