@@ -28,7 +28,8 @@ function UserList() {
     setFilter(e.target.value);
   };
 
-  const search = () => {
+  const search = (e) => {
+    e.preventDefault()
     if (searchRef.current.value === "") return;
     setKeyword(searchRef.current.value);
     setType(typeRef.current.value);
@@ -39,18 +40,24 @@ function UserList() {
       <h1 className="p-2">회원목록</h1>
       <div className={styles.searchType}>
         <div className={styles.searchUser}>
+          <div className="d-flex justify-content-center gap-2">
           <select className={styles.searchUserType} ref={typeRef}>
             <option value="nickname">닉네임</option>
             <option value="email">이메일</option>
           </select>
+          <form onSubmit={search} >
           <input
             className={`me-1 ms-1 ${styles.searchBox}`}
             type="text"
             placeholder="검색"
             ref={searchRef}></input>
+              <button type="reset" onClick={()=>{setKeyword("")}} className="bg-white" style={{border:"none", padding:"12px"}}>✖</button>
+            </form>
           <button className={styles.searchBtn} type="button" onClick={search}>
             검색
           </button>
+          </div>
+        
         </div>
         <div className={styles.showUser}>
           <select
