@@ -100,24 +100,6 @@ const FriendList = () => {
     });
   };
 
-  const handleRequestBlock = async (friendId) => {
-    const result = await sweetalert.question(
-      "차단 할거야?",
-      "",
-      "네",
-      "아니오"
-    );
-
-    if (result.dismiss) return;
-    friendBlockMutate.mutate(friendId, {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(["getRequestFriend"]);
-        sweetalert.success("차단 완료");
-        await refetch();
-        return;
-      },
-    });
-  };
   const handleFriendBlock = async (targetId) => {
     const result = await sweetalert.question(
       "차단 할거야?",
@@ -129,9 +111,10 @@ const FriendList = () => {
 
     friendBlockMutate.mutate(targetId, {
       onSuccess: async () => {
-        await queryClient.invalidateQueries(["getFriend"]);
+        await queryClient.invalidateQueries(["getFriend", 'getBlockUser']);
         sweetalert.success("차단 완료");
         await listRefetch();
+        await blockRefetch();
         return;
       },
     });
@@ -191,6 +174,7 @@ const FriendList = () => {
   useEffect(()=>{
     setKeyword('')
   },[btn])
+
   if (
     requestStatus === "loading" ||
     friendStatus === "loading" ||
@@ -256,6 +240,7 @@ const FriendList = () => {
           <div className={styles.title}>친구 목록</div>
           {friendData.result.length > 0 ? (
             friendData.result.map((item) => {
+              console.log(item)
               return (
                 <div key={item.friendId} className={styles.contentBox}>
                   <Link
@@ -299,6 +284,7 @@ const FriendList = () => {
           <div className={styles.title}>친구 요청 목록</div>
           {requestData.result.length > 0 ? (
             requestData.result.map((item) => {
+              console.log(item)
               return (
                 <div key={item.friendId} className={styles.contentBox}>
                   <Link to={`/user/${item.requestUser.userId}`}>
@@ -319,13 +305,6 @@ const FriendList = () => {
                       onClick={() => handleRequestRefuse(item.friendId)}
                     >
                       거절
-                    </div>
-                    <div
-                      type="button"
-                      className={styles.button}
-                      onClick={handleRequestBlock}
-                    >
-                      너 차단
                     </div>
                   </div>
                 </div>
