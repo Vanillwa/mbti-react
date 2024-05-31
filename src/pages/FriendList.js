@@ -100,6 +100,24 @@ const FriendList = () => {
     });
   };
 
+  const handleRequestBlock = async (targetId) => {
+    const result = await sweetalert.question(
+      "차단 할거야?",
+      "",
+      "네",
+      "아니오"
+    );
+    if (result.dismiss) return;
+    friendBlockMutate.mutate(targetId, {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["getRequestFriend", 'getBlockUser']);
+        sweetalert.success("차단 완료");
+        await refetch();
+        await blockRefetch();
+        return;
+      },
+    });
+  };
   const handleFriendBlock = async (targetId) => {
     const result = await sweetalert.question(
       "차단 할거야?",
@@ -305,6 +323,13 @@ const FriendList = () => {
                       onClick={() => handleRequestRefuse(item.friendId)}
                     >
                       거절
+                    </div>
+                    <div
+                      type="button"
+                      className={styles.button}
+                      onClick={() => {handleRequestBlock(item.userId);}}
+                    >
+                      너 차단
                     </div>
                   </div>
                 </div>
