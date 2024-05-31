@@ -91,6 +91,13 @@ const FriendList = () => {
   };
 
   const handleRequestRefuse = async (friendId) => {
+    const result = await sweetalert.question(
+      "거절 할거야?",
+      "",
+      "네",
+      "아니오"
+    );
+    if (result.dismiss) return;
     refuseMutate.mutate(friendId, {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["getRequestFriend"]);
@@ -258,7 +265,6 @@ const FriendList = () => {
           <div className={styles.title}>친구 목록</div>
           {friendData.result.length > 0 ? (
             friendData.result.map((item) => {
-              console.log(item)
               return (
                 <div key={item.friendId} className={styles.contentBox}>
                   <Link
