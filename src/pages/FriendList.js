@@ -24,7 +24,7 @@ import Footer from "../component/Footer";
 
 const FriendList = () => {
   const queryClient = new QueryClient();
-  const { memoUserInfo } = useAuthContext();
+  const { memoUserInfo, socket } = useAuthContext();
   const { isLoggedIn, userInfo } = memoUserInfo;
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState("");
@@ -187,9 +187,17 @@ const FriendList = () => {
     }
   };
 
-  const handleBtnChange = (e) => {
+  const handleBtnChange = async(e) => {
     setBtn(e.target.value);
+    if(e.target.value == 'friend'){
+      await listRefetch()
+    }else if(e.target.value == 'request'){
+      await refetch()
+    }else{
+      await blockRefetch()
+    }
   };
+
   const handleSearch = (e) => {
     e.preventDefault();
     const keyword = e.target.keyword.value;
@@ -199,6 +207,10 @@ const FriendList = () => {
   useEffect(()=>{
     setKeyword('')
   },[btn])
+
+  socket.on('friendRequest', async ()=>{
+    await refetch()
+  })
 
   if (
     requestStatus === "loading" ||
