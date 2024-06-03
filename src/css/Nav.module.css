@@ -105,7 +105,7 @@
   border:1px solid lightgray;
 }
 
-.imgBox img {width: 100%;}
+.imgBox img {margin-left: 12px; width: 100%; height: auto;}
 
 .userImg {
   width: 100%;
@@ -153,8 +153,6 @@
   }
   .nickname{
     display: none;
-  }
-  .imgBox{margin: 0 0 0 -12px;
   }
 }
 @media (max-width: 768px) {
