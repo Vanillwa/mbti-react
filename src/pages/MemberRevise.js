@@ -146,6 +146,10 @@ function MemberRevise() {
         setNicknameValidation("valid");
         setNicknameBtn("변경");
         setNicknameValidColor("is-valid");
+      } else if (nicknameRef.current.value === userInfo.nickname) {
+        setNicknameAlert("바뀌지 않았어요.");
+        setNicknameValidation("invalid");
+        setNicknameValidColor("is-invalid");
       } else if (result?.message === "duplicated") {
         setNicknameAlert("이미 사용중.");
         setNicknameValidation("invalid");
@@ -352,6 +356,11 @@ function MemberRevise() {
                   disabled={!nicknameEditable}
                   ref={nicknameRef}
                   id="user-nickname"
+                  onChange={() => {
+                    setNicknameBtn("체크");
+                    setNicknameAlert("");
+                    setNicknameValidColor("");
+                  }}
                 />
                 <button
                   type="button"
